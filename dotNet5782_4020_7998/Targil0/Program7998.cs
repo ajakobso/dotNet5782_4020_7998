@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Targil0
+{
+    partial class Program
+    {
+        static void Main()
+        {
+            welcome7998();
+        }
+        static partial void welcome7998()
+        {
+            Console.WriteLine("I am also here!");
+        }
+    }
+}
+}
