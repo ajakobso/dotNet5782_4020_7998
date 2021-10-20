@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace IDAL
 {
-    class Class1
+    namespace DO
     {
+        // public struct
+        //  פה נמצאים הenum 
     }
 }
