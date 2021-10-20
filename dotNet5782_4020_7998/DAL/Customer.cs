@@ -4,9 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace IDAL
 {
-    class Customer
+    namespace DO
     {
+        public struct Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Phone { get; set; }
+            public double Longtitude { get; set; }
+            public double Lattitude { get; set; }
+            public override string ToString()
+            {
+                return base.ToString();
+            }
+        }
     }
 }
