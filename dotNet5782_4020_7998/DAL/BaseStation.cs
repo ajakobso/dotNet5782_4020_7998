@@ -13,7 +13,7 @@ namespace IDAL
             public double Latitude { get; set; }
             public override string ToString()
             {
-                return $"id=ID, name=Name, chargeSlot=ChargeSlot, longitude=Longitude, latitude=Latitude ";
+                return $"id = ID, name = Name, charge slot = ChargeSlot, longitude = Longitude, latitude = Latitude ";
             }
         }
     }
