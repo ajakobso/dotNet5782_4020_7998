@@ -16,10 +16,10 @@ namespace IDAL
             public int DroneId { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public datetime Requested { get; set; }
-            public datetime Scheduleded { get; set; }
-            public datetime PickedUp { get; set; }
-            public datetime Delivered { get; set; }
+            public DateTime Requested { get; set; }
+            public DateTime Scheduleded { get; set; }
+            public DateTime PickedUp { get; set; }
+            public DateTime Delivered { get; set; }
             public override string ToString()
             {
                 return $"id = Id, sender id = SenderId, target id = TargetId, drone id = DroneId, weight = Weight, priority = Priority, requested time = Requested, scheduleded time = Scheduleded, pick up time = PickedUp, delivering time = Delivered ";
