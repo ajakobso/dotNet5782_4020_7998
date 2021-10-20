@@ -6,6 +6,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //IDAL DO namespace open
             Console.WriteLine("Hello World!");
         }
     }
