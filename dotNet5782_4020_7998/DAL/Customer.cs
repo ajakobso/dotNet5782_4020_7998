@@ -17,7 +17,7 @@ namespace IDAL
             public double Lattitude { get; set; }
             public override string ToString()
             {
-                return base.ToString();
+                return $"id = Id, name = Name, phone = Phone, longitude = Longitude, latitude= Latitude";
             }
         }
     }
