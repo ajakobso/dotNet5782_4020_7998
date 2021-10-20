@@ -10,10 +10,10 @@ namespace IDAL
             public string Name { get; set; }
             public int ChargeSlots { get; set; }
             public double Longitude { get; set; }
-            public double Latitude { get; set; }
+            public double Lattitude { get; set; }
             public override string ToString()
             {
-                return $"id = ID, name = Name, charge slot = ChargeSlot, longitude = Longitude, latitude = Latitude ";
+                return $"id = ID, name = Name, charge slot = ChargeSlot, longitude = Longitude, lattitude = Lattitude ";
             }
         }
     }
