@@ -6,8 +6,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //IDAL DO namespace open
-            Console.WriteLine("Hello World!");
+            IDAL.DO.BaseStation baseStation= new IDAL.DO.BaseStation();
+            Console.WriteLine(baseStation);
         }
     }
 }

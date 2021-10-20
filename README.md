@@ -1,8 +1,2 @@
-היי עתיה זוט אני
 # dotNet5782_4020_7998
 מיני פרויקט חלונות אילת ועתיה
-goodBye Ayelet
-This project is amazing!
-blah blah
-i dont want to merge anymore!
-thats it! wer'e done!!!
