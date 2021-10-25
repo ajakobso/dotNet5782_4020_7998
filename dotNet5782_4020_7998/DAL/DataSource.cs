@@ -14,14 +14,15 @@ namespace DalObject
         internal static List<Parcel> Parcels = new List<Parcel>();
        internal class Config
         {
-            internal static int RunningParcelId = 1000;//running number for the parcels id
+            internal static int RunningParcelId = 1001;//running number for the parcels id
+            internal static int RunningBSId = 101;//running number for the base stations id
         }
         //מתודה סטטית  לאיתחול מופעי הישויות עם נתונים וכו
-        static void Initialize ()
+        static void Initialize ()// לבדוק אם באמת אפשר את הרחפנים ואת התחנות בסיס להגדיר עם מספר רץ
         {
             Random r = new Random();
-            BaseStations.Add(new BaseStation { Id = 101, Name = "station1", ChargeSlots = 3, Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });//initializing stations around Jerusalem
-            BaseStations.Add(new BaseStation { Id = 102, Name = "station2", ChargeSlots = 5, Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
+            BaseStations.Add(new BaseStation { Id = DataSource.Config.RunningBSId++, Name = "station1", ChargeSlots = 3, Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });//initializing stations around Jerusalem
+            BaseStations.Add(new BaseStation { Id = DataSource.Config.RunningBSId++, Name = "station2", ChargeSlots = 5, Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
             Drones.Add(new Drone { Id = 1, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Light, Model = "10A", Status = DroneStatuses.Maintenance });
             Drones.Add(new Drone { Id = 2, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Heavy, Model = "5A", Status = DroneStatuses.Available });
             Drones.Add(new Drone { Id = 3, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Middle, Model = "10B", Status = DroneStatuses.Available });
@@ -38,16 +39,16 @@ namespace DalObject
             Customers.Add(new Customer { Id = 410258943, Name = "Nati", Phone = "0589756121", Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
             Customers.Add(new Customer { Id = 327498510, Name = "Batty", Phone = "0542235829", Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
             Customers.Add(new Customer { Id = 610845302, Name = "Rachel", Phone = "0548645679", Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
-            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 4, SenderId = 425891358, TargetId = 326456189, Priority = Priorities.Fast, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
+            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 1, SenderId = 425891358, TargetId = 326456189, Priority = Priorities.Fast, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
             Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 5, SenderId = 425891358, TargetId = 610845302, Priority = Priorities.Standart, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
-            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 4, SenderId = 610845302, TargetId = 326456189, Priority = Priorities.Fast, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
-            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 6, SenderId = 425891358, TargetId = 203459782, Priority = Priorities.Urgent, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
+            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 3, SenderId = 610845302, TargetId = 326456189, Priority = Priorities.Fast, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
+            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 2, SenderId = 425891358, TargetId = 203459782, Priority = Priorities.Urgent, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
             Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 6, SenderId = 203459782, TargetId = 425891358, Priority = Priorities.Fast, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
-            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 5, SenderId = 425891358, TargetId = 326456189, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
+            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 3, SenderId = 425891358, TargetId = 326456189, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
             Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 4, SenderId = 204168946, TargetId = 327498510, Priority = Priorities.Fast, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
-            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 5, SenderId = 702594863, TargetId = 326456189, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
+            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 1, SenderId = 702594863, TargetId = 326456189, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
             Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 5, SenderId = 425891358, TargetId = 204168946, Priority = Priorities.Standart, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
-            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 4, SenderId = 327498510, TargetId = 702594863, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
+            Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 2, SenderId = 327498510, TargetId = 702594863, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
 
         }
     }
