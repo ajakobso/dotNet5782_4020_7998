@@ -8,6 +8,13 @@ namespace DalObject
 {
     class DataSource
     {
+       internal class Config//fields of the first empty element in every array.
+        {
+            internal static int FstDroneAvailable = 0;///
+            internal static int FstBaseStationAvailable = 0;
+            internal static int FstCustomerAvailable = 0;
+            internal static int FstParcelavailable = 0;
+            //שדה ליצירת מספר מזהה עבור חבילות
         internal static List<Drone> Drones = new List<Drone>();
         internal static List<BaseStation> BaseStations = new List<BaseStation>();
         internal static List<Customer> Customers = new List<Customer>();
