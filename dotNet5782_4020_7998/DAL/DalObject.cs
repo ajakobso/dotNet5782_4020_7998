@@ -25,23 +25,39 @@ namespace DalObject
         {
             DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
-        public static void AscriptionPtoD(Parcel parcel)// ascription a parcel with an available drone
+        public static void AscriptionPtoD(int parcelId, int droneId)// ascription a parcel with drone
         {
-            foreach (Drone drone in DataSource.Config.Drones)
+            Parcel p = new Parcel();
+            foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel
             {
-                if (drone.Status == DroneStatuses.Available)
+                if (parcel.Id == parcelId)
                 {
-                    parcel.DroneId = drone.Id;
-                    return;
+                    p = parcel;
                 }
             }
+            p.DroneId = droneId;
+            //foreach (Drone drone in DataSource.Config.Drones)
+            //{
+            //    if (drone.Status == DroneStatuses.Available)
+            //    {
+            //        parcel.DroneId = drone.Id;
+            //        return;
+            //    }
+            //}
         }
-        public static void PickUpParcel(Parcel parcel)
+        public static void PickUpParcel(int parcelId)
         {
-
+            Parcel p = new Parcel();
+            foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel
+            {
+                if (parcel.Id == parcelId)
+                {
+                    p = parcel;
+                }
+            }
             foreach (Drone drone in DataSource.Config.Drones)
             {
-                if (drone.Id == parcel.DroneId)
+                if (drone.Id == p.DroneId)
                 {
                     Drone newDrone = new Drone { Id = drone.Id, Status = DroneStatuses.Shipping, Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
                     DataSource.Config.Drones.Remove(drone);
@@ -185,9 +201,9 @@ namespace DalObject
         public static List<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
         {
             List<BaseStation> nList = new List<BaseStation>();
-            foreach(BaseStation baseStation in DataSource.Config.BaseStations)
+            foreach (BaseStation baseStation in DataSource.Config.BaseStations)
             {
-                if (baseStation.ChargeSlots>0)
+                if (baseStation.ChargeSlots > 0)
                 {
                     nList.Add(baseStation);
                 }

@@ -52,7 +52,7 @@ namespace DalObject
             Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 1, SenderId = 702594863, TargetId = 326456189, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
             Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 0, SenderId = 425891358, TargetId = 204168946, Priority = Priorities.Standart, Weight = WeightCategories.Heavy, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
             Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 2, SenderId = 327498510, TargetId = 702594863, Priority = Priorities.Standart, Weight = WeightCategories.Middle, Requested = DateTime.Now, Scheduleded = DateTime.Now, PickedUp = DateTime.Now, Delivered = new DateTime(2021, 10, 22) });
-            Config.DroneCharges.Add(new DroneCharge { DroneId = 1, StationId=102 });
+            Config.DroneCharges.Add(new DroneCharge { DroneId = 1, StationId = 102 });
         }
     }
 }

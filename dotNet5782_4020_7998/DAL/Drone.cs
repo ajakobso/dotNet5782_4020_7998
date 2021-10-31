@@ -20,6 +20,6 @@ namespace IDAL
                 return $"id = Id, model = Model, max weight = MaxWeight, status = Status, battery = Battery ";
             }
         }
-    
+
     }
 }
