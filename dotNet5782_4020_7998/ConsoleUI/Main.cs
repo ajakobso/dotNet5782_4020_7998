@@ -13,9 +13,11 @@ namespace ConsoleUI
         enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
         static void Main(string[] args)
         {
+            DalObject.DataSource.Initialize();
             Inputs options;
             do
             {
+                
                 Console.WriteLine("Choose one of the following options:\n" +
                 "a: Add new element\n" +
                 "p: Updating existing element\n" +
@@ -216,7 +218,6 @@ namespace ConsoleUI
                                 inp = Console.ReadLine();
                                 int DBSId;//display base station id
                                 int.TryParse(inp, out DBSId);
-                                List<BaseStation> DBaseStations = new List<BaseStation>();
                                 Console.WriteLine(DalObject.DalObject.CopyBaseStation(DBSId));
                                 break;
                             case Displaying.DDrone:

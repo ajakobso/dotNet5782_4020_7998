@@ -7,7 +7,7 @@ using IDAL.DO;
 using DalObject;
 namespace DalObject
 {
-    class DataSource
+    public class DataSource
     {
         internal class Config//fields of the first empty element in every array.
         {
