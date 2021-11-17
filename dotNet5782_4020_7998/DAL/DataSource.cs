@@ -26,12 +26,12 @@ namespace DalObject
             Random r = new Random();
             Config.BaseStations.Add(new BaseStation { Id = 101, Name = "station1", ChargeSlots = 3, Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });//initializing stations around Jerusalem
             Config.BaseStations.Add(new BaseStation { Id = 102, Name = "station2", ChargeSlots = 5, Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
-            Config.Drones.Add(new Drone { Id = 1, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Light, Model = "10A", Status = DroneStatuses.Maintenance });
-            Config.Drones.Add(new Drone { Id = 2, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Heavy, Model = "5A", Status = DroneStatuses.Available });
-            Config.Drones.Add(new Drone { Id = 3, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Middle, Model = "10B", Status = DroneStatuses.Available });
-            Config.Drones.Add(new Drone { Id = 4, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Heavy, Model = "15C", Status = DroneStatuses.Shipping });
-            Config.Drones.Add(new Drone { Id = 5, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Heavy, Model = "10D", Status = DroneStatuses.Shipping });
-            Config.Drones.Add(new Drone { Id = 6, Battery = r.NextDouble() + r.Next(1, 100), MaxWeight = WeightCategories.Heavy, Model = "15D", Status = DroneStatuses.Shipping });
+            Config.Drones.Add(new Drone { Id = 1, MaxWeight = WeightCategories.Light, Model = "10A" });// Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Maintenance
+            Config.Drones.Add(new Drone { Id = 2,  MaxWeight = WeightCategories.Heavy, Model = "5A" });//Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Available
+            Config.Drones.Add(new Drone { Id = 3, MaxWeight = WeightCategories.Middle, Model = "10B" });//Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Available
+            Config.Drones.Add(new Drone { Id = 4, MaxWeight = WeightCategories.Heavy, Model = "15C" });//Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Shipping
+            Config.Drones.Add(new Drone { Id = 5, MaxWeight = WeightCategories.Heavy, Model = "10D" });//Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Shipping
+            Config.Drones.Add(new Drone { Id = 6, MaxWeight = WeightCategories.Heavy, Model = "15D" });//Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Shipping
             Config.Customers.Add(new Customer { Id = 326456189, Name = "Avital", Phone = "0548651821", Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
             Config.Customers.Add(new Customer { Id = 204168946, Name = "Yosi", Phone = "0548679821", Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });
             Config.Customers.Add(new Customer { Id = 425891358, Name = "Lulu", Phone = "0548768521", Longitude = 31 + r.NextDouble(), Lattitude = 35 + r.NextDouble() });

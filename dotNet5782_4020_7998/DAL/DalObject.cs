@@ -11,18 +11,71 @@ namespace DalObject
     {
         public static void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
         {
+            try
+            {
+                foreach (BaseStation bStation in DataSource.Config.BaseStations)
+                {
+
+                    if (bStation.Id == id)
+                    {
+                        throw new AddExistingBaseStation();////////////////////////////////////////////////////////////////////////////////
+                    }
+                }
+            }
+            catch (AddExistingBaseStation)
+            { Console.WriteLine("ERROR - attempt to add an existing base station!"); }
+            
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
-        public static void AddDrone(int id, double battery, WeightCategories maxW, string model, DroneStatuses status)
+        public static void AddDrone(int id,  WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
-            DataSource.Config.Drones.Add(new Drone { Id = id, Battery = battery, MaxWeight = maxW, Model = model, Status = status });
+            try
+            {
+                foreach (Drone drone in DataSource.Config.Drones)
+                {
+
+                    if (drone.Id == id)
+                    {
+                        throw new AddExistingDrone();////////////////////////////////////////////////////////////////////////////////
+                    }
+                }
+            }
+            catch (AddExistingDrone)
+            { Console.WriteLine("ERROR - attempt to add an existing drone!"); }
+            DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
         }
         public static void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
+            try
+            {
+                foreach (Customer customer in DataSource.Config.Customers)
+                {
+                    if (customer.Id == id)
+                    {
+                        throw new AddExistingCustomer();////////////////////////////////////////////////////////////////////////////////
+                    }
+                }
+            }
+            catch (AddExistingCustomer)
+            { Console.WriteLine("ERROR - attempt to add an existing customer!"); }
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });
         }
         public static void AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)
         {
+            try
+            {
+                foreach (Parcel parcel in DataSource.Config.Parcels)
+                {
+
+                    if (parcel.DroneId == droneId)
+                    {
+                        throw new AddParcelToAnAsscriptedDrone();////////////////////////////////////////////////////////////////////////////////
+                    }
+                }
+            }
+            catch (AddParcelToAnAsscriptedDrone)
+            { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!"); }
+           
             DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
         public static void AscriptionPtoD(int parcelId, int droneId)// ascription a parcel with drone
@@ -76,7 +129,7 @@ namespace DalObject
                     {
                         if (drone.Id == parcel.DroneId)
                         {
-                            Drone newDrone = new Drone { Id = drone.Id, Status = DroneStatuses.Available, Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
+                            Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
                             DataSource.Config.Drones.Remove(drone);
                             DataSource.Config.Drones.Add(newDrone);///change the status of the drone into available because he finish the shipment.
                             Parcel newParcel = new Parcel { Id = parcel.Id, Delivered = DateTime.Now, DroneId = parcel.DroneId, PickedUp = parcel.PickedUp, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight };
@@ -94,7 +147,7 @@ namespace DalObject
             {
                 if (drone.Id == droneId)
                 {
-                    Drone newDrone = new Drone { Id = drone.Id, Status = DroneStatuses.Maintenance, Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
+                    Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };// Status = DroneStatuses.Maintenance, Battery = drone.Battery
                     DataSource.Config.Drones.Remove(drone);
                     DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into maintenance because he need to charge.
                     DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId }; ///
@@ -108,7 +161,7 @@ namespace DalObject
             {
                 if (drone.Id == droneId)
                 {
-                    Drone newDrone = new Drone { Id = drone.Id, Status = DroneStatuses.Available, Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
+                    Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
                     DataSource.Config.Drones.Remove(drone);
                     DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into available because the user's request
                     foreach (DroneCharge charger in DataSource.Config.DroneCharges)///remove the matching charging station from the list
@@ -170,23 +223,23 @@ namespace DalObject
             }
             return nParcel;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
-        public static List<BaseStation> CopyBaseStations()//return copy of the base stations's list
+        public static IEnumerable<BaseStation> CopyBaseStations()//return copy of the base stations's list
         {
             return DataSource.Config.BaseStations;
         }
-        public static List<Drone> CopyDronesList()//return copy of the drones's list
+        public static IEnumerable<Drone> CopyDronesList()//return copy of the drones's list
         {
             return DataSource.Config.Drones;
         }
-        public static List<Customer> CopyCustomersList()//return copy of the customer's list
+        public static IEnumerable<Customer> CopyCustomersList()//return copy of the customer's list
         {
             return DataSource.Config.Customers;
         }
-        public static List<Parcel> CopyParcelsList()//return copy of the parcels's list
+        public static IEnumerable<Parcel> CopyParcelsList()//return copy of the parcels's list
         {
             return DataSource.Config.Parcels;
         }
-        public static List<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
+        public static IEnumerable<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
         {
             List<Parcel> nList = new List<Parcel>();
             foreach (Parcel parcel in DataSource.Config.Parcels)
@@ -198,7 +251,7 @@ namespace DalObject
             }
             return nList;
         }
-        public static List<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
+        public static IEnumerable<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
         {
             List<BaseStation> nList = new List<BaseStation>();
             foreach (BaseStation baseStation in DataSource.Config.BaseStations)
