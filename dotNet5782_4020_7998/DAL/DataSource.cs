@@ -17,7 +17,8 @@ namespace DalObject
             internal static List<Parcel> Parcels = new List<Parcel>();
             internal static List<DroneCharge> DroneCharges = new List<DroneCharge>();
 
-
+            internal static PowerPerKM PPM;
+            internal static double droneChargingRate;
             internal static int RunningParcelId = 1001;//running number for the parcels id
         }
         //מתודה סטטית  לאיתחול מופעי הישויות עם נתונים וכו

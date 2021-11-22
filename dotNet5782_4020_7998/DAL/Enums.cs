@@ -16,6 +16,7 @@ namespace IDAL
         public enum Updating { AscPtoD, PUParcel, Pdelivering, DCharging, DRelease };//for the main
         public enum Displaying { DBaseStation, Ddrone, DCustomer, DParcel };//for the main
         public enum ListsDisplaying { BaseStationsList, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsLict, AvailableChargingStationsList };//for the main
+        public enum PowerPerKM { Available, LightWheight, MiddleWheight, HeavyWeight};
     }
 }
 

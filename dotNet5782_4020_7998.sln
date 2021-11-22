@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "dotNet5782_402
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "dotNet5782_4020_7998\DAL\DAL.csproj", "{CF8B530C-B849-48F7-A44B-BA74E957EC1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{CF8B530C-B849-48F7-A44B-BA74E957EC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF8B530C-B849-48F7-A44B-BA74E957EC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF8B530C-B849-48F7-A44B-BA74E957EC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AD13A072-FB6D-4A19-9CCB-05CE8599D586} = {65D45E18-8F11-49CF-AC86-8E163237935C}
 		{CF8B530C-B849-48F7-A44B-BA74E957EC1A} = {65D45E18-8F11-49CF-AC86-8E163237935C}
+		{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E} = {65D45E18-8F11-49CF-AC86-8E163237935C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A281129B-4938-44F5-B362-C2CCD6529585}
