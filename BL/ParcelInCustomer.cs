@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class ParcelInCustomer
+    public class ParcelInCustomer
     {
+        //partial class BL
+        //{
+        public int ParcelId { get; set; }
+        public Enums.WeightCategories ParcelWC { get; set; }
+        public Enums.Priorities ParcelPriority { get; set; }
+        public Enums.ParcelState ParcelState { get; set; }
+        public CustomerInParcel SourceCustomer { get; set; }
+        public CustomerInParcel DestinationCustomer { get; set; }
+        //}
     }
 }

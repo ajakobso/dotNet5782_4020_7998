@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public class CustomerInParcel
+    public class Location 
     {
         //partial class BL//מימוש הממשק IBL
         //{
-        public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
+            public double Longitude { get; set; }
+            public double Latitude { get; set; }
         //}
     }
 }

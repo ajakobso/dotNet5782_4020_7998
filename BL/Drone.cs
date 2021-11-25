@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class Drone
+    public class Drone
     {
-        partial class BL//מימוש הממשק IBL
-        {
-        }
+        public int DroneId { get; set; }
+        public string Model { get; set; }
+        public Enums.WeightCategories MaxWeight { get; set; }
+        public Enums.DroneStatuses DroneState { get; set; }
+        public double Battery { get; set; }
+        public ParcelInDelivering DeliveryParcel { get; set; }
+        public Location CurrentLocation { get; set; }
     }
 }

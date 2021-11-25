@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class BaseStation
+    public class BaseStation
     {
-        partial class BL//מימוש הממשק IBL
-            {
-            }
+        public int BaseStationId { get; set; }
+        public string StationName { get; set; }
+        public Location StationLocation { get; set; }
+        public int AvailableChargingS { get; set; }
+        public IEnumerable<List<DroneInCharge>> DInChargeList { get; set; }
+       
     }
 }

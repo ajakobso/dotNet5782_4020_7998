@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace IDAL.DO
 {
-    class DroneCharge
+    internal class DroneIdNotFoundException: Exception
     {
-        partial class BL//מימוש הממשק IBL
-        {
-        }
+        public DroneIdNotFoundException() { }
     }
 }

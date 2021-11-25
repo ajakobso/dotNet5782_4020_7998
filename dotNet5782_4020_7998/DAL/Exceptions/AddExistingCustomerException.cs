@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace IDAL.DO
 {
-    public class DroneInCharge
+    internal class AddExistingCustomerException: Exception
     {
-        public int DroneId { get; set; }
-        public double Battery { get; set; }
+        public AddExistingCustomerException() { }
+
     }
 }

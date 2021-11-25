@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    interface ParcelToList
+    public class ParcelToList
     {
+        public int ParcelId { get; set; }
+        public string SenderName { get; set; }
+        public string ReceiverName { get; set; }
+        public Enums.WeightCategories ParcelWC { get; set; }
+        public Enums.Priorities ParcelPriority { get; set; }
+        public Enums.ParcelState ParcelState { get; set; }
     }
 }

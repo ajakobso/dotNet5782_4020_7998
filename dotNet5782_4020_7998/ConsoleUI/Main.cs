@@ -259,7 +259,7 @@ namespace ConsoleUI
                         switch (ld)
                         {
                             case ListsDisplaying.BaseStationsList:
-                                List<BaseStation> BaseStations = new List<BaseStation>();
+                                IEnumerable<BaseStation> BaseStations;
                                 BaseStations = DalObject.DalObject.CopyBaseStations();
                                 foreach (BaseStation basestation in BaseStations)
                                 {
@@ -267,7 +267,7 @@ namespace ConsoleUI
                                 }
                                 break;
                             case ListsDisplaying.DronesList:
-                                List<Drone> Drones = new List<Drone>();
+                                IEnumerable<Drone> Drones = new List<Drone>();
                                 Drones = DalObject.DalObject.CopyDronesList();
                                 foreach (Drone drones in Drones)
                                 {
@@ -275,7 +275,7 @@ namespace ConsoleUI
                                 }
                                 break;
                             case ListsDisplaying.CustomersList:
-                                List<Customer> Customers = new List<Customer>();
+                                IEnumerable<Customer> Customers;
                                 Customers = DalObject.DalObject.CopyCustomersList();
                                 foreach (Customer customer in Customers)
                                 {
@@ -283,7 +283,7 @@ namespace ConsoleUI
                                 }
                                 break;
                             case ListsDisplaying.ParcelsList:
-                                List<Parcel> Parcels = new List<Parcel>();
+                                IEnumerable<Parcel> Parcels;
                                 Parcels = DalObject.DalObject.CopyParcelsList();
                                 foreach (Parcel parcel in Parcels)
                                 {

@@ -16,9 +16,11 @@ namespace DalObject
             internal static List<Customer> Customers = new List<Customer>();
             internal static List<Parcel> Parcels = new List<Parcel>();
             internal static List<DroneCharge> DroneCharges = new List<DroneCharge>();
-
-            internal static PowerPerKM PPM;
-            internal static double droneChargingRate;
+            internal static double Available = 5;
+            internal static double LightWheight = 20;//5 KM for a full battery
+            internal static double MiddleWheight = 25;//4 KM for a full battery
+            internal static double HeavyWeight = 30;//3 KM +- for a full battery
+            internal static double BatteryPerHour = 60;//we have dicided that the delivering company will operate only in jerusalem, so 1 precent per minut make sense.
             internal static int RunningParcelId = 1001;//running number for the parcels id
         }
         //מתודה סטטית  לאיתחול מופעי הישויות עם נתונים וכו
