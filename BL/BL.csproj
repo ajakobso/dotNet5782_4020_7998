@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dotNet5782_4020_7998\ConsoleUI\ConsoleUI.csproj" />
+    <ProjectReference Include="..\dotNet5782_4020_7998\DAL\DAL.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -4,13 +4,13 @@ using IDAL.DO;
 using DalObject;
 namespace ConsoleUI
 {
-    class ConsoleUI
+    public class ConsoleUI
     {
-        enum Inputs { a = 1, p, d, l, e };
-        enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
-        enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
-        enum Displaying { DBaseStation = 1, DDrone, DCustomer, DParcel };//for the main
-        enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
+        public enum Inputs { a = 1, p, d, l, e };
+        public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
+        public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
+        public enum Displaying { DBaseStation = 1, DDrone, DCustomer, DParcel };//for the main
+        public enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
         static void Main(string[] args)
         {
             DalObject.DataSource.Initialize();

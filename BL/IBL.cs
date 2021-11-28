@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
+
 namespace IBL.BO
 {
     interface IBL
     {
-        public:
             void AddBaseStation(int num, string name, string location, int numOfAvailableDCharge);
-            void AddDrone(int Id, char Model, WeightCategories MaxWeight, int Bstation);
+            void AddDrone(int Id, char Model, Enums.WeightCategories MaxWeight, int Bstation);
             void AddCustomer(int Id, string Name, int PhoneNum, string Location);
-            void AddParcelToDeliver(SCustomerId, SCustomerId, WeightCategories Weight, Priorities Priority);
+            void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority);
             void UpdateDrone(int Id, string Model);
             void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots);
             void UpdateCustomer(int Id, string Name, int PhoneNum);

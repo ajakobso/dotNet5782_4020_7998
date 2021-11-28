@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public class CustomerToList
+    public class CustomerForList
     {
         //partial class BL//מימוש הממשק IBL
         //{
