@@ -146,7 +146,71 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 bl.UpdateDrone(NewDID, inp);
                                 break;
-                                
+                            case Enums.NewUpdating.BaseStation:
+                                Console.WriteLine("please enter:\n" + "base station's id:\n");
+                                inp=Console.ReadLine();
+                                int BSId;
+                                int.TryParse(inp, out BSId);
+                                Console.WriteLine("new name for the base station(optional, else enter' '):\n");
+                                string BSName = Console.ReadLine();
+                                Console.WriteLine("new number of charge slots(optional, else enter ' '):\n");
+                                string CSNumber = Console.ReadLine();
+                                bl.UpdateBaseStation(BSId, BSName, CSNumber)
+                                    break;
+                            case Enums.NewUpdating.Customer:
+                                Console.WriteLine("please enter:\n" + "customer id:\n");
+                                inp = Console.ReadLine();
+                                int CId;
+                                int.TryParse(inp, out CId);
+                                Console.WriteLine("new customer name (optional, else enter ' '):\n");
+                                string CName = Console.ReadLine();
+                                Console.WriteLine("new customer's phone number(optional, else enter ' '):\n");
+                                inp = Console.ReadLine();
+                                int CPNum;
+                                int.TryParse(inp, out CPNum);
+                                bl.UpdateCustomer(CId, CName, CPNum);
+                                break;
+                            case Enums.NewUpdating.DroneToCharge:
+                                Console.WriteLine("plese enter drone's id:\n");
+                                inp = Console.ReadLine();
+                                int DroneId;
+                                int.TryParse(inp, out DroneId);
+                                bl.DroneToCharge(DroneId);
+                                break;
+                            case Enums.NewUpdating.DroneRealese:
+                                Console.WriteLine("please enter:\n" + "drone's id:");
+                                inp = Console.ReadLine();
+                                int DId2;
+                                int.TryParse(inp, out DId2);
+                                Console.WriteLine("how long the drone has been charging:\n");
+                                inp = Console.ReadLine();
+                                DateTime TICharging;//time in charging
+                                DateTime.TryParse(inp, out TICharging);
+                                bl.ReleaseDroneFromCharge(DId2, TICharging);
+                                break;
+                            case Enums.NewUpdating.AscriptionPToD:
+                                Console.WriteLine("please enter drone's id:\n");
+                                inp = Console.ReadLine();
+                                int DId;
+                                int.TryParse(inp, out DId);
+                                bl.AscriptionParcelToDrone(DId);
+                                break;
+                            case Enums.NewUpdating.PickUpParcel:
+                                Console.WriteLine("please enter drone's id:\n");
+                                inp = Console.ReadLine();
+                                int DId3;
+                                int.TryParse(inp, out DId3);
+                                bl.PickUpParcel(DId3);
+                                break;
+                            case Enums.NewUpdating.DeliveringPByD:
+                                Console.WriteLine("please enter drone's id:\n");
+                                inp = Console.ReadLine();
+                                int DId4;
+                                int.TryParse(inp, out DId4);
+                                bl.DeliveringParcelByDrone(DId4);
+                                break;
+
+
                 }
             }
         }
