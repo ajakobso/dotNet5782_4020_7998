@@ -20,10 +20,10 @@ namespace IBL.BO
             void AscriptionParcelToDrone(int Id);
             void PickUpParcel(int DId);
             void DeliveringParcelByDrone(int Id);
-            void DisplayBaseStation();
-            void DisplayDrone();
-            void DisplayCustomer();
-            void DisplayParcel();
+            void DisplayBaseStation(int id);
+            void DisplayDrone(int id);
+            void DisplayCustomer(int id);
+            void DisplayParcel(int id);
             void DisplayBaseStationsList();
             void DisplayDronesList();
             void DisplayCustomersList();

@@ -9,9 +9,8 @@ namespace DAL
 {
     namespace IDAL
     {
-        namespace DO//in the targil its says to do IDAL in namspace IDAl, i added DO to get access to the rest of the classes in DAL.
-        {
-            interface IDal//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
+        
+            public interface IDal//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
             {
                 void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude);
                 void AddDrone(int id, WeightCategories maxW, string model);
@@ -34,6 +33,6 @@ namespace DAL
                 IEnumerable<Parcel> UnAscriptedParcels();
                 IEnumerable<BaseStation> AvailableBaseStation();
             }
-        }
+        
     }
 }

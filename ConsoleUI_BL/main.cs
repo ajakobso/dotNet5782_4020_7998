@@ -209,9 +209,97 @@ namespace ConsoleUI_BL
                                 int.TryParse(inp, out DId4);
                                 bl.DeliveringParcelByDrone(DId4);
                                 break;
+                            default:
+                                break;
+                        }
+                        break;
 
+                    case ConsoleUI.ConsoleUI.Inputs.d:
+                        ConsoleUI.ConsoleUI.Displaying d;
+                        Console.WriteLine("What do you want to add?\n" +
+                            "DBaseStation: display a base station\n" +
+                            "Ddrone: display a drone\n" +
+                            "DCustomer: display a customer\n" +
+                            "DParcel: display a parcel\n");
+                        inp = Console.ReadLine();
+                        Enums.Displaying.TryParse(inp, out d);
+                        switch (d)
+                        {
+                            case ConsoleUI.ConsoleUI.Displaying.DBaseStation:
+                                Console.WriteLine("please enter base station id:\n");
+                                inp = Console.ReadLine();
+                                int DBSId;//display base station id
+                                int.TryParse(inp, out DBSId);
+                                bl.DisplayBaseStation(DBSId);
+                                break;
+                            case ConsoleUI.ConsoleUI.Displaying.DDrone:
+                                Console.WriteLine("please enter drone id:\n");
+                                inp = Console.ReadLine();
+                                int DDId;//display drone id
+                                int.TryParse(inp, out DDId);
+                                bl.DisplayDrone(DDId);
+                                break;
+                            case ConsoleUI.ConsoleUI.Displaying.DCustomer:
+                                Console.WriteLine("please enter customer id:\n");
+                                inp = Console.ReadLine();
+                                int DCId;
+                                int.TryParse(inp, out DCId);
+                                bl.DisplayCustomer(DCId);
+                                break;
+                            case ConsoleUI.ConsoleUI.Displaying.DParcel:
+                                Console.WriteLine("please enter parcel id:\n");
+                                inp = Console.ReadLine();
+                                int DPId;
+                                int.TryParse(inp, out DPId);//display parcel id
+                                bl.DisplayParcel(DPId);
+                                break;
+                            default:
+                                break;
+                        }
+                    case ConsoleUI.ConsoleUI.Inputs.l:
+                        ConsoleUI.ConsoleUI.ListsDisplaying l;
+                        Console.WriteLine("Which list do you want to display?\n" +
+                            "BaseStationsList: list of base stations\n" +
+                            "DronesList: list of drones\n" +
+                            "CustomersList: list of customers\n" +
+                            "ParcelsList: list of parcels\n" +
+                            "UnAscriptedParcelsList: list of unascripted parcels\n" +
+                            "AvailableChargingStationsList: list of base stations with availables charge slots\n");
+                        inp = Console.ReadLine();
+                        Enums.ListsDisplaying.TryParse(inp, out l);
+                        switch (l)
+                        {
+                            case ConsoleUI.ConsoleUI.ListsDisplaying.BaseStationsList:
+                                bl.DisplayBaseStationsList();
+                                break;
+                            case ConsoleUI.ConsoleUI.ListsDisplaying.DronesList:
+                                bl.DisplayDronesList();
+                                break;
+                            case ConsoleUI.ConsoleUI.ListsDisplaying.CustomersList:
+                                bl.DisplayCustomersList();
+                                break;
+                            case ConsoleUI.ConsoleUI.ListsDisplaying.ParcelsList:
+                                bl.DisplayParcelsList();
+                                break;
+                            case ConsoleUI.ConsoleUI.ListsDisplaying.UnAscriptedParcelsList:
+                                bl.DisplayUnAscriptedParcelsList();
+                                break;
+                            case ConsoleUI.ConsoleUI.ListsDisplaying.AvailableChargingStationsList:
+                                bl.DisplayAvailableChargingStation();
+                                break;
+                            default:
+                                break;
+                        }
+                    case ConsoleUI.ConsoleUI.Inputs.e:
+                        Console.WriteLine("Bye!\n");
+                        break;
+                    default:
+                        break;
 
                 }
+
+
+            }
             }
         }
     }

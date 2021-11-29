@@ -13,6 +13,7 @@ namespace IBL.BO
         public Location StationLocation { get; set; }
         public int AvailableChargingS { get; set; }
         public IEnumerable<List<DroneInCharge>> DInChargeList { get; set; }
+
        
     }
 }
