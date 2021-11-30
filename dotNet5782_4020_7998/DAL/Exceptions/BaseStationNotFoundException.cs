@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IDAL.DO
 {
-    public class AddExistingCustomerException: Exception
+    public class BaseStationNotFoundException : Exception
     {
-        public AddExistingCustomerException() { }
-
+        public BaseStationNotFoundException() { }
     }
 }
+

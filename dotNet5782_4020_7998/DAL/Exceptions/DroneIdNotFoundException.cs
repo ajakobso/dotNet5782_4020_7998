@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IDAL.DO
 {
-    internal class DroneIdNotFoundException: Exception
+    public class DroneIdNotFoundException: Exception
     {
         public DroneIdNotFoundException() { }
     }

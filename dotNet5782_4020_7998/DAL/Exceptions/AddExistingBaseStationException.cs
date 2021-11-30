@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using IDAL.DO;
 namespace IDAL.DO
 {
-    internal class AddExistingBaseStationException : Exception
+    public class AddExistingBaseStationException : Exception
     {
         public AddExistingBaseStationException(){ }
 

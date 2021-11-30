@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IDAL.DO
 {
-    internal class AddParcelToAnAsscriptedDroneException : Exception
+    public class AddParcelToAnAsscriptedDroneException : Exception
     {
         public AddParcelToAnAsscriptedDroneException() { }
 

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace IDAL.DO
 {
-    public class AddExistingCustomerException: Exception
+    public class ParcelIdNotFoundException: Exception
     {
-        public AddExistingCustomerException() { }
-
+        public ParcelIdNotFoundException() { }
     }
 }

@@ -24,10 +24,10 @@ namespace ConsoleUI_BL
                 {
                     case ConsoleUI.ConsoleUI.Inputs.a:
                         Console.WriteLine("What do you want to add?\n" +
-              "nBaseStation: Add new base station\n" +
-              "nDrone: Add new drone\n" +
-              "nCustomer: Add new customer\n" +
-              "nParcel: Add new parcel\n");
+                        "nBaseStation: Add new base station\n" +
+                        "nDrone: Add new drone\n" +
+                        "nCustomer: Add new customer\n" +
+                        "nParcel: Add new parcel\n");
                         ConsoleUI.ConsoleUI.Adding a;
                         string input1;
                         input1 = Console.ReadLine();
@@ -69,7 +69,7 @@ namespace ConsoleUI_BL
                                 Console.WriteLine("drone's Max weight categories (Heavy, Light, Middle):\n");
                                 inp = Console.ReadLine();
                                 Enums.WeightCategories.TryParse(inp, out DWC);
-                                Enums.DroneStatuses DS;
+                                Enums.DroneStatuses bgGTDS;
                                 Console.WriteLine("base station's number for first charging:");
                                 inp = Console.ReadLine();
                                 int StationForCharging;
@@ -115,22 +115,21 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 Enums.Priorities PPriority;
                                 Enums.Priorities.TryParse(inp, out PPriority);
-                                bl.AddParcel( PSId, PDeId, PWC, PPriority );//create a new parcel with new values
+                                bl.AddParcel(PSId, PDeId, PWC, PPriority);//create a new parcel with new values
                                 break;
                             default:
                                 break;
                         }
                         break;
                     case ConsoleUI.ConsoleUI.Inputs.p:
-
                         Console.WriteLine("What do you want to update?\n" +
                             "DroneModel: Update drone's name\n" +
                             "BaseStation: Update a base station\n" +
                             "Customer: Update a customer\n" +
-                            "DroneToCharge: Sending a drone to charge at a base station \n" +
-                            "DroneRealese: Release drone from charging at a base station\n"+
-                            "AscriptionPToD: Ascription of a parcel to a drone\n"+
-                            "PickUpParcel: picking up parcel by a drone\n"+
+                            "DroneToAscriptionPToDCharge: Sending a drone to charge at a base station \n" +
+                            "DroneRealese: Release drone from charging at a base station\n" +
+                            ": Ascription of a parcel to a drone\n" +
+                            "PickUpParcel: picking up parcel by a drone\n" +
                             "DeliveringPByD: delivere of a parcel by a drone\n");
                         Enums.NewUpdating u;
                         inp = Console.ReadLine();
@@ -139,7 +138,7 @@ namespace ConsoleUI_BL
                         {
                             case Enums.NewUpdating.DroneModel:
                                 Console.WriteLine("please enter:\n" + "drone id:\n");
-                                    inp = Console.ReadLine();
+                                inp = Console.ReadLine();
                                 int NewDID;
                                 int.TryParse(inp, out NewDID);
                                 Console.WriteLine("drone model:\n");
@@ -148,15 +147,15 @@ namespace ConsoleUI_BL
                                 break;
                             case Enums.NewUpdating.BaseStation:
                                 Console.WriteLine("please enter:\n" + "base station's id:\n");
-                                inp=Console.ReadLine();
+                                inp = Console.ReadLine();
                                 int BSId;
                                 int.TryParse(inp, out BSId);
                                 Console.WriteLine("new name for the base station(optional, else enter' '):\n");
                                 string BSName = Console.ReadLine();
                                 Console.WriteLine("new number of charge slots(optional, else enter ' '):\n");
                                 string CSNumber = Console.ReadLine();
-                                bl.UpdateBaseStation(BSId, BSName, CSNumber)
-                                    break;
+                                bl.UpdateBaseStation(BSId, BSName, CSNumber);
+                                break;
                             case Enums.NewUpdating.Customer:
                                 Console.WriteLine("please enter:\n" + "customer id:\n");
                                 inp = Console.ReadLine();
@@ -213,7 +212,6 @@ namespace ConsoleUI_BL
                                 break;
                         }
                         break;
-
                     case ConsoleUI.ConsoleUI.Inputs.d:
                         ConsoleUI.ConsoleUI.Displaying d;
                         Console.WriteLine("What do you want to add?\n" +
@@ -299,8 +297,9 @@ namespace ConsoleUI_BL
                 }
 
 
-            }
-            }
+            } while (!(option == ConsoleUI.ConsoleUI.Inputs.e));
+
         }
     }
 }
+
