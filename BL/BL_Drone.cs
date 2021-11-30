@@ -9,7 +9,10 @@ namespace BL
     public partial class BL : IBL.BL//?????????????????
     {
 
-        void AddDrone(int Id, char Model, Enums.WeightCategories MaxWeight, int Bstation);
+        void AddDrone(int Id, string Model, IBL.BO.Enums.WeightCategories MaxWeight, int Bstation)
+        {
+            dal.DalObject.AddDrone(Id, MaxWeight, Model, Bstation);//צריך לטפל בפונ' שבדאטה סורס
+        }
         void UpdateDrone(int Id, string Model);
         void DroneToCharge(int Id);
         void ReleaseDroneFromCharge(int Id, DateTime TimeInCharge);
