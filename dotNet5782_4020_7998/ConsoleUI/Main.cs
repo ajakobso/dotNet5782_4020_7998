@@ -13,8 +13,8 @@ namespace ConsoleUI
         public enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
         static void Main(string[] args)
         {
-            IDAL DalObject = new IDAL();//factory to create the object????
-            DalObject.DataSource.Initialize();
+            
+        DalObject.DataSource.Initialize();
             Inputs options;
             do
             {

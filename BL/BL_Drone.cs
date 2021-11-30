@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public partial class BL : IBL
+    public partial class BL : IBL.BL//?????????????????
     {
 
         void AddDrone(int Id, char Model, Enums.WeightCategories MaxWeight, int Bstation);

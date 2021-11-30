@@ -15,7 +15,7 @@ namespace IBL
         private static Random r = new Random();
         public BL()
         {
-            //dal = new DalObject.DalObject();
+            dal = new DalObject.DalObject();
             drones = new List<DroneForList>();//drones list
             foreach(var drone in dal.GetDrone())
             {
