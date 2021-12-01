@@ -10,7 +10,7 @@ namespace IBL
 {
     public partial class BL :IBL
     {
-        public IDal dal;
+        public IDAL.IDal dal;
         private List<DroneForList> drones;
         private static Random r = new Random();
         public BL()
