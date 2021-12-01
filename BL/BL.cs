@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.IDAL;
 using DalObject;
 using IBL.BO;
 namespace IBL
 {
-    public partial class BL :IBL
+    public partial class BL :IBL.BO.IBL
     {
-        public IDal dal;
+        public IDAL.IDal myDalObject = new DalObject.DalObject();
         private List<DroneForList> drones;
         private static Random r = new Random();
+        bool isDroneInDelivering(DroneForList drone)
+        {
+            return true;
+        }
         public BL()
         {
-            IDAL.IDal myDalObject = new DalObject.DalObject();
+            
             drones = new List<DroneForList>();//drones list
             foreach(var drone in myDalObject.CopyDronesList())
+
             {
                 drones.Add(new DroneForList {DroneId = drone.Id, Model = drone.Model, MaxWeight = (Enums.WeightCategories)drone.MaxWeight });
            

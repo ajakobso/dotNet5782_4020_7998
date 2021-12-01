@@ -317,8 +317,7 @@ namespace ConsoleUI
                                 }
                                 break;
                             case ListsDisplaying.DronesList:
-                                IEnumerable<Drone> Drones = new List<Drone>();
-                                Drones = myDalObject.CopyDronesList();
+                                IEnumerable<Drone> Drones = myDalObject.CopyDronesList();
                                 foreach (Drone drones in Drones)
                                 {
                                     Console.WriteLine(drones);
