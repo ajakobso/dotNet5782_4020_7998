@@ -15,16 +15,16 @@ namespace IBL
         private static Random r = new Random();
         public BL()
         {
-            dal = new DalObject.DalObject();
+            IDAL.IDal myDalObject = new DalObject.DalObject();
             drones = new List<DroneForList>();//drones list
-            foreach(var drone in dal.GetDrone())
+            foreach(var drone in myDalObject.CopyDronesList())
             {
                 drones.Add(new DroneForList {DroneId = drone.Id, Model = drone.Model, MaxWeight = (Enums.WeightCategories)drone.MaxWeight });
-
+           
             }
             foreach (var drone in drones)
             {
-                if (isDroneInDelivering(drone))///////////////////////////
+                if (isDroneInDelivering(drone))
                 {
                     drone.DroneStatus = Enums.DroneStatuses.Shipping;
                 }

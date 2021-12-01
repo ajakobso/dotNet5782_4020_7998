@@ -15,7 +15,7 @@ namespace IDAL
         void AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered);
         void AscriptionPtoD(int parcelId, int droneId);
         void PickUpParcel(int parcelId);
-        void PaclerDelivering(int parcelId);
+        void ParcelDelivering(int parcelId);
         void DroneCharging(int droneId, int baseStationId);
         void DroneRelease(int droneId, int baseStationId);
         BaseStation CopyBaseStation(int baseStationId);

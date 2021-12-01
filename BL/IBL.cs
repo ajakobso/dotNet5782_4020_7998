@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    interface IBL
+    public interface IBL
     {
-            void AddBaseStation(int num, string name, string location, int numOfAvailableDCharge);
-            void AddDrone(int Id, char Model, Enums.WeightCategories MaxWeight, int Bstation);
+            void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge);
+            void AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation);
             void AddCustomer(int Id, string Name, int PhoneNum, string Location);
             void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority);
             void UpdateDrone(int Id, string Model);

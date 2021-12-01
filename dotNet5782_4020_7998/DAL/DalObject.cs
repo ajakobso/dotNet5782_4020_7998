@@ -8,9 +8,10 @@ using IDAL;
 
 namespace DalObject//add exception of id that didnt found
 {
-    public class DalObject
+    public class DalObject:IDAL.IDal
     {
-        public static void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
+
+        void IDal.AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
         {
 
 
@@ -25,7 +26,7 @@ namespace DalObject//add exception of id that didnt found
 
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
-        public static void AddDrone(int id, WeightCategories maxW, string model)//double battery, DroneStatuses status
+        void IDal.AddDrone(int id, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
             foreach (Drone drone in DataSource.Config.Drones)
             {
@@ -37,7 +38,7 @@ namespace DalObject//add exception of id that didnt found
             }
             DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
         }
-        public static void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
+        void IDal.AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
             foreach (Customer customer in DataSource.Config.Customers)
             {
@@ -48,7 +49,7 @@ namespace DalObject//add exception of id that didnt found
             }
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });
         }
-        public static void AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)
+        void IDal.AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)
         {
             foreach (Parcel parcel in DataSource.Config.Parcels)
                 {
@@ -63,7 +64,7 @@ namespace DalObject//add exception of id that didnt found
     
             DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
-        public static void AscriptionPtoD(int parcelId, int droneId)// ascription a parcel with drone
+        void IDal.AscriptionPtoD(int parcelId, int droneId)// ascription a parcel with drone
         {
             Parcel p = new Parcel();
             bool droneExsists = false;
@@ -91,7 +92,7 @@ namespace DalObject//add exception of id that didnt found
                 throw new ParcelIdNotFoundException();
 
         }
-        public static void PickUpParcel(int parcelId)
+        void IDal.PickUpParcel(int parcelId)
         {
             Parcel p = new Parcel();
             bool parcelExists = false;
@@ -122,7 +123,7 @@ namespace DalObject//add exception of id that didnt found
             else
                 throw new ParcelIdNotFoundException();
         }
-        public static void ParcelDelivering(int parcelId)//אם קלט הפונקציה זה איבר מסוג חבילה אז אפשר למחוק את הלולאה של פוראיצ הראשונה, העיקרון שעשיתי פה אבל ישמש אותנו בפונקציות של ההצגה של איבר/רשימה.
+        void IDal.ParcelDelivering(int parcelId)//אם קלט הפונקציה זה איבר מסוג חבילה אז אפשר למחוק את הלולאה של פוראיצ הראשונה, העיקרון שעשיתי פה אבל ישמש אותנו בפונקציות של ההצגה של איבר/רשימה.
         {
             bool parcelExists = false;
             bool droneExists = false;
@@ -154,7 +155,7 @@ namespace DalObject//add exception of id that didnt found
                 }
             }
         }
-        public static void DroneCharging(int droneId, int baseStationId)//inserting a drone into a charging station in order to charge his battery
+        void IDal.DroneCharging(int droneId, int baseStationId)//inserting a drone into a charging station in order to charge his battery
         {
             bool droneExists = false;
             foreach (Drone drone in DataSource.Config.Drones)
@@ -171,7 +172,7 @@ namespace DalObject//add exception of id that didnt found
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
-        public static void DroneRelease(int droneId, int baseStationId)//Release the drone from the charging station                                                                 
+        void IDal.DroneRelease(int droneId, int baseStationId)//Release the drone from the charging station                                                                 
         {
             bool droneExists = false;
             foreach (Drone drone in DataSource.Config.Drones)
@@ -195,7 +196,7 @@ namespace DalObject//add exception of id that didnt found
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
-        public static BaseStation CopyBaseStation(int baseStationId)//return copy of a base station
+        BaseStation IDal.CopyBaseStation(int baseStationId)//return copy of a base station
         {
             bool BSExsists = false;
             BaseStation nBStation = new BaseStation();
@@ -210,7 +211,7 @@ namespace DalObject//add exception of id that didnt found
                 throw new BaseStationNotFoundException();
             return nBStation;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
-        public static Drone CopyDrone(int droneId)//return copy of a drone
+        Drone IDal.CopyDrone(int droneId)//return copy of a drone
         {
             Drone nDrone = new Drone();
             bool droneExists = false;
@@ -225,7 +226,7 @@ namespace DalObject//add exception of id that didnt found
                 throw new DroneIdNotFoundException();
             return nDrone;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
-        public static Customer CopyCustomer(int customerId)//return copy of a customer
+        Customer IDal.CopyCustomer(int customerId)//return copy of a customer
         {
             bool customerExists = false;
             Customer nCustomer = new Customer();
@@ -240,7 +241,7 @@ namespace DalObject//add exception of id that didnt found
                 throw new CustomerNotFoundException();
             return nCustomer;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
-        public static Parcel CopyParcel(int parcelId)//return copy of a parcel
+        Parcel IDal.CopyParcel(int parcelId)//return copy of a parcel
         {
             bool parcelExists = false;
             Parcel nParcel = new Parcel();
@@ -255,7 +256,7 @@ namespace DalObject//add exception of id that didnt found
                 throw new ParcelIdNotFoundException();
             return nParcel;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
-        public static double[] DronePowerConsumingPerKM()
+        double[] IDal.DronePowerConsumingPerKM()
         {
             double[] DPC = new double[5];
             DPC[0] = DataSource.Config.Available;
@@ -265,27 +266,27 @@ namespace DalObject//add exception of id that didnt found
             DPC[4] = DataSource.Config.BatteryPerHour;
             return DPC;
         }
-        public static IEnumerable<BaseStation> CopyBaseStations()//return copy of the base stations's list
+        IEnumerable<BaseStation> IDal.CopyBaseStations()//return copy of the base stations's list
         {
             IEnumerable<BaseStation> copyBS = DataSource.Config.BaseStations;
             return copyBS;
         }
-        public static IEnumerable<Drone> CopyDronesList()//return copy of the drones's list
+        IEnumerable<Drone> IDal.CopyDronesList()//return copy of the drones's list
         {
             IEnumerable<Drone> copyD = DataSource.Config.Drones;
             return copyD;
         }
-        public static IEnumerable<Customer> CopyCustomersList()//return copy of the customer's list
+        IEnumerable<Customer> IDal.CopyCustomersList()//return copy of the customer's list
         {
             IEnumerable<Customer> copyC = DataSource.Config.Customers;
             return copyC;
         }
-        public static IEnumerable<Parcel> CopyParcelsList()//return copy of the parcels's list
+        IEnumerable<Parcel> IDal.CopyParcelsList()//return copy of the parcels's list
         {
             IEnumerable<Parcel> copyP = DataSource.Config.Parcels;
             return copyP;
         }
-        public static IEnumerable<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
+        IEnumerable<Parcel> IDal.UnAscriptedParcels()//return new list with all the un-ascripted parcels.
         {
             List<Parcel> nList = new List<Parcel>();
             foreach (Parcel parcel in DataSource.Config.Parcels)
@@ -297,7 +298,7 @@ namespace DalObject//add exception of id that didnt found
             }
             return nList;
         }
-        public static IEnumerable<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
+        IEnumerable<BaseStation> IDal.AvailableBaseStation()//return new list with the base stations who have available charge slots.
         {
             List<BaseStation> nList = new List<BaseStation>();
             foreach (BaseStation baseStation in DataSource.Config.BaseStations)

@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using IBL.BO;
 namespace BL
 {
-    public partial class BL : IBL
+    public partial class BL : IBL.BO.IBL
     {
 
-        void AddBaseStation(int num, string name, IBL.BO.Location location, int numOfAvailableDCharge)
+        void IBL.BO.IBL.AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge)
         {
-            dal.DalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
-                    public List<IBL.BO.DroneInCharge> DronesInCharge = new List<IBL.BO.DroneInCharge>();
-        //dal.DataSource.Config.BaseStations.Add(new dal.BaseStation { Id = num, Name = name, ChargeSlots = numOfAvailableDCharge, Longitude = location.Longitude, Lattitude = location.Latitude });
-    }
+            //myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
+            //public IEnumerable<IBL.BO.DroneInCharge> DronesInCharge = new IEnumerable<IBL.BO.DroneInCharge>();
+            //dal.DataSource.Config.BaseStations.Add(new dal.BaseStation { Id = num, Name = name, ChargeSlots = numOfAvailableDCharge, Longitude = location.Longitude, Lattitude = location.Latitude });
+        }
 
-    void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots);
-        void DisplayBaseStation(int id);
-        void DisplayBaseStationsList();
-        void DisplayAvailableChargingStation();
-
-    }
+    void IBL.BO.IBL.UpdateBaseStation(int Id, string Name, int NumOfChargeSlots) { }//
+    void IBL.BO.IBL.DisplayBaseStation(int id) { }//
+    void IBL.BO.IBL.DisplayBaseStationsList() { }//
+    void IBL.BO.IBL.DisplayAvailableChargingStation() { }//
 }
+}
+

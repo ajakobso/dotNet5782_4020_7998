@@ -6,6 +6,7 @@ namespace ConsoleUI
 {
     public class ConsoleUI
     {
+        IDAL.IDal myDalObject = new DalObject.DalObject();
         public enum Inputs { a = 1, p, d, l, e };
         public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
         public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
@@ -65,7 +66,7 @@ namespace ConsoleUI
                                 double BSLattitude;
                                 double.TryParse(inp, out BSLattitude);
                                 try
-                                { DalObject.DalObject.AddBaseStation(BSId, BSName, BSChargeSlots, BSLongitude, BSLattitude); }//create a new base station with new values
+                                { myDalObject.AddBaseStation(BSId, BSName, BSChargeSlots, BSLongitude, BSLattitude); }//create a new base station with new values
                                 catch (AddExistingBaseStationException)
                                 { Console.WriteLine("ERROR - attempt to add an existing base station!\n"); }
                                 break;
@@ -90,7 +91,7 @@ namespace ConsoleUI
                                 inp = Console.ReadLine();
                                 DroneStatuses.TryParse(inp, out DS);
                                 try
-                                { DalObject.DalObject.AddDrone(DId, DBattery, DWC, DModel, DS); }//create a new drone with new values
+                                { myDalObject.AddDrone(DId, DBattery, DWC, DModel, DS); }//create a new drone with new values
                                 catch (AddExistingDroneException)
                                 { Console.WriteLine("ERROR - attempt to add an existing drone!\n"); }
                                 break;
@@ -114,7 +115,7 @@ namespace ConsoleUI
                                 double CLattitude;
                                 double.TryParse(inp, out CLattitude);
                                 try
-                                { DalObject.DalObject.AddCustomer(CId, CName, CPhone, CLongitude, CLattitude); }//adding new customer with new values
+                                { myDalObject.AddCustomer(CId, CName, CPhone, CLongitude, CLattitude); }//adding new customer with new values
                                 catch (AddExistingCustomerException)
                                 { Console.WriteLine("ERROR - attempt to add an existing customer!\n"); }
                                 break;
@@ -144,7 +145,7 @@ namespace ConsoleUI
                                 DateTime PPUT = DateTime.MinValue;//parcel pick up time
                                 DateTime PDT = DateTime.MinValue;//parcel delivery time
                                 try
-                                { DalObject.DalObject.AddParcel(PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
+                                { myDalObject.AddParcel(PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
                                 catch (IDAL.DO.AddParcelToAnAsscriptedDroneException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!\n"); }
                                 break;
@@ -174,7 +175,7 @@ namespace ConsoleUI
                                 int UDId;//update drone id
                                 int.TryParse(inp, out UDId);
                                 try
-                                { DalObject.DalObject.AscriptionPtoD(UPId, UDId); }
+                                { myDalObject.AscriptionPtoD(UPId, UDId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to a non-exists drone!\n"); }
                                 catch (ParcelIdNotFoundException)
@@ -186,7 +187,7 @@ namespace ConsoleUI
                                 int PUP;//pick up parcel
                                 int.TryParse(inp, out PUP);
                                 try
-                                { DalObject.DalObject.PickUpParcel(PUP); }
+                                { myDalObject.PickUpParcel(PUP); }
                                 catch (ParcelIdNotFoundException)
                                 { Console.WriteLine("ERROR - attemp to pick up a non-existing parcel!\n"); }
                                 catch (DroneIdNotFoundException)
@@ -198,7 +199,7 @@ namespace ConsoleUI
                                 int PDeId;
                                 int.TryParse(inp, out PDeId);
                                 try
-                                { DalObject.DalObject.ParcelDelivering(PDeId); }
+                                { myDalObject.ParcelDelivering(PDeId); }
                                 catch (ParcelIdNotFoundException)
                                 { Console.WriteLine("ERROR - attemp to deliver a non-existing parcel!\n"); }
                                 catch (DroneIdNotFoundException)
@@ -214,7 +215,7 @@ namespace ConsoleUI
                                 int DCBSId;//drone charging base station id
                                 int.TryParse(inp, out DCBSId);
                                 try
-                                { DalObject.DalObject.DroneCharging(DCDId, DCBSId); }
+                                { myDalObject.DroneCharging(DCDId, DCBSId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to charge a non-exists drone!\n"); }
                                 break;
@@ -228,7 +229,7 @@ namespace ConsoleUI
                                 int DRBSId;//drone release base station id
                                 int.TryParse(inp, out DRBSId);
                                 try
-                                { DalObject.DalObject.DroneRelease(DRDId, DRBSId); }
+                                { myDalObject.DroneRelease(DRDId, DRBSId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to release a non-exists drone!\n"); }
                                 break;
@@ -253,7 +254,7 @@ namespace ConsoleUI
                                 int DBSId;//display base station id
                                 int.TryParse(inp, out DBSId);
                                 try
-                                { Console.WriteLine(DalObject.DalObject.CopyBaseStation(DBSId)); }
+                                { Console.WriteLine(myDalObject.CopyBaseStation(DBSId)); }
                                 catch (BaseStationNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non-existsing base station!\n"); }
                                 break;
@@ -263,7 +264,7 @@ namespace ConsoleUI
                                 int DDId;//display drone id
                                 int.TryParse(inp, out DDId);
                                 try
-                                { Console.WriteLine(DalObject.DalObject.CopyDrone(DDId)); }
+                                { Console.WriteLine(myDalObject.CopyDrone(DDId)); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non-existing drone!\n"); }
                                 break;
@@ -273,7 +274,7 @@ namespace ConsoleUI
                                 int DCId;//display customer id
                                 int.TryParse(inp, out DCId);
                                 try
-                                { Console.WriteLine(DalObject.DalObject.CopyCustomer(DCId)); }
+                                { Console.WriteLine(myDalObject.CopyCustomer(DCId)); }
                                 catch (CustomerNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non-existing cutomer!\n"); }
                                 break;
@@ -283,7 +284,7 @@ namespace ConsoleUI
                                 int DPId;//display parcel id
                                 int.TryParse(inp, out DPId);
                                 try
-                                { Console.WriteLine(DalObject.DalObject.CopyParcel(DPId)); }
+                                { Console.WriteLine(myDalObject.CopyParcel(DPId)); }
                                 catch (ParcelIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non - existing parcel!\n"); }
                                 break;
@@ -307,7 +308,7 @@ namespace ConsoleUI
                             case ListsDisplaying.BaseStationsList:
                                 IEnumerable<BaseStation> BaseStations;
                                 try
-                                { BaseStations = DalObject.DalObject.CopyBaseStations(); }
+                                { BaseStations = myDalObject.CopyBaseStations(); }
                                 catch (BaseStationNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to copy a non-existing base station"); }
                                 foreach (BaseStation basestation in BaseStations)
@@ -317,7 +318,7 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.DronesList:
                                 IEnumerable<Drone> Drones = new List<Drone>();
-                                Drones = DalObject.DalObject.CopyDronesList();
+                                Drones = myDalObject.CopyDronesList();
                                 foreach (Drone drones in Drones)
                                 {
                                     Console.WriteLine(drones);
@@ -325,7 +326,7 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.CustomersList:
                                 IEnumerable<Customer> Customers;
-                                Customers = DalObject.DalObject.CopyCustomersList();
+                                Customers = myDalObject.CopyCustomersList();
                                 foreach (Customer customer in Customers)
                                 {
                                     Console.WriteLine(customer);
@@ -333,23 +334,23 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.ParcelsList:
                                 IEnumerable<Parcel> Parcels;
-                                Parcels = DalObject.DalObject.CopyParcelsList();
+                                Parcels = myDalObject.CopyParcelsList();
                                 foreach (Parcel parcel in Parcels)
                                 {
                                     Console.WriteLine(parcel);
                                 }
                                 break;
                             case ListsDisplaying.UnAscriptedParcelsList:
-                                List<Parcel> UAParcels = new List<Parcel>();
-                                UAParcels = DalObject.DalObject.UnAscriptedParcels();
+                                IEnumerable<Parcel> UAParcels = new List<Parcel>();
+                                UAParcels = myDalObject.UnAscriptedParcels();
                                 foreach (Parcel parcel in UAParcels)
                                 {
                                     Console.WriteLine(parcel);
                                 }
                                 break;
                             case ListsDisplaying.AvailableChargingStationsList:
-                                List<BaseStation> ACSList = new List<BaseStation>();
-                                ACSList = DalObject.DalObject.AvailableBaseStation();
+                                IEnumerable<BaseStation> ACSList = new List<BaseStation>();
+                                ACSList = myDalObject.AvailableBaseStation();
                                 foreach (BaseStation basestation in ACSList)
                                 {
                                     Console.WriteLine(basestation);
