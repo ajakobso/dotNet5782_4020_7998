@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public class Location 
+    public class Location
     {
-        //partial class BL//מימוש הממשק IBL
-        //{
-            public double Longitude { get; set; }
-            public double Latitude { get; set; }
+        
+        public IDAL.DO.Coordinate Longitude { get; set; }
+        public IDAL.DO.Coordinate Latitude { get; set; }
+        public Location(double longitude, double lat) { Longitude = IDAL.DO.Coordinate.FromDouble(longitude); Latitude = IDAL.DO.Coordinate.FromDouble(lat); }//initalize the location
         //}
     }
 }

@@ -6,7 +6,8 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            BL bl = new BL();
+            BL.BL bl = new BL.BL();
+            IDAL.DO.Coordinate coordinate;
             ConsoleUI.ConsoleUI.Inputs option;
             do
             {
@@ -95,7 +96,8 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 double CLattitude;
                                 double.TryParse(inp, out CLattitude);
-                                bl.AddCustomer(CId, CName, CPhone, CLongitude, CLattitude);//adding new customer with new values
+                                Location Clocation = new Location(CLongitude, CLattitude);
+                                bl.AddCustomer(CId, CName, CPhone, Clocation);//adding new customer with new values
                                 break;
                             case ConsoleUI.ConsoleUI.Adding.nParcel:
                                 Console.WriteLine("please enter:\n");
@@ -115,7 +117,7 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 Enums.Priorities PPriority;
                                 Enums.Priorities.TryParse(inp, out PPriority);
-                                bl.AddParcel(PSId, PDeId, PWC, PPriority);//create a new parcel with new values
+                                bl.AddParcelToDeliver(PSId, PDeId, PWC, PPriority);//create a new parcel with new values
                                 break;
                             default:
                                 break;

@@ -12,7 +12,7 @@ namespace IBL.BO
         //{
             public int CustomerId { get; set; }
             public string CustomerName { get; set; }
-            public int CustomerPhone { get; set; }
+            public string CustomerPhone { get; set; }
             public Location Place { get; set; }
             public ParcelInCustomer PICustomer { get; set; }//bc parcelincustomer is inernal but when it was public it casue problems
             public IEnumerable<List<Drone>> ParcelsFromCustomer { get; set; }
