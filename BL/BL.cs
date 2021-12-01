@@ -10,7 +10,7 @@ namespace IBL
     public partial class BL :IBL.BO.IBL
     {
         public IDAL.IDal myDalObject = new DalObject.DalObject();
-        private List<DroneForList> drones;
+        public List<DroneForList> drones;
         private static Random r = new Random();
         bool isDroneInDelivering(DroneForList drone)
         {
@@ -20,12 +20,12 @@ namespace IBL
         {
             
             drones = new List<DroneForList>();//drones list
-            foreach(var drone in myDalObject.CopyDronesList())
+            //foreach(var drone in myDalObject.CopyDronesList())
 
-            {
-                drones.Add(new DroneForList {DroneId = drone.Id, Model = drone.Model, MaxWeight = (Enums.WeightCategories)drone.MaxWeight });
+            //{
+            //    drones.Add(new DroneForList {DroneId = drone.Id, Model = drone.Model, MaxWeight = (Enums.WeightCategories)drone.MaxWeight });
            
-            }
+            //}
             foreach (var drone in drones)
             {
                 if (isDroneInDelivering(drone))
