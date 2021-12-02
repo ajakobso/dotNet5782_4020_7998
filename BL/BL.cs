@@ -7,9 +7,9 @@ using DalObject;
 using IBL.BO;
 namespace IBL
 {
-    public partial class BL :IBL.BO.IBL
+    public partial class BL : IBL.BO.IBL
     {
-        public IDAL.IDal myDalObject = new DalObject.DalObject();
+        public IDAL.IDal myDalObject { get; set; }
         public List<DroneForList> drones;
         private static Random r = new Random();
         bool isDroneInDelivering(DroneForList drone)
@@ -18,7 +18,7 @@ namespace IBL
         }
         public BL()
         {
-            
+            myDalObject = new DalObject.DalObject();//initialize myDalObject
             drones = new List<DroneForList>();//drones list
             //foreach(var drone in myDalObject.CopyDronesList())
 
