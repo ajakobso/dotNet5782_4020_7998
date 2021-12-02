@@ -9,7 +9,7 @@ namespace IBL
 {
     public partial class BL : IBL.BO.IBL
     {
-        public IDAL.IDal myDalObject { get; set; }
+        public IDAL.IDal myDalObject;
         public List<DroneForList> drones;
         private static Random r = new Random();
         bool isDroneInDelivering(DroneForList drone)

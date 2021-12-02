@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using IBL.BO;
 namespace BL
 {
-    public partial class BL : IBL.BO.IBL
+    public partial class BL/* : IBL.BO.IBL*/
     {
         void IBL.BO.IBL.AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge)
         {
-            public IEnumerable<IBL.BO.DroneInCharge> DronesInCharge; //= new IEnumerable<IBL.BO.DroneInCharge>();
+            IEnumerable<IBL.BO.DroneInCharge> DronesInCharge; //= new IEnumerable<IBL.BO.DroneInCharge>();
             // DalObject.DataSource.Config.BaseStations.Add(new IDAL.DO.BaseStation {Id = num, Name = name, ChargeSlots = numOfAvailableDCharge, Longitude = location.Longitude, Lattitude = location.Latitude });//חייב לבדוק מה הבעיה עם זה..זה פשוט תוקע את כל המחלקה
             //myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
             // myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
@@ -20,7 +20,7 @@ namespace BL
         void IBL.BO.IBL.UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
             int Check = 0;
-            foreach(BL.myDalObject.BaseStation baseStation in BL.myDalObject.DataSource.Config.BaseStations)
+            foreach(myDalObject.BaseStation baseStation in myDalObject.DataSource.Config.BaseStations)
             {
                 if(baseStation.Id==Id)
                 {
@@ -53,6 +53,7 @@ namespace BL
             });
         }
         Location location = Locations[0].Location;
+            return location;/////////not true, just did it to delete an error
         ///////////////////////
     }
 }

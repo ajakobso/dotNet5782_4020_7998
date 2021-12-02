@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using IBL.BO;
 namespace BL
 {
-    public partial class BL : IBL.BO.IBL
+    public partial class BL// : IBL.BO.IBL
     {
         
         void IBL.BO.IBL.AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
@@ -17,7 +17,7 @@ namespace BL
         void IBL.BO.IBL.DeliveringParcelByDrone(int Id)
         { 
             
-            foreach (Parcel parcel in DalObject.DataSource.Config.Parcels)
+            foreach (Parcel parcel in DataSource.Config.Parcels)
             {
 
             }
