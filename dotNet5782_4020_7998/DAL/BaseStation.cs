@@ -13,8 +13,9 @@ namespace IDAL
             public int Id { get; set; }
             public string Name { get; set; }
             public int ChargeSlots { get; set; }
+            public int AvailableChargeSlots { get; set; }
             public double Longitude { get; set; }
-            public double Lattitude { get; set; }
+            public double Latitude { get; set; }
             public override string ToString()
             {
                 Coordinate sexaLongitude = Coordinate.FromDouble(Longitude);///convert from decimal to sexagesimal

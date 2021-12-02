@@ -154,8 +154,10 @@ namespace ConsoleUI_BL
                                 int.TryParse(inp, out BSId);
                                 Console.WriteLine("new name for the base station(optional, else enter' '):\n");
                                 string BSName = Console.ReadLine();
-                                Console.WriteLine("new number of charge slots(optional, else enter ' '):\n");
-                                string CSNumber = Console.ReadLine();
+                                Console.WriteLine("new number of charge slots(optional, else enter -1):\n");
+                                inp = Console.ReadLine();
+                                int CSNumber;
+                                int.TryParse(inp, out CSNumber);
                                 bl.UpdateBaseStation(BSId, BSName, CSNumber);
                                 break;
                             case Enums.NewUpdating.Customer:

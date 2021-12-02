@@ -30,7 +30,7 @@ namespace BL
                 throw new myDalObject.BaseStationNotFoundException();
 
                 myDalObject.AddDrone(Id, MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
-            BL.drones.Add({ DroneId=Id, Model=Model, MaxWeight= MaxWeight, DroneState=Enums.DroneStatuses.Maintenance, Battery=r, CurrentLocation.Longitude= BStationLocation.Longitude, CurrentLocation.Latitude= BStationLocation.Latitude});
+            BL.drones.Add({ DroneId=Id, Model=Model, MaxWeight= MaxWeight, DroneState=Enums.DroneStatuses.Maintenance, Battery=(double)r.Next(20,40)/100, CurrentLocation.Longitude= BStationLocation.Longitude, CurrentLocation.Latitude= BStationLocation.Latitude});
         }
         void IBL.BO.IBL.UpdateDrone(int Id, string Model)
         {
@@ -45,7 +45,7 @@ namespace BL
                 }
             }
             if (Check == 0)
-                throw new DroneIdNotFoundException();
+                throw new myDalObject.DroneIdNotFoundException();
             foreach(DroneForList droneForList in drones)
             {
                 if (droneForList.DroneId == Id)
@@ -54,9 +54,61 @@ namespace BL
                     break;
                 }
             }
+        }//צריך להבין מה הבעיה עם מיי דאל אובג'קט
+        void IBL.BO.IBL.DroneToCharge(int Id)
+        {
+            double NBattery;
+            foreach (DroneForList drone in BL.drones)
+            {
+                double Battery;
+                if (drone.DroneState==Enums.DroneStatuses.Available)
+                {
+                    Location location = findCloseBaseStationLocation(drone);//////////אנחנו צריכות להגדיר פונקציה שתחשב מרחק וגם פונקציה שתחשב כמה בטריה לוקח כל מרחק
+                    Battery = myDalObject.BatteryUsage()[BatteryUsage.Available] * distance(drone.CurrentLocation, location);
+                    if (Battery > drone.Battery)
+                    {
+                        throw new Exception();//////////////////////////////צריך להגדיר חריגה מתאימה
+                        break;
+                    }
+                    foreach(myDalObject.Drone dalDrone in myDalObject.DataSource.Config.Drones)
+                    {
+                        if(dalDrone.Id==drone.DroneId)
+                        {
+                            NBattery = dalDrone.Battery - Battery;
+                            dalDrone.Battery -= Battery;
+                            //dalDrone.Longitude = location.Longitude;
+                            //dalDrone.Latittude = location.Latitude;
+                            dalDrone.DroneState = Enums.DroneStatuses.Maintenance;
+                        }
+                    }
+                    foreach(myObject.BaseStation baseStation in myObject.DataSource.Config.BaseStations)
+                    {
+                        if ((baseStation.Longitude == location.Longitude) && (baseStation.Latitude == location.Latitude))
+                        {
+                            baseStation.AvailableChargeSlots -= 1;
+                        }
+                        
+                    }
+                    DronesInCharge.Add({ DroneId=drone.DroneId, Battery= NBattery });
+                }
+            }
         }//לממש
-        void IBL.BO.IBL.DroneToCharge(int Id) { }//לממש
-        void IBL.BO.IBL.ReleaseDroneFromCharge(int Id, DateTime TimeInCharge) { }//לממש
+        void IBL.BO.IBL.ReleaseDroneFromCharge(int Id, DateTime TimeInCharge)
+        {
+
+            foreach(Drone drone in drones)
+            {
+                if(drone.DroneId==Id)
+                {
+                    if(!(drone.DroneStatus==Enums.DroneStatuses.Maintenance))
+                    {
+                        throw new myDalObject.DroneIdNotFoundException();
+                        break;
+                    }
+
+                }
+            }
+        }//לממש
         void IBL.BO.IBL.DisplayDrone(int id) { }//לממש
         void IBL.BO.IBL.DisplayDronesList() { }//לממש
 
