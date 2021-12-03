@@ -9,16 +9,13 @@ namespace IBL
     public partial class BL// : IBL.BO.IBL
     {
         
-        void IBL.AddParcelToDeliver(int SCustomerId, int DCustomerId, BO.Enums.WeightCategories Weight, Enums.Priorities Priority)
+        void IBL.AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
         {
-            IDAL.IDal myDalObject = new DalObject.DalObject();
-            myDalObject.AddParcel(0, SCustomerId, DCustomerId, Priority, Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
-            return;
+            myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
         void IBL.DeliveringParcelByDrone(int Id)
         { 
-            
-            foreach (Parcel parcel in DataSource.Config.Parcels)
+            foreach (IDAL.DO.Parcel parcel in myDalObject.CopyParcelsList())
             {
 
             }

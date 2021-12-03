@@ -20,24 +20,21 @@ namespace IBL
         void IBL.UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
             int Check = 0;
-            foreach(myDalObject.BaseStation baseStation in myDalObject.DataSource.Config.BaseStations)
+            foreach(IDAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
             {
                 if(baseStation.Id==Id)
                 {
                     Check++;
-                    if(!(Name==null))
+                    if(!(Name==null)&& !(NumOfChargeSlots == -1))
                     {
-                        baseStation.Name = Name;
-                    }
-                    if(!(NumOfChargeSlots==-1))
-                    {
+                        baseStation.Name = Name;////////remove the old bs, and add the updated one.
                         baseStation.ChargeSlots = NumOfChargeSlots;
                     }
                     break;
                 }
             }
             if (Check == 0)
-                throw new myDalObject.BaseStationNotFoundException();
+                throw new IDAL.DO.BaseStationNotFoundException();
         }//
         void IBL.DisplayBaseStation(int id) { }//
         void IBL.DisplayBaseStationsList() { }//

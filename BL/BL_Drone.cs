@@ -26,16 +26,16 @@ namespace IBL
                 }
             }
             if (Check == 0)
-                // throw new IDAL.DO.BaseStationNotFoundException();
-                throw new myDalObject.BaseStationNotFoundException();
+                throw new IDAL.DO.BaseStationNotFoundException();
+                //throw new myDalObject.BaseStationNotFoundException();
 
-                myDalObject.AddDrone(Id, MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
+                myDalObject.AddDrone(Id, (IDAL.DO.WeightCategories)MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
             BL.drones.Add( DroneId=Id, Model=Model, MaxWeight= MaxWeight, DroneState=Enums.DroneStatuses.Maintenance, Battery=(double)r.Next(20,40)/100, CurrentLocation.Longitude= BStationLocation.Longitude, CurrentLocation.Latitude= BStationLocation.Latitude);
         }
         void IBL.UpdateDrone(int Id, string Model)
         {
             int Check = 0;
-            foreach(Drone drone in myDalObject.DataSource.Config.Drones)
+            foreach(IDAL.DO.Drone drone in myDalObject.CopyDronesList())
             {
                 if(drone.DroneId==Id)
                 {
@@ -45,7 +45,7 @@ namespace IBL
                 }
             }
             if (Check == 0)
-                throw new myDalObject.DroneIdNotFoundException();
+                throw new IDAL.DO.DroneIdNotFoundException();
             foreach(DroneForList droneForList in drones)
             {
                 if (droneForList.DroneId == Id)
@@ -70,7 +70,7 @@ namespace IBL
                         throw new Exception();//////////////////////////////צריך להגדיר חריגה מתאימה
                         break;
                     }
-                    foreach(myDalObject.Drone dalDrone in myDalObject.DataSource.Config.Drones)
+                    foreach(IDAL.DO.Drone dalDrone in myDalObject.CopyDronesList())
                     {
                         if(dalDrone.Id==drone.DroneId)
                         {
@@ -81,7 +81,7 @@ namespace IBL
                             dalDrone.DroneState = Enums.DroneStatuses.Maintenance;
                         }
                     }
-                    foreach(myObject.BaseStation baseStation in myObject.DataSource.Config.BaseStations)
+                    foreach(IDAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
                     {
                         if ((baseStation.Longitude == location.Longitude) && (baseStation.Latitude == location.Latitude))
                         {
@@ -96,14 +96,14 @@ namespace IBL
         void IBL.ReleaseDroneFromCharge(int Id, DateTime TimeInCharge)
         {
 
-            foreach (Drone drone in drones)
+            foreach (DroneForList drone in drones)
             {
                 if(drone.DroneId==Id)
                 {
                     if(!(drone.DroneStatus==Enums.DroneStatuses.Maintenance))
                     {
-                        throw new myDalObject.DroneIdNotFoundException();
-                        break;
+                        throw new IDAL.DO.DroneIdNotFoundException();
+                        return;
                     }
 
                 }
