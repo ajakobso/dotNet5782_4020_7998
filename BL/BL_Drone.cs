@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
-namespace BL
+namespace IBL
 {
     public partial class BL// : IBL.BO.IBL//?????????????????
     {
         
-        void IBL.BO.IBL.AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation)
+        void IBL.AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation)
         {
             Random r = new Random();//אין לי שמץ של מושג אם ככה מגדירים רנדום
             r.Next(20, 41);//מגריל מספר בין 20 ל-40 לפי מה שהבנתי
@@ -30,9 +30,9 @@ namespace BL
                 throw new myDalObject.BaseStationNotFoundException();
 
                 myDalObject.AddDrone(Id, MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
-            BL.drones.Add({ DroneId=Id, Model=Model, MaxWeight= MaxWeight, DroneState=Enums.DroneStatuses.Maintenance, Battery=(double)r.Next(20,40)/100, CurrentLocation.Longitude= BStationLocation.Longitude, CurrentLocation.Latitude= BStationLocation.Latitude});
+            BL.drones.Add( DroneId=Id, Model=Model, MaxWeight= MaxWeight, DroneState=Enums.DroneStatuses.Maintenance, Battery=(double)r.Next(20,40)/100, CurrentLocation.Longitude= BStationLocation.Longitude, CurrentLocation.Latitude= BStationLocation.Latitude);
         }
-        void IBL.BO.IBL.UpdateDrone(int Id, string Model)
+        void IBL.UpdateDrone(int Id, string Model)
         {
             int Check = 0;
             foreach(Drone drone in myDalObject.DataSource.Config.Drones)
@@ -55,7 +55,7 @@ namespace BL
                 }
             }
         }//צריך להבין מה הבעיה עם מיי דאל אובג'קט
-        void IBL.BO.IBL.DroneToCharge(int Id)
+        void IBL.DroneToCharge(int Id)
         {
             double NBattery;
             foreach (DroneForList drone in BL.drones)
@@ -93,10 +93,10 @@ namespace BL
                 }
             }
         }//לממש
-        void IBL.BO.IBL.ReleaseDroneFromCharge(int Id, DateTime TimeInCharge)
+        void IBL.ReleaseDroneFromCharge(int Id, DateTime TimeInCharge)
         {
 
-            foreach(Drone drone in drones)
+            foreach (Drone drone in drones)
             {
                 if(drone.DroneId==Id)
                 {
@@ -109,8 +109,8 @@ namespace BL
                 }
             }
         }//לממש
-        void IBL.BO.IBL.DisplayDrone(int id) { }//לממש
-        void IBL.BO.IBL.DisplayDronesList() { }//לממש
+        void IBL.DisplayDrone(int id) { }//לממש
+        void IBL.DisplayDronesList() { }//לממש
 
     }
 }

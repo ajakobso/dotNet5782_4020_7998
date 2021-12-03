@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalObject;
+using IDAL;
 using IBL.BO;
 namespace IBL
 {
-    public partial class BL : IBL.BO.IBL
+    public partial class BL : IBL
     {
-        public IDAL.IDal myDalObject;
+        private IDal myDalObject;
         public List<DroneForList> drones;
         private static Random r = new Random();
         bool isDroneInDelivering(DroneForList drone)

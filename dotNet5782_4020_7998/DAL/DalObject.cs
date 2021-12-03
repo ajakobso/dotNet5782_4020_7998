@@ -8,7 +8,7 @@ using IDAL;
 
 namespace DalObject//add exception of id that didnt found
 {
-    public class DalObject:IDAL.IDal
+    public class DalObject:IDal
     {
 
         void IDal.AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
