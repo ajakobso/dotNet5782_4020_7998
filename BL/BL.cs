@@ -12,6 +12,7 @@ namespace IBL
     {
         private IDal myDalObject;
         public List<DroneForList> drones;
+        public List<BaseStationForList> baseStations;
         private static Random r = new Random();
         bool isDroneInDelivering(DroneForList drone)
         {

@@ -11,9 +11,10 @@ namespace IBL
         public void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge)
         {
             IEnumerable<DroneInCharge> DronesInCharge; //= new IEnumerable<IBL.BO.DroneInCharge>();
-            // DalObject.DataSource.Config.BaseStations.Add(new IDAL.DO.BaseStation {Id = num, Name = name, ChargeSlots = numOfAvailableDCharge, Longitude = location.Longitude, Lattitude = location.Latitude });//חייב לבדוק מה הבעיה עם זה..זה פשוט תוקע את כל המחלקה
-            //myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
-            // myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
+            baseStations.Add({ BaseStationId = num, StationName = name,AvailableChargingS= numOfAvailableDCharge, StationLocation = location, DInChargeList=new IEnumerable<DroneInCharge>()  });
+             DalObject.DataSource.Config.BaseStations.Add(new IDAL.DO.BaseStation {Id = num, Name = name, ChargeSlots = numOfAvailableDCharge, Longitude = location.Longitude, Lattitude = location.Latitude });//חייב לבדוק מה הבעיה עם זה..זה פשוט תוקע את כל המחלקה
+            myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
+             myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Longitude, location.Latitude);
         }
 
 
@@ -25,12 +26,35 @@ namespace IBL
                 if(baseStation.Id==Id)
                 {
                     Check++;
-                    if(!(Name==null)&& !(NumOfChargeSlots == -1))
+                    IDAL.DO.BaseStation nBaseStation = new IDAL.DO.BaseStation();
+                    nBaseStation = baseStation;
+
+                    if (!(Name==" "))
                     {
-                        baseStation.Name = Name;////////remove the old bs, and add the updated one.
-                        baseStation.ChargeSlots = NumOfChargeSlots;
+                        nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
+                    }
+                    if (!(NumOfChargeSlots == -1))
+                    {
+                        nBaseStation.ChargeSlots = NumOfChargeSlots;
                     }
                     break;
+                }
+            }
+            foreach(BaseStationForList baseStation1 in baseStations)
+            {
+                if(baseStation1.BaseStationId==Id)
+                {
+                    BaseStationForList nbaseStation = new BaseStationForList();
+                    nbaseStation = baseStation1;
+
+                    if (!(Name==" "))
+                    {
+                        nbaseStation.StationName = Name;
+                    }
+                    if (!(NumOfChargeSlots==-1))
+                    {
+                        nbaseStation.AvailableChargingS = (NumOfChargeSlots - nbaseStation.UnAvailableChargingS);
+                    }
                 }
             }
             if (Check == 0)

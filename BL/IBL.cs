@@ -20,12 +20,12 @@ namespace IBL
             void AscriptionParcelToDrone(int Id);
             void PickUpParcel(int DId);
             void DeliveringParcelByDrone(int Id);
-            void DisplayBaseStation(int id);
-            void DisplayDrone(int id);
+            BaseStation DisplayBaseStation(int id);
+            DroneForList DisplayDrone(int id);
             void DisplayCustomer(int id);
             void DisplayParcel(int id);
-            void DisplayBaseStationsList();
-            void DisplayDronesList();
+            IEnumerable<BaseStation> DisplayBaseStationsList();
+            IEnumerable<DroneForList> DisplayDronesList();
             void DisplayCustomersList();
             void DisplayParcelsList();
             void DisplayUnAscriptedParcelsList();
