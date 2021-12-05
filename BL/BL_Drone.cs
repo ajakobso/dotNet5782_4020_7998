@@ -111,7 +111,7 @@ namespace IBL
             {
                 if(drone.DroneId==Id)
                 {
-                    if(!(drone.DroneStatus==Enums.DroneStatuses.Maintenance))
+                    if(!(drone.DroneState==Enums.DroneStatuses.Maintenance))
                     {
                         throw new IDAL.DO.DroneIdNotFoundException();
                     }
@@ -122,14 +122,16 @@ namespace IBL
                     {
                         if ((nDrone.CurrentLocation.Long == baseStation.Longitude) && (nDrone.CurrentLocation.Lat == baseStation.Lattitude)) 
                         {
-                            baseStation.AvailableChargeSlots++;////////////////////////////////////
+                            myDalObject.RemoveBaseStation(baseStation.Id);
+                            myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude);
+                            //baseStation.AvailableChargeSlots++;////////////////////////////////////
                         }
                     }
                     foreach (var baseStation1 in baseStations)//רק בביאל..
                     {
                         if (baseStation1.StationLocation == nDrone.CurrentLocation)
                         {
-                            baseStation1.DInChargeList.Remove(nDrone);//זה קיים רק ב בי אל..
+                            baseStation1.removeDInCharge(nDrone.DroneId);//זה קיים רק ב בי אל..
                         }
                     }
 
@@ -147,7 +149,7 @@ namespace IBL
                     return nDrone;
                 }
             }
-             throw new DroneNotFoundException();
+             throw new DroneIdNotFoundException();
          //the function demend us to return a value, and because the return is inside a condition it cause an error
         }//לממש
         public IEnumerable<DroneForList> DisplayDronesList()
