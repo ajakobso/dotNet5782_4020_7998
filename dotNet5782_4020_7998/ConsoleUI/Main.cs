@@ -6,7 +6,7 @@ namespace ConsoleUI
 {
     public class ConsoleUI
     {
-        IDAL.IDal myDalObject = new DalObject.DalObject();
+        public static IDAL.IDal myDalObject;
         public enum Inputs { a = 1, p, d, l, e };
         public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
         public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
@@ -14,12 +14,11 @@ namespace ConsoleUI
         public enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
         static void Main(string[] args)
         {
-            
-        DalObject.DataSource.Initialize();
+            myDalObject = new DalObject.DalObject();
+            DataSource.Initialize();
             Inputs options;
             do
             {
-                
                 Console.WriteLine("Choose one of the following options:\n" +
                 "a: Add new element\n" +
                 "p: Updating existing element\n" +
@@ -86,12 +85,8 @@ namespace ConsoleUI
                                 Console.WriteLine("drone's model\n");
                                 string DModel;
                                 DModel = Console.ReadLine();
-                                DroneStatuses DS;
-                                Console.WriteLine("drone's status(Available, Maintenance, Shipping):\n");
-                                inp = Console.ReadLine();
-                                DroneStatuses.TryParse(inp, out DS);
                                 try
-                                { myDalObject.AddDrone(DId, DBattery, DWC, DModel, DS); }//create a new drone with new values
+                                { myDalObject.AddDrone(DId, DBattery, DWC, DModel);}//create a new drone with new values
                                 catch (AddExistingDroneException)
                                 { Console.WriteLine("ERROR - attempt to add an existing drone!\n"); }
                                 break;

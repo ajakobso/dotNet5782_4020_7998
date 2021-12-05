@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using IBL.BO;
 namespace IBL
 {
-    public partial class BL// : IBL.BO.IBL
+    public partial class BL
     {
         private IEnumerable<ParcelInCustomer> listOfParcelsInC(string option, int Pid)
         {
@@ -42,11 +42,11 @@ namespace IBL
             else
                 return res2;
         }
-        void IBL.AddCustomer(int Id, string Name, string PhoneNum, Location Location)
+        public void AddCustomer(int Id, string Name, string PhoneNum, Location Location)
         {
             myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat);
         }//
-        void IBL.UpdateCustomer(int Id, string Name, string PhoneNum)
+        public void UpdateCustomer(int Id, string Name, string PhoneNum)
         {
             var customer = myDalObject.CopyCustomer(Id);
             myDalObject.RemoveCustomer(Id);
@@ -62,7 +62,7 @@ namespace IBL
             }
             myDalObject.AddCustomer(Id, name, phone, customer.Longitude, customer.Lattitude);
         }//
-        Customer IBL.DisplayCustomer(int id)
+        public Customer DisplayCustomer(int id)
         {
             var customer = myDalObject.CopyCustomer(id);
             Location location = new Location(customer.Longitude, customer.Lattitude);
@@ -71,16 +71,7 @@ namespace IBL
             Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };
             return nCustomer;
         }
-        private Customer DisplayCustomer(int id)//help to the bl - convert from IDAL.DO.Customer to IBL.BO.Customer
-        {
-            var customer = myDalObject.CopyCustomer(id);
-            Location location = new Location(customer.Longitude, customer.Lattitude);
-            IEnumerable<ParcelInCustomer> PtoC = listOfParcelsInC("PtoC", id);
-            IEnumerable<ParcelInCustomer> PfromC = listOfParcelsInC("PfromC", id);
-            Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };
-            return nCustomer;
-        }//
-        IEnumerable<CustomerForList> IBL.DisplayCustomersList()
+        public IEnumerable<CustomerForList> DisplayCustomersList()
         {
             List<CustomerForList> responce = new List<CustomerForList>();
             foreach (var customer in myDalObject.CopyCustomersList())

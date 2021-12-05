@@ -115,11 +115,11 @@ namespace IBL
             }
             return false;
         }
-        void IBL.AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
+        public void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
         {
             myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
-        void IBL.AscriptionParcelToDrone(int Id) 
+        public void AscriptionParcelToDrone(int Id) 
         {
             DroneForList drone = DisplayDrone(Id);
             bool parcelFound = false;
@@ -172,9 +172,9 @@ namespace IBL
 
             }
         }
-        void IBL.PickUpParcel(int DId) 
+        public void PickUpParcel(int DId) 
         {
-            DroneForList drone = DisplayDrone(Id);
+            DroneForList drone = DisplayDrone(DId);
             var parcel = myDalObject.CopyParcel(drone.InDeliveringParcelId);
             if (parcel.DroneId == DId && parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp == DateTime.MinValue)
             {
@@ -183,12 +183,12 @@ namespace IBL
                 drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
                 myDalObject.RemoveParcel(parcel);
                 parcel.PickedUp = DateTime.Now;
-                myDalObject.AddParcel(parcel);
+                myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered);
             }
             //else
             //   throw new ParcelCantBePickedUPException////////////////
         }//
-        void IBL.DeliveringParcelByDrone(int Id)
+        public void DeliveringParcelByDrone(int Id)
         {
             DroneForList drone = DisplayDrone(Id);
             var parcel = myDalObject.CopyParcel(drone.InDeliveringParcelId);
@@ -218,12 +218,12 @@ namespace IBL
                 drone.DroneState = Enums.DroneStatuses.Available;
                 myDalObject.RemoveParcel(parcel);
                 parcel.Delivered = DateTime.Now;
-                myDalObject.AddParcel(parcel);
+                myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered);
             }
             //else
             //throw exceptiom////////////////////////////////////////
         }//
-        Parcel IBL.DisplayParcel(int id) 
+        public Parcel DisplayParcel(int id) 
         {
             var parcel = myDalObject.CopyParcel(id);
             DroneForList drone = DisplayDrone(parcel.DroneId);
@@ -233,7 +233,7 @@ namespace IBL
             Parcel nParcel = new Parcel { ParcelId = parcel.Id, ParcelWC = WeightParcel(parcel.Weight), ParcelCreationTime = parcel.Requested, ParcelAscriptionTime = parcel.Scheduleded, ParcelPickUpTime = parcel.PickedUp, ParcelDeliveringTime = parcel.Delivered, ParcelPriority = (Enums.Priorities)parcel.Priority, DInParcel = droneInParcel, DCIParcel = destination, SCIParcel = source };
             return nParcel;
         }//
-        IEnumerable<ParcelToList> IBL.DisplayParcelsList()
+        public IEnumerable<ParcelToList> DisplayParcelsList()
         {
             IEnumerable<IDAL.DO.Parcel> p = myDalObject.CopyParcelsList();
             List<ParcelToList> nPList = new List<ParcelToList>();
@@ -253,7 +253,7 @@ namespace IBL
             }
             return nPList;
         }//
-        IEnumerable<ParcelToList> IBL.DisplayUnAscriptedParcelsList()
+        public IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList()
         {
             IEnumerable<IDAL.DO.Parcel> p = myDalObject.UnAscriptedParcels();
             List<ParcelToList> nPList = new List<ParcelToList>();

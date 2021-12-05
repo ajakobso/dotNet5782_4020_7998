@@ -26,7 +26,7 @@ namespace DalObject//add exception of id that didnt found
 
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
-        void IDal.AddDrone(int id, WeightCategories maxW, string model)//double battery, DroneStatuses status
+        void IDal.AddDrone(int id,double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
             foreach (Drone drone in DataSource.Config.Drones)
             {
@@ -36,7 +36,7 @@ namespace DalObject//add exception of id that didnt found
                     throw new AddExistingDroneException();
                 }
             }
-            DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
+            DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model, Battery = Battery });//Battery = battery, Status = status
         }
         void IDal.AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
