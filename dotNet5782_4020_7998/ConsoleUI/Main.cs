@@ -302,9 +302,7 @@ namespace ConsoleUI
                         {
                             case ListsDisplaying.BaseStationsList:
                                 IEnumerable<BaseStation> BaseStations;
-                                try
-                                { BaseStations = myDalObject.CopyBaseStations(); }
-                                catch (BaseStationNotFoundException)
+                                BaseStations = myDalObject.CopyBaseStations();
                                 { Console.WriteLine("ERROR - attempt to copy a non-existing base station"); }
                                 foreach (BaseStation basestation in BaseStations)
                                 {
