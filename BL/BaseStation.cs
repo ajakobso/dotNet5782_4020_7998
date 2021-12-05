@@ -12,7 +12,7 @@ namespace IBL.BO
         public string StationName { get; set; }
         public Location StationLocation { get; set; }
         public int AvailableChargingS { get; set; }
-        public IEnumerable<DroneInCharge> DInChargeList { get; set; }
+        public List<DroneInCharge> DInChargeList { get; set; }
 
        public void removeDInCharge(int id)
         {
@@ -20,7 +20,7 @@ namespace IBL.BO
             {
                 if(drone.DroneId==id)
                 {
-                    DInChargeList.remove(drone);
+                    DInChargeList.Remove(drone);
                 }
             }
         }

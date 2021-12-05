@@ -16,7 +16,7 @@ namespace IBL
         void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots);
         void UpdateCustomer(int Id, string Name, string PhoneNum);
         void DroneToCharge(int Id);
-        void ReleaseDroneFromCharge(int Id, DateTime TimeInCharge);
+        void ReleaseDroneFromCharge(int Id, double TimeInCharge);
         void AscriptionParcelToDrone(int Id);
         void PickUpParcel(int DId);
         void DeliveringParcelByDrone(int Id);

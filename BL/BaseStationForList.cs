@@ -11,9 +11,10 @@ namespace IBL.BO
         public int BaseStationId { get; set; }
         public string StationName { get; set; }
         public int AvailableChargingS { get; set; }
-       public int UnAvailableChargingS { get; set; }
+        public int UnAvailableChargingS { get; set; }
         public Location StationLocation { get; set; }
-        public IEnumerable<DroneInCharge> DInChargeList { get; set; }
+        public List<DroneInCharge> DInChargeList { get; set; }
+        public void RemoveDInCharge(int id) { }
 
     }
 }

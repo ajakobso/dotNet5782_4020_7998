@@ -15,21 +15,18 @@ namespace IBL
             Random r = new Random();//אין לי שמץ של מושג אם ככה מגדירים רנדום
             r.Next(20, 41);//מגריל מספר בין 20 ל-40 לפי מה שהבנתי
             Location BStationLocation;
-            int Check = 0;
-            foreach(BaseStation baseStation in myDalObject.DataSource.Config.BaseStations)//כרגיל לא עובד
+            foreach(var baseStation in myDalObject.CopyBaseStations())//כרגיל לא עובד
             {
-                if (baseStation.BaseStationId == Bstation)
+                if (baseStation.Id == Bstation)
                 {
-                    BStationLocation = baseStation.StationLocation;
-                    Check++;
-                    break;
+                    BStationLocation = new Location(baseStation.Longitude, baseStation.Lattitude);
+                    try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model); }
+                    catch (IDAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
+                    drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
+                    return;
                 }
             }
-            if (Check == 0)
-                throw new IDAL.DO.BaseStationNotFoundException();
-
-            myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
-            drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation.Longitude = BStationLocation.Longitude, CurrentLocation.Latitude = BStationLocation.Latitude });
+            throw new BaseStationNotFoundException();
         }
         public void UpdateDrone(int Id, string Model)
         {
@@ -50,7 +47,7 @@ namespace IBL
             {
                 if (droneForList.DroneId == Id)
                 {
-                    removeDroneForList(droneForList.DroneId);
+                    RemoveDroneForList(droneForList.DroneId);
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = droneForList.MaxWeight, Battery = droneForList.Battery, CurrentLocation = droneForList.CurrentLocation, DroneState = droneForList.DroneState, InDeliveringParcelId = droneForList.InDeliveringParcelId });
                     break;
                 }
@@ -58,12 +55,14 @@ namespace IBL
         }
         public void DroneToCharge(int Id)
         {
-            double NBattery;
+            double NBattery = 20.0;//minimum value as a default, in the meanwhile until we insert value.
             foreach (DroneForList drone in drones)
             {
                 double Battery;
                 if (drone.DroneState == Enums.DroneStatuses.Available)
                 {
+                    Location droneLocation = new Location(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
+                    Location location = new Location(myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
                     Battery = myDalObject.DronePowerConsumingPerKM()[0] * distanceFromBS(drone.CurrentLocation)[0];
                     if (Battery > drone.Battery)
                     {
@@ -76,20 +75,21 @@ namespace IBL
                         {
                             myDalObject.RemoveDrone(dalDrone.Id);
                             myDalObject.AddDrone(dalDrone.Id, dalDrone.Battery - Battery, dalDrone.MaxWeight, dalDrone.Model);
-                            //NBattery = dalDrone.Battery - Battery;
-                            //dalDrone.Battery -= Battery;
+                            NBattery = dalDrone.Battery - Battery;
                             //dalDrone.Longitude = location.Longitude;
                             //dalDrone.Latittude = location.Latitude;
-                            dalDrone.DroneState = Enums.DroneStatuses.Maintenance;
+                            drone.DroneState = Enums.DroneStatuses.Maintenance;
                         }
                     }
                     foreach (var baseStation in myDalObject.CopyBaseStations())
                     {
-                        if ((baseStation.Longitude == location.Longitude) && (baseStation.Latitude == location.Latitude))
+                        if ((baseStation.Longitude == location.Long) && (baseStation.Lattitude == location.Lat))
                         {
-                            myDalObject.RemoveBaseStation(baseStation.Id);
-                            myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude);
-                            //baseStation.AvailableChargeSlots -= 1;
+                            try { myDalObject.RemoveBaseStation(baseStation.Id); }
+                            catch (IDAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude); }
+                            catch (IDAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                           
                         }
 
                     }
@@ -97,14 +97,14 @@ namespace IBL
                     {
                         if (baseStation1.StationLocation==location)
                         {
-                            baseStation1.DInChargeList.Add({ DroneId = drone.DroneId, Battery = NBattery });//זה קיים רק ב בי אל..
+                            baseStation1.DInChargeList.Add(new DroneInCharge { DroneId = drone.DroneId, Battery = NBattery });
                         }
                     }
             
                 }
             }
         }//לממש
-        public void ReleaseDroneFromCharge(int Id, DateTime TimeInCharge)
+        public void ReleaseDroneFromCharge(int Id, double TimeInCharge)
         {
             DroneForList nDrone = new DroneForList();
             foreach (DroneForList drone in drones)
@@ -113,27 +113,31 @@ namespace IBL
                 {
                     if(!(drone.DroneState==Enums.DroneStatuses.Maintenance))
                     {
-                        throw new IDAL.DO.DroneIdNotFoundException();
+                        throw new DroneIdNotFoundException();
                     }
                     nDrone = drone;
-                    nDrone.Battery += ChargingBattery();//לממש!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    nDrone.Battery += TimeInCharge*myDalObject.DronePowerConsumingPerKM()[4];
                     nDrone.DroneState = Enums.DroneStatuses.Available;
                     foreach (var baseStation in myDalObject.CopyBaseStations())
                     {
                         if ((nDrone.CurrentLocation.Long == baseStation.Longitude) && (nDrone.CurrentLocation.Lat == baseStation.Lattitude)) 
                         {
-                            myDalObject.RemoveBaseStation(baseStation.Id);
-                            myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude);
-                            //baseStation.AvailableChargeSlots++;////////////////////////////////////
+                            try { myDalObject.RemoveBaseStation(baseStation.Id); }
+                            catch (IDAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude); }
+                            catch (IDAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            catch (IDAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
                         }
                     }
-                    foreach (var baseStation1 in baseStations)//רק בביאל..
+                    foreach (var baseStation1 in baseStations)
                     {
                         if (baseStation1.StationLocation == nDrone.CurrentLocation)
                         {
-                            baseStation1.removeDInCharge(nDrone.DroneId);//זה קיים רק ב בי אל..
+
+                            baseStation1.DInChargeList.Remove(new DroneInCharge { DroneId = nDrone.DroneId, Battery = nDrone.Battery });
                         }
                     }
+                    drones.Add(nDrone);
 
                 }
             }
@@ -157,7 +161,7 @@ namespace IBL
             IEnumerable<DroneForList> DronesList = drones;
             return DronesList;
         }//לממש
-        public void removeDroneForList(int Id)
+        public void RemoveDroneForList(int Id)
         {
             int Check = 0;
             foreach(var drone in drones)

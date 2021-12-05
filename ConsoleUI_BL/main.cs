@@ -72,12 +72,13 @@ namespace ConsoleUI_BL
                                 Console.WriteLine("drone's Max weight categories (Heavy, Light, Middle):\n");
                                 inp = Console.ReadLine();
                                 Enums.WeightCategories.TryParse(inp, out DWC);
-                                Enums.DroneStatuses bgGTDS;
                                 Console.WriteLine("base station's number for first charging:");
                                 inp = Console.ReadLine();
                                 int StationForCharging;
                                 int.TryParse(inp, out StationForCharging);
-                                bl.AddDrone(DId, DModel, DWC, StationForCharging);//create a new drone with new values
+                                try { bl.AddDrone(DId, DModel, DWC, StationForCharging); }//create a new drone with new values
+                                catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - the base station for first charging not found\n"); }
+                                catch (AddExistingDroneException) { Console.WriteLine("ERROR - attemp to add an existing drone\n"); }
                                 break;
                             case Enums.Adding.nCustomer:
                                 Console.WriteLine("please enter:\n+ customer's id:\n");
@@ -191,11 +192,13 @@ namespace ConsoleUI_BL
                                     inp = Console.ReadLine();
                                     int DId2;
                                     int.TryParse(inp, out DId2);
-                                    Console.WriteLine("how long the drone has been charging:\n");
+                                    Console.WriteLine("how long the drone has been charging? (in hours)\n");
                                     inp = Console.ReadLine();
-                                    DateTime TICharging;//time in charging
-                                    DateTime.TryParse(inp, out TICharging);
-                                    bl.ReleaseDroneFromCharge(DId2, TICharging);
+                                    double TICharging;//time in charging
+                                    double.TryParse(inp, out TICharging);
+                                    try { bl.ReleaseDroneFromCharge(DId2, TICharging); }
+                                    catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - attemp to relese drone from a non-existing charge station\n"); }
+                                    catch (AddExistingBaseStationException) { Console.WriteLine("ERROR - sorry, we were unable to relese the drone from the charge station\n"); }
                                     break;
                                 case Enums.NewUpdating.AscriptionPToD:
                                     Console.WriteLine("please enter drone's id:\n");
