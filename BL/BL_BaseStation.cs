@@ -60,8 +60,25 @@ namespace IBL
             if (Check == 0)
                 throw new IDAL.DO.BaseStationNotFoundException();
         }//
-        void IBL.DisplayBaseStation(int id) { }//
-        void IBL.DisplayBaseStationsList() { }//
+        BaseStationForList IBL.DisplayBaseStation(int id)
+        {
+            BaseStationForList nBaseStation = new BaseStationForList();
+            foreach(BaseStationForList baseStation in baseStations)
+            {
+                if(baseStation.BaseStationId==id)
+                {
+                    nBaseStation = baseStation;
+                    return nBaseStation;
+                }
+            }
+            throw new BaseStationNotFoundException();
+        }//
+        IEnumerable<BaseStationForList> IBL.DisplayBaseStationsList()
+        {
+            IEnumerable<BaseStationForList> nStationsList = new IEnumerable<BaseStationForList>();
+            nStationsList = baseStations;
+            return nStationsList;
+        }//
         void IBL.DisplayAvailableChargingStation() { }//
     public Location findCloseBaseStationLocation(Ilocatable fromLocation)
     {
