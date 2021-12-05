@@ -181,7 +181,7 @@ namespace IBL
                 double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
                 drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
                 drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
-                myDalObject.RemoveParcel(parcel);
+                myDalObject.RemoveParcel(parcel.Id);
                 parcel.PickedUp = DateTime.Now;
                 myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered);
             }
@@ -216,7 +216,7 @@ namespace IBL
                 drone.Battery -= batterySpent;
                 drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
                 drone.DroneState = Enums.DroneStatuses.Available;
-                myDalObject.RemoveParcel(parcel);
+                myDalObject.RemoveParcel(parcel.Id);
                 parcel.Delivered = DateTime.Now;
                 myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered);
             }

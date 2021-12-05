@@ -34,11 +34,12 @@ namespace IBL
         public void UpdateDrone(int Id, string Model)
         {
             int Check = 0;
-            foreach(IDAL.DO.Drone drone in myDalObject.CopyDronesList())
+            foreach(var drone in myDalObject.CopyDronesList())
             {
-                if(drone.DroneId==Id)
+                if(drone.Id==Id)
                 {
-                    drone.Model = Model;
+                    myDalObject.RemoveDrone(drone.Id);
+                    myDalObject.AddDrone(drone.Id, drone.Battery, drone.MaxWeight, Model);
                     Check++;
                     break;
                 }
@@ -53,7 +54,7 @@ namespace IBL
                     break;
                 }
             }
-        }//צריך להבין מה הבעיה עם מיי דאל אובג'קט
+        }
         public void DroneToCharge(int Id)
         {
             double NBattery;
@@ -68,7 +69,7 @@ namespace IBL
                         throw new Exception();//////////////////////////////צריך להגדיר חריגה מתאימה
                         
                     }
-                    foreach (IDAL.DO.Drone dalDrone in myDalObject.CopyDronesList())
+                    foreach (var dalDrone in myDalObject.CopyDronesList())
                     {
                         if (dalDrone.Id == drone.DroneId)
                         {
@@ -79,7 +80,7 @@ namespace IBL
                             dalDrone.DroneState = Enums.DroneStatuses.Maintenance;
                         }
                     }
-                    foreach (IDAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
+                    foreach (var baseStation in myDalObject.CopyBaseStations())
                     {
                         if ((baseStation.Longitude == location.Longitude) && (baseStation.Latitude == location.Latitude))
                         {
@@ -87,7 +88,7 @@ namespace IBL
                         }
 
                     }
-                    foreach (BaseStation baseStation1 in baseStations)//רק בביאל..
+                    foreach (var baseStation1 in baseStations)
                     {
                         if (baseStation1.StationLocation==location)
                         {
@@ -123,7 +124,7 @@ namespace IBL
                     {
                         if (baseStation1.StationLocation == nDrone.CurrentLocation)
                         {
-                            baseStation1.DInChargeList.remove(nDrone);//זה קיים רק ב בי אל..
+                            baseStation1.DInChargeList.Remove(nDrone);//זה קיים רק ב בי אל..
                         }
                     }
 
@@ -141,7 +142,7 @@ namespace IBL
                     return nDrone;
                 }
             }
-             throw new DroneIdNotFoundException();
+             throw new DroneNotFoundException();
          //the function demend us to return a value, and because the return is inside a condition it cause an error
         }//לממש
         public IEnumerable<DroneForList> DisplayDronesList()

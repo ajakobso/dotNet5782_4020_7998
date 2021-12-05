@@ -65,7 +65,7 @@ namespace IBL
                     return nBaseStation;
                 }
             }
-            throw new BaseStationNotFoundException();
+            throw new BaseStationIdNotFoundException();
         }//
         public IEnumerable<BaseStationForList> DisplayBaseStationsList()
         {

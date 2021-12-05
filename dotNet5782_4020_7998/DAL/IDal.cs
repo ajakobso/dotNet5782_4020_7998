@@ -13,6 +13,10 @@ namespace IDAL
         void AddDrone(int id,double Battery, WeightCategories maxW, string model);
         void AddCustomer(int id, string name, string phone, double longitude, double lattitude);
         void AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered);
+        void RemoveCustomer(int id);
+        void RemoveParcel(int id);
+        void RemoveDrone(int id);
+        void RemoveBaseStation(int id);
         void AscriptionPtoD(int parcelId, int droneId);
         void PickUpParcel(int parcelId);
         void ParcelDelivering(int parcelId);
