@@ -70,6 +70,15 @@ namespace IBL
             IEnumerable<ParcelInCustomer> PfromC = listOfParcelsInC("PfromC", id);
             Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };
             return nCustomer;
+        }
+        private Customer DisplayCustomer(int id)//help to the bl - convert from IDAL.DO.Customer to IBL.BO.Customer
+        {
+            var customer = myDalObject.CopyCustomer(id);
+            Location location = new Location(customer.Longitude, customer.Lattitude);
+            IEnumerable<ParcelInCustomer> PtoC = listOfParcelsInC("PtoC", id);
+            IEnumerable<ParcelInCustomer> PfromC = listOfParcelsInC("PfromC", id);
+            Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };
+            return nCustomer;
         }//
         IEnumerable<CustomerForList> IBL.DisplayCustomersList()
         {

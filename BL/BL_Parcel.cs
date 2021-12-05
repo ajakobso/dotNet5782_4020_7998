@@ -17,7 +17,7 @@ namespace IBL
             double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
             return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
         }
-        private bool droneMakeIt(DroneForList drone,IDAL.DO.Parcel parcel)//בודק אם לרחפן יש מספיק בטריה להגיע לשולח, ליעד ולתחנה הקרובה ביותר מיעד המשלוח
+        private double minimumBattery(DroneForList drone, IDAL.DO.Parcel parcel)
         {
             Location location;
             location = new Location(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
@@ -39,9 +39,14 @@ namespace IBL
                 default:
                     break;
             }
-            
-            double possibleDistance = (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDroneAndSender) + (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDstAndBs) + (batteryPerKM * distanceBetweenSenderAndDst);//calculation of the amount of battery in percent needed for the 
-            if (possibleDistance <= drone.Battery)//check if there is enough battery
+
+            double possibleDistance = (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDroneAndSender) + (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDstAndBs) + (batteryPerKM * distanceBetweenSenderAndDst);//calculation of the amount of battery in percent needed for the
+            return possibleDistance;                                                                                                                                                                                                                             //
+        }
+        private bool droneMakeIt(DroneForList drone,IDAL.DO.Parcel parcel)//בודק אם לרחפן יש מספיק בטריה להגיע לשולח, ליעד ולתחנה הקרובה ביותר מיעד המשלוח
+        {
+            double minimum = minimumBattery(drone, parcel);
+            if (minimum <= drone.Battery)//check if there is enough battery
                 return true;
             else
                 return false;
