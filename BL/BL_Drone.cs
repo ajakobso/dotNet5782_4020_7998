@@ -28,7 +28,7 @@ namespace IBL
             if (Check == 0)
                 throw new IDAL.DO.BaseStationNotFoundException();
 
-            myDalObject.AddDrone(Id, (IDAL.DO.WeightCategories)MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
+            myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
             drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation.Longitude = BStationLocation.Longitude, CurrentLocation.Latitude = BStationLocation.Latitude });
         }
         public void UpdateDrone(int Id, string Model)
@@ -74,8 +74,10 @@ namespace IBL
                     {
                         if (dalDrone.Id == drone.DroneId)
                         {
-                            NBattery = dalDrone.Battery - Battery;
-                            dalDrone.Battery -= Battery;
+                            myDalObject.RemoveDrone(dalDrone.Id);
+                            myDalObject.AddDrone(dalDrone.Id, dalDrone.Battery - Battery, dalDrone.MaxWeight, dalDrone.Model);
+                            //NBattery = dalDrone.Battery - Battery;
+                            //dalDrone.Battery -= Battery;
                             //dalDrone.Longitude = location.Longitude;
                             //dalDrone.Latittude = location.Latitude;
                             dalDrone.DroneState = Enums.DroneStatuses.Maintenance;
@@ -85,7 +87,9 @@ namespace IBL
                     {
                         if ((baseStation.Longitude == location.Longitude) && (baseStation.Latitude == location.Latitude))
                         {
-                            baseStation.AvailableChargeSlots -= 1;
+                            myDalObject.RemoveBaseStation(baseStation.Id);
+                            myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude);
+                            //baseStation.AvailableChargeSlots -= 1;
                         }
 
                     }
