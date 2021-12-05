@@ -6,7 +6,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            BL.BL bl = new BL.BL();
+            IBL.BL bl = new IBL.BL();
             IDAL.DO.Coordinate coordinate;
             ConsoleUI.ConsoleUI.Inputs option;
             do

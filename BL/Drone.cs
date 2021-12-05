@@ -15,5 +15,6 @@ namespace IBL.BO
         public double Battery { get; set; }
         public ParcelInDelivering DeliveryParcel { get; set; }
         public Location CurrentLocation { get; set; }
+
     }
 }

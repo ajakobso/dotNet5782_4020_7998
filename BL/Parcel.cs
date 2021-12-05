@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDAL.DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,8 @@ namespace IBL.BO
         //partial class BL//מימוש הממשק IBL
         //{
             public int ParcelId { get; set; }
-            public CustomerInParcel DCIParcel { get; set; }//the sender
-            public CustomerInParcel RCIParcel { get; set; }//the reciever
+            public CustomerInParcel SCIParcel { get; set; }//the sender
+            public CustomerInParcel DCIParcel { get; set; }//the reciever
             public Enums.WeightCategories ParcelWC { get; set; }
             public Enums.Priorities ParcelPriority { get; set; }
             public DroneInParcel DInParcel { get; set; }
@@ -20,6 +21,8 @@ namespace IBL.BO
             public DateTime ParcelAscriptionTime { get; set; }
             public DateTime ParcelPickUpTime { get; set; }
             public DateTime ParcelDeliveringTime { get; set; }
+
+       
         //}
     }
 }

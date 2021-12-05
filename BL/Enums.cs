@@ -19,7 +19,7 @@ namespace IBL.BO
         public enum ListsDisplaying { BaseStationsList, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsLict, AvailableChargingStationsList };//for the main
         public enum PowerPerKM { Available, LightWheight, MiddleWheight, HeavyWeight };
         public enum NewUpdating { DroneModel, BaseStation, Customer, DroneToCharge, DroneRealese, AscriptionPToD, PickUpParcel, DeliveringPByD };//for the main
-    
+        
     }
 }
 

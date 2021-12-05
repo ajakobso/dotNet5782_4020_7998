@@ -87,7 +87,7 @@ namespace DalObject//add exception of id that didnt found
                 }
             }
             if (parcelExsists)
-                p.DroneId = droneId;
+            { p.DroneId = droneId;p.Scheduleded = DateTime.Now; }
             else
                 throw new ParcelIdNotFoundException();
 
@@ -111,7 +111,7 @@ namespace DalObject//add exception of id that didnt found
                 {
                     if (drone.Id == p.DroneId)
                     {
-                        Drone newDrone = new Drone { Id = drone.Id, Status = DroneStatuses.Shipping, Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
+                        Drone newDrone = new Drone { Id = drone.Id, /*Status = DroneStatuses.Shipping,*/ Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
                         DataSource.Config.Drones.Remove(drone);
                         DataSource.Config.Drones.Add(newDrone);
                         droneExists = true;
@@ -266,6 +266,7 @@ namespace DalObject//add exception of id that didnt found
             DPC[4] = DataSource.Config.BatteryPerHour;
             return DPC;
         }
+
         IEnumerable<BaseStation> IDal.CopyBaseStations()//return copy of the base stations's list
         {
             IEnumerable<BaseStation> copyBS = DataSource.Config.BaseStations;
