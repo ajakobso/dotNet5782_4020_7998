@@ -29,7 +29,7 @@ namespace IBL
                 throw new IDAL.DO.BaseStationNotFoundException();
 
             myDalObject.AddDrone(Id, (IDAL.DO.WeightCategories)MaxWeight, Model);//צריך לטפל בפונ' שבדאטה סורס
-            drones.Add( DroneId=Id, Model=Model, MaxWeight= MaxWeight, DroneState=Enums.DroneStatuses.Maintenance, Battery=(double)r.Next(20,40)/100, CurrentLocation.Longitude= BStationLocation.Longitude, CurrentLocation.Latitude= BStationLocation.Latitude);
+            drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation.Longitude = BStationLocation.Longitude, CurrentLocation.Latitude = BStationLocation.Latitude });
         }
         public void UpdateDrone(int Id, string Model)
         {
@@ -50,7 +50,8 @@ namespace IBL
             {
                 if (droneForList.DroneId == Id)
                 {
-                    droneForList.Model = Model;
+                    removeDroneForList(droneForList.DroneId);
+                    drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = droneForList.MaxWeight, Battery = droneForList.Battery, CurrentLocation = droneForList.CurrentLocation, DroneState = droneForList.DroneState, InDeliveringParcelId = droneForList.InDeliveringParcelId });
                     break;
                 }
             }
@@ -66,7 +67,7 @@ namespace IBL
                     Battery = myDalObject.DronePowerConsumingPerKM()[0] * distanceFromBS(drone.CurrentLocation)[0];
                     if (Battery > drone.Battery)
                     {
-                        throw new Exception();//////////////////////////////צריך להגדיר חריגה מתאימה
+                        throw new IDAL.DO.DroneOutOfBatteryException();//////////////////////////////צריך להגדיר חריגה מתאימה
                         
                     }
                     foreach (var dalDrone in myDalObject.CopyDronesList())
@@ -150,6 +151,22 @@ namespace IBL
             IEnumerable<DroneForList> DronesList = drones;
             return DronesList;
         }//לממש
-        
+        public void removeDroneForList(int Id)
+        {
+            int Check = 0;
+            foreach(var drone in drones)
+            {
+                if(drone.DroneId==Id)
+                {
+                    drones.Remove(drone);
+                    Check++;
+                    break;
+                }
+            }
+            if (Check==0)
+            {
+                throw new DroneIdNotFoundException();
+            }
+        }
     }
 }
