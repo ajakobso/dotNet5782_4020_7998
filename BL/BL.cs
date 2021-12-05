@@ -18,6 +18,7 @@ namespace IBL
         {
             myDalObject = new DalObject.DalObject();//initialize myDalObject
             drones = new List<DroneForList>();//drones list
+            baseStations = new();
             initializeDrones();
         }
         private int droneWhileShipping(int droneId)//check if there is a parcel that the drone is ascripted to

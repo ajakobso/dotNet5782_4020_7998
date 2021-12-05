@@ -29,7 +29,7 @@ namespace IBL
         IEnumerable<CustomerForList> DisplayCustomersList();
         IEnumerable<ParcelToList> DisplayParcelsList();
         IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();
-        void DisplayAvailableChargingStation();
+        IEnumerable<BaseStationForList> DisplayAvailableChargingStation();
 
     }
 }

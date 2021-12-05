@@ -12,6 +12,8 @@ namespace IBL
         {
             try { myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Long, location.Lat); }
             catch (IDAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
+            BaseStationForList nBs = new BaseStationForList { BaseStationId = num, StationLocation = location, StationName = name, AvailableChargingS = numOfAvailableDCharge, UnAvailableChargingS = 0, DInChargeList = new List<DroneInCharge>() };
+            baseStations.Add(nBs);
         }
         public void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
@@ -70,7 +72,7 @@ namespace IBL
         public BaseStationForList DisplayBaseStation(int id)
         {
             BaseStationForList nBaseStation = new BaseStationForList();
-            foreach(BaseStationForList baseStation in baseStations)
+            foreach(var baseStation in baseStations)
             {
                 if(baseStation.BaseStationId==id)
                 {
@@ -86,9 +88,17 @@ namespace IBL
             nStationsList = baseStations;
             return nStationsList;
         }
-        public void DisplayAvailableChargingStation()
-        { 
-
+        public IEnumerable<BaseStationForList> DisplayAvailableChargingStation()
+        {
+            List<BaseStationForList> list = new();
+            foreach(var bs in baseStations)
+            {
+                if(bs.AvailableChargingS>0)
+                {
+                    list.Add(bs);
+                }
+            }
+            return list;
         }
 }
 }

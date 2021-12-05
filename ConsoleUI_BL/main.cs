@@ -41,18 +41,18 @@ namespace ConsoleUI_BL
                                 int BSId;
                                 inp = Console.ReadLine();
                                 int.TryParse(inp, out BSId);
-                                Console.WriteLine("base station's name:\n");
+                                Console.WriteLine("base station's name:");
                                 string BSName;
                                 BSName = Console.ReadLine();
-                                Console.WriteLine("base station's longitude:\n");
+                                Console.WriteLine("base station's longitude:");
                                 inp = Console.ReadLine();
                                 double BSLongitude;
                                 double.TryParse(inp, out BSLongitude);
-                                Console.WriteLine("base station's lattitude:\n");
+                                Console.WriteLine("base station's lattitude:");
                                 inp = Console.ReadLine();
                                 double BSLattitude;
                                 double.TryParse(inp, out BSLattitude);
-                                Console.WriteLine("base station's charge slots:\n");
+                                Console.WriteLine("base station's charge slots:");
                                 inp = Console.ReadLine();
                                 int BSChargeSlots;
                                 int.TryParse(inp, out BSChargeSlots);
@@ -251,9 +251,11 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 int DBSId;//display base station id
                                 int.TryParse(inp, out DBSId);
+                                BaseStationForList bs;
                                 try
-                                { bl.DisplayBaseStation(DBSId); }
-                                catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - there is no base station matching the id you entered"); }
+                                { bs = bl.DisplayBaseStation(DBSId); }
+                                catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - there is no base station matching the id you entered"); break; }
+                                Console.WriteLine($"id: {bs.BaseStationId}, name: {bs.StationName}, Available Charging Slots: {bs.AvailableChargingS}, Un Available Charging Slots: {bs.UnAvailableChargingS}")/*add more staff and add to string*/;
                                 break;
                             case Enums.Displaying.DDrone:
                                 Console.WriteLine("please enter drone id:\n");
