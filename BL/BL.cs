@@ -41,15 +41,15 @@ namespace IBL
                 {
                     drone.DroneState = Enums.DroneStatuses.Shipping;
                     //drone.Battery=rand.Next(MinBattery,100)
-                    if (ParcelNotPikedUpYet)
+                    if (ParcelNotPikedUpYet(drone))
                     {
-                        drone.CurrentLocation = findCloseBaseStationLocation(parcel.senderLocation);
+                        drone.CurrentLocation = findCloseBaseStationLocation(drone.InDeliveringParcelId.senderLocation);
                     }
                     else
                     {
-                        if (ParcelPickedUpButNotDeliveredYet)
+                        if (ParcelPickedUpButNotDeliveredYet(drone))
                         {
-                            drone.CurrentLocation = parcel.senderLocation
+                            drone.CurrentLocation = parcel.senderLocation;
                         }
                     }
                 }
@@ -73,6 +73,15 @@ namespace IBL
 
                 }
             }
+
         }
+        //public string CheckDroneStatus(Drone drone)
+        //{
+        //    if(drone.DroneStatus==Enums.DroneStatuses.Shipping)
+        //    {
+        //        return "droneWhileShipping";
+        //    }
+        //    if(drone.DroneStatus==Enums.DroneStatuses.Maintenance)
+        //}
     }
 }
