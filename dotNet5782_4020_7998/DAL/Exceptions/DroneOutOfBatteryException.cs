@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IDAL.DO
 {
-    class DroneOutOfBatteryException
+    public class DroneOutOfBatteryException: Exception
     {
         public DroneOutOfBatteryException() { }
 

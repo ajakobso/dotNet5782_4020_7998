@@ -57,7 +57,8 @@ namespace ConsoleUI_BL
                                 int BSChargeSlots;
                                 int.TryParse(inp, out BSChargeSlots);
                                 Location BSLocation = new Location(BSLongitude, BSLattitude);
-                                bl.AddBaseStation(BSId, BSName, BSLocation, BSChargeSlots);//create a new base station with new values
+                                try { bl.AddBaseStation(BSId, BSName, BSLocation, BSChargeSlots); }//create a new base station with new values
+                                catch (AddExistingBaseStationException) { Console.WriteLine("ERROR - attemp to add an existing drone\n"); }
                                 break;
                             case Enums.Adding.nDrone:
                                 Console.WriteLine("please enter:\n" + "drone's id\n");
@@ -98,7 +99,8 @@ namespace ConsoleUI_BL
                                 double CLattitude;
                                 double.TryParse(inp, out CLattitude);
                                 Location Clocation = new Location(CLongitude, CLattitude);
-                                bl.AddCustomer(CId, CName, CPhone, Clocation);//adding new customer with new values
+                                try { bl.AddCustomer(CId, CName, CPhone, Clocation); }//adding new customer with new values
+                                catch (AddExistingCustomerException) { Console.WriteLine("ERROR - attemp to add an existing customer\n"); }
                                 break;
                             case Enums.Adding.nParcel:
                                 Console.WriteLine("please enter:\n");
@@ -160,7 +162,8 @@ namespace ConsoleUI_BL
                                     inp = Console.ReadLine();
                                     int CSNumber;
                                     int.TryParse(inp, out CSNumber);
-                                    bl.UpdateBaseStation(BSId, BSName, CSNumber);
+                                    try { bl.UpdateBaseStation(BSId, BSName, CSNumber); }
+                                    catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - attemp to update non-exists base station\n"); }
                                     break;
                                 case Enums.NewUpdating.Customer:
                                     Console.WriteLine("please enter:\n" + "customer id:\n");
@@ -173,7 +176,8 @@ namespace ConsoleUI_BL
                                     inp = Console.ReadLine();
                                     string CPNum;
                                     CPNum = inp;
-                                    bl.UpdateCustomer(CId, CName, CPNum);
+                                    try { bl.UpdateCustomer(CId, CName, CPNum); }
+                                    catch (AddExistingCustomerException) { Console.WriteLine("ERROR - attemp to update non-existing "); }
                                     break;
                                 case Enums.NewUpdating.DroneToCharge:
                                     Console.WriteLine("plese enter drone's id:\n");
@@ -198,21 +202,30 @@ namespace ConsoleUI_BL
                                     inp = Console.ReadLine();
                                     int DId;
                                     int.TryParse(inp, out DId);
-                                    bl.AscriptionParcelToDrone(DId);
+                                    try { bl.AscriptionParcelToDrone(DId); }
+                                    catch (NoParcelAscriptedToDroneException) { Console.WriteLine("ERROR - sorry, we could not found a parcel to ascript with the drone\n"); }
+                                    catch (DroneIdNotFoundException) { Console.WriteLine("ERROR - attemp to ascript a non-exists drone\n"); }
+                                    catch (ParcelIdNotFoundException) { Console.WriteLine("ERROR - attemp to ascript a non-exists parcel\n"); }
                                     break;
                                 case Enums.NewUpdating.PickUpParcel:
                                     Console.WriteLine("please enter drone's id:\n");
                                     inp = Console.ReadLine();
                                     int DId3;
                                     int.TryParse(inp, out DId3);
-                                    bl.PickUpParcel(DId3);
+                                    try { bl.PickUpParcel(DId3); }
+                                    catch (ParcelCantBePickedUPException) { Console.WriteLine("ERROR - sorry, we were unable to pick up the parcel\n"); }
+                                    catch (DroneIdNotFoundException) { Console.WriteLine("ERROR - attemp to pick up a parcel by a non-exists drone\n"); }
+                                    catch (ParcelIdNotFoundException) { Console.WriteLine("ERROR - attemp to pick up a non-exists parcel\n"); }
                                     break;
                                 case Enums.NewUpdating.DeliveringPByD:
                                     Console.WriteLine("please enter drone's id:\n");
                                     inp = Console.ReadLine();
                                     int DId4;
                                     int.TryParse(inp, out DId4);
-                                    bl.DeliveringParcelByDrone(DId4);
+                                    try { bl.DeliveringParcelByDrone(DId4); }
+                                    catch (ParcelCantBeDeliveredException) { Console.WriteLine("ERROR - soory, we were unable to deliver this parcel\n"); }
+                                    catch (DroneIdNotFoundException) { Console.WriteLine("ERROR - attemp to deliver a parcel by a non-exists drone\n"); }
+                                    catch (ParcelIdNotFoundException) { Console.WriteLine("ERROR - attemp to deliver a non-exists parcel\n"); }
                                     break;
                                 default:
                                     break;
@@ -235,7 +248,9 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 int DBSId;//display base station id
                                 int.TryParse(inp, out DBSId);
-                                bl.DisplayBaseStation(DBSId);
+                                try
+                                { bl.DisplayBaseStation(DBSId); }
+                                catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - there is no base station matching the id you entered"); }
                                 break;
                             case Enums.Displaying.DDrone:
                                 Console.WriteLine("please enter drone id:\n");

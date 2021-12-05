@@ -117,7 +117,8 @@ namespace IBL
         }
         public void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
         {
-            myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+            try { myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue); }
+            catch (IDAL.DO.AddParcelToAnAsscriptedDroneException) { }
         }
         public void AscriptionParcelToDrone(int Id) 
         {
@@ -129,7 +130,9 @@ namespace IBL
                 {
                     if (parcel.Priority == (IDAL.DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel)) 
                     {
-                        myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId);
+                        try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
+                        catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                        catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                         drone.DroneState = Enums.DroneStatuses.Shipping;
                         drone.InDeliveringParcelId = parcel.Id;
                         parcelFound = true;
@@ -141,7 +144,9 @@ namespace IBL
                     {
                         if (drone.MaxWeight == WeightParcel(parcel.Weight) && droneMakeIt(drone, parcel))
                         {
-                            myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId);
+                            try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
+                            catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                            catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                             drone.DroneState = Enums.DroneStatuses.Shipping;
                             drone.InDeliveringParcelId = parcel.Id;
                             parcelFound = true;
@@ -157,7 +162,9 @@ namespace IBL
                             if (maxDistance > distanceBetweenDroneAndSender && droneMakeIt(drone,parcel)) 
                             {
                                 maxDistance = distanceBetweenDroneAndSender;
-                                myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId);
+                                try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
+                                catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                                catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                                 drone.DroneState = Enums.DroneStatuses.Shipping;
                                 drone.InDeliveringParcelId = parcel.Id;
                                 parcelFound = true;
@@ -169,7 +176,7 @@ namespace IBL
             }
             if (parcelFound == false) //no matching parcel, throw proper exception
             {
-
+                throw new NoParcelAscriptedToDroneException();
             }
         }
         public void PickUpParcel(int DId) 
@@ -181,12 +188,16 @@ namespace IBL
                 double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
                 drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
                 drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
-                myDalObject.RemoveParcel(parcel.Id);
+                try { myDalObject.RemoveParcel(parcel.Id); }
+                catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 parcel.PickedUp = DateTime.Now;
-                myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered);
+                try { myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
+                catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
             }
-            //else
-            //   throw new ParcelCantBePickedUPException////////////////
+            else
+                throw new ParcelCantBePickedUPException();
         }//
         public void DeliveringParcelByDrone(int Id)
         {
@@ -216,13 +227,17 @@ namespace IBL
                 drone.Battery -= batterySpent;
                 drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
                 drone.DroneState = Enums.DroneStatuses.Available;
-                myDalObject.RemoveParcel(parcel.Id);
+                try { myDalObject.RemoveParcel(parcel.Id); }
+                catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 parcel.Delivered = DateTime.Now;
-                myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered);
+                try { myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
+                catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
             }
-            //else
-            //throw exceptiom////////////////////////////////////////
-        }//
+            else
+                throw new ParcelCantBeDeliveredException();
+        }
         public Parcel DisplayParcel(int id) 
         {
             var parcel = myDalObject.CopyParcel(id);

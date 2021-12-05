@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public class DroneOutOfBatteryException:Exception
+    public class ParcelCantBePickedUPException:Exception
     {
-        public DroneOutOfBatteryException() { }
-
+        public ParcelCantBePickedUPException() { }
     }
 }

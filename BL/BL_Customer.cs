@@ -8,7 +8,7 @@ namespace IBL
 {
     public partial class BL
     {
-        private IEnumerable<ParcelInCustomer> listOfParcelsInC(string option, int Pid)
+        private IEnumerable<ParcelInCustomer> ListOfParcelsInC(string option, int Pid)
         {
             List<ParcelInCustomer> res1 = new List<ParcelInCustomer> { };
             List<ParcelInCustomer> res2 = new List<ParcelInCustomer> { };
@@ -44,12 +44,14 @@ namespace IBL
         }
         public void AddCustomer(int Id, string Name, string PhoneNum, Location Location)
         {
-            myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat);
+            try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
+            catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
         }//
         public void UpdateCustomer(int Id, string Name, string PhoneNum)
         {
             var customer = myDalObject.CopyCustomer(Id);
-            myDalObject.RemoveCustomer(Id);
+            try { myDalObject.RemoveCustomer(Id); }
+            catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
             string name = customer.Name;
             if (Name != " ")
             {
@@ -60,14 +62,15 @@ namespace IBL
             {
                 phone = PhoneNum;
             }
-            myDalObject.AddCustomer(Id, name, phone, customer.Longitude, customer.Lattitude);
-        }//
+            try { myDalObject.AddCustomer(Id, name, phone, customer.Longitude, customer.Lattitude); }
+            catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+        }
         public Customer DisplayCustomer(int id)
         {
             var customer = myDalObject.CopyCustomer(id);
             Location location = new Location(customer.Longitude, customer.Lattitude);
-            IEnumerable<ParcelInCustomer> PtoC = listOfParcelsInC("PtoC", id);
-            IEnumerable<ParcelInCustomer> PfromC = listOfParcelsInC("PfromC", id);
+            IEnumerable<ParcelInCustomer> PtoC = ListOfParcelsInC("PtoC", id);
+            IEnumerable<ParcelInCustomer> PfromC = ListOfParcelsInC("PfromC", id);
             Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };
             return nCustomer;
         }

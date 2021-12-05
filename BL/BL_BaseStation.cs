@@ -10,12 +10,13 @@ namespace IBL
     {
         public void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge)
         {
-            myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Long, location.Lat);
+            try { myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Long, location.Lat); }
+            catch (IDAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
         }
         public void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
             int Check = 0;
-            foreach(IDAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
+            foreach(var baseStation in myDalObject.CopyBaseStations())
             {
                 if(baseStation.Id==Id)
                 {
@@ -23,15 +24,26 @@ namespace IBL
                     IDAL.DO.BaseStation nBaseStation = new IDAL.DO.BaseStation();
                     nBaseStation = baseStation;
 
-                    if (!(Name==" "))
+                    if (!(Name == " "))
                     {
                         nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
                     }
+                    else
+                        nBaseStation.Name = baseStation.Name;
                     if (!(NumOfChargeSlots == -1))
                     {
                         nBaseStation.ChargeSlots = NumOfChargeSlots;
                     }
-                    break;
+                    else
+                        nBaseStation.ChargeSlots = baseStation.ChargeSlots;
+                    try
+                    {
+                        myDalObject.RemoveBaseStation(baseStation.Id);
+                        myDalObject.AddBaseStation(baseStation.Id, nBaseStation.Name, nBaseStation.ChargeSlots, baseStation.Longitude, baseStation.Lattitude);
+                    }
+                    catch (IDAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    
+                    return;
                 }
             }
             foreach(BaseStationForList baseStation1 in baseStations)
@@ -50,9 +62,10 @@ namespace IBL
                         nbaseStation.AvailableChargingS = (NumOfChargeSlots - nbaseStation.UnAvailableChargingS);
                     }
                 }
+                ///////not sure which exceptions to de here or what you did here, i think maby you need to add the nBaseStation somewhere? or not? 
             }
             if (Check == 0)
-                throw new IDAL.DO.BaseStationNotFoundException();
+                throw new BaseStationNotFoundException();
         }//
         public BaseStationForList DisplayBaseStation(int id)
         {
@@ -65,15 +78,18 @@ namespace IBL
                     return nBaseStation;
                 }
             }
-            throw new BaseStationIdNotFoundException();
+            throw new BaseStationNotFoundException();
         }//
         public IEnumerable<BaseStationForList> DisplayBaseStationsList()
         {
-            List<BaseStationForList> nStationsList = new List<BaseStationForList>();
+            List<BaseStationForList> nStationsList = new();
             nStationsList = baseStations;
             return nStationsList;
-        }//
-        public void DisplayAvailableChargingStation() { }
+        }
+        public void DisplayAvailableChargingStation()
+        { 
+
+        }
 }
 }
 
