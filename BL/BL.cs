@@ -13,7 +13,7 @@ namespace IBL
         private IDal myDalObject;
         public List<DroneForList> drones;
         public List<BaseStationForList> baseStations;
-        private static Random r = new Random();
+        private static Random rand = new Random();
         bool isDroneInDelivering(DroneForList drone)
         {
             return true;
@@ -22,20 +22,57 @@ namespace IBL
         {
             myDalObject = new DalObject.DalObject();//initialize myDalObject
             drones = new List<DroneForList>();//drones list
-            //foreach(var drone in myDalObject.CopyDronesList())
-
-            //{
-            //    drones.Add(new DroneForList {DroneId = drone.Id, Model = drone.Model, MaxWeight = (Enums.WeightCategories)drone.MaxWeight });
-           
-            //}
+            initializeDrones();
+        }
+        private void initializeDrones()
+        {
+            foreach (var drone in myDalObject.CopyDronesList())
+            {
+                drones.Add(new DroneForList
+                {
+                    DroneId = drone.Id,
+                    Model = drone.Model,
+                    MaxWeight = WeightParcel(drone.MaxWeight)
+                });
+            }
             foreach (var drone in drones)
             {
-                if (isDroneInDelivering(drone))
+                if(droneWhileShipping(drone))
                 {
-                    drone.DroneStatus = Enums.DroneStatuses.Shipping;
+                    drone.DroneState = Enums.DroneStatuses.Shipping;
+                    //drone.Battery=rand.Next(MinBattery,100)
+                    if (ParcelNotPikedUpYet)
+                    {
+                        drone.CurrentLocation = findCloseBaseStationLocation(parcel.senderLocation);
+                    }
+                    else
+                    {
+                        if (ParcelPickedUpButNotDeliveredYet)
+                        {
+                            drone.CurrentLocation = parcel.senderLocation
+                        }
+                    }
+                }
+                else
+                {
+                    drone.DroneState = (Enums.DroneStatuses)rand.Next(1, 2);
+                    if (drone.DroneState == Enums.DroneStatuses.Maintenance)
+                    {
+                        //drone.CurrentLocation=rand.Next(baseStations)//location is random between the basestations
+                        drone.Battery = rand.NextDouble() + rand.Next(0, 20);
+                    }
+                    else
+                    { 
+                        if (drone.DroneState == Enums.DroneStatuses.Available)
+                        { 
+                            //drone.CurrentLocation=rand.Next(customers)//location is random between customers that parcels has just delivered to them
+                            //drone.Battery=rand.Next(MinBattery,100)
+                        }
+                    }
+
+
                 }
             }
-          
         }
     }
 }

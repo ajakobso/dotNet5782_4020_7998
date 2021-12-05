@@ -64,15 +64,6 @@ namespace IBL
             //res[1] = bsID;//the bs id
             return res;
         }
-        void IBL.AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
-        {
-            myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
-        }
-        void IBL.DeliveringParcelByDrone(int Id)
-        {
-            DroneForList drone = DisplayDrone(Id);
-            if ()
-        }//
         private Enums.WeightCategories WeightParcel(IDAL.DO.WeightCategories v)//convert frome IDAL.DO.WeightCategories to IBL.BO.WeightCategories 
         {
             Enums.WeightCategories w;
@@ -118,6 +109,10 @@ namespace IBL
                     break;
             }
             return false;
+        }
+        void IBL.AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
+        {
+            myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
         void IBL.AscriptionParcelToDrone(int Id) 
         {
@@ -172,10 +167,107 @@ namespace IBL
 
             }
         }
-        void IBL.DisplayParcel(int id) { }//
-        void IBL.PickUpParcel(int DId) { }//
-        void IBL.DisplayParcelsList() { }//
-        void IBL.DisplayUnAscriptedParcelsList() { }//
+        void IBL.PickUpParcel(int DId) 
+        {
+            DroneForList drone = DisplayDrone(Id);
+            var parcel = myDalObject.CopyParcel(drone.InDeliveringParcelId);
+            if (parcel.DroneId == DId && parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp == DateTime.MinValue)
+            {
+                double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
+                drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
+                drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
+                myDalObject.RemoveParcel(parcel);
+                parcel.PickedUp = DateTime.Now;
+                myDalObject.AddParcel(parcel);
+            }
+            //else
+            //   throw new ParcelCantBePickedUPException////////////////
+        }//
+        void IBL.DeliveringParcelByDrone(int Id)
+        {
+            DroneForList drone = DisplayDrone(Id);
+            var parcel = myDalObject.CopyParcel(drone.InDeliveringParcelId);
+            double batterySpent;
+            if (myDalObject.CopyParcel(drone.InDeliveringParcelId).Scheduleded <= DateTime.Now && myDalObject.CopyParcel(drone.InDeliveringParcelId).PickedUp == DateTime.MinValue)
+            {
+                double distanceBetweenSenderAndDst = Distance(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude, myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);//distance between sender and target
+                double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
+                double batteryPerKM = 0;//defult
+                switch ((Enums.WeightCategories)parcel.Weight)
+                {
+                    case Enums.WeightCategories.Light:
+                        batteryPerKM = myDalObject.DronePowerConsumingPerKM()[1];
+                        break;
+                    case Enums.WeightCategories.Middle:
+                        batteryPerKM = myDalObject.DronePowerConsumingPerKM()[2];
+                        break;
+                    case Enums.WeightCategories.Heavy:
+                        batteryPerKM = myDalObject.DronePowerConsumingPerKM()[3];
+                        break;
+                    default:
+                        break;
+                }
+                batterySpent = (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDroneAndSender) + (batteryPerKM * distanceBetweenSenderAndDst);
+                drone.Battery -= batterySpent;
+                drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
+                drone.DroneState = Enums.DroneStatuses.Available;
+                myDalObject.RemoveParcel(parcel);
+                parcel.Delivered = DateTime.Now;
+                myDalObject.AddParcel(parcel);
+            }
+            //else
+            //throw exceptiom////////////////////////////////////////
+        }//
+        Parcel IBL.DisplayParcel(int id) 
+        {
+            var parcel = myDalObject.CopyParcel(id);
+            DroneForList drone = DisplayDrone(parcel.DroneId);
+            DroneInParcel droneInParcel = new DroneInParcel { BatteryState = drone.Battery, DroneId = drone.DroneId, CurrentLocation = drone.CurrentLocation };
+            CustomerInParcel source = new CustomerInParcel { CustomerId = parcel.SenderId, CustomerName = myDalObject.CopyCustomer(parcel.SenderId).Name };
+            CustomerInParcel destination = new CustomerInParcel { CustomerId = parcel.TargetId, CustomerName = myDalObject.CopyCustomer(parcel.TargetId).Name };
+            Parcel nParcel = new Parcel { ParcelId = parcel.Id, ParcelWC = WeightParcel(parcel.Weight), ParcelCreationTime = parcel.Requested, ParcelAscriptionTime = parcel.Scheduleded, ParcelPickUpTime = parcel.PickedUp, ParcelDeliveringTime = parcel.Delivered, ParcelPriority = (Enums.Priorities)parcel.Priority, DInParcel = droneInParcel, DCIParcel = destination, SCIParcel = source };
+            return nParcel;
+        }//
+        IEnumerable<ParcelToList> IBL.DisplayParcelsList()
+        {
+            IEnumerable<IDAL.DO.Parcel> p = myDalObject.CopyParcelsList();
+            List<ParcelToList> nPList = new List<ParcelToList>();
+            foreach (var parcel in p)
+            {
+                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be done is to catch exception if parcel not found
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded == DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    pState = Enums.ParcelState.Created;
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    pState = Enums.ParcelState.Ascripted;
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp > DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    pState = Enums.ParcelState.PickedUp;
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp > DateTime.MinValue && parcel.Delivered > DateTime.MinValue)
+                    pState = Enums.ParcelState.Delivered;
+                ParcelToList nP = new ParcelToList { ParcelId = parcel.Id, ParcelPriority = (Enums.Priorities)parcel.Priority, SenderName = myDalObject.CopyCustomer(parcel.SenderId).Name, ReceiverName = myDalObject.CopyCustomer(parcel.TargetId).Name, ParcelWC = WeightParcel(parcel.Weight), ParcelState = pState };
+                nPList.Add(nP);
+            }
+            return nPList;
+        }//
+        IEnumerable<ParcelToList> IBL.DisplayUnAscriptedParcelsList()
+        {
+            IEnumerable<IDAL.DO.Parcel> p = myDalObject.UnAscriptedParcels();
+            List<ParcelToList> nPList = new List<ParcelToList>();
+            foreach(var parcel in p)
+            {
+                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be done is to catch exception if parcel not found
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded == DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    pState = Enums.ParcelState.Created;
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    pState = Enums.ParcelState.Ascripted;
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp > DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    pState = Enums.ParcelState.PickedUp;
+                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp > DateTime.MinValue && parcel.Delivered > DateTime.MinValue)
+                    pState = Enums.ParcelState.Delivered;
+                ParcelToList nP = new ParcelToList { ParcelId = parcel.Id, ParcelPriority = (Enums.Priorities)parcel.Priority, SenderName = myDalObject.CopyCustomer(parcel.SenderId).Name, ReceiverName = myDalObject.CopyCustomer(parcel.TargetId).Name, ParcelWC = WeightParcel(parcel.Weight), ParcelState = pState };
+                nPList.Add(nP);
+            }
+            return nPList;
+        }
 
     }
 }

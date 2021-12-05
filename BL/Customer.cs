@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public class customer
+    public class Customer
     {
         //partial class BL//מימוש הממשק IBL
         //{
@@ -14,9 +14,8 @@ namespace IBL.BO
             public string CustomerName { get; set; }
             public string CustomerPhone { get; set; }
             public Location Place { get; set; }
-            public ParcelInCustomer PICustomer { get; set; }//bc parcelincustomer is inernal but when it was public it casue problems
-            public IEnumerable<List<Drone>> ParcelsFromCustomer { get; set; }
-            public IEnumerable<List<Drone>> ParcelsToCustomer { get; set; }
+            public IEnumerable<ParcelInCustomer> ParcelsFromCustomer { get; set; }
+            public IEnumerable<ParcelInCustomer> ParcelsToCustomer { get; set; }
         //}
     }
 }

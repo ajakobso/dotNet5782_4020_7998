@@ -12,9 +12,9 @@ namespace IBL.BO
         //{
             public int CustomerId { get; set; }
             public string CustomerName { get; set; }
-            public int CustomerPhone { get; set; }
-            public int NumOfProvidedParcels { get; set; }
-            public int NumOfUnProvidedParcels { get; set; }
+            public string CustomerPhone { get; set; }
+            public int NumOfDeliveredParcels { get; set; }
+            public int NumOfUnDeliveredParcels { get; set; }
             public int NumOfRecivedParcels { get; set; }
             public int NumOfParcelsOnTheWay { get; set; }
         //}

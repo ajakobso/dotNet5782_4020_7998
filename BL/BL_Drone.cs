@@ -58,13 +58,12 @@ namespace IBL
         void IBL.DroneToCharge(int Id)
         {
             double NBattery;
-            foreach (DroneForList drone in BL.drones)
+            foreach (DroneForList drone in drones)
             {
                 double Battery;
                 if (drone.DroneState == Enums.DroneStatuses.Available)
                 {
-                    Location location = findCloseBaseStationLocation(drone);//////////אנחנו צריכות להגדיר פונקציה שתחשב מרחק וגם פונקציה שתחשב כמה בטריה לוקח כל מרחק
-                    Battery = myDalObject.BatteryUsage()[BatteryUsage.Available] * distance(drone.CurrentLocation, location);
+                    Battery = myDalObject.DronePowerConsumingPerKM()[0] * distanceFromBS(drone.CurrentLocation)[0];
                     if (Battery > drone.Battery)
                     {
                         throw new Exception();//////////////////////////////צריך להגדיר חריגה מתאימה

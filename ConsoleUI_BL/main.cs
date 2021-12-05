@@ -169,8 +169,8 @@ namespace ConsoleUI_BL
                                 string CName = Console.ReadLine();
                                 Console.WriteLine("new customer's phone number(optional, else enter ' '):\n");
                                 inp = Console.ReadLine();
-                                int CPNum;
-                                int.TryParse(inp, out CPNum);
+                                string CPNum;
+                                string.TryParse(inp, out CPNum);
                                 bl.UpdateCustomer(CId, CName, CPNum);
                                 break;
                             case Enums.NewUpdating.DroneToCharge:

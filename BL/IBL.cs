@@ -10,11 +10,11 @@ namespace IBL
     {
         void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge);
         void AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation);
-        void AddCustomer(int Id, string Name, string PhoneNum, Location Location);
+        public void AddCustomer(int Id, string Name, string PhoneNum, Location Location);
         void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority);
         void UpdateDrone(int Id, string Model);
         void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots);
-        void UpdateCustomer(int Id, string Name, int PhoneNum);
+        void UpdateCustomer(int Id, string Name, string PhoneNum);
         void DroneToCharge(int Id);
         void ReleaseDroneFromCharge(int Id, DateTime TimeInCharge);
         void AscriptionParcelToDrone(int Id);
@@ -22,13 +22,13 @@ namespace IBL
         void DeliveringParcelByDrone(int Id);
         BaseStationForList DisplayBaseStation(int id);
         DroneForList DisplayDrone(int id);
-        void DisplayCustomer(int id);
-        void DisplayParcel(int id);
+        Customer DisplayCustomer(int id);
+        Parcel DisplayParcel(int id);
         IEnumerable<BaseStationForList> DisplayBaseStationsList();
         IEnumerable<DroneForList> DisplayDronesList();
-        void DisplayCustomersList();
-        void DisplayParcelsList();
-        void DisplayUnAscriptedParcelsList();
+        IEnumerable<CustomerForList> DisplayCustomersList();
+        IEnumerable<ParcelToList> DisplayParcelsList();
+        IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();
         void DisplayAvailableChargingStation();
 
     }
