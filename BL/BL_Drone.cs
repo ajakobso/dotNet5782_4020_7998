@@ -61,7 +61,7 @@ namespace IBL
             foreach (DroneForList drone in BL.drones)
             {
                 double Battery;
-                if (drone.DroneState==Enums.DroneStatuses.Available)
+                if (drone.DroneState == Enums.DroneStatuses.Available)
                 {
                     Location location = findCloseBaseStationLocation(drone);//////////אנחנו צריכות להגדיר פונקציה שתחשב מרחק וגם פונקציה שתחשב כמה בטריה לוקח כל מרחק
                     Battery = myDalObject.BatteryUsage()[BatteryUsage.Available] * distance(drone.CurrentLocation, location);
@@ -70,9 +70,9 @@ namespace IBL
                         throw new Exception();//////////////////////////////צריך להגדיר חריגה מתאימה
                         break;
                     }
-                    foreach(IDAL.DO.Drone dalDrone in myDalObject.CopyDronesList())
+                    foreach (IDAL.DO.Drone dalDrone in myDalObject.CopyDronesList())
                     {
-                        if(dalDrone.Id==drone.DroneId)
+                        if (dalDrone.Id == drone.DroneId)
                         {
                             NBattery = dalDrone.Battery - Battery;
                             dalDrone.Battery -= Battery;
@@ -81,21 +81,28 @@ namespace IBL
                             dalDrone.DroneState = Enums.DroneStatuses.Maintenance;
                         }
                     }
-                    foreach(IDAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
+                    foreach (IDAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
                     {
                         if ((baseStation.Longitude == location.Longitude) && (baseStation.Latitude == location.Latitude))
                         {
                             baseStation.AvailableChargeSlots -= 1;
                         }
-                        
+
                     }
-                    DronesInCharge.Add({ DroneId=drone.DroneId, Battery= NBattery });
+                    foreach (BaseStation baseStation1 in baseStations)//רק בביאל..
+                    {
+                        if (baseStation1.StationLocation==location)
+                        {
+                            baseStation1.DInChargeList.Add({ DroneId = drone.DroneId, Battery = NBattery });//זה קיים רק ב בי אל..
+                        }
+                    }
+            
                 }
             }
         }//לממש
         void IBL.ReleaseDroneFromCharge(int Id, DateTime TimeInCharge)
         {
-
+            DroneForList nDrone = new DroneForList();
             foreach (DroneForList drone in drones)
             {
                 if(drone.DroneId==Id)
@@ -103,14 +110,47 @@ namespace IBL
                     if(!(drone.DroneStatus==Enums.DroneStatuses.Maintenance))
                     {
                         throw new IDAL.DO.DroneIdNotFoundException();
-                        return;
+                    }
+                    nDrone = drone;
+                    nDrone.Battery += ChargingBattery();//לממש!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    nDrone.DroneState = Enums.DroneStatuses.Available;
+                    foreach (IDAL.DO.BaseStation baseStation in myDalObject.BaseStations)
+                    {
+                        if ((nDrone.CurrentLocation.Longitude==baseStation.Longitude)&&(nDrone.CurrentLocation.Latitude==baseStation.Latitude))
+                        {
+                            baseStation.AvailableChargeSlots++;////////////////////////////////////
+                        }
+                    }
+                    foreach (BaseStation baseStation1 in baseStations)//רק בביאל..
+                    {
+                        if (baseStation1.StationLocation == nDrone.CurrentLocation)
+                        {
+                            baseStation1.DInChargeList.remove(nDrone);//זה קיים רק ב בי אל..
+                        }
                     }
 
                 }
             }
         }//לממש
-        void IBL.DisplayDrone(int id) { }//לממש
-        void IBL.DisplayDronesList() { }//לממש
-
+        DroneForList IBL.DisplayDrone(int id)
+        {
+            DroneForList nDrone = new DroneForList();
+            foreach (DroneForList drone in drones)
+            {
+                if (drone.DroneId == id)
+                {
+                    nDrone = drone;
+                    return nDrone;
+                }
+            }
+             throw new DroneIdNotFoundException();
+         //the function demend us to return a value, and because the return is inside a condition it cause an error
+        }//לממש
+        IEnumerable<DroneForList> IBL.DisplayDronesList()
+        {
+            IEnumerable<DroneForList> DronesList = drones;
+            return DronesList;
+        }//לממש
+        
     }
 }
