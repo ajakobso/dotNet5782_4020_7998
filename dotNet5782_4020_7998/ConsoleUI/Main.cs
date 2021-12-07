@@ -135,10 +135,10 @@ namespace ConsoleUI
                                 inp = Console.ReadLine();
                                 WeightCategories PWC;
                                 WeightCategories.TryParse(inp, out PWC);
-                                DateTime PRT = DateTime.Now;//parcel requested time
-                                DateTime PST = DateTime.MinValue;//parcel scheduled time
-                                DateTime PPUT = DateTime.MinValue;//parcel pick up time
-                                DateTime PDT = DateTime.MinValue;//parcel delivery time
+                                DateTime? PRT = DateTime.Now;//parcel requested time
+                                DateTime? PST = null;//parcel scheduled time
+                                DateTime? PPUT = null;//parcel pick up time
+                                DateTime? PDT = null;//parcel delivery time
                                 try
                                 { myDalObject.AddParcel(PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
                                 catch (IDAL.DO.AddParcelToAnAsscriptedDroneException)

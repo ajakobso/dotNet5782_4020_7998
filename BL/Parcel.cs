@@ -17,10 +17,10 @@ namespace IBL.BO
             public Enums.WeightCategories ParcelWC { get; set; }
             public Enums.Priorities ParcelPriority { get; set; }
             public DroneInParcel DInParcel { get; set; }
-            public DateTime ParcelCreationTime { get; set; }
-            public DateTime ParcelAscriptionTime { get; set; }
-            public DateTime ParcelPickUpTime { get; set; }
-            public DateTime ParcelDeliveringTime { get; set; }
+            public DateTime? ParcelCreationTime { get; set; }
+            public DateTime? ParcelAscriptionTime { get; set; }
+            public DateTime? ParcelPickUpTime { get; set; }
+            public DateTime? ParcelDeliveringTime { get; set; }
 
        
         //}

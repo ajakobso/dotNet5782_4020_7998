@@ -16,13 +16,13 @@ namespace IBL
             {
                 ParcelInCustomer nParcel;
                 Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be done is to catch exception if parcel not found
-                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded == DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Created;
-                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp == DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
-                    pState = Enums.ParcelState.Ascripted;
-                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp > DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
-                    pState = Enums.ParcelState.PickedUp;
-                if (parcel.Requested > DateTime.MinValue && parcel.Scheduleded > DateTime.MinValue && parcel.PickedUp > DateTime.MinValue && parcel.Delivered > DateTime.MinValue)
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null && parcel.Delivered == null)
+                    pState = Enums.ParcelState.Ascripted;          
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp != null && parcel.Delivered == null)
+                    pState = Enums.ParcelState.PickedUp;           
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp != null && parcel.Delivered != null)
                     pState = Enums.ParcelState.Delivered;
                 CustomerInParcel source = new CustomerInParcel { CustomerId = parcel.SenderId, CustomerName = myDalObject.CopyCustomer(parcel.SenderId).Name };
                 CustomerInParcel destination = new CustomerInParcel { CustomerId = parcel.TargetId, CustomerName = myDalObject.CopyCustomer(parcel.TargetId).Name };

@@ -91,7 +91,7 @@ namespace IBL
                     drone.InDeliveringParcelId = parcelId;
                     var c = myDalObject.CopyCustomer(parcel.SenderId);
                     Location sLocation = new Location(c.Longitude, c.Lattitude);
-                    if (parcel.PickedUp==DateTime.MinValue)
+                    if (parcel.PickedUp==null)
                     {
                         var bs = myDalObject.CopyBaseStation((int)distanceFromBS(sLocation)[1]);
                         Location bsLocation = new Location(bs.Longitude, bs.Lattitude);
@@ -99,7 +99,7 @@ namespace IBL
                     }
                     else
                     {
-                        if (parcel.PickedUp > DateTime.MinValue)
+                        if (parcel.PickedUp != null)
                         {
                             drone.CurrentLocation = sLocation;
                         }
