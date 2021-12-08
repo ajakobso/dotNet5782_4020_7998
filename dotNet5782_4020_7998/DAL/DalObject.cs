@@ -25,7 +25,6 @@ namespace DalObject//add exception of id that didnt found
                 {
                     throw new AddExistingBaseStationException();
                 }
-                if(())
             }
 
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
