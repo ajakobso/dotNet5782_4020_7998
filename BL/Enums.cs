@@ -7,9 +7,9 @@ namespace IBL.BO
     {
         //partial class BL//מימוש הממשק IBL
         //{
-        public enum DroneStatuses { Available, Maintenance, Shipping };
+        public enum DroneStatuses { Available, Maintenance, Shipping, All};
         public enum ParcelState { Created, Ascripted, PickedUp, Delivered };
-        public enum WeightCategories { Light, Middle, Heavy };
+        public enum WeightCategories { Light, Middle, Heavy, All};
         //public enum DroneStatuses { Available, Maintenance, Shipping };
         public enum Priorities { Standart, Fast, Urgent };
         public enum Inputs { a, p, d, l, e };

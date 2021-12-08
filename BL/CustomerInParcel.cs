@@ -8,10 +8,11 @@ namespace IBL.BO
 {
     public class CustomerInParcel
     {
-        //partial class BL//מימוש הממשק IBL
-        //{
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
-        //}
+        public override string ToString()
+        {
+            return $"id = {CustomerId}, name = {CustomerName}";
+        }
     }
 }

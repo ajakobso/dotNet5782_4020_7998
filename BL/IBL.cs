@@ -25,7 +25,7 @@ namespace IBL
         Customer DisplayCustomer(int id);
         Parcel DisplayParcel(int id);
         IEnumerable<BaseStationForList> DisplayBaseStationsList();
-        IEnumerable<DroneForList> DisplayDronesList();
+        IEnumerable<DroneForList> DisplayDronesList(Predicate<DroneForList> predicate);
         IEnumerable<CustomerForList> DisplayCustomersList();
         IEnumerable<ParcelToList> DisplayParcelsList();
         IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();//predict

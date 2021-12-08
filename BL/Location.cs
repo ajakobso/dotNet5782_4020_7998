@@ -14,6 +14,9 @@ namespace IBL.BO
         public double Long { get; set; }
         public double Lat { get; set; }
         public Location(double longitude, double lat) { Long = longitude; Lat = lat; Longitude = IDAL.DO.Coordinate.FromDouble(longitude); Latitude = IDAL.DO.Coordinate.FromDouble(lat); }//initalize the location
-        //}
+        public override string ToString()
+        {
+            return $"longitude = {Longitude}, lattitude = {Latitude} ";
+        }
     }
 }

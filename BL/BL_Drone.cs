@@ -155,12 +155,13 @@ namespace IBL
             }
              throw new DroneIdNotFoundException();
          //the function demend us to return a value, and because the return is inside a condition it cause an error
-        }//לממש
-        public IEnumerable<DroneForList> DisplayDronesList()
+        }
+        public IEnumerable<DroneForList> DisplayDronesList(Predicate<DroneForList> predicate)
         {
-            IEnumerable<DroneForList> DronesList = drones;
+            IEnumerable<DroneForList> DronesList = drones.FindAll(predicate);
             return DronesList;
-        }//לממש
+        }
+        
         public void RemoveDroneForList(int Id)
         {
             int Check = 0;

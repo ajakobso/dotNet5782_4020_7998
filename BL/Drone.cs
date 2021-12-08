@@ -15,6 +15,9 @@ namespace IBL.BO
         public double Battery { get; set; }
         public ParcelInDelivering DeliveryParcel { get; set; }
         public Location CurrentLocation { get; set; }
-
+        public override string ToString()
+        {
+            return $"id = {DroneId}, model = {Model}, max weight = {MaxWeight}, status = {DroneStatus}, battery = {Battery}, location = {CurrentLocation},parcel = {DeliveryParcel}";
+        }
     }
 }

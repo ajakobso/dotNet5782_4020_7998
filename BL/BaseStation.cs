@@ -13,7 +13,10 @@ namespace IBL.BO
         public Location StationLocation { get; set; }
         public int AvailableChargingS { get; set; }
         public List<DroneInCharge> DInChargeList { get; set; }
-
+        public override string ToString()
+        {
+            return $"id = {BaseStationId}, name = {StationName}, location = {StationLocation}, available charging stations = {AvailableChargingS}, drones in charge = {DInChargeList}";
+        }
        public void removeDInCharge(int id)
         {
             foreach(var drone in DInChargeList)

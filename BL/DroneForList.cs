@@ -15,6 +15,10 @@ namespace IBL.BO
         public double Battery { get; set; }
         public Location CurrentLocation { get; set; }
         public int InDeliveringParcelId { get; set; }//of course just in case there is a parcel in delivering
+        public override string ToString()
+        {
+            return $"id = {DroneId}, model = {Model}, max weight = {MaxWeight}, status = {DroneState}, battery = {Battery}, location = {CurrentLocation},parcel id = {InDeliveringParcelId}";
+        }
 
     }
 }

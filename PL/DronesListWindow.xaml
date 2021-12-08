@@ -18,12 +18,13 @@ VerticalAlignment="Stretch" Width="auto"  Background="#FFFFFDE7">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200" Height="71.1111111" Margin="-4,0,0,0" Grid.Column="1" Background="#FFFFFDE7"/>
-            <Label Content="StatusSelector" Grid.Column="0" Grid.ColumnSpan="2" Margin="29,13,171,-13" FontFamily="Berlin Sans FB Demi" FontSize="22"/>
-            <ComboBox Name="WeightSelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200" Height="71.1111111" Margin="-4,0,0,0" Grid.Column="3" Background="#FFFFFDE7">
-            </ComboBox>
-            <Label Content="WeightSelector" Grid.Column="2" Grid.ColumnSpan="2" Margin="30,15,170,-15" FontFamily="Berlin Sans FB Demi" FontSize="22"/>
+            <ComboBox Name="StatusSelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="160" Height="71.1111111" Margin="-4,0,0,0" Grid.Column="1" BorderBrush = "#FFFFFDE7" SelectionChanged="StatusSelector_SelectionChanged" Background="#FFFFFDE7" Foreground="#FFFFFDE7" OpacityMask="#FFFFFDE7"/>
+            <Label Name="StatusSelectorLabel" Content="Status Selector" Grid.Column="0" Margin="4,14,2,0" FontFamily="Berlin Sans FB Demi" FontSize="22"/>
+            <ComboBox Name="WeightSelector" Height="71.1111111" Margin="158,0,158,-2" Grid.Column="2" Background="#FFFFFDE7" SelectionChanged="WeightSelector_SelectionChanged" Grid.ColumnSpan="3" BorderBrush="#FFFFFDE7"/>
+            <Label Name="WeightSelectorLabel" Content="Weight Selector" Grid.Column="2" Margin="8,16,4,-17" FontFamily="Berlin Sans FB Demi" FontSize="22"/>
+            <Button x:Name="AddDroneWindowButton" Content="Add drone" Grid.Column="4" HorizontalAlignment="Center" Height="71.1111111" VerticalAlignment="Center" Width="160" FontFamily="Berlin Sans FB Demi" FontSize="22" Background="#FFFFFDE7" Click="AddDroneWindowButton_Click"/>
 
         </Grid>
         <ListView x:Name="DronesListView" Grid.Row="1">
