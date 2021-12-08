@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using IBL.BO;
 namespace IBL
 {
-    public interface IBL
+    public interface Ibl
     {
         void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge);
         void AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation);
@@ -28,8 +28,8 @@ namespace IBL
         IEnumerable<DroneForList> DisplayDronesList();
         IEnumerable<CustomerForList> DisplayCustomersList();
         IEnumerable<ParcelToList> DisplayParcelsList();
-        IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();
-        IEnumerable<BaseStationForList> DisplayAvailableChargingStation();
+        IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();//predict
+        IEnumerable<BaseStationForList> DisplayAvailableChargingStation();//predict
 
     }
 }

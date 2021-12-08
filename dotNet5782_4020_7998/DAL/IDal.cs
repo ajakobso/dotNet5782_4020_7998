@@ -31,8 +31,8 @@ namespace IDAL
         IEnumerable<Drone> CopyDronesList();
         IEnumerable<Customer> CopyCustomersList();
         IEnumerable<Parcel> CopyParcelsList();
-        IEnumerable<Parcel> UnAscriptedParcels();
-        IEnumerable<BaseStation> AvailableBaseStation();
+        IEnumerable<Parcel> UnAscriptedParcels();//change to predict
+        IEnumerable<BaseStation> AvailableBaseStation();//change to predict
     }
 
 }

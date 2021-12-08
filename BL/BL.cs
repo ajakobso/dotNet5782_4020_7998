@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DalObject;
 using IDAL;
 using IBL.BO;
 namespace IBL
 {
-    public partial class BL : IBL
+    public partial class BL : Ibl
     {
         private IDal myDalObject;
         public List<DroneForList> drones;
@@ -85,9 +82,7 @@ namespace IBL
                 if (parcelId!=-1)
                 {
                     var parcel = myDalObject.CopyParcel(parcelId);
-                    double minBattery = minimumBattery(drone, parcel);
                     drone.DroneState = Enums.DroneStatuses.Shipping;
-                    drone.Battery = rand.Next(((int)minBattery) + 1, 100) + rand.NextDouble();
                     drone.InDeliveringParcelId = parcelId;
                     var c = myDalObject.CopyCustomer(parcel.SenderId);
                     Location sLocation = new Location(c.Longitude, c.Lattitude);
@@ -104,6 +99,8 @@ namespace IBL
                             drone.CurrentLocation = sLocation;
                         }
                     }
+                    double minBattery = minimumBattery(drone, parcel);//random.NextDouble() * (maximum - minimum) + minimum
+                    drone.Battery = rand.NextDouble() * (100 - minBattery) + minBattery;
                 }
                 else
                 {
@@ -113,7 +110,7 @@ namespace IBL
                         int random = rand.Next(0, myDalObject.CopyBaseStations().Count());
                         Location randomBS = randomBSLocation(random);
                         drone.CurrentLocation = randomBS;
-                        drone.Battery = rand.NextDouble() + rand.Next(0, 20);
+                        drone.Battery = rand.NextDouble() * 20;
                     }
                     else
                     { 
@@ -124,7 +121,7 @@ namespace IBL
                             drone.CurrentLocation = randomCustomer;
                             var bs = myDalObject.CopyBaseStation((int)distanceFromBS(randomCustomer)[1]);
                             double minBattery = myDalObject.DronePowerConsumingPerKM()[0] * Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, bs.Longitude, bs.Lattitude);
-                            drone.Battery = rand.Next((int)minBattery + 1, 100) + rand.NextDouble();
+                            drone.Battery = rand.NextDouble() * (100 - minBattery) + minBattery;
                         }
                     }
 

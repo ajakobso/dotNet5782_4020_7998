@@ -8,15 +8,27 @@ namespace IBL
 {
     public partial class BL// : IBL.BO.IBL
     {
-        private double Distance(double long1, double lat1, double long2, double lat2)
+        private static double Distance(double long1, double lat1, double long2, double lat2)
         {
-            lat1 *= (Math.PI / 180.0);
-            long1 *= (Math.PI / 180.0);
-            lat2 *= (Math.PI / 180.0);
-            long2 *= (Math.PI / 180.0) - long1;
-            double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
-            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
+            //lat1 *= (Math.PI / 180.0);
+            //long1 *= (Math.PI / 180.0);
+            //lat2 *= (Math.PI / 180.0);
+            //long2 *= (Math.PI / 180.0) - long1;
+            //double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
+            //return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
+            double rlat1 = Math.PI * lat1 / 180;
+            double rlat2 = Math.PI * lat2 / 180;
+            double theta = long1 - long2;
+            double rtheta = Math.PI * theta / 180;
+            double dist =
+                (Math.Sin(rlat1) * Math.Sin(rlat2)) + (Math.Cos(rlat1) *
+            Math.Cos(rlat2) * Math.Cos(rtheta));
+            dist = Math.Acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+            return dist * 1.609344;
         }
+    
         private double minimumBattery(DroneForList drone, IDAL.DO.Parcel parcel)
         {
             Location location;
@@ -183,7 +195,7 @@ namespace IBL
         {
             DroneForList drone = DisplayDrone(DId);
             var parcel = myDalObject.CopyParcel(drone.InDeliveringParcelId);
-            if (parcel.DroneId == DId && parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp == null)
+            if (parcel.DroneId == DId && parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null)
             {
                 double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
                 drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
@@ -255,13 +267,13 @@ namespace IBL
             foreach (var parcel in p)
             {
                 Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be done is to catch exception if parcel not found
-                if (parcel.Requested > null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
+                if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Created;
-                if (parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp == null && parcel.Delivered == null)
-                    pState = Enums.ParcelState.Ascripted;
-                if (parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp > null && parcel.Delivered == null)
-                    pState = Enums.ParcelState.PickedUp;
-                if (parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp > null && parcel.Delivered > null)
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null && parcel.Delivered == null)
+                    pState = Enums.ParcelState.Ascripted;         
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp != null && parcel.Delivered == null)
+                    pState = Enums.ParcelState.PickedUp;                                      
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp != null && parcel.Delivered != null)
                     pState = Enums.ParcelState.Delivered;
                 ParcelToList nP = new ParcelToList { ParcelId = parcel.Id, ParcelPriority = (Enums.Priorities)parcel.Priority, SenderName = myDalObject.CopyCustomer(parcel.SenderId).Name, ReceiverName = myDalObject.CopyCustomer(parcel.TargetId).Name, ParcelWC = WeightParcel(parcel.Weight), ParcelState = pState };
                 nPList.Add(nP);
@@ -275,13 +287,13 @@ namespace IBL
             foreach(var parcel in p)
             {
                 Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be done is to catch exception if parcel not found
-                if (parcel.Requested > null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
+                if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Created;
-                if (parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp == null && parcel.Delivered == null)
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Ascripted;
-                if (parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp > null && parcel.Delivered == null)
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp != null && parcel.Delivered == null)
                     pState = Enums.ParcelState.PickedUp;
-                if (parcel.Requested > null && parcel.Scheduleded > null && parcel.PickedUp > null && parcel.Delivered > null)
+                if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp != null && parcel.Delivered != null)
                     pState = Enums.ParcelState.Delivered;
                 ParcelToList nP = new ParcelToList { ParcelId = parcel.Id, ParcelPriority = (Enums.Priorities)parcel.Priority, SenderName = myDalObject.CopyCustomer(parcel.SenderId).Name, ReceiverName = myDalObject.CopyCustomer(parcel.TargetId).Name, ParcelWC = WeightParcel(parcel.Weight), ParcelState = pState };
                 nPList.Add(nP);

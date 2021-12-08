@@ -10,7 +10,10 @@ namespace DalObject//add exception of id that didnt found
 {
     public class DalObject:IDal
     {
-
+        public DalObject()
+        {
+            DataSource.Initialize();
+        }
         public void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
         {
 
