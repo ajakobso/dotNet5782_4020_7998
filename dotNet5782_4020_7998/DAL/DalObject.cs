@@ -26,6 +26,10 @@ namespace DalObject//add exception of id that didnt found
                     throw new AddExistingBaseStationException();
                 }
             }
+            if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
+            {
+                throw new LocationOutOfRangeException();
+            }
 
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
@@ -38,6 +42,7 @@ namespace DalObject//add exception of id that didnt found
                 {
                     throw new AddExistingDroneException();
                 }
+                
             }
             DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model, Battery = Battery });//Battery = battery, Status = status
         }
@@ -48,6 +53,10 @@ namespace DalObject//add exception of id that didnt found
                 if (customer.Id == id)
                 {
                     throw new AddExistingCustomerException();
+                }
+                if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
+                {
+                    throw new LocationOutOfRangeException();
                 }
             }
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });

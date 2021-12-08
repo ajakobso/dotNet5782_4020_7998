@@ -22,6 +22,7 @@ namespace IBL
                     BStationLocation = new Location(baseStation.Longitude, baseStation.Lattitude);
                     try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model); }
                     catch (IDAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
+                    catch (IDAL.DO.LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
                     return;
                 }

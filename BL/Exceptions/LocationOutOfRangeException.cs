@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public class LocationOutOfRangeException:Exception
+    public class LocationOutOfRangeException : Exception
     {
         public LocationOutOfRangeException() { }
     }

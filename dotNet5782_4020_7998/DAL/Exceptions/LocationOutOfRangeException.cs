@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace DAL.Exceptions
+using IDAL.DO;
+namespace IDAL.DO
 {
-    class LocationOutOfRangeException
+    public class LocationOutOfRangeException : Exception
     {
-        public LocationOutOfRangeException()
-        {
-
-        }
+        public LocationOutOfRangeException() { }
     }
 }
+
+   

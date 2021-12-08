@@ -12,6 +12,7 @@ namespace IBL
         {
             try { myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Long, location.Lat); }
             catch (IDAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
+            catch (IDAL.DO.LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }
             BaseStationForList nBs = new BaseStationForList { BaseStationId = num, StationLocation = location, StationName = name, AvailableChargingS = numOfAvailableDCharge, UnAvailableChargingS = 0, DInChargeList = new List<DroneInCharge>() };
             baseStations.Add(nBs);
         }

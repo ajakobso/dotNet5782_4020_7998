@@ -46,6 +46,8 @@ namespace IBL
         {
             try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
             catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+            catch (IDAL.DO.LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }
+
         }//
         public void UpdateCustomer(int Id, string Name, string PhoneNum)
         {

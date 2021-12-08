@@ -73,7 +73,7 @@ namespace IDAL
         {
             case "NS":
                 return string.Format(
-                    "{0}° {1:00}' {2:00}.{3:000}\"S {4}",
+                    "{0}° {1:00}' {2:00}.{3:000}\" {4}",
                     this.Degrees,
                     this.Minutes,
                     this.Seconds,
