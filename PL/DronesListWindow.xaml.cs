@@ -20,14 +20,14 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
-        private Ibl bl;
+        private readonly Ibl bl;
         public DronesListWindow(Ibl bl)
         {
             InitializeComponent();
             this.bl = bl;
             DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
-            WeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.WeightCategories));
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.DroneStatuses));
+            WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
