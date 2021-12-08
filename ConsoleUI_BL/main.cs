@@ -58,7 +58,8 @@ namespace ConsoleUI_BL
                                 int.TryParse(inp, out BSChargeSlots);
                                 Location BSLocation = new Location(BSLongitude, BSLattitude);
                                 try { bl.AddBaseStation(BSId, BSName, BSLocation, BSChargeSlots); }//create a new base station with new values
-                                catch (AddExistingBaseStationException) { Console.WriteLine("ERROR - attemp to add an existing drone\n"); }
+                                catch (AddExistingBaseStationException) { Console.WriteLine("ERROR - attemp to add an existing base station\n"); }
+                                catch (LocationOutOfRangeException) { Console.WriteLine("ERROR- attemp to add base station out of Jerusalem\n"); }
                                 break;
                             case Enums.Adding.nDrone:
                                 Console.WriteLine("please enter:\n" + "drone's id\n");
@@ -79,6 +80,7 @@ namespace ConsoleUI_BL
                                 try { bl.AddDrone(DId, DModel, DWC, StationForCharging); }//create a new drone with new values
                                 catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - the base station for first charging not found\n"); }
                                 catch (AddExistingDroneException) { Console.WriteLine("ERROR - attemp to add an existing drone\n"); }
+                                catch (LocationOutOfRangeException) { Console.WriteLine("ERROR- attemp to add a drone out of Jerusalem\n"); }
                                 break;
                             case Enums.Adding.nCustomer:
                                 Console.WriteLine("please enter:\n+ customer's id:\n");
@@ -102,6 +104,7 @@ namespace ConsoleUI_BL
                                 Location Clocation = new Location(CLongitude, CLattitude);
                                 try { bl.AddCustomer(CId, CName, CPhone, Clocation); }//adding new customer with new values
                                 catch (AddExistingCustomerException) { Console.WriteLine("ERROR - attemp to add an existing customer\n"); }
+                                catch (LocationOutOfRangeException) { Console.WriteLine("ERROR- attemp to add a customer out of Jerusalem\n"); }
                                 break;
                             case Enums.Adding.nParcel:
                                 Console.WriteLine("please enter:\n");

@@ -16,7 +16,7 @@ namespace IBL.BO
         public Location(double longitude, double lat) { Long = longitude; Lat = lat; Longitude = IDAL.DO.Coordinate.FromDouble(longitude); Latitude = IDAL.DO.Coordinate.FromDouble(lat); }//initalize the location
         public override string ToString()
         {
-            return $"longitude = {Longitude}, lattitude = {Latitude} ";
+            return $"{Longitude.ToString("WE")} {Latitude.ToString("NS")}";
         }
     }
 }
