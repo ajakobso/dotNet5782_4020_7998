@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="DroneIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black"/>
+            <TextBox x:Name="DroneIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black" TextChanged="DroneIdTextBox_TextChanged"/>
             <Label x:Name="DroneIDLabel" Content="Drone ID" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <TextBox x:Name="DroneModelTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="DroneModelTextBox_TextChanged"/>
             <Label x:Name="DroneModelLabel" Content="Drone Model" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />

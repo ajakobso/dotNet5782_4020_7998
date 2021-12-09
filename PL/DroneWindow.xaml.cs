@@ -70,26 +70,28 @@ namespace PL
         private void DroneIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string input;
-            while (true)
+            input = DroneIdTextBox.Text;
+            bool isInt = int.TryParse(input, out DId);
+            if (isInt == false || DId < 0)
             {
-                input = DroneIdTextBox.Text;
-                bool isInt = int.TryParse(input, out DId);
-                if (isInt == false || DId < 0)
+                DroneIdTextBox.Foreground = Brushes.Red;
+                _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            }
+            else
+            {
+                if (isInt && DId >= 0)
                 {
-                    DroneIdTextBox.Foreground = Brushes.Red;
-                    _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-                }
-                else
-                {
-                    if (isInt && DId >= 0)
-                    {
-                        break;
-                    }
+                    DroneIdTextBox.Foreground = Brushes.Black;
+                    IdTextBoxChanged = true;
                 }
             }
-            DroneIdTextBox.Foreground = Brushes.Black;
-            IdTextBoxChanged = true;
         }
+
+        private void DroneIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
         private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             DModel = DroneModelTextBox.Text;

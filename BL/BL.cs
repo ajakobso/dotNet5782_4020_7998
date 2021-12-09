@@ -133,11 +133,13 @@ namespace IBL
         }
         public Location AddLocation(double longitude, double lat)
         {
+            _ = new double[2];
             double[] temp1 = myDalObject.CopyLongitudeRange();
+            _ = new double[2];
             double[] temp2 = myDalObject.CopyLattitudeRange();
             return temp1[0] < longitude && longitude < temp1[1] && temp2[0] < lat && lat < temp2[1]
-                ? AddLocation(longitude, lat)
-                : throw AddLocationOutOfRangeException();
+                ? new Location(longitude, lat)
+                : throw new LocationOutOfRangeException();
         }
     }
 }
