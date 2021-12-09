@@ -100,6 +100,7 @@ namespace DalObject//add exception of id that didnt found
             {
                 if (drone.Id == id)
                     DataSource.Config.Drones.Remove(drone);
+                return;
             }
             throw new DroneIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
