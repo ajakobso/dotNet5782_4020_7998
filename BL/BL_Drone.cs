@@ -24,6 +24,10 @@ namespace IBL
                     try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model); }
                     catch (IDAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
+                    if ((myDalObject.CopyLongitudeRange()[0] > location.Long) || (myDalObject.CopyLongitudeRange()[1] < location.Long) || (myDalObject.CopyLattitudeRange()[0] > location.Lat) || (myDalObject.CopyLattitudeRange()[1] < location.Lat))
+                    {
+                        throw new LocationOutOfRangeException();
+                    }
                     return;
                 }
             }
