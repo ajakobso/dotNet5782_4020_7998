@@ -48,7 +48,7 @@ namespace IBL
             //catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this in pl
             try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
             catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
-            if ((myDalObject.CopyLongitudeRange()[0] > location.Long) || (myDalObject.CopyLongitudeRange()[1] < location.Long) || (myDalObject.CopyLattitudeRange()[0] > location.Lat) || (myDalObject.CopyLattitudeRange()[1] < location.Lat))
+            if ((myDalObject.CopyLongitudeRange()[0] > Location.Long) || (myDalObject.CopyLongitudeRange()[1] < Location.Long) || (myDalObject.CopyLattitudeRange()[0] > Location.Lat) || (myDalObject.CopyLattitudeRange()[1] < Location.Lat))
             {
                 throw new LocationOutOfRangeException();
             }
