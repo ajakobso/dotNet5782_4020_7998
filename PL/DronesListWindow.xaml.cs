@@ -36,19 +36,11 @@ namespace PL
             if (WeightSelector.SelectedIndex > -1)//check if the second combo box selected
             {
                 Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-                DronesListView.ItemsSource = status == Enums.DroneStatuses.All && weight == Enums.WeightCategories.All
-                 ? bl.DisplayDronesList(x => x.DroneId == x.DroneId)
-                 : status == Enums.DroneStatuses.All
-                 ? bl.DisplayDronesList(x => x.DroneId == x.DroneId && x.MaxWeight == weight)
-                 : weight == Enums.WeightCategories.All
-                 ? bl.DisplayDronesList(x => x.DroneState == status && x.DroneId == x.DroneId)
-                 : bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
+                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
             }
             else
             {
-                DronesListView.ItemsSource = status == Enums.DroneStatuses.All
-                 ? bl.DisplayDronesList(x => x.DroneId == x.DroneId)
-                 : bl.DisplayDronesList(x => x.DroneState == status);
+                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status);
             }
         }
 
@@ -59,25 +51,22 @@ namespace PL
 
             {
                 Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
-                DronesListView.ItemsSource = status == Enums.DroneStatuses.All && weight == Enums.WeightCategories.All
-                 ? bl.DisplayDronesList(x => x.DroneId == x.DroneId)
-                 : status == Enums.DroneStatuses.All
-                 ? bl.DisplayDronesList(x => x.DroneId == x.DroneId && x.MaxWeight == weight)
-                 : weight == Enums.WeightCategories.All
-                 ? bl.DisplayDronesList(x => x.DroneState == status && x.DroneId == x.DroneId)
-                 : bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
+                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
             }
             else
             {
-                DronesListView.ItemsSource = weight == Enums.WeightCategories.All
-                    ? bl.DisplayDronesList(x => x.DroneId == x.DroneId)
-                    : bl.DisplayDronesList(x => x.MaxWeight == weight);
+                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.MaxWeight == weight);
             }
         }
 
         private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).Show();
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);
         }
     }
 }

@@ -6,6 +6,16 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="400">
+    <Window.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center">Please insert a integer</Label>
+                <Border BorderThickness="1" BorderBrush="Red">
+                    <AdornedElementPlaceholder />
+                </Border>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid x:Name="AddDroneGrid" >
             <Grid.RowDefinitions>
@@ -19,14 +29,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="14,0,0,0" Grid.Row="0" Text="please enter the drone's id here" TextWrapping="Wrap" VerticalAlignment="Center" Width="175"/>
-            <Label x:Name="DroneID" Content="Drone ID" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="14,0,0,0" Grid.Row="1" Text="please enter the drone's model here" TextWrapping="Wrap" VerticalAlignment="Center" Width="175"/>
-            <Label x:Name="DroneModel" Content="Drone Model" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <ComboBox x:Name="DroneWeightSelector" Text="choose the drone's weight" Grid.Column="1" HorizontalAlignment="Center" Height="18" Grid.Row="2" VerticalAlignment="Center" Width="122"/>
+            <TextBox x:Name="DroneIdTextBox"  Validation.ErrorTemplate="{StaticResource validationTemplate}" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="14,0,0,0" Grid.Row="0" Text="please enter the drone's id here" TextWrapping="Wrap" VerticalAlignment="Center" Width="175"/>
+            <Label x:Name="DroneIDLabel" Content="Drone ID" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <TextBox x:Name="DroneModelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="14,0,0,0" Grid.Row="1" Text="please enter the drone's model here" TextWrapping="Wrap" VerticalAlignment="Center" Width="175" TextChanged="DroneModelTextBox_TextChanged"/>
+            <Label x:Name="DroneModelLabel" Content="Drone Model" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <ComboBox x:Name="DroneWeightSelector" Text="choose the drone's weight" Grid.Column="1" HorizontalAlignment="Center" Height="18" Grid.Row="2" VerticalAlignment="Center" Width="122" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
             <Label x:Name="DroneWeight" Content="Drone weight" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <Label x:Name="BsID" Content="Base station ID" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="148" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="37" Margin="142,14,0,0" Grid.Row="5" VerticalAlignment="Top" Width="108" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="#FFFFFDE7" Click="AddDroneButton_Click" FontWeight="Bold">
+            <ComboBox x:Name="BsIdSelector" Text="choose Base station id" Grid.Column="1" HorizontalAlignment="Center" Height="18" Grid.Row="3" VerticalAlignment="Center" Width="122" SelectionChanged="BsIdSelector_SelectionChanged"/>
+            <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="37" Margin="142,14,0,0" Grid.Row="4" VerticalAlignment="Top" Width="108" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="#FFFFFDE7" Click="AddDroneButton_Click" FontWeight="Bold">
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>

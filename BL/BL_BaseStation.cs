@@ -83,11 +83,19 @@ namespace IBL
             }
             throw new BaseStationNotFoundException();
         }//
-        public IEnumerable<BaseStationForList> DisplayBaseStationsList()
+        public IEnumerable<BaseStationForList> DisplayBaseStationsList(Predicate<BaseStationForList> predicate)
         {
-            List<BaseStationForList> nStationsList = new();
-            nStationsList = baseStations;
+            List<BaseStationForList> nStationsList = baseStations.FindAll(predicate);
             return nStationsList;
+        }
+        public IEnumerable<int> DisplayBaseStationsId()
+        {
+            List<int> responce = new();
+            foreach(var bs in myDalObject.CopyBaseStations())
+            {
+                responce.Add(bs.Id);
+            }
+            return responce;
         }
         public IEnumerable<BaseStationForList> DisplayAvailableChargingStation()
         {

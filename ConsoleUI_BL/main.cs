@@ -299,7 +299,7 @@ namespace ConsoleUI_BL
                         switch (l)
                         {
                             case Enums.ListsDisplaying.BaseStationsList:
-                                bl.DisplayBaseStationsList();
+                                bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
                                 break;
                             case Enums.ListsDisplaying.DronesList:
                                 bl.DisplayDronesList(x=> x.DroneId == x.DroneId);
