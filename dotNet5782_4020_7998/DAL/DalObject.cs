@@ -8,7 +8,7 @@ using IDAL;
 
 namespace DalObject//add exception of id that didnt found
 {
-    public class DalObject:IDal
+    public class DalObject : IDal
     {
         public DalObject()
         {
@@ -26,25 +26,24 @@ namespace DalObject//add exception of id that didnt found
                     throw new AddExistingBaseStationException();
                 }
             }
-            if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
-            {
-                throw new LocationOutOfRangeException();
-            }
+            //if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
+            //{
+            //    throw new LocationOutOfRangeException();
+            //}
 
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
-        public void AddDrone(int id,double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
+        public void AddDrone(int id, double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
             foreach (Drone drone in DataSource.Config.Drones)
             {
-
                 if (drone.Id == id)
                 {
                     throw new AddExistingDroneException();
                 }
-                
+
             }
-            DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model, Battery = Battery });//Battery = battery, Status = status
+            DataSource.Config.Drones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
         }
         public void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
@@ -54,32 +53,32 @@ namespace DalObject//add exception of id that didnt found
                 {
                     throw new AddExistingCustomerException();
                 }
-                if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
-                {
-                    throw new LocationOutOfRangeException();
-                }
+                //if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
+                //{
+                //    throw new LocationOutOfRangeException();
+                //}
             }
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });
         }
         public void AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered)
         {
             foreach (Parcel parcel in DataSource.Config.Parcels)
-                {
+            {
 
-                    if (parcel.DroneId == droneId)
-                    {
+                if (parcel.DroneId == droneId)
+                {
                     DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
                     throw new AddParcelToAnAsscriptedDroneException();
-                    }
                 }
-            
-    
+            }
+
+
             DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
-        
+
         public void RemoveCustomer(int id)
         {
-            foreach(var customer in DataSource.Config.Customers)
+            foreach (var customer in DataSource.Config.Customers)
             {
                 if (customer.Id == id)
                     DataSource.Config.Customers.Remove(customer);
@@ -125,7 +124,7 @@ namespace DalObject//add exception of id that didnt found
                     droneExsists = true;
                 }
             }
-            if (droneExsists==false)
+            if (droneExsists == false)
                 throw new DroneIdNotFoundException();
             foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel
             {
@@ -136,7 +135,7 @@ namespace DalObject//add exception of id that didnt found
                 }
             }
             if (parcelExsists)
-            { p.DroneId = droneId;p.Scheduleded = DateTime.Now; }
+            { p.DroneId = droneId; p.Scheduleded = DateTime.Now; }
             else
                 throw new ParcelIdNotFoundException();
 
@@ -370,6 +369,6 @@ namespace DalObject//add exception of id that didnt found
             return nList;
         }
 
-    } 
+    }
 }
 

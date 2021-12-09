@@ -83,7 +83,7 @@ namespace ConsoleUI_BL
                                 catch (LocationOutOfRangeException) { Console.WriteLine("ERROR- attemp to add a drone out of Jerusalem\n"); }
                                 break;
                             case Enums.Adding.nCustomer:
-                                Console.WriteLine("please enter:\n+ customer's id:\n");
+                                Console.WriteLine("please enter:\n"+ "customer's id:\n");
                                 int CId;
                                 inp = Console.ReadLine();
                                 int.TryParse(inp, out CId);
@@ -138,7 +138,7 @@ namespace ConsoleUI_BL
                               "Customer: Update a customer\n" +
                               "DroneToAscriptionPToDCharge: Sending a drone to charge at a base station \n" +
                               "DroneRealese: Release drone from charging at a base station\n" +
-                              ": Ascription of a parcel to a drone\n" +
+                              "Asc: Ascription of a parcel to a drone\n" +
                               "PickUpParcel: picking up parcel by a drone\n" +
                               "DeliveringPByD: delivere of a parcel by a drone\n");
                             Enums.NewUpdating u;
@@ -151,7 +151,7 @@ namespace ConsoleUI_BL
                                     inp = Console.ReadLine();
                                     int NewDID;
                                     int.TryParse(inp, out NewDID);
-                                    Console.WriteLine("drone model:\n");
+                                    Console.WriteLine("drone's new model:\n");
                                     inp = Console.ReadLine();
                                     bl.UpdateDrone(NewDID, inp);
                                     break;
