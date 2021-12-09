@@ -137,8 +137,9 @@ namespace IBL
             double[] temp1 = myDalObject.CopyLongitudeRange();
             _ = new double[2];
             double[] temp2 = myDalObject.CopyLattitudeRange();
-            return temp1[0] < longitude && longitude < temp1[1] && temp2[0] < lat && lat < temp2[1]
-                ? new Location(longitude, lat)
+            Location location = new Location(longitude, lat);
+            return (temp1[0] < longitude && longitude < temp1[1] && temp2[0] < lat && lat < temp2[1])
+                ? location
                 : throw new LocationOutOfRangeException();
         }
     }

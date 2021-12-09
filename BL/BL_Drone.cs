@@ -24,6 +24,7 @@ namespace IBL
                     try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model); }
                     catch (IDAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
+                   
                     return;
                 }
             }

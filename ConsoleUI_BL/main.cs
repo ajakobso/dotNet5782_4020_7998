@@ -83,7 +83,7 @@ namespace ConsoleUI_BL
                                 catch (LocationOutOfRangeException) { Console.WriteLine("ERROR- attemp to add a drone out of Jerusalem\n"); }
                                 break;
                             case Enums.Adding.nCustomer:
-                                Console.WriteLine("please enter:\n+ customer's id:\n");
+                                Console.WriteLine("please enter:\n"+ "customer's id:\n");
                                 int CId;
                                 inp = Console.ReadLine();
                                 int.TryParse(inp, out CId);
@@ -138,7 +138,7 @@ namespace ConsoleUI_BL
                               "Customer: Update a customer\n" +
                               "DroneToAscriptionPToDCharge: Sending a drone to charge at a base station \n" +
                               "DroneRealese: Release drone from charging at a base station\n" +
-                              ": Ascription of a parcel to a drone\n" +
+                              "Asc: Ascription of a parcel to a drone\n" +
                               "PickUpParcel: picking up parcel by a drone\n" +
                               "DeliveringPByD: delivere of a parcel by a drone\n");
                             Enums.NewUpdating u;
@@ -151,7 +151,7 @@ namespace ConsoleUI_BL
                                     inp = Console.ReadLine();
                                     int NewDID;
                                     int.TryParse(inp, out NewDID);
-                                    Console.WriteLine("drone model:\n");
+                                    Console.WriteLine("drone's new model:\n");
                                     inp = Console.ReadLine();
                                     bl.UpdateDrone(NewDID, inp);
                                     break;
@@ -168,6 +168,7 @@ namespace ConsoleUI_BL
                                     int.TryParse(inp, out CSNumber);
                                     try { bl.UpdateBaseStation(BSId, BSName, CSNumber); }
                                     catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - attemp to update non-exists base station\n"); }
+                  
                                     break;
                                 case Enums.NewUpdating.Customer:
                                     Console.WriteLine("please enter:\n" + "customer id:\n");
@@ -242,7 +243,7 @@ namespace ConsoleUI_BL
                         Enums.Displaying d;
                         Console.WriteLine("What do you want to add?\n" +
                             "DBaseStation: display a base station\n" +
-                            "Ddrone: display a drone\n" +
+                            "DDrone: display a drone\n" +
                             "DCustomer: display a customer\n" +
                             "DParcel: display a parcel\n");
                         inp = Console.ReadLine();
@@ -265,21 +266,33 @@ namespace ConsoleUI_BL
                                 inp = Console.ReadLine();
                                 int DDId;//display drone id
                                 int.TryParse(inp, out DDId);
-                                bl.DisplayDrone(DDId);
+                                DroneForList df;
+                                try 
+                                { df = bl.DisplayDrone(DDId); }
+                                catch(DroneIdNotFoundException) { Console.WriteLine("ERROR- there is no drone matching the id tou entered"); break; }
+                                Console.WriteLine($"Id: {df.DroneId}, Model: {df.Model}, Battery: {df.Battery}, Location: {df.CurrentLocation}, Max weight: {df.MaxWeight}, Drone state: {df.DroneState}, Parcels in delivering: {df.InDeliveringParcelId}");
                                 break;
                             case Enums.Displaying.DCustomer:
                                 Console.WriteLine("please enter customer id:\n");
                                 inp = Console.ReadLine();
                                 int DCId;
                                 int.TryParse(inp, out DCId);
-                                bl.DisplayCustomer(DCId);
+                                Customer cf;
+                                try 
+                                {cf = bl.DisplayCustomer(DCId); }
+                                catch(CustomerNotFoundException) { Console.WriteLine("ERROE- there is no customer matching the id you entered"); break; }
+                                Console.WriteLine($"id: {cf.CustomerId}, name: {cf.CustomerName}, phone: {cf.CustomerPhone}, parcels delivered from customer: {cf.ParcelsFromCustomer}, parcels delivered to customer: {cf.ParcelsToCustomer}, place: {cf.Place}");
                                 break;
                             case Enums.Displaying.DParcel:
                                 Console.WriteLine("please enter parcel id:\n");
                                 inp = Console.ReadLine();
                                 int DPId;
                                 int.TryParse(inp, out DPId);//display parcel id
-                                bl.DisplayParcel(DPId);
+                                Parcel pc;
+                                try 
+                                { pc= bl.DisplayParcel(DPId); }
+                                catch(ParcelIdNotFoundException) { Console.WriteLine("ERROR- there is no parcel matching the id you rntered"); break; }
+                                Console.WriteLine($"id: {pc.ParcelId}, weight category: {pc.ParcelWC}");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 break;
                             default:
                                 break;

@@ -44,11 +44,15 @@ namespace IBL
         }
         public void AddCustomer(int Id, string Name, string PhoneNum, Location Location)
         {
-            try { Location = AddLocation(Location.Long, Location.Lat); }
-            catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this in pl
+            //try { Location = AddLocation(Location.Long, Location.Lat); }
+            //catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this in pl
+            if ((myDalObject.CopyLongitudeRange()[0] > Location.Long) || (myDalObject.CopyLongitudeRange()[1] < Location.Long) || (myDalObject.CopyLattitudeRange()[0] > Location.Lat) || (myDalObject.CopyLattitudeRange()[1] < Location.Lat))
+            {
+                throw new LocationOutOfRangeException();
+            }
             try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
             catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
-            
+          
 
         }//
         public void UpdateCustomer(int Id, string Name, string PhoneNum)
