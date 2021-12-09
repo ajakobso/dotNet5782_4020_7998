@@ -44,9 +44,11 @@ namespace IBL
         }
         public void AddCustomer(int Id, string Name, string PhoneNum, Location Location)
         {
+            try { Location = AddLocation(Location.Long, Location.Lat); }
+            catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this in pl
             try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
             catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
-            catch (IDAL.DO.LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }
+            
 
         }//
         public void UpdateCustomer(int Id, string Name, string PhoneNum)
@@ -70,7 +72,7 @@ namespace IBL
         public Customer DisplayCustomer(int id)
         {
             var customer = myDalObject.CopyCustomer(id);
-            Location location = new Location(customer.Longitude, customer.Lattitude);
+            Location location = AddLocation(customer.Longitude, customer.Lattitude);
             IEnumerable<ParcelInCustomer> PtoC = ListOfParcelsInC("PtoC", id);
             IEnumerable<ParcelInCustomer> PfromC = ListOfParcelsInC("PfromC", id);
             Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };

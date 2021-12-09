@@ -12,6 +12,7 @@ namespace IBL
         void AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation);
         void AddCustomer(int Id, string Name, string PhoneNum, Location Location);
         void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority);
+        Location AddLocation(double longitude, double lat);
         void UpdateDrone(int Id, string Model);
         void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots);
         void UpdateCustomer(int Id, string Name, string PhoneNum);

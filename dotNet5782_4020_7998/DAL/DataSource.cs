@@ -22,6 +22,8 @@ namespace DalObject
             internal static double HeavyWeight = 5;//20 KM for a full battery
             internal static double BatteryPerHour = 60;//we have dicided that the delivering company will operate only in jerusalem, so 1 precent per minut make sense.
             internal static int RunningParcelId = 1001;//running number for the parcels id
+            internal static double[] LongitudeRange = { 35.1252, 35.2642 };//longitude coordinates of jerusalem
+            internal static double[] LattitudeRange = { 31.7082, 31.8830 };//lattitude coordinates of jerusalem
         }
         //מתודה סטטית  לאיתחול מופעי הישויות עם נתונים וכו
         public static void Initialize()

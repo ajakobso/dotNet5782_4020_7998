@@ -26,7 +26,9 @@ namespace IDAL
         Drone CopyDrone(int droneId);
         Customer CopyCustomer(int customerId);
         Parcel CopyParcel(int parcelId);
-        double[] DronePowerConsumingPerKM();//check that
+        double[] DronePowerConsumingPerKM();
+        double[] CopyLongitudeRange();
+        double[] CopyLattitudeRange();
         IEnumerable<BaseStation> CopyBaseStations();
         IEnumerable<Drone> CopyDronesList();
         IEnumerable<Customer> CopyCustomersList();

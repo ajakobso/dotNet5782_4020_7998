@@ -76,6 +76,7 @@ namespace DalObject//add exception of id that didnt found
     
             DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
+        
         public void RemoveCustomer(int id)
         {
             foreach(var customer in DataSource.Config.Customers)
@@ -314,7 +315,16 @@ namespace DalObject//add exception of id that didnt found
             DPC[4] = DataSource.Config.BatteryPerHour;
             return DPC;
         }
-
+        public double[] CopyLongitudeRange()
+        {
+            double[] responce = { DataSource.Config.LongitudeRange[0], DataSource.Config.LongitudeRange[1] };
+            return responce;
+        }
+        public double[] CopyLattitudeRange()
+        {
+            double[] responce = { DataSource.Config.LattitudeRange[0], DataSource.Config.LattitudeRange[1] };
+            return responce;
+        }
         public IEnumerable<BaseStation> CopyBaseStations()//return copy of the base stations's list
         {
             IEnumerable<BaseStation> copyBS = DataSource.Config.BaseStations;

@@ -32,7 +32,7 @@ namespace IBL
         private double minimumBattery(DroneForList drone, IDAL.DO.Parcel parcel)
         {
             Location location;
-            location = new Location(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
+            location = AddLocation(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
             double distanceBetweenSenderAndDst = Distance(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude, myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);//distance between sender and target
             double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
             double distanceBetweenDstAndBs = distanceFromBS(location)[0];//distance from target to closest bs
@@ -199,7 +199,7 @@ namespace IBL
             {
                 double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
                 drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
-                drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
+                drone.CurrentLocation = AddLocation(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
                 try { myDalObject.RemoveParcel(parcel.Id); }
                 catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                 catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
@@ -237,7 +237,7 @@ namespace IBL
                 }
                 batterySpent = (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDroneAndSender) + (batteryPerKM * distanceBetweenSenderAndDst);
                 drone.Battery -= batterySpent;
-                drone.CurrentLocation = new Location(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
+                drone.CurrentLocation = AddLocation(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
                 drone.DroneState = Enums.DroneStatuses.Available;
                 try { myDalObject.RemoveParcel(parcel.Id); }
                 catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }

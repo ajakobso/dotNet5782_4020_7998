@@ -49,7 +49,7 @@ namespace IBL
             {
                 if (counter==num)
                 {
-                    bsLocation = new Location(bs.Longitude, bs.Lattitude);
+                    bsLocation = AddLocation(bs.Longitude, bs.Lattitude);
                     return bsLocation;
                 }
             }
@@ -85,11 +85,11 @@ namespace IBL
                     drone.DroneState = Enums.DroneStatuses.Shipping;
                     drone.InDeliveringParcelId = parcelId;
                     var c = myDalObject.CopyCustomer(parcel.SenderId);
-                    Location sLocation = new Location(c.Longitude, c.Lattitude);
+                    Location sLocation = AddLocation(c.Longitude, c.Lattitude);
                     if (parcel.PickedUp==null)
                     {
                         var bs = myDalObject.CopyBaseStation((int)distanceFromBS(sLocation)[1]);
-                        Location bsLocation = new Location(bs.Longitude, bs.Lattitude);
+                        Location bsLocation = AddLocation(bs.Longitude, bs.Lattitude);
                         drone.CurrentLocation = bsLocation;
                     }
                     else
@@ -130,6 +130,14 @@ namespace IBL
                 drones.Add(drone);
             }
 
+        }
+        public Location AddLocation(double longitude, double lat)
+        {
+            double[] temp1 = myDalObject.CopyLongitudeRange();
+            double[] temp2 = myDalObject.CopyLattitudeRange();
+            return temp1[0] < longitude && longitude < temp1[1] && temp2[0] < lat && lat < temp2[1]
+                ? AddLocation(longitude, lat)
+                : throw AddLocationOutOfRangeException();
         }
     }
 }

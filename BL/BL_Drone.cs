@@ -19,10 +19,10 @@ namespace IBL
             {
                 if (baseStation.Id == Bstation)
                 {
-                    BStationLocation = new Location(baseStation.Longitude, baseStation.Lattitude);
+                    try { BStationLocation = AddLocation(baseStation.Longitude, baseStation.Lattitude); }
+                    catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
                     try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (IDAL.DO.WeightCategories)MaxWeight, Model); }
                     catch (IDAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
-                    catch (IDAL.DO.LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
                     return;
                 }
@@ -62,8 +62,8 @@ namespace IBL
                 double Battery;
                 if (drone.DroneState == Enums.DroneStatuses.Available)
                 {
-                    Location droneLocation = new Location(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
-                    Location location = new Location(myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
+                    Location droneLocation = AddLocation(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
+                    Location location = AddLocation(myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
                     Battery = myDalObject.DronePowerConsumingPerKM()[0] * distanceFromBS(drone.CurrentLocation)[0];
                     if (Battery > drone.Battery)
                     {

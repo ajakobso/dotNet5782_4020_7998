@@ -26,6 +26,7 @@ namespace PL
         private IBL.BO.Enums.WeightCategories DWeight;
         private int BsId;
         private bool IdTextBoxChanged, ModelTextBoxChanged;
+        private bool InputError;
         
         public DroneWindow(Ibl bl)//add drone constractor
         {
@@ -48,9 +49,10 @@ namespace PL
             if (BsIdSelector.SelectedIndex > -1 && DroneWeightSelector.SelectedIndex > -1 && ModelTextBoxChanged && IdTextBoxChanged)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to add this drone?", "Add Drone", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-                if (result == MessageBoxResult.Yes /*&& input is valid*/)
+                if (result == MessageBoxResult.Yes)
                 {
-                    bl.AddDrone(DId, DModel, DWeight, BsId);//add try and catch with the proper exceptions from the bl.exceptions
+                    try { bl.AddDrone(DId, DModel, DWeight, BsId); }//add try and catch with the proper exceptions from the bl.exceptions
+                    catch (IBL.BO.LocationOutOfRangeException) { MessageBox.Show("the location of the base station tou choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                 }
             }
         }
@@ -67,7 +69,25 @@ namespace PL
 
         private void DroneIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DId = Convert.ToInt32(DroneIdTextBox.Text);
+            string input;
+            while (true)
+            {
+                input = DroneIdTextBox.Text;
+                bool isInt = int.TryParse(input, out DId);
+                if (isInt == false || DId < 0)
+                {
+                    DroneIdTextBox.Foreground = Brushes.Red;
+                    _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                }
+                else
+                {
+                    if (isInt && DId >= 0)
+                    {
+                        break;
+                    }
+                }
+            }
+            DroneIdTextBox.Foreground = Brushes.Black;
             IdTextBoxChanged = true;
         }
         private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
