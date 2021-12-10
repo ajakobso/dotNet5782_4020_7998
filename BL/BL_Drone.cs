@@ -119,6 +119,8 @@ namespace IBL
                     }
                     nDrone = drone;
                     nDrone.Battery += TimeInCharge*myDalObject.DronePowerConsumingPerKM()[4];
+                    if (nDrone.Battery > 100)
+                    { nDrone.Battery = 100; }
                     nDrone.DroneState = Enums.DroneStatuses.Available;
                     foreach (var baseStation in myDalObject.CopyBaseStations())
                     {

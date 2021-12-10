@@ -21,13 +21,12 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private readonly Ibl bl;
-        private int DId;
-        private string DModel;
-        private IBL.BO.Enums.WeightCategories DWeight;
+        private IBL.BO.DroneForList drone;//for action
+        private int id;
         private int BsId;
         private bool IdTextBoxChanged, ModelTextBoxChanged;
-        private bool InputError;
-        
+        private DateTime In, Out;//in and out time of sending drone to charge
+
         public DroneWindow(Ibl bl)//add drone constractor
         {
             InitializeComponent();
@@ -42,17 +41,29 @@ namespace PL
             this.bl = bl;
             InitializeComponent();
             ActionsOnDroneGrid.Visibility = Visibility.Visible;
+            drone = bl.DisplayDrone(droneId);
+            DroneView.ItemsSource = bl.DisplayDrone(droneId).ToString();
+            
         }
 
+        private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            drone.Model = DroneModelTextBox.Text;
+            ModelTextBoxChanged = true;
+        }
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
             if (BsIdSelector.SelectedIndex > -1 && DroneWeightSelector.SelectedIndex > -1 && ModelTextBoxChanged && IdTextBoxChanged)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to add this drone?", "Add Drone", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-                if (result == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes)//the exe callapse here//////////////////////////
                 {
-                    try { bl.AddDrone(DId, DModel, DWeight, BsId); }//add try and catch with the proper exceptions from the bl.exceptions
+                    try { bl.AddDrone(id, drone.Model, drone.MaxWeight, BsId); }//add try and catch with the proper exceptions from the bl.exceptions
                     catch (IBL.BO.LocationOutOfRangeException) { MessageBox.Show("the location of the base station tou choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    ModelTextBoxChanged = false;
+                    IdTextBoxChanged = false;
+                    new DronesListWindow(bl, true);
+                    Close();
                 }
             }
         }
@@ -64,22 +75,22 @@ namespace PL
 
         private void DroneWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DWeight = (IBL.BO.Enums.WeightCategories)DroneWeightSelector.SelectedItem;
+            drone.MaxWeight = (IBL.BO.Enums.WeightCategories)DroneWeightSelector.SelectedItem;
         }
 
         private void DroneIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string input;
             input = DroneIdTextBox.Text;
-            bool isInt = int.TryParse(input, out DId);
-            if (isInt == false || DId < 0)
+            bool isInt = int.TryParse(input, out id);
+            if (isInt == false || drone.DroneId < 0)
             {
                 DroneIdTextBox.Foreground = Brushes.Red;
                 _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
             else
             {
-                if (isInt && DId >= 0)
+                if (isInt && id >= 0)
                 {
                     DroneIdTextBox.Foreground = Brushes.Black;
                     IdTextBoxChanged = true;
@@ -87,15 +98,82 @@ namespace PL
             }
         }
 
-        private void DroneIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
 
-        private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DModel = DroneModelTextBox.Text;
+            drone.Model = DroneModelTextBox.Text;
             ModelTextBoxChanged = true;
+        }
+
+        private void ModelUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (drone.DroneState == IBL.BO.Enums.DroneStatuses.Available)
+            {
+                bl.UpdateDrone(drone.DroneId, drone.Model);//try catch
+                SuccessOperation();
+            }//we to do this in try and catch and catch any exception that might be thrown from bl.
+            
+        }
+
+        private void ChargeIn_Click(object sender, RoutedEventArgs e)
+        {
+            if(drone.DroneState == IBL.BO.Enums.DroneStatuses.Available)
+            {
+                In = DateTime.Now;
+                bl.DroneToCharge(drone.DroneId);//we to do this in try and catch and catch any exception that might be thrown from bl.
+                
+            }
+        }
+
+        
+        private void PickUpParcel_Click(object sender, RoutedEventArgs e)
+        {
+            IBL.BO.Parcel parcel = bl.DisplayParcel(drone.InDeliveringParcelId);
+            if(parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime==null && drone.DroneState==IBL.BO.Enums.DroneStatuses.Shipping)
+            {
+                bl.PickUpParcel(drone.DroneId);//we to do this in try and catch and catch any exception that might be thrown from bl.
+            }
+        }
+
+        private void DeliverParcel_Click(object sender, RoutedEventArgs e)
+        {
+            IBL.BO.Parcel parcel = bl.DisplayParcel(drone.InDeliveringParcelId);
+            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null && drone.DroneState == IBL.BO.Enums.DroneStatuses.Shipping)
+            {
+                bl.DeliveringParcelByDrone(drone.DroneId);//we to do this in try and catch and catch any exception that might be thrown from bl.
+            }
+        }
+
+        private void SendDrone_Click(object sender, RoutedEventArgs e)//should be a refernce i done know why there is not i think it could cause an error
+        {
+            bl.AscriptionParcelToDrone(drone.DroneId);//we to do this in try and catch and catch any exception that might be thrown from bl.
+        }
+
+        private void ChargeOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (drone.DroneState == IBL.BO.Enums.DroneStatuses.Maintenance)
+            {
+                Out = DateTime.Now;
+                TimeSpan time = In - Out;
+                double timeInCharge = time.TotalHours;
+                bl.ReleaseDroneFromCharge(drone.DroneId, timeInCharge);//we to do this in try and catch and catch any exception that might be thrown from bl.
+            }
+        }
+        private void SuccessOperation()
+        {
+            MessageBoxResult result = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (result == MessageBoxResult.OK)
+            {
+                DroneView.ItemsSource = bl.DisplayDrone(drone.DroneId).ToString();
+            }
+        }
+        private void FailOperation()
+        {
+            _ = MessageBox.Show("operation faild", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
