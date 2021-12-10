@@ -111,7 +111,7 @@ namespace PL
        
         private void DronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            drone.DroneId = 0;//meanwhile until i figure out how to get the drone id in the row clicked
+            drone.DroneId = ((DroneForList)DronesListView.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
             new DroneWindow(bl, drone.DroneId).Show();
         }
     }
