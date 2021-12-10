@@ -143,14 +143,14 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="DeliverParcelLabel" Background="#FFFFFDE7" Content="Drone Deliver The Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
+                <Label x:Name="DeliverParcelLabel" Background="#FFFFFDE7" Content="Drone Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
                 <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/droneDeliverParcel-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            
+
         </Grid>
     </Grid>
 </Window>
