@@ -47,6 +47,7 @@ namespace PL
             try
             { DroneView.ItemsSource = bl.DisplayDrone(droneId).ToString(); }
             catch (IBL.BO.DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+            SuccessOperation();
         }
 
         private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -69,6 +70,7 @@ namespace PL
                     Close();
                 }
             }
+            SuccessOperation();
         }
 
         private void BsIdSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -121,7 +123,7 @@ namespace PL
                 catch(IBL.BO.DroneIdNotFoundException) { MessageBox.Show( "sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                 SuccessOperation();
             }//we to do this in try and catch and catch any exception that might be thrown from bl.
-            
+            SuccessOperation();
         }
 
         private void ChargeIn_Click(object sender, RoutedEventArgs e)
@@ -136,6 +138,7 @@ namespace PL
                 catch(IBL.BO.NoChargingSlotIsAvailableException) { MessageBox.Show("there is no available charging stations anymore\n please call someone to take it to charge", "ERROE", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                 
             }
+            SuccessOperation();
         }
 
         
@@ -152,6 +155,7 @@ namespace PL
                 catch(IBL.BO.ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
            catch(IBL.BO.ParcelCantBePickedUPException) { MessageBox.Show("this parcel can not be picked up\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
+            SuccessOperation();
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
@@ -165,6 +169,7 @@ namespace PL
                 catch (IBL.BO.ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                 catch(IBL.BO.ParcelCantBeDeliveredException) { MessageBox.Show("this parcel can not be delivered\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
+            SuccessOperation();
         }
 
         private void SendDrone_Click(object sender, RoutedEventArgs e)//should be a refernce i done know why there is not i think it could cause an error
@@ -174,6 +179,7 @@ namespace PL
             catch (IBL.BO.DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             catch (IBL.BO.ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             catch (IBL.BO.NoParcelAscriptedToDroneException) { MessageBox.Show("this parcel can not be ascripted\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+            SuccessOperation();
         }
 
         private void ChargeOut_Click(object sender, RoutedEventArgs e)
@@ -189,6 +195,7 @@ namespace PL
                 catch(IBL.BO.BaseStationNotFoundException) { MessageBox.Show("this base station is not exist\n please choose enother base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                 catch (IBL.BO.AddExistingBaseStationException) { MessageBox.Show("something went wrong\n please try again", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
+            SuccessOperation();
         }
         private void SuccessOperation()
         {
@@ -199,6 +206,7 @@ namespace PL
                 { DroneView.ItemsSource = bl.DisplayDrone(drone.DroneId).ToString(); }
                 catch (IBL.BO.DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
+            SuccessOperation();
         }
         private void FailOperation()
         {
