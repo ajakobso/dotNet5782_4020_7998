@@ -8,8 +8,4 @@
     <ProjectReference Include="..\dotNet5782_4020_7998\DAL\DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BO\" />
-  </ItemGroup>
-
 </Project>

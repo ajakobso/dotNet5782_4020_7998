@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
-    public class NoParcelAscriptedToDroneException:Exception
+    public class BaseStationNotFoundException : Exception
     {
-        public NoParcelAscriptedToDroneException() { }
+        public BaseStationNotFoundException() { }
     }
 }
+

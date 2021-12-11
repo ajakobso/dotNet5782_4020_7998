@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace IBL.BO
+
+namespace BO
 {
-    public class AddExistingBaseStationException : Exception
+    public class AddExistingDroneException: Exception
     {
-        public AddExistingBaseStationException(){ }
+        public AddExistingDroneException() { }
 
     }
 }

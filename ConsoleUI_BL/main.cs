@@ -1,13 +1,12 @@
 ﻿using System;
-using IBL.BO;
-using IBL;
+using BO;
 namespace ConsoleUI_BL
 {
     class ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            BL bl = new BL();
+            BL.BlApi.IBL bl = BL.BlApi.BLFactory.GetBL("1");
             Enums.Inputs option;
             do
             {

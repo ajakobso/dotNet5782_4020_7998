@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
-    public class DroneIdNotFoundException: Exception
+    public class ParcelIdNotFoundException: Exception
     {
-        public DroneIdNotFoundException() { }
+        public ParcelIdNotFoundException() { }
     }
 }

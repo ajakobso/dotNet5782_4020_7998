@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
-    public class LocationOutOfRangeException : Exception
+    public class DroneOutOfBatteryException:Exception
     {
-        public LocationOutOfRangeException() { }
+        public DroneOutOfBatteryException() { }
+
     }
 }
