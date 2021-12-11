@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi;
+using DAL.DalApi;
 
-    namespace DO
+    namespace DAL.DO
     {
         public struct BaseStation
         {

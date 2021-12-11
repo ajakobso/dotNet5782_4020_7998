@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 
-namespace BlApi
+namespace BL
 {
-    public partial class BL
+    internal sealed partial class BL
     {
         public void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge)
         {
@@ -118,4 +118,5 @@ namespace BlApi
             return list;
         }
     }
+
 }

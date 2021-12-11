@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DO
+namespace DAL.DO
 {
     public struct DroneCharge
     {

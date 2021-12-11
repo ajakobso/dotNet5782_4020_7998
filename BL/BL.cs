@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DalApi;
+using DAL.DalApi;
 using BO;
-
-namespace BlApi
+using BlApi;
+namespace BL
 {
-    public partial class BL : IBL
+    internal sealed partial class BL : IBL
     {
+        static readonly BL instance = new BL();
+        public static BL Instance { get => instance; }
+        static BL() { }
         private IDAL myDalObject;
         public List<DroneForList> drones;
         public List<BaseStationForList> baseStations;
         private static Random rand = new Random();
-        public BL()
+        BL()
         {
             myDalObject = DalFactory.GetDal("1");//initialize myDalObject
             drones = new List<DroneForList>();//drones list
@@ -144,4 +147,5 @@ namespace BlApi
                 : throw new LocationOutOfRangeException();
         }
     }
+
 }

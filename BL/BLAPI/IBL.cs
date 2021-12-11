@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-
+namespace BL
+{
     namespace BlApi
     {
         public interface IBL
@@ -36,3 +37,4 @@ using BO;
 
         }
     }
+}

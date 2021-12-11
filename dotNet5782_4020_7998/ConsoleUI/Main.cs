@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using DO;
-using DalApi;
-using DalObject;
+using DAL.DO;
+using DAL.DalApi;
+using DAL.DalObject;
 namespace ConsoleUI
 {
     public class ConsoleUI
     {
-        public static DalApi.IDAL myDalObject;
+        public static DAL.DalApi.IDAL myDalObject;
         public enum Inputs { a = 1, p, d, l, e };
         public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
         public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main

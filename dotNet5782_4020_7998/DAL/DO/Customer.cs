@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi;
-namespace DO
+using DAL.DalApi;
+namespace DAL.DO
 {
     public struct Customer
     {

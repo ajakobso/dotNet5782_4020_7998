@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using DO;
-namespace DalApi
+using DAL.DalObject;
+using DAL.DO;
+namespace DAL.DalApi
 {
     public interface IDAL//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
     {

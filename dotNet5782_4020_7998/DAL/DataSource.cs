@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DO;
-using DalObject;
+using DAL.DO;
+using DAL.DalObject;
 
-namespace DalObject
+namespace DAL.DalObject
 {
     public class DataSource
     {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DO;
-namespace DalApi
+using DAL.DO;
+namespace DAL.DalApi
 {
     public static class DalFactory
     {
@@ -13,7 +13,7 @@ namespace DalApi
             switch (type)
             {
                 case "1":
-                    return new DalObject.DalObject();
+                    return DalObject.DalObject.Instance;
                 case "2":
                 //return new DalXml();
                 default:
