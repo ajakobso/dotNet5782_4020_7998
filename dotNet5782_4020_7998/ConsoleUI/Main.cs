@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using IDAL.DO;
+using DO;
+using DalApi;
 using DalObject;
 namespace ConsoleUI
 {
     public class ConsoleUI
     {
-        public static IDAL.IDal myDalObject;
+        public static DalApi.IDAL myDalObject;
         public enum Inputs { a = 1, p, d, l, e };
         public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
         public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
@@ -14,7 +15,7 @@ namespace ConsoleUI
         public enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
         static void Main(string[] args)
         {
-            myDalObject = new DalObject.DalObject();
+            myDalObject = DalFactory.GetDal("1");
             DataSource.Initialize();
             Inputs options;
             do
@@ -141,7 +142,7 @@ namespace ConsoleUI
                                 DateTime? PDT = null;//parcel delivery time
                                 try
                                 { myDalObject.AddParcel(PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
-                                catch (IDAL.DO.AddParcelToAnAsscriptedDroneException)
+                                catch (DO.AddParcelToAnAsscriptedDroneException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!\n"); }
                                 break;
                             default:

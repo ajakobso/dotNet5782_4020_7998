@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-namespace BL
-{
+
     namespace BlApi
     {
         public partial class BL// : BO.BlApi
@@ -31,7 +30,7 @@ namespace BL
                 return dist * 1.609344;
             }
 
-            private double minimumBattery(DroneForList drone, IDAL.DO.Parcel parcel)
+            private double minimumBattery(DroneForList drone, DO.Parcel parcel)
             {
                 Location location;
                 location = AddLocation(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
@@ -57,7 +56,7 @@ namespace BL
                 double possBlApieDistance = (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDroneAndSender) + (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDstAndBs) + (batteryPerKM * distanceBetweenSenderAndDst);//calculation of the amount of battery in percent needed for the
                 return possBlApieDistance;                                                                                                                                                                                                                             //
             }
-            private bool droneMakeIt(DroneForList drone, IDAL.DO.Parcel parcel)//בודק אם לרחפן יש מספיק בטריה להגיע לשולח, ליעד ולתחנה הקרובה ביותר מיעד המשלוח
+            private bool droneMakeIt(DroneForList drone, DO.Parcel parcel)//בודק אם לרחפן יש מספיק בטריה להגיע לשולח, ליעד ולתחנה הקרובה ביותר מיעד המשלוח
             {
                 double minimum = minimumBattery(drone, parcel);
                 if (minimum <= drone.Battery)//check if there is enough battery
@@ -70,7 +69,7 @@ namespace BL
                 double[] res = new double[2];
                 double dis;
                 res[0] = 1000;//very big number just to start with, since our company do delivering in jerusalem so 1000 km is higher than the distance between the actual places.
-                foreach (IDAL.DO.BaseStation bs in myDalObject.CopyBaseStations())
+                foreach (DO.BaseStation bs in myDalObject.CopyBaseStations())
                 {
                     dis = Distance(location.Long, location.Lat, bs.Longitude, bs.Lattitude);
                     if (res[0] > dis)
@@ -83,20 +82,20 @@ namespace BL
                 //res[1] = bsID;//the bs id
                 return res;
             }
-            private Enums.WeightCategories WeightParcel(IDAL.DO.WeightCategories v)//convert frome IDAL.DO.WeightCategories to BO.WeightCategories 
+            private Enums.WeightCategories WeightParcel(DO.WeightCategories v)//convert frome DO.WeightCategories to BO.WeightCategories 
             {
                 Enums.WeightCategories w;
                 switch (v)
                 {
 
-                    case IDAL.DO.WeightCategories.Light:
+                    case DO.WeightCategories.Light:
                         w = Enums.WeightCategories.Light;
                         return w;
 
-                    case IDAL.DO.WeightCategories.Middle:
+                    case DO.WeightCategories.Middle:
                         w = Enums.WeightCategories.Middle;
                         return w;
-                    case IDAL.DO.WeightCategories.Heavy:
+                    case DO.WeightCategories.Heavy:
                         w = Enums.WeightCategories.Heavy;
                         return w;
                     default:
@@ -131,8 +130,8 @@ namespace BL
             }
             public void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
             {
-                try { myDalObject.AddParcel(0, SCustomerId, DCustomerId, (IDAL.DO.Priorities)Priority, (IDAL.DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
-                catch (IDAL.DO.AddParcelToAnAsscriptedDroneException) { }
+                try { myDalObject.AddParcel(0, SCustomerId, DCustomerId, (DO.Priorities)Priority, (DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
+                catch (DO.AddParcelToAnAsscriptedDroneException) { }
             }
             public void AscriptionParcelToDrone(int Id)
             {
@@ -142,11 +141,11 @@ namespace BL
                 {
                     foreach (var parcel in myDalObject.CopyParcelsList())
                     {
-                        if (parcel.Priority == (IDAL.DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel))
+                        if (parcel.Priority == (DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel))
                         {
                             try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                            catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                            catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                            catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                            catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                             drone.DroneState = Enums.DroneStatuses.Shipping;
                             drone.InDeliveringParcelId = parcel.Id;
                             parcelFound = true;
@@ -159,8 +158,8 @@ namespace BL
                             if (drone.MaxWeight == WeightParcel(parcel.Weight) && droneMakeIt(drone, parcel))
                             {
                                 try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                                catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                                catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                                catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                                catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                                 drone.DroneState = Enums.DroneStatuses.Shipping;
                                 drone.InDeliveringParcelId = parcel.Id;
                                 parcelFound = true;
@@ -177,8 +176,8 @@ namespace BL
                                 {
                                     maxDistance = distanceBetweenDroneAndSender;
                                     try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                                    catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                                    catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                                    catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                                     drone.DroneState = Enums.DroneStatuses.Shipping;
                                     drone.InDeliveringParcelId = parcel.Id;
                                     parcelFound = true;
@@ -203,12 +202,12 @@ namespace BL
                     drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
                     drone.CurrentLocation = AddLocation(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
                     try { myDalObject.RemoveParcel(parcel.Id); }
-                    catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                    catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                     parcel.PickedUp = DateTime.Now;
                     try { myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
-                    catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                    catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 }
                 else
                     throw new ParcelCantBePickedUPException();
@@ -242,12 +241,12 @@ namespace BL
                     drone.CurrentLocation = AddLocation(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
                     drone.DroneState = Enums.DroneStatuses.Available;
                     try { myDalObject.RemoveParcel(parcel.Id); }
-                    catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                    catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                     parcel.Delivered = DateTime.Now;
                     try { myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
-                    catch (IDAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                    catch (IDAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 }
                 else
                     throw new ParcelCantBeDeliveredException();
@@ -264,7 +263,7 @@ namespace BL
             }//
             public IEnumerable<ParcelToList> DisplayParcelsList()
             {
-                IEnumerable<IDAL.DO.Parcel> p = myDalObject.CopyParcelsList();
+                IEnumerable<DO.Parcel> p = myDalObject.CopyParcelsList();
                 List<ParcelToList> nPList = new List<ParcelToList>();
                 foreach (var parcel in p)
                 {
@@ -284,7 +283,7 @@ namespace BL
             }//
             public IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList()
             {
-                IEnumerable<IDAL.DO.Parcel> p = myDalObject.UnAscriptedParcels();
+                IEnumerable<DO.Parcel> p = myDalObject.UnAscriptedParcels();
                 List<ParcelToList> nPList = new List<ParcelToList>();
                 foreach (var parcel in p)
                 {
@@ -305,4 +304,3 @@ namespace BL
 
         }
     }
-}

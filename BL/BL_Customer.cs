@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-namespace BL
-{
+
     namespace BlApi
     {
         public partial class BL
@@ -53,7 +52,7 @@ namespace BL
                     throw new LocationOutOfRangeException();
                 }
                 try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
-                catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+                catch (DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
 
 
             }//
@@ -61,7 +60,7 @@ namespace BL
             {
                 var customer = myDalObject.CopyCustomer(Id);
                 try { myDalObject.RemoveCustomer(Id); }
-                catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+                catch (DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
                 string name = customer.Name;
                 if (Name != " ")
                 {
@@ -73,7 +72,7 @@ namespace BL
                     phone = PhoneNum;
                 }
                 try { myDalObject.AddCustomer(Id, name, phone, customer.Longitude, customer.Lattitude); }
-                catch (IDAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+                catch (DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
             }
             public Customer DisplayCustomer(int id)
             {
@@ -112,4 +111,3 @@ namespace BL
 
         }
     }
-}

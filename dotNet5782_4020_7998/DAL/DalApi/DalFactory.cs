@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BO;
-
-namespace BlApi
+using DO;
+namespace DalApi
 {
-    public static class BLFactory
+    public static class DalFactory
     {
-        public static IBL GetBL(string type)
+        public static IDAL GetDal(string type)
         {
             switch (type)
             {
                 case "1":
-                    return new BL();
+                    return new DalObject.DalObject();
                 case "2":
-                //return new BLImp2();
+                //return new DalXml();
                 default:
-                    return new BL();
+                    throw new DalTypeCantBeProducedException();
             }
         }
+        }
     }
-}
+
 
