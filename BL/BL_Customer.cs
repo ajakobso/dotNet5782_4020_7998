@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BO;
+using BL.BO;
 
 namespace BL
 {
@@ -16,7 +16,7 @@ namespace BL
             foreach (var parcel in myDalObject.CopyParcelsList())
             {
                 ParcelInCustomer nParcel;
-                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be done is to catch exception if parcel not found
+                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be DAL.DOne is to catch exception if parcel not found
                 if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Created;
                 if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null && parcel.Delivered == null)
@@ -52,7 +52,7 @@ namespace BL
                 throw new LocationOutOfRangeException();
             }
             try { myDalObject.AddCustomer(Id, Name, PhoneNum, Location.Long, Location.Lat); }
-            catch (DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+            catch (DAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
 
 
         }//
@@ -60,7 +60,7 @@ namespace BL
         {
             var customer = myDalObject.CopyCustomer(Id);
             try { myDalObject.RemoveCustomer(Id); }
-            catch (DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+            catch (DAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
             string name = customer.Name;
             if (Name != " ")
             {
@@ -72,7 +72,7 @@ namespace BL
                 phone = PhoneNum;
             }
             try { myDalObject.AddCustomer(Id, name, phone, customer.Longitude, customer.Lattitude); }
-            catch (DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
+            catch (DAL.DO.AddExistingCustomerException) { throw new AddExistingCustomerException(); }
         }
         public Customer DisplayCustomer(int id)
         {

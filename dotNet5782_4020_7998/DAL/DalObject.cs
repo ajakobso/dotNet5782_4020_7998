@@ -369,7 +369,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             }
             return nList;
         }
-        public static Coordinate FromDouble(double angleInDegrees)
+        public static Coordinate Fromdouble(double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]
             while (angleInDegrees < -180.0)

@@ -20,8 +20,8 @@ namespace BL
                 {
                     try { BStationLocation = AddLocation(baseStation.Longitude, baseStation.Lattitude); }
                     catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
-                    try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (DO.WeightCategories)MaxWeight, Model); }
-                    catch (DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
+                    try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (DAL.DO.WeightCategories)MaxWeight, Model); }
+                    catch (DAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
 
                     return;
@@ -43,7 +43,7 @@ namespace BL
                 }
             }
             if (Check == 0)
-                throw new DO.DroneIdNotFoundException();
+                throw new DAL.DO.DroneIdNotFoundException();
             foreach (DroneForList droneForList in drones)
             {
                 if (droneForList.DroneId == Id)
@@ -88,9 +88,9 @@ namespace BL
                         if ((baseStation.Longitude == location.Long) && (baseStation.Lattitude == location.Lat) && (baseStation.ChargeSlots > 0))
                         {
                             try { myDalObject.RemoveBaseStation(baseStation.Id); }
-                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                             try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude); }
-                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                             check = true;
                             break;
                         }
@@ -132,10 +132,10 @@ namespace BL
                         if ((nDrone.CurrentLocation.Long == baseStation.Longitude) && (nDrone.CurrentLocation.Lat == baseStation.Lattitude))
                         {
                             try { myDalObject.RemoveBaseStation(baseStation.Id); }
-                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                             try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude); }
-                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                            catch (DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
+                            catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            catch (DAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
                         }
                     }
                     foreach (var baseStation1 in baseStations)

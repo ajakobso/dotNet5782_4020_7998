@@ -9,21 +9,21 @@ namespace BL.BO
     public class Location
     {
         
-        public DO.Coordinate Longitude { get; set; }
-        public DO.Coordinate Latitude { get; set; }
+        public DAL.DO.Coordinate Longitude { get; set; }
+        public DAL.DO.Coordinate Latitude { get; set; }
         public double Long { get; set; }
         public double Lat { get; set; }
         public Location(double longitude, double lat) 
         {
             Long = longitude;
             Lat = lat;
-            Longitude = FromDouble(longitude); 
-            Latitude = FromDouble(lat); }//initalize the location
+            Longitude = Fromdouble(longitude); 
+            Latitude = Fromdouble(lat); }//initalize the location
         public override string ToString()
         {
             return $"{Longitude.ToString("WE")} {Latitude.ToString("NS")}";
         }
-        private DO.Coordinate FromDouble(double angleInDegrees)
+        private DAL.DO.Coordinate Fromdouble(double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]
             while (angleInDegrees < -180.0)
@@ -32,7 +32,7 @@ namespace BL.BO
             while (angleInDegrees > 180.0)
                 angleInDegrees -= 360.0;
 
-            var result = new DO.Coordinate();
+            var result = new DAL.DO.Coordinate();
 
             //switch the value to positive
             result.IsNegative = angleInDegrees < 0;

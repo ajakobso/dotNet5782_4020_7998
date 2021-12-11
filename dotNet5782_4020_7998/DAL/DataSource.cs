@@ -29,7 +29,7 @@ namespace DAL.DalObject
         //מתודה סטטית  לאיתחול מופעי הישויות עם נתונים וכו
         public static void Initialize()
         {
-            Random r = new Random();
+            Random r = new();
             Config.BaseStations.Add(new BaseStation { Id = 101, Name = "station1", ChargeSlots = 3, Longitude = (r.NextDouble() * (DataSource.Config.LongitudeRange[1] - DataSource.Config.LongitudeRange[0])) + DataSource.Config.LongitudeRange[0], Lattitude = (r.NextDouble() * (DataSource.Config.LattitudeRange[1] - DataSource.Config.LattitudeRange[0])) + DataSource.Config.LattitudeRange[0] });//initializing stations around Jerusalem
             Config.BaseStations.Add(new BaseStation { Id = 102, Name = "station2", ChargeSlots = 5, Longitude = (r.NextDouble() * (DataSource.Config.LongitudeRange[1] - DataSource.Config.LongitudeRange[0])) + DataSource.Config.LongitudeRange[0], Lattitude = (r.NextDouble() * (DataSource.Config.LattitudeRange[1] - DataSource.Config.LattitudeRange[0])) + DataSource.Config.LattitudeRange[0] });
             Config.Drones.Add(new Drone { Id = 1, MaxWeight = WeightCategories.Light, Model = "10A" });// Battery = r.NextDouble() + r.Next(1, 100), Status = DroneStatuses.Maintenance

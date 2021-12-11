@@ -1,12 +1,12 @@
 ﻿using System;
-using BO;
+using BL.BO;
 namespace ConsoleUI_BL
 {
     class ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            BlApi.IBL bl = BlApi.BLFactory.GetBL("1");
+            BL.BlApi.IBL bl = BL.BlApi.BLFactory.GetBL("1");
             Enums.Inputs option;
             do
             {
@@ -23,7 +23,7 @@ namespace ConsoleUI_BL
                 switch (option)
                 {
                     case Enums.Inputs.a:
-                        Console.WriteLine("What do you want to add?\n" +
+                        Console.WriteLine("What DAL.DO you want to add?\n" +
                         "nBaseStation: Add new base station\n" +
                         "nDrone: Add new drone\n" +
                         "nCustomer: Add new customer\n" +
@@ -131,7 +131,7 @@ namespace ConsoleUI_BL
                         break;
                     case Enums.Inputs.p:
                         {
-                            Console.WriteLine("What do you want to update?\n" +
+                            Console.WriteLine("What DAL.DO you want to update?\n" +
                               "DroneModel: Update drone's name\n" +
                               "BaseStation: Update a base station\n" +
                               "Customer: Update a customer\n" +
@@ -240,7 +240,7 @@ namespace ConsoleUI_BL
                         break;
                     case Enums.Inputs.d:
                         Enums.Displaying d;
-                        Console.WriteLine("What do you want to add?\n" +
+                        Console.WriteLine("What DAL.DO you want to add?\n" +
                             "DBaseStation: display a base station\n" +
                             "DDrone: display a drone\n" +
                             "DCustomer: display a customer\n" +
@@ -299,7 +299,7 @@ namespace ConsoleUI_BL
                         break;
                     case Enums.Inputs.l:
                         Enums.ListsDisplaying l;
-                        Console.WriteLine("Which list do you want to display?\n" +
+                        Console.WriteLine("Which list DAL.DO you want to display?\n" +
                             "BaseStationsList: list of base stations\n" +
                             "DronesList: list of drones\n" +
                             "CustomersList: list of customers\n" +
