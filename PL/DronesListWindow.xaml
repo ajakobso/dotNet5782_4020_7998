@@ -28,12 +28,12 @@
             <Button x:Name="AddDroneWindowButton" Content="Add drone" Grid.Column="6" HorizontalAlignment="Center" Height="71.1111111" VerticalAlignment="Center" Width="160" FontFamily="Berlin Sans FB Demi" FontSize="22" Background="#FFFFFDE7" Click="AddDroneWindowButton_Click"/>
             <Button x:Name="Reset" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" Margin="66,0,0,0" VerticalAlignment="Center" Width="66" FontFamily="Berlin Sans FB Demi" FontSize="20" Click="Reset_Click" Grid.ColumnSpan="2">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/reset-button.jpg"/>
+                    <ImageBrush ImageSource="C:/Users/USER/source/repos/etyali/dotNet5782_4020_7998/PL/reset-button.jpg"/>
                 </Button.Background>
             </Button>
             <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="63" Click="CloseButton_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/close-button.jpg"/>
+                    <ImageBrush ImageSource="C:/Users/USER/source/repos/etyali/dotNet5782_4020_7998/PL/close-button.jpg"/>
                 </Button.Background>
             </Button>
 

@@ -32,11 +32,11 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
         public DronesListWindow(IBL bl, bool check)
-        { 
+        {
             if (check)
             {
                 new DronesListWindow(bl);
-                if(WeightSelector.SelectedIndex > -1 || StatusSelector.SelectedIndex > -1)
+                if (WeightSelector.SelectedIndex > -1 || StatusSelector.SelectedIndex > -1) 
                 {
                     if (WeightSelector.SelectedIndex > -1 && StatusSelector.SelectedIndex > -1)
                     {
@@ -60,8 +60,11 @@ namespace PL
                             }
                         }
                     }
-                    
                 }
+               // else
+             
+
+                
             }
         }
 
@@ -108,7 +111,7 @@ namespace PL
         {
             Close();
         }
-       
+
         private void DronesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             drone.DroneId = ((DroneForList)DronesListView.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
