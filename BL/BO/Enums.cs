@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace IBL.BO
+namespace BO
 {
 
     public class Enums
     {
-        //partial class BL//מימוש הממשק IBL
+        //partial class BL//מימוש הממשק BlApi
         //{
         public enum DroneStatuses { Available, Maintenance, Shipping};
         public enum ParcelState { Created, Ascripted, PickedUp, Delivered };

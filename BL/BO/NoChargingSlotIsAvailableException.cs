@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace IBL.BO
+namespace BO
 {
-    public class ParcelCantBePickedUPException:Exception
+    public class NoChargingSlotIsAvailableException : Exception
     {
-        public ParcelCantBePickedUPException() { }
+        public NoChargingSlotIsAvailableException() { }
+
     }
 }

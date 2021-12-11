@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
-    public class AddExistingDroneException: Exception
+    public class AddExistingCustomerException: Exception
     {
-        public AddExistingDroneException() { }
+        public AddExistingCustomerException() { }
 
     }
 }

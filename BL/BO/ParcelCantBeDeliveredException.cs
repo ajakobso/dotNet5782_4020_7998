@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
-    public class DroneOutOfBatteryException:Exception
+    public class ParcelCantBeDeliveredException:Exception
     {
-        public DroneOutOfBatteryException() { }
-
+        public ParcelCantBeDeliveredException() { }
     }
 }

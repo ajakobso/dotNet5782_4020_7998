@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
     public class Parcel
     {
-        //partial class BL//מימוש הממשק IBL
+        //partial class BL//מימוש הממשק BlApi
         //{
             public int ParcelId { get; set; }
             public CustomerInParcel SCIParcel { get; set; }//the sender

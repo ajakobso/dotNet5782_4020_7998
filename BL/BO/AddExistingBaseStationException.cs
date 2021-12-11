@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace IBL.BO
+namespace BO
 {
-    public class ParcelCantBeDeliveredException:Exception
+    public class AddExistingBaseStationException : Exception
     {
-        public ParcelCantBeDeliveredException() { }
+        public AddExistingBaseStationException(){ }
+
     }
 }
