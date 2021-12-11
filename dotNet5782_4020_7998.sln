@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65D45E18-8F11-49CF-AC86-8E163237935C}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
+		PL\update-button.jpg = PL\update-button.jpg
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "dotNet5782_4020_7998\ConsoleUI\ConsoleUI.csproj", "{AD13A072-FB6D-4A19-9CCB-05CE8599D586}"
@@ -18,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{40C9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "ConsoleUI_BL\ConsoleUI_BL.csproj", "{570DDF52-2384-4C3F-9D9F-1835CE9982C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{ADDF877D-9FD5-4DA6-808A-79B8F06ECFB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{ADDF877D-9FD5-4DA6-808A-79B8F06ECFB2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{40C95B1D-45EB-41C5-96C8-DCD2BFF4664E} = {40C95B1D-45EB-41C5-96C8-DCD2BFF4664E}
 	EndProjectSection
