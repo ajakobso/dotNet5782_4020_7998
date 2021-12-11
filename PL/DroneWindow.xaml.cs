@@ -44,10 +44,8 @@ namespace PL
             try
             { drone = bl.DisplayDrone(droneId); }
             catch (IBL.BO.DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            try
-            { DroneView.ItemsSource = bl.DisplayDrone(droneId).ToString(); }
-            catch (IBL.BO.DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            SuccessOperation();
+            DroneView.ItemsSource = drone.ToString();
+            
         }
 
         private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -105,19 +103,21 @@ namespace PL
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            AddDroneGrid.Visibility = Visibility.Hidden;
+            ActionsOnDroneGrid.Visibility = Visibility.Hidden;
             Close();
         }
 
         private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            drone.Model = DroneModelTextBox.Text;
+            drone.Model = DroneModelTBox.Text;
             ModelTextBoxChanged = true;
         }
 
         private void ModelUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
-            { bl.UpdateDrone(drone.DroneId, drone.Model); }//try catch
+            { bl.UpdateDrone(drone.DroneId, DroneModelTBox.Text); }//try catch
             catch(IBL.BO.DroneIdNotFoundException) { MessageBox.Show( "sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             SuccessOperation();
         }
