@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.DalApi;
 
-namespace IDAL
-{
-    namespace DO
+    namespace DAL.DO
     {
         public struct BaseStation
         {
@@ -26,4 +25,3 @@ namespace IDAL
             }
         }
     }
-}

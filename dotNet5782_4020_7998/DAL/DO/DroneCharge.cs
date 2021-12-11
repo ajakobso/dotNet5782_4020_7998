@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BO
+
+namespace DAL.DO
 {
-    public class DroneInCharge
+    public struct DroneCharge
     {
         public int DroneId { get; set; }
-        public double Battery { get; set; }
+        public int StationId { get; set; }
         public override string ToString()
         {
-            return $"id = {DroneId}, battery = {Battery}";
+            return $"drone id = {DroneId}, station id = {StationId}";
         }
     }
 }
+

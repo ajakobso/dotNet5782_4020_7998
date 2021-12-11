@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BO
+namespace BL.BO
 {
 
     public class Enums

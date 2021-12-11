@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using IDAL.DO;
-namespace IDAL
+using DAL.DalObject;
+using DAL.DO;
+namespace DAL.DalApi
 {
-    public interface IDal//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
+    public interface IDAL//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
     {
         void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude);
         void AddDrone(int id,double Battery, WeightCategories maxW, string model);

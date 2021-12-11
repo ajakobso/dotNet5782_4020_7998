@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using IDAL;
-
-namespace DalObject//add exception of id that didnt found
+using DAL.DalApi;
+using DAL.DO;
+namespace DAL.DalObject//add exception of id that didnt found
 {
-    public class DalObject : IDal
+    internal sealed class DalObject : IDAL
     {
-        public DalObject()
+        static readonly DalObject instance = new DalObject();
+        public static DalObject Instance { get => instance; }
+        static DalObject() { }
+        DalObject()
         {
             DataSource.Initialize();
         }
         public void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
         {
-
-
             foreach (BaseStation bStation in DataSource.Config.BaseStations)
             {
 
