@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using DAL.DalApi;
-using BO;
-using BlApi;
+using BL.BO;
+using BL.BlApi;
 namespace BL
 {
     internal sealed partial class BL : IBL
@@ -33,7 +33,7 @@ namespace BL
             }
             return -1;
         }
-        private Location randomCustomerLocation(int num)//location is random between customers that parcels has just delivered to them
+        private Location RandomCustomerLocation(int num)//location is Random between customers that parcels has just delivered to them
         {
             int counter = 0;
             foreach (var l in customersWithReceivedParcelsList())
@@ -45,7 +45,7 @@ namespace BL
             }
             throw new Exception();
         }
-        private Location randomBSLocation(int num)//location is random between the basestations
+        private Location RandomBSLocation(int num)//location is Random between the basestations
         {
             int counter = 0;
             Location bsLocation;
@@ -103,7 +103,7 @@ namespace BL
                             drone.CurrentLocation = sLocation;
                         }
                     }
-                    double minBattery = minimumBattery(drone, parcel);//random.NextDouble() * (maximum - minimum) + minimum
+                    double minBattery = minimumBattery(drone, parcel);//Random.NextDouble() * (maximum - minimum) + minimum
                     drone.Battery = rand.NextDouble() * (100 - minBattery) + minBattery;
                 }
                 else
@@ -112,7 +112,7 @@ namespace BL
                     if (drone.DroneState == Enums.DroneStatuses.Maintenance)
                     {
                         int random = rand.Next(0, myDalObject.CopyBaseStations().Count());
-                        Location randomBS = randomBSLocation(random);
+                        Location randomBS = RandomBSLocation(random);
                         drone.CurrentLocation = randomBS;
                         drone.Battery = rand.NextDouble() * 20;
                     }
@@ -121,7 +121,7 @@ namespace BL
                         if (drone.DroneState == Enums.DroneStatuses.Available)
                         {
                             int random = rand.Next(0, customersWithReceivedParcelsList().Count());
-                            Location randomCustomer = randomCustomerLocation(random);
+                            Location randomCustomer = RandomCustomerLocation(random);
                             drone.CurrentLocation = randomCustomer;
                             var bs = myDalObject.CopyBaseStation((int)distanceFromBS(randomCustomer)[1]);
                             double minBattery = myDalObject.DronePowerConsumingPerKM()[0] * Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, bs.Longitude, bs.Lattitude);

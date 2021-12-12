@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace BL
-{ namespace BlApi
+{ 
+    namespace BlApi
     {
         public static class BLFactory
         {
@@ -13,11 +14,11 @@ namespace BL
                 switch (type)
                 {
                     case "1":
-                        return new BL.Instance;
+                        return BL.Instance;
                     case "2":
                     //return new BLImp2();
                     default:
-                        return new BL.Instance;
+                        return BL.Instance;
                 }
             }
         }

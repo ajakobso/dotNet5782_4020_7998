@@ -12,8 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BO;
-using BlApi;
+using BL.BO;
+using BL.BlApi;
 namespace PL
 {
     /// <summary>

@@ -33,7 +33,7 @@ namespace ConsoleUI
                 switch (options)
                 {
                     case Inputs.a:
-                        Console.WriteLine("What do you want to add?\n" +
+                        Console.WriteLine("What DAL.DO you want to add?\n" +
                 "nBaseStation: Add new base station\n" +
                 "nDrone: Add new drone\n" +
                 "nCustomer: Add new customer\n" +
@@ -142,7 +142,7 @@ namespace ConsoleUI
                                 DateTime? PDT = null;//parcel delivery time
                                 try
                                 { myDalObject.AddParcel(PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
-                                catch (DO.AddParcelToAnAsscriptedDroneException)
+                                catch (DAL.DO.AddParcelToAnAsscriptedDroneException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!\n"); }
                                 break;
                             default:
@@ -150,7 +150,7 @@ namespace ConsoleUI
                         }
                         break;
                     case Inputs.p:
-                        Console.WriteLine("What do you want to update?\n" +
+                        Console.WriteLine("What DAL.DO you want to update?\n" +
                             "AscPtoD: ascription a parcel to a drone\n" +
                             "PUParcel: pick up a parcel by a drone\n" +
                             "PDelivering: The parcel was delivered to the customer\n" +
@@ -289,7 +289,7 @@ namespace ConsoleUI
                         }
                         break;
                     case Inputs.l:
-                        Console.WriteLine("Which list do you want to display?\n" +
+                        Console.WriteLine("Which list DAL.DO you want to display?\n" +
                             "BaseStationsList: the list of base stations\n" +
                             "DronesList: the list of drones\n" +
                             "CustomersList: the list of customers\n" +

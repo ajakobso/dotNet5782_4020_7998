@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BO;
+using BL.BO;
 
 namespace BL
 {
@@ -18,7 +18,7 @@ namespace BL
             try { location = AddLocation(location.Long, location.Lat); }
             catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this
             try { myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Long, location.Lat); }
-            catch (DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
+            catch (DAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
 
 
             BaseStationForList nBs = new BaseStationForList { BaseStationId = num, StationLocation = location, StationName = name, AvailableChargingS = numOfAvailableDCharge, UnAvailableChargingS = 0, DInChargeList = new List<DroneInCharge>() };
@@ -32,7 +32,7 @@ namespace BL
                 if (baseStation.Id == Id)
                 {
                     Check++;
-                    DO.BaseStation nBaseStation = new DO.BaseStation();
+                    DAL.DO.BaseStation nBaseStation = new DAL.DO.BaseStation();
                     nBaseStation = baseStation;
 
                     if (!(Name == " "))
@@ -52,7 +52,7 @@ namespace BL
                         myDalObject.RemoveBaseStation(baseStation.Id);
                         myDalObject.AddBaseStation(baseStation.Id, nBaseStation.Name, nBaseStation.ChargeSlots, baseStation.Longitude, baseStation.Lattitude);
                     }
-                    catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
 
                     return;
                 }
