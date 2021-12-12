@@ -109,7 +109,11 @@ namespace DAL.DalObject//add exception of id that didnt found
             foreach (var bs in DataSource.Config.BaseStations)
             {
                 if (bs.Id == id)
+                {
                     DataSource.Config.BaseStations.Remove(bs);
+                    return;
+                }
+
             }
             throw new BaseStationNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }

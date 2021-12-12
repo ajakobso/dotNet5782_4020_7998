@@ -23,7 +23,8 @@ namespace BL
                     try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (DAL.DO.WeightCategories)MaxWeight, Model); }
                     catch (DAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
-
+                    myDalObject.RemoveBaseStation(Bstation);
+                    myDalObject.AddBaseStation(Bstation, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude);
                     return;
                 }
             }
@@ -31,18 +32,18 @@ namespace BL
         }
         public void UpdateDrone(int Id, string Model)
         {
-            int Check = 0;
+            bool Check = false;
             foreach (var drone in myDalObject.CopyDronesList())
             {
                 if (drone.Id == Id)
                 {
                     myDalObject.RemoveDrone(drone.Id);
                     myDalObject.AddDrone(drone.Id, drone.Battery, drone.MaxWeight, Model);
-                    Check++;
+                    Check=true;
                     break;
                 }
             }
-            if (Check == 0)
+            if (!Check)
                 throw new DAL.DO.DroneIdNotFoundException();
             foreach (DroneForList droneForList in drones)
             {
@@ -152,6 +153,7 @@ namespace BL
         }//לממש
         public DroneForList DisplayDrone(int id)
         {
+            
             DroneForList nDrone = new DroneForList();
             foreach (DroneForList drone in drones)
             {
@@ -172,17 +174,20 @@ namespace BL
 
         public void RemoveDroneForList(int Id)
         {
-            int Check = 0;
+            bool Check=false;
             foreach (var drone in drones)
             {
                 if (drone.DroneId == Id)
                 {
+                    try
+                    { myDalObject.RemoveDrone(Id); }
+                    catch ( DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                     drones.Remove(drone);
-                    Check++;
+                    Check = true;
                     break;
                 }
             }
-            if (Check == 0)
+            if (!Check)
             {
                 throw new DroneIdNotFoundException();
             }

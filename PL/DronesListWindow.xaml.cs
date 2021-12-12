@@ -31,41 +31,46 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
-        public DronesListWindow(IBL bl, bool check)
+        public void RefreshDronesListWindow()
         {
-            if (check)
+
+
+            new DronesListWindow(bl);
+            //int weightSelectoeSelectedIndex = WeightSelector.SelectedIndex;
+            //int statusSelectorSelectedIndex = StatusSelector.SelectedIndex;
+            if (WeightSelector != null || StatusSelector != null)
+            //if (weightSelectoeSelectedIndex > -1 || statusSelectorSelectedIndex > -1) 
             {
-                new DronesListWindow(bl);
-                if (WeightSelector.SelectedIndex > -1 || StatusSelector.SelectedIndex > -1) 
+                if (WeightSelector != null && StatusSelector != null)
+                //if (WeightSelector.SelectedIndex > -1 && StatusSelector.SelectedIndex > -1)
                 {
-                    if (WeightSelector.SelectedIndex > -1 && StatusSelector.SelectedIndex > -1)
+                    Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
+                    Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
+                    DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
+                }
+                else
+                {
+                    if (WeightSelector != null)
+                    //if (WeightSelector.SelectedIndex > -1)
                     {
-                        Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
                         Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-                        DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
+                        DronesListView.ItemsSource = bl.DisplayDronesList(x => x.MaxWeight == weight);
                     }
                     else
                     {
-                        if (WeightSelector.SelectedIndex > -1)
+                        if (StatusSelector.SelectedIndex > -1)
                         {
-                            Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-                            DronesListView.ItemsSource = bl.DisplayDronesList(x => x.MaxWeight == weight);
-                        }
-                        else
-                        {
-                            if (StatusSelector.SelectedIndex > -1)
-                            {
-                                Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
-                                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status);
-                            }
+                            Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
+                            DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status);
                         }
                     }
                 }
-               // else
-             
-
-                
             }
+            else
+            {
+                MessageBox.Show("enjoy in your next action!\n", "Goodluck", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
+            }
+
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,5 +122,6 @@ namespace PL
             drone.DroneId = ((DroneForList)DronesListView.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
             new DroneWindow(bl, drone.DroneId).Show();
         }
+        
     }
 }

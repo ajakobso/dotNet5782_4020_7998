@@ -14,7 +14,8 @@ namespace BL
         private IDAL myDalObject;
         public List<DroneForList> drones;
         public List<BaseStationForList> baseStations;
-        private static Random rand = new Random();
+        private Random rand = new Random();
+
         BL()
         {
             myDalObject = DalFactory.GetDal("1");//initialize myDalObject
@@ -104,7 +105,9 @@ namespace BL
                         }
                     }
                     double minBattery = minimumBattery(drone, parcel);//Random.NextDouble() * (maximum - minimum) + minimum
-                    drone.Battery = rand.NextDouble() * (100 - minBattery) + minBattery;
+                    double r1 = rand.NextDouble();
+                    double r2 = 100 - minBattery;
+                    drone.Battery = r1 * r2 + minBattery;
                 }
                 else
                 {

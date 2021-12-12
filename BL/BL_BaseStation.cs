@@ -19,8 +19,6 @@ namespace BL
             catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this
             try { myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, location.Long, location.Lat); }
             catch (DAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
-
-
             BaseStationForList nBs = new BaseStationForList { BaseStationId = num, StationLocation = location, StationName = name, AvailableChargingS = numOfAvailableDCharge, UnAvailableChargingS = 0, DInChargeList = new List<DroneInCharge>() };
             baseStations.Add(nBs);
         }

@@ -69,10 +69,11 @@ namespace PL
                     catch (LocationOutOfRangeException) { MessageBox.Show("the location of the base station tou choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                     ModelTextBoxChanged = false;
                     IdTextBoxChanged = false;
-                    new DronesListWindow(bl, true);
-                   Close();
+
+                    
+                    Close();
                 }
-            }
+            } 
            SuccessOperation();
         }
 
