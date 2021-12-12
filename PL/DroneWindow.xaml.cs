@@ -48,7 +48,7 @@ namespace PL
             { drone = bl.DisplayDrone(droneId); }
             catch (DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             DroneView.ItemsSource = drone.ToString();
-            
+       
         }
 
         private void DroneModelTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -67,14 +67,18 @@ namespace PL
                 {
                     try { bl.AddDrone(id, model, maxWeight, BsId); }//add try and catch with the proper exceptions from the bl.exceptions
                     catch (LocationOutOfRangeException) { MessageBox.Show("the location of the base station tou choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
                     ModelTextBoxChanged = false;
                     IdTextBoxChanged = false;
-
-                    
                     Close();
+                    return;
                 }
-            } 
-           SuccessOperation();
+            }
+            else
+            {
+                MessageBox.Show("please insert all the requested information,\nwithout it you cant add the drone!", "WARNING!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
         }
 
         private void BsIdSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -211,13 +215,20 @@ namespace PL
             {
                 Out = DateTime.Now;
                 TimeSpan time = In - Out;
-                double timeInCharge = time.TotalHours;
-                try
-                { bl.ReleaseDroneFromCharge(drone.DroneId, timeInCharge); }//we to do this in try and catch and catch any exception that might be thrown from bl.
-                catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                catch(BaseStationNotFoundException) { MessageBox.Show("this base station is not exist\n please choose enother base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                catch (AddExistingBaseStationException) { MessageBox.Show("something went wrong\n please try again", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                SuccessOperation();
+                if (In == DateTime.MinValue)
+                {
+                    MessageBox.Show("can't stop charging of drone that didnt inserted to charge", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    double timeInCharge = time.TotalHours;
+                    try
+                    { bl.ReleaseDroneFromCharge(drone.DroneId, timeInCharge); }//we to do this in try and catch and catch any exception that might be thrown from bl.
+                    catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    catch (BaseStationNotFoundException) { MessageBox.Show("this base station is not exist\n please choose enother base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    catch (AddExistingBaseStationException) { MessageBox.Show("something went wrong\n please try again", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    SuccessOperation();
+                }
             }
             else
             {

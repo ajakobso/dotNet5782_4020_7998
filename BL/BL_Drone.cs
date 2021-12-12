@@ -22,6 +22,7 @@ namespace BL
                     catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
                     try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (DAL.DO.WeightCategories)MaxWeight, Model); }
                     catch (DAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
+                    try { myDalObject.DroneCharging(Id, Bstation); }
                     drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
                     myDalObject.RemoveBaseStation(Bstation);
                     myDalObject.AddBaseStation(Bstation, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude);
@@ -105,7 +106,7 @@ namespace BL
                     {
                         if (baseStation1.StationLocation == location)
                         {
-                            baseStation1.DInChargeList.Add(new DroneInCharge { DroneId = drone.DroneId, Battery = NBattery });
+                            baseStation1.DInChargeList.Add(new DroneInCharge { DroneId = drone.DroneId, Battery = NBattery, InsertionTime = DateTime.Now });
                         }
                     }
 
@@ -143,7 +144,7 @@ namespace BL
                     {
                         if (baseStation1.StationLocation == nDrone.CurrentLocation)
                         {
-                            baseStation1.DInChargeList.Remove(new DroneInCharge { DroneId = nDrone.DroneId, Battery = nDrone.Battery });
+                            baseStation1.DInChargeList.Remove(new DroneInCharge { DroneId = nDrone.DroneId, Battery = nDrone.Battery, InsertionTime=DateTime.Now });
                         }
                     }
                     drones.Add(nDrone);

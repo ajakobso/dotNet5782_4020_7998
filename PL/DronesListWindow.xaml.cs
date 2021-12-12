@@ -75,36 +75,44 @@ namespace PL
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
-            if (WeightSelector.SelectedIndex > -1)//check if the second combo box selected
+            if (StatusSelector.SelectedItem != null)
             {
-                Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
-            }
-            else
-            {
-                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status);
+                Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
+                if (WeightSelector.SelectedIndex > -1)//check if the second combo box selected
+                {
+                    Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
+                    DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
+                }
+                else
+                {
+                    DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status);
+                }
             }
         }
 
         private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-            if (StatusSelector.SelectedIndex > -1)//check if the second combo box selected
-
+            if (WeightSelector.SelectedItem != null)
             {
-                Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
-                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
-            }
-            else
-            {
-                DronesListView.ItemsSource = bl.DisplayDronesList(x => x.MaxWeight == weight);
+                Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
+                if (StatusSelector.SelectedIndex > -1 && StatusSelector.SelectedItem != null)//check if the second combo box selected
+                {
+                    Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
+                    DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight);
+                }
+                else
+                {
+                    DronesListView.ItemsSource = bl.DisplayDronesList(x => x.MaxWeight == weight);
+                }
             }
         }
 
         private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).Show();
+            new DroneWindow(bl).ShowDialog();
+            DronesListView.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);
+            WeightSelector_SelectionChanged(WeightSelector, null);
+            StatusSelector_SelectionChanged(StatusSelector, null);
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
@@ -123,5 +131,6 @@ namespace PL
             new DroneWindow(bl, drone.DroneId).Show();
         }
         
+
     }
 }

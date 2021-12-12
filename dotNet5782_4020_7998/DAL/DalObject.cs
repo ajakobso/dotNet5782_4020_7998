@@ -39,7 +39,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             {
                 if (drone.Id == id)
                 {
-                    throw new AddExistingDroneException();
+                        throw new AddExistingDroneException();
                 }
 
             }
@@ -99,8 +99,10 @@ namespace DAL.DalObject//add exception of id that didnt found
             foreach (var drone in DataSource.Config.Drones)
             {
                 if (drone.Id == id)
+                {
                     DataSource.Config.Drones.Remove(drone);
-                return;
+                    return;
+                }
             }
             throw new DroneIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
