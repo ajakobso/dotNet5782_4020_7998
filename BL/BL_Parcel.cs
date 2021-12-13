@@ -130,7 +130,7 @@ namespace BL
         }
         public void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
         {
-            try { myDalObject.AddParcel(0, SCustomerId, DCustomerId, (DAL.DO.Priorities)Priority, (DAL.DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
+            try { myDalObject.AddParcel(-1,0, SCustomerId, DCustomerId, (DAL.DO.Priorities)Priority, (DAL.DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
             catch (DAL.DO.AddParcelToAnAsscriptedDroneException) { }
         }
         public void AscriptionParcelToDrone(int Id)
@@ -149,6 +149,7 @@ namespace BL
                         drone.DroneState = Enums.DroneStatuses.Shipping;
                         drone.InDeliveringParcelId = parcel.Id;
                         parcelFound = true;
+                        return;
                     }
                 }
                 if (parcelFound == false)
@@ -163,6 +164,7 @@ namespace BL
                             drone.DroneState = Enums.DroneStatuses.Shipping;
                             drone.InDeliveringParcelId = parcel.Id;
                             parcelFound = true;
+                            return;
                         }
                     }
                     if (parcelFound == false)
@@ -181,6 +183,7 @@ namespace BL
                                 drone.DroneState = Enums.DroneStatuses.Shipping;
                                 drone.InDeliveringParcelId = parcel.Id;
                                 parcelFound = true;
+                                return;
                             }
                         }
                     }
@@ -205,7 +208,7 @@ namespace BL
                 catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                 catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 parcel.PickedUp = DateTime.Now;
-                try { myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
+                try { myDalObject.AddParcel(parcel.Id, parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
                 catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                 catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
             }
@@ -217,7 +220,7 @@ namespace BL
             DroneForList drone = DisplayDrone(Id);
             var parcel = myDalObject.CopyParcel(drone.InDeliveringParcelId);
             double batterySpent;
-            if (myDalObject.CopyParcel(drone.InDeliveringParcelId).Scheduleded <= DateTime.Now && myDalObject.CopyParcel(drone.InDeliveringParcelId).PickedUp == null)
+            if (parcel.PickedUp != null && parcel.Requested != null && parcel.Scheduleded != null && parcel.Delivered == null)
             {
                 double distanceBetweenSenderAndDst = Distance(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude, myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);//distance between sender and target
                 double distanceBetweenDroneAndSender = Distance(drone.CurrentLocation.Long, drone.CurrentLocation.Lat, myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);//distance between the drone and the sender's location
@@ -244,7 +247,7 @@ namespace BL
                 catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                 catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 parcel.Delivered = DateTime.Now;
-                try { myDalObject.AddParcel(parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
+                try { myDalObject.AddParcel(parcel.Id, parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
                 catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                 catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
             }

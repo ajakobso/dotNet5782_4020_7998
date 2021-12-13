@@ -20,12 +20,32 @@ namespace BL
                 {
                     try { BStationLocation = AddLocation(baseStation.Longitude, baseStation.Lattitude); }
                     catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
-                    try { myDalObject.AddDrone(Id, (double)r.Next(20, 40) / 100, (DAL.DO.WeightCategories)MaxWeight, Model); }
+                    double battery = r.NextDouble() * (40 - 20) + 20;
+                    try { myDalObject.AddDrone(Id, battery, (DAL.DO.WeightCategories)MaxWeight, Model) ; }
                     catch (DAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
                     try { myDalObject.DroneCharging(Id, Bstation); }
-                    drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = (double)r.Next(20, 40) / 100, CurrentLocation = BStationLocation });
+                    catch (DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = r.NextDouble() * (40 - 20) + 20, CurrentLocation = BStationLocation });
                     myDalObject.RemoveBaseStation(Bstation);
                     myDalObject.AddBaseStation(Bstation, baseStation.Name, baseStation.ChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude);
+                    #region add drone to first charge in base station
+                    DroneInCharge nDIC = new DroneInCharge { DroneId = Id, Battery = battery, InsertionTime = DateTime.Now };
+                    List<DroneInCharge> dicList = new();
+                    BaseStationForList oldBs = new(), nBsForList;
+                    try { oldBs = DisplayBaseStation(baseStation.Id); }
+                    catch (BaseStationNotFoundException)
+                    {
+                        dicList.Add(nDIC);
+                        nBsForList = new BaseStationForList { BaseStationId = baseStation.Id, StationLocation = AddLocation(baseStation.Longitude, baseStation.Lattitude), StationName = baseStation.Name, DInChargeList = dicList, AvailableChargingS = baseStation.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
+                        baseStations.Add(nBsForList);
+                        return;
+                    }
+                    dicList = oldBs.DInChargeList;
+                    dicList.Add(nDIC);
+                    nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
+                    baseStations.Remove(oldBs);
+                    baseStations.Add(nBsForList);
+                    #endregion
                     return;
                 }
             }
@@ -63,7 +83,7 @@ namespace BL
             foreach (DroneForList drone in drones)
             {
                 double Battery;
-                if (drone.DroneState == Enums.DroneStatuses.Available)
+                if (drone.DroneState == Enums.DroneStatuses.Available && drone.DroneId == Id)
                 {
                     Location droneLocation = AddLocation(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
                     Location location = AddLocation(myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDalObject.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
@@ -83,6 +103,7 @@ namespace BL
                             //dalDrone.Longitude = location.Longitude;
                             //dalDrone.Latittude = location.Latitude;
                             drone.DroneState = Enums.DroneStatuses.Maintenance;
+                            break;
                         }
                     }
                     foreach (var baseStation in myDalObject.CopyBaseStations())
@@ -104,9 +125,10 @@ namespace BL
                     }
                     foreach (var baseStation1 in baseStations)
                     {
-                        if (baseStation1.StationLocation == location)
+                        if (baseStation1.StationLocation.Long == location.Long && baseStation1.StationLocation.Lat == location.Lat) 
                         {
                             baseStation1.DInChargeList.Add(new DroneInCharge { DroneId = drone.DroneId, Battery = NBattery, InsertionTime = DateTime.Now });
+                            return;
                         }
                     }
 
@@ -138,17 +160,19 @@ namespace BL
                             try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude); }
                             catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                             catch (DAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
+                            break;
                         }
                     }
                     foreach (var baseStation1 in baseStations)
                     {
-                        if (baseStation1.StationLocation == nDrone.CurrentLocation)
+                        if (baseStation1.StationLocation == nDrone.CurrentLocation)//he deleted the second BS from basestations i think bc the add drone op
                         {
                             baseStation1.DInChargeList.Remove(new DroneInCharge { DroneId = nDrone.DroneId, Battery = nDrone.Battery, InsertionTime=DateTime.Now });
+                            break;
                         }
                     }
                     drones.Add(nDrone);
-
+                    return;
                 }
             }
         }//לממש
@@ -193,6 +217,22 @@ namespace BL
                 throw new DroneIdNotFoundException();
             }
         }
+        public DateTime GetInsertionTime(int droneID)
+        { 
+            foreach(var bs in DisplayBaseStationsList(x=>x.BaseStationId==x.BaseStationId))
+            {
+                foreach(var dic in bs.DInChargeList)
+                {
+                    if (dic.DroneId==droneID)
+                    {
+                        return dic.InsertionTime;
+                    }
+                }
+                throw new DroneIdNotFoundException();
+            }
+            throw new BaseStationNotFoundException();
+        }
     }
-
+    
 }
+

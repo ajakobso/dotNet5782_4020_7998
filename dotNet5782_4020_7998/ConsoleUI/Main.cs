@@ -141,7 +141,7 @@ namespace ConsoleUI
                                 DateTime? PPUT = null;//parcel pick up time
                                 DateTime? PDT = null;//parcel delivery time
                                 try
-                                { myDalObject.AddParcel(PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
+                                { myDalObject.AddParcel(-1,PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
                                 catch (DAL.DO.AddParcelToAnAsscriptedDroneException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!\n"); }
                                 break;

@@ -23,6 +23,7 @@ namespace BL
             void AscriptionParcelToDrone(int Id);
             void PickUpParcel(int DId);
             void DeliveringParcelByDrone(int Id);
+            DateTime GetInsertionTime(int droneID);
             BaseStationForList DisplayBaseStation(int id);
             DroneForList DisplayDrone(int id);
             Customer DisplayCustomer(int id);

@@ -10,7 +10,7 @@ namespace BL.BO
     {
         public int DroneId { get; set; }
         public double Battery { get; set; }
-        public DateTime? InsertionTime { get; set; }
+        public DateTime InsertionTime { get; set; }
         public override string ToString()
         {
             return $"id = {DroneId}, battery = {Battery}, insertion  time {InsertionTime}";

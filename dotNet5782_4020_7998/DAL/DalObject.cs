@@ -39,7 +39,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             {
                 if (drone.Id == id)
                 {
-                        throw new AddExistingDroneException();
+                    throw new AddExistingDroneException();
                 }
 
             }
@@ -53,27 +53,24 @@ namespace DAL.DalObject//add exception of id that didnt found
                 {
                     throw new AddExistingCustomerException();
                 }
-                //if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
-                //{
-                //    throw new LocationOutOfRangeException();
-                //}
             }
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });
         }
-        public void AddParcel(int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered)
+        public void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered)
         {
+            int parcelID;
+            if (id != -1)
+            { parcelID = id; }
+            else { parcelID = DataSource.Config.RunningParcelId++; }
             foreach (Parcel parcel in DataSource.Config.Parcels)
             {
-
                 if (parcel.DroneId == droneId)
                 {
-                    DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
+                    DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
                     throw new AddParcelToAnAsscriptedDroneException();
                 }
             }
-
-
-            DataSource.Config.Parcels.Add(new Parcel { Id = DataSource.Config.RunningParcelId++, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
+            DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
 
         public void RemoveCustomer(int id)
@@ -81,7 +78,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             foreach (var customer in DataSource.Config.Customers)
             {
                 if (customer.Id == id)
-                    DataSource.Config.Customers.Remove(customer);
+                { DataSource.Config.Customers.Remove(customer); return; }
             }
             throw new CustomerNotFoundException();
         }
@@ -90,7 +87,8 @@ namespace DAL.DalObject//add exception of id that didnt found
             foreach (var parcel in DataSource.Config.Parcels)
             {
                 if (parcel.Id == id)
-                    DataSource.Config.Parcels.Remove(parcel);
+                { DataSource.Config.Parcels.Remove(parcel); return; }
+
             }
             throw new ParcelIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
@@ -142,7 +140,12 @@ namespace DAL.DalObject//add exception of id that didnt found
                 }
             }
             if (parcelExsists)
-            { p.DroneId = droneId; p.Scheduleded = DateTime.Now; }
+            {
+                DataSource.Config.Parcels.Remove(p);
+                p.DroneId = droneId; 
+                p.Scheduleded = DateTime.Now;
+                DataSource.Config.Parcels.Add(p);
+            }
             else
                 throw new ParcelIdNotFoundException();
 
@@ -220,8 +223,10 @@ namespace DAL.DalObject//add exception of id that didnt found
                     Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };// Status = DroneStatuses.Maintenance, Battery = drone.Battery
                     DataSource.Config.Drones.Remove(drone);
                     DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into maintenance because he need to charge.
-                    DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId }; ///
+                    DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId }; //what is this for??? and if we need to add it somewhere - then where??
+                    DataSource.Config.DroneCharges.Add(newDCharge);
                     droneExists = true;
+                    return;
                 }
             }
             if (droneExists == false)
