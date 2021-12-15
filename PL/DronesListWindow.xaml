@@ -45,5 +45,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label Content="Label"/>
     </Grid>
 </Window>

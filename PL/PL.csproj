@@ -7,7 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="WPFSpark" Version="1.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Prism">
+      <HintPath>..\..\..\..\..\.nuget\packages\prism.core\8.1.97\lib\net5.0\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\GitHub\GitHub\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Events.WPF">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\GitHub\GitHub\ReactiveUI.Events.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Wpf">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\GitHub\GitHub\ReactiveUI.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFSpark">
+      <HintPath>..\..\..\..\..\.nuget\packages\wpfspark\1.5.0\lib\net5.0-windows7.0\WPFSpark.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
