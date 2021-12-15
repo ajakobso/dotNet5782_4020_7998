@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="DronesListButton" Content="DronesList" HorizontalAlignment="Left" Height="68" Margin="69,35,0,0" VerticalAlignment="Top" Width="117"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="DronesListButton_Click"/>
+        <Button x:Name="BSListButton" Content="Base stations List" HorizontalAlignment="Left" Height="68" Margin="245,35,0,0" VerticalAlignment="Top" Width="202"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="BSListButton_Click"/>
 
     </Grid>
 </Window>

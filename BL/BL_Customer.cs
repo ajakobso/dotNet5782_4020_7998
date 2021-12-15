@@ -85,7 +85,7 @@ namespace BL
         }
         public IEnumerable<CustomerForList> DisplayCustomersList()
         {
-            IEnumerable<CustomerForList> responce = new List<CustomerForList>();
+            List<CustomerForList> responce = new List<CustomerForList>();
             foreach (var customer in myDalObject.CopyCustomersList())
             {
                 Customer blC = DisplayCustomer(customer.Id);
