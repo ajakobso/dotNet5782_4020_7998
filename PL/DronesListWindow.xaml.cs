@@ -33,8 +33,6 @@ namespace PL
         }
         public void RefreshDronesListWindow()
         {
-
-
             new DronesListWindow(bl);
             //int weightSelectoeSelectedIndex = WeightSelector.SelectedIndex;
             //int statusSelectorSelectedIndex = StatusSelector.SelectedIndex;
