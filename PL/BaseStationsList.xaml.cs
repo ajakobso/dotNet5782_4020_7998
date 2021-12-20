@@ -29,7 +29,6 @@ namespace PL
             this.bl = bl;
             BaseStation = new();
             BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);//predicate that always true to show all BaseStations
-            
         }
         
         private void Reset_Click(object sender, RoutedEventArgs e)
@@ -41,7 +40,6 @@ namespace PL
         {
             Close();
         }
-
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
             BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.AvailableChargingS > 0);
@@ -49,21 +47,25 @@ namespace PL
         }
         private void AddBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            //new BaseStationWindow(bl).ShowDialog();
+            new BaseStationWindow(bl).ShowDialog();
             BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
             if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
         }
+        
         private void RemoveBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _ = new BaseStationWindow(bl, true).ShowDialog();
+            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+            if (filterButtonIsClicked)
+            { FilterButton_Click(FilterButton, null); }
         }
-
         private void UpdateBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _ = new BaseStationWindow(bl, 0).ShowDialog();
+            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+            if (filterButtonIsClicked)
+            { FilterButton_Click(FilterButton, null); }
         }
-
-       
     }
 }

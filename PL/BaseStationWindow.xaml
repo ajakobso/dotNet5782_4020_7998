@@ -1,0 +1,126 @@
+﻿<Window x:Class="PL.BaseStationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        mc:Ignorable="d"
+        Title="BaseStationWindow" Height="450" Width="400">
+    <Window.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center">Please insert a integer</Label>
+                <Border BorderThickness="1" BorderBrush="Red">
+                    <AdornedElementPlaceholder />
+                </Border>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid Name="MainGrid">
+        <Grid x:Name="AddBaseStationGrid" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="BaseStationIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationIdTextBox_TextChanged"/>
+            <Label x:Name="BaseStationIDLabel" Content="ID" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="64,19,79,15" />
+            <TextBox x:Name="BaseStationNameTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationNameTextBox_TextChanged"/>
+            <Label x:Name="BaseStationNameLabel" Content="Name" Grid.Column="0" Grid.Row="1" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="49,0,70,0" />
+            <syncfusion:DoubleTextBox x:Name="doubleLongitudeTextBox" Width="100" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" TextChanged="doubleLongitudeTextBox_TextChanged" />
+            <Label x:Name="BaseStationLong" Content="Longitude" Grid.Column="0" Grid.Row="2" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="34,0,57,0" />
+            <syncfusion:DoubleTextBox x:Name="doubleLattitudeTextBox" Width="100" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" TextChanged="doubleLattitudeTextBox_TextChanged" />
+            <Label x:Name="BaseStationLatt" Content="Lattitude" Grid.Column="0" Grid.Row="3" Height="38" VerticalAlignment="Center" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="36,0,57,0" />
+            <TextBox x:Name="BaseStationCSTextBox" Grid.Row="4" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationCSTextBox_TextChanged"/>
+            <Label x:Name="BaseStationCSLabel" Content="Charging Slots" Grid.Row="4" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="22,18,32,17" />
+            <Button x:Name="AddBaseStationButton" Content="Add BaseStation" Height="40" Margin="118,16,138,16" Grid.Row="5" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Click="AddBaseStationButton_Click" FontWeight="Bold" Foreground="Black">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC5FBF5"/>
+                        <GradientStop Color="#FEB4FFFB" Offset="0.139"/>
+                        <GradientStop Color="#FEA5F9F5" Offset="0.357"/>
+                        <GradientStop Color="#FE92F2ED" Offset="0.648"/>
+                        <GradientStop Color="#FE76EAE4" Offset="0.726"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFCBC8A2" Opacity="0.75"/>
+                </Button.BorderBrush>
+            </Button>
+        </Grid>
+        <Grid x:Name="RemoveBaseStationGrid" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="BaseStationRemoveIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationRemoveIdTextBox_TextChanged" />
+            <Label x:Name="BaseStationRemoveIDLabel" Content="ID" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="64,19,79,15" />
+            <Button x:Name="RemoveBaseStationButton" Content="Remove BaseStation" Height="40" Margin="118,16,138,16" Grid.Row="5" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18"  FontWeight="Bold" Foreground="Black" Click="RemoveBaseStationButton_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC5FBF5"/>
+                        <GradientStop Color="#FEB4FFFB" Offset="0.139"/>
+                        <GradientStop Color="#FEA5F9F5" Offset="0.357"/>
+                        <GradientStop Color="#FE92F2ED" Offset="0.648"/>
+                        <GradientStop Color="#FE76EAE4" Offset="0.726"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFCBC8A2" Opacity="0.75"/>
+                </Button.BorderBrush>
+            </Button>
+        </Grid>
+        <Grid x:Name="UpdateBaseStationGrid" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="UpdateBaseStationIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationIdTextBox_TextChanged"/>
+            <Label x:Name="UpdateBaseStationIDLabel" Content="ID" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="64,19,79,15" />
+            <TextBox x:Name="UpdateBaseStationNameTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationNameTextBox_TextChanged"/>
+            <Label x:Name="UpdateBaseStationNameLabel" Content="Name" Grid.Column="0" Grid.Row="1" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="49,0,70,0" />
+            <TextBox x:Name="UpdateBaseStationCSTextBox" Grid.Row="2" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationCSTextBox_TextChanged"/>
+            <Label x:Name="UpdateBaseStationCSLabel" Content="Charging Slots" Grid.Row="2" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="22,18,32,17" />
+            <Button x:Name="UpdateBaseStationButton" Content="Add BaseStation" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="40" Margin="118,16,138,16" Grid.Row="3" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" FontWeight="Bold" Foreground="Black" Click="UpdateBaseStationButton_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC5FBF5"/>
+                        <GradientStop Color="#FEB4FFFB" Offset="0.139"/>
+                        <GradientStop Color="#FEA5F9F5" Offset="0.357"/>
+                        <GradientStop Color="#FE92F2ED" Offset="0.648"/>
+                        <GradientStop Color="#FE76EAE4" Offset="0.726"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFCBC8A2" Opacity="0.75"/>
+                </Button.BorderBrush>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

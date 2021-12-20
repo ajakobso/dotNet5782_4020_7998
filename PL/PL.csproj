@@ -12,6 +12,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="19.4.0.38" />
     <PackageReference Include="WPFSpark" Version="1.5.0" />
   </ItemGroup>
 
@@ -38,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="BaseStationWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -54,6 +58,13 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="BaseStationWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>
