@@ -58,7 +58,7 @@
                 </Button.BorderBrush>
             </Button>
         </Grid>
-        <Grid x:Name="RemoveBaseStationGrid" Visibility="Visible">
+        <Grid x:Name="RemoveBaseStationGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>

@@ -48,7 +48,7 @@
             <Button x:Name="FilterButton" Grid.Column="2" Content="Base stations with available charging stations" Background="{x:Null}" FontFamily="Berlin Sans FB Demi" FontSize="14" Foreground="Black" Click="FilterButton_Click" Margin="1,19,0,18">
             </Button>
         </Grid>
-        <ListView x:Name="BaseStationsListView" MouseDoubleClick="BaseStationsListView_MouseDoubleClick" Margin="-6,69,6,0" Grid.RowSpan="2">
+        <ListView x:Name="BaseStationsListView" Margin="-6,69,6,0" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
