@@ -66,7 +66,7 @@ namespace ConsoleUI
                                 double BSLattitude;
                                 double.TryParse(inp, out BSLattitude);
                                 try
-                                { myDalObject.AddBaseStation(BSId, BSName, BSChargeSlots, BSLongitude, BSLattitude); }//create a new base station with new values
+                                { myDalObject.AddBaseStation(BSId, BSName, BSChargeSlots, BSChargeSlots, BSLongitude, BSLattitude); }//create a new base station with new values, with no cherging drones
                                 catch (AddExistingBaseStationException)
                                 { Console.WriteLine("ERROR - attempt to add an existing base station!\n"); }
                                 break;

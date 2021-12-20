@@ -13,14 +13,14 @@ namespace BL
         static BL() { }
         private IDAL myDalObject;
         public List<DroneForList> drones;
-        public List<BaseStationForList> baseStations;
+        //public List<BaseStationForList> baseStations;
         private Random rand = new Random();
 
         BL()
         {
             myDalObject = DalFactory.GetDal("1");//initialize myDalObject
             drones = new List<DroneForList>();//drones list
-            baseStations = new();
+            //baseStations = new();
             initializeDrones();
         }
         private int droneWhileShipping(int droneId)//check if there is a parcel that the drone is ascripted to
@@ -87,10 +87,10 @@ namespace BL
                     Model = dalDrone.Model,
                     MaxWeight = WeightParcel(dalDrone.MaxWeight)
                 };
-                DroneInCharge nDIC;
+               // DroneInCharge nDIC;
                 List<DroneInCharge> dicList = new();
-                BaseStationForList nBsForList;
-                BaseStationForList oldBs = new();
+                //BaseStationForList nBsForList;
+                //BaseStationForList oldBs = new();
                 int parcelId = droneWhileShipping(drone.DroneId);
                 if (parcelId != -1)//the drone is ascripted to a parcel
                 {
@@ -102,24 +102,27 @@ namespace BL
                     
                     if (parcel.PickedUp == null)//the drone didnt pick up the parcel yet - location: the closest base station to the sender customer
                     {
-                        var bs = myDalObject.CopyBaseStation((int)distanceFromBS(sLocation)[1]);
+                        var bs= new DAL.DO.BaseStation();
+                        try { bs = myDalObject.CopyBaseStation((int)distanceFromBS(sLocation)[1]); }
+                        catch (BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                         Location bsLocation = AddLocation(bs.Longitude, bs.Lattitude);
                         drone.CurrentLocation = bsLocation;
                         #region add drone to first charge in the closest base station to the customer
-                        nDIC = new DroneInCharge { DroneId = drone.DroneId, Battery = rand.NextDouble() * (100 - minimumBattery(drone, parcel)) + minimumBattery(drone, parcel), InsertionTime = DateTime.Now };
-                        try { oldBs = DisplayBaseStation(bs.Id); }
-                        catch (BaseStationNotFoundException) 
-                        {
-                            dicList.Add(nDIC);
-                            nBsForList = new BaseStationForList { BaseStationId = bs.Id, StationLocation = bsLocation, StationName = bs.Name, DInChargeList = dicList, AvailableChargingS = bs.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
-                            baseStations.Add(nBsForList);
-                        }
-                        if (oldBs.DInChargeList != null)
-                        { dicList = oldBs.DInChargeList; }
-                        dicList.Add(nDIC);
-                        nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
-                        baseStations.Remove(oldBs);
-                        baseStations.Add(nBsForList);
+                        //nDIC = new DroneInCharge { DroneId = drone.DroneId, Battery = rand.NextDouble() * (100 - minimumBattery(drone, parcel)) + minimumBattery(drone, parcel), InsertionTime = DateTime.Now };
+                        //try { oldBs = DisplayBaseStation(bs.Id); }
+                        //catch (BaseStationNotFoundException) 
+                        //{
+                        //    dicList.Add(nDIC);
+
+                        //nBsForList = new BaseStationForList { BaseStationId = bs.Id, StationLocation = bsLocation, StationName = bs.Name, DInChargeList = dicList, AvailableChargingS = bs.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
+                        //baseStations.Add(nBsForList);
+                        //}
+                        //if (oldBs.DInChargeList != null)
+                        //{ dicList = oldBs.DInChargeList; }
+                        //dicList.Add(nDIC);
+                        //nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
+                        //baseStations.Remove(oldBs);
+                        //baseStations.Add(nBsForList);
                         #endregion
                     }
                     else
@@ -143,24 +146,24 @@ namespace BL
                         var randomBS = RandomBSLocation(random);
                         drone.CurrentLocation = AddLocation(randomBS.Longitude, randomBS.Lattitude);
                         drone.Battery = rand.NextDouble() * 20;
-                        #region add drone to first charge in base station
-                        nDIC = new DroneInCharge { DroneId = drone.DroneId, Battery = drone.Battery, InsertionTime = DateTime.Now };
-                        try 
-                        { 
-                            oldBs = DisplayBaseStation(randomBS.Id);
-                            dicList = oldBs.DInChargeList;// the list contains nothingfor some reason
-                            dicList.Add(nDIC);
-                            nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
-                            baseStations.Remove(oldBs);
-                            baseStations.Add(nBsForList);
-                        }
-                        catch (BaseStationNotFoundException)
-                        {
-                            dicList.Add(nDIC);
-                            nBsForList = new BaseStationForList { BaseStationId = randomBS.Id, StationLocation = drone.CurrentLocation, StationName = randomBS.Name, DInChargeList = dicList, AvailableChargingS = randomBS.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
-                            baseStations.Add(nBsForList);
-                        }
-                        #endregion
+                        //#region add drone to first charge in base station
+                        //nDIC = new DroneInCharge { DroneId = drone.DroneId, Battery = drone.Battery, InsertionTime = DateTime.Now };
+                        //try 
+                        //{ 
+                            //oldBs = DisplayBaseStation(randomBS.Id);
+                            //dicList = oldBs.DInChargeList;// the list contains nothingfor some reason
+                            //dicList.Add(nDIC);
+                           // nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
+                           // baseStations.Remove(oldBs);
+                           // baseStations.Add(nBsForList);
+                       // }
+                        //catch (BaseStationNotFoundException)
+                        //{
+                        //    dicList.Add(nDIC);
+                        //    nBsForList = new BaseStationForList { BaseStationId = randomBS.Id, StationLocation = drone.CurrentLocation, StationName = randomBS.Name, DInChargeList = dicList, AvailableChargingS = randomBS.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
+                        //    baseStations.Add(nBsForList);
+                        //}
+                       // #endregion
                     }
                     else
                     {

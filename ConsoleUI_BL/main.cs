@@ -23,7 +23,7 @@ namespace ConsoleUI_BL
                 switch (option)
                 {
                     case Enums.Inputs.a:
-                        Console.WriteLine("What DAL.DO you want to add?\n" +
+                        Console.WriteLine("What do you want to add?\n" +
                         "nBaseStation: Add new base station\n" +
                         "nDrone: Add new drone\n" +
                         "nCustomer: Add new customer\n" +
@@ -82,7 +82,7 @@ namespace ConsoleUI_BL
                                 catch (LocationOutOfRangeException) { Console.WriteLine("ERROR- attemp to add a drone out of Jerusalem\n"); }
                                 break;
                             case Enums.Adding.nCustomer:
-                                Console.WriteLine("please enter:\n"+ "customer's id:\n");
+                                Console.WriteLine("please enter:\n" + "customer's id:\n");
                                 int CId;
                                 inp = Console.ReadLine();
                                 int.TryParse(inp, out CId);
@@ -131,9 +131,10 @@ namespace ConsoleUI_BL
                         break;
                     case Enums.Inputs.p:
                         {
-                            Console.WriteLine("What DAL.DO you want to update?\n" +
+                            Console.WriteLine("What do you want to update?\n" +
                               "DroneModel: Update drone's name\n" +
                               "BaseStation: Update a base station\n" +
+                              "RBaseStation: remove a base station\n"+
                               "Customer: Update a customer\n" +
                               "DroneToAscriptionPToDCharge: Sending a drone to charge at a base station \n" +
                               "DroneRealese: Release drone from charging at a base station\n" +
@@ -163,11 +164,18 @@ namespace ConsoleUI_BL
                                     string BSName = Console.ReadLine();
                                     Console.WriteLine("new number of charge slots(optional, else enter -1):\n");
                                     inp = Console.ReadLine();
-                                    int CSNumber;
+                                    int CSNumber;//charge slots number
                                     int.TryParse(inp, out CSNumber);
                                     try { bl.UpdateBaseStation(BSId, BSName, CSNumber); }
                                     catch (BaseStationNotFoundException) { Console.WriteLine("ERROR - attemp to update non-exists base station\n"); }
-                  
+                                    break;
+                                case Enums.NewUpdating.RBaseStation:
+                                    Console.WriteLine("please enter base station's id:");
+                                    inp = Console.ReadLine();
+                                    int BsId;
+                                    int.TryParse(inp, out BsId);
+                                    try { bl.removeBaseStation(BsId); }
+                                    catch (BaseStationNotFoundException) { Console.WriteLine("Sorry, this base station is not exist\n"); }
                                     break;
                                 case Enums.NewUpdating.Customer:
                                     Console.WriteLine("please enter:\n" + "customer id:\n");
@@ -240,7 +248,7 @@ namespace ConsoleUI_BL
                         break;
                     case Enums.Inputs.d:
                         Enums.Displaying d;
-                        Console.WriteLine("What DAL.DO you want to add?\n" +
+                        Console.WriteLine("What do you want to add?\n" +
                             "DBaseStation: display a base station\n" +
                             "DDrone: display a drone\n" +
                             "DCustomer: display a customer\n" +
@@ -266,9 +274,9 @@ namespace ConsoleUI_BL
                                 int DDId;//display drone id
                                 int.TryParse(inp, out DDId);
                                 DroneForList df;
-                                try 
+                                try
                                 { df = bl.DisplayDrone(DDId); }
-                                catch(DroneIdNotFoundException) { Console.WriteLine("ERROR- there is no drone matching the id tou entered"); break; }
+                                catch (DroneIdNotFoundException) { Console.WriteLine("ERROR- there is no drone matching the id tou entered"); break; }
                                 Console.WriteLine($"Id: {df.DroneId}, Model: {df.Model}, Battery: {df.Battery}, Location: {df.CurrentLocation}, Max weight: {df.MaxWeight}, Drone state: {df.DroneState}, Parcels in delivering: {df.InDeliveringParcelId}");
                                 break;
                             case Enums.Displaying.DCustomer:
@@ -277,9 +285,9 @@ namespace ConsoleUI_BL
                                 int DCId;
                                 int.TryParse(inp, out DCId);
                                 Customer cf;
-                                try 
-                                {cf = bl.DisplayCustomer(DCId); }
-                                catch(CustomerNotFoundException) { Console.WriteLine("ERROE- there is no customer matching the id you entered"); break; }
+                                try
+                                { cf = bl.DisplayCustomer(DCId); }
+                                catch (CustomerNotFoundException) { Console.WriteLine("ERROE- there is no customer matching the id you entered"); break; }
                                 Console.WriteLine($"id: {cf.CustomerId}, name: {cf.CustomerName}, phone: {cf.CustomerPhone}, parcels delivered from customer: {cf.ParcelsFromCustomer}, parcels delivered to customer: {cf.ParcelsToCustomer}, place: {cf.Place}");
                                 break;
                             case Enums.Displaying.DParcel:
@@ -288,9 +296,9 @@ namespace ConsoleUI_BL
                                 int DPId;
                                 int.TryParse(inp, out DPId);//display parcel id
                                 Parcel pc;
-                                try 
-                                { pc= bl.DisplayParcel(DPId); }
-                                catch(ParcelIdNotFoundException) { Console.WriteLine("ERROR- there is no parcel matching the id you rntered"); break; }
+                                try
+                                { pc = bl.DisplayParcel(DPId); }
+                                catch (ParcelIdNotFoundException) { Console.WriteLine("ERROR- there is no parcel matching the id you rntered"); break; }
                                 Console.WriteLine($"id: {pc.ParcelId}, weight category: {pc.ParcelWC}");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 break;
                             default:
@@ -299,7 +307,7 @@ namespace ConsoleUI_BL
                         break;
                     case Enums.Inputs.l:
                         Enums.ListsDisplaying l;
-                        Console.WriteLine("Which list DAL.DO you want to display?\n" +
+                        Console.WriteLine("Which list do you want to display?\n" +
                             "BaseStationsList: list of base stations\n" +
                             "DronesList: list of drones\n" +
                             "CustomersList: list of customers\n" +
@@ -311,22 +319,40 @@ namespace ConsoleUI_BL
                         switch (l)
                         {
                             case Enums.ListsDisplaying.BaseStationsList:
-                                bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+                                foreach(var baseStation in bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId))
+                                {
+                                    Console.WriteLine(baseStation);
+                                }
                                 break;
                             case Enums.ListsDisplaying.DronesList:
-                                bl.DisplayDronesList(x=> x.DroneId == x.DroneId);
+                                foreach(var drone in bl.DisplayDronesList(x => x.DroneId == x.DroneId))
+                                {
+                                    Console.WriteLine(drone);
+                                }
                                 break;
                             case Enums.ListsDisplaying.CustomersList:
-                                bl.DisplayCustomersList();
+                                foreach(var customer in bl.DisplayCustomersList())
+                                {
+                                    Console.WriteLine(customer);
+                                }
                                 break;
                             case Enums.ListsDisplaying.ParcelsList:
-                                bl.DisplayParcelsList();
+                                foreach(var parcel in bl.DisplayParcelsList())
+                                {
+                                    Console.WriteLine(parcel);
+                                }
                                 break;
                             case Enums.ListsDisplaying.UnAscriptedParcelsLict:
-                                bl.DisplayUnAscriptedParcelsList();
+                                foreach(var fParcel in bl.DisplayUnAscriptedParcelsList())//free parcel
+                                {
+                                    Console.WriteLine(fParcel);
+                                }
                                 break;
                             case Enums.ListsDisplaying.AvailableChargingStationsList:
-                                bl.DisplayAvailableChargingStation();
+                                foreach(var aBaseStation in bl.DisplayAvailableChargingStation())//available base stations
+                                {
+                                    Console.WriteLine(aBaseStation);
+                                }
                                 break;
                             default:
                                 break;

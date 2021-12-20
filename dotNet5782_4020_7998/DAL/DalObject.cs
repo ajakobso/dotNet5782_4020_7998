@@ -16,11 +16,10 @@ namespace DAL.DalObject//add exception of id that didnt found
         {
             DataSource.Initialize();
         }
-        public void AddBaseStation(int id, string name, int chargeSlots, double longitude, double lattitude)
+        public void AddBaseStation(int id, string name, int chargeSlots,int availableChargeSlots, double longitude, double lattitude)
         {
             foreach (BaseStation bStation in DataSource.Config.BaseStations)
             {
-
                 if (bStation.Id == id)
                 {
                     throw new AddExistingBaseStationException();
@@ -31,7 +30,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             //    throw new LocationOutOfRangeException();
             //}
 
-            DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, Longitude = longitude, Lattitude = lattitude });
+            DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots,AvailableChargeSlots=availableChargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
         public void AddDrone(int id, double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
@@ -142,7 +141,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             if (parcelExsists)
             {
                 DataSource.Config.Parcels.Remove(p);
-                p.DroneId = droneId; 
+                p.DroneId = droneId;
                 p.Scheduleded = DateTime.Now;
                 DataSource.Config.Parcels.Add(p);
             }
@@ -258,8 +257,8 @@ namespace DAL.DalObject//add exception of id that didnt found
         }
         public BaseStation CopyBaseStation(int baseStationId)//return copy of a base station
         {
-            bool BSExsists = false;
-            BaseStation nBStation = new BaseStation();
+            //bool BSExsists = false;
+            //BaseStation nBStation = new BaseStation();
             foreach (BaseStation baseStation in DataSource.Config.BaseStations)
             {
                 if (baseStation.Id == baseStationId)
@@ -267,9 +266,9 @@ namespace DAL.DalObject//add exception of id that didnt found
                     return baseStation;
                 }
             }
-            if (BSExsists == false)
-                throw new BaseStationNotFoundException();
-            return nBStation;//the function demend us to return a value, and because the return is inside a condition it cause an error
+            // if (BSExsists == false)
+            throw new BaseStationNotFoundException();
+            // return nBStation;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
         public Drone CopyDrone(int droneId)//return copy of a drone
         {
