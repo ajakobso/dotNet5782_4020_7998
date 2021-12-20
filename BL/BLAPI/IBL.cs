@@ -11,6 +11,7 @@ namespace BL
         public interface IBL
         {
             void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge);
+            void removeBaseStation(int id);
             void AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation);
             void AddCustomer(int Id, string Name, string PhoneNum, Location Location);
             void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority);
