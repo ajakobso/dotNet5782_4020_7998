@@ -160,8 +160,9 @@ namespace PL
         }
         private void RemoveBaseStationButton_Click(object sender, RoutedEventArgs e)
         {
-            //try { bl.removeBaseStation(id); }
-            //catch()//catch the exceptions from the remove
+            try { bl.removeBaseStation(id); }
+            catch (BaseStationNotFoundException) { MessageBox.Show("sorry, this BaseStation is not exist in our company yet!\n please choose enother BaseStation to remove", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+            _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void BaseStationRemoveIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -209,7 +210,6 @@ namespace PL
                 }
             }
         }
-
         private void UpdateBaseStationIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string input;
