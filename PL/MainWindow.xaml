@@ -1,16 +1,34 @@
-﻿<Window x:Class="PL.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
+        x:Class="PL.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="DronesListButton" Content="DronesList" HorizontalAlignment="Left" Height="68" Margin="69,35,0,0" VerticalAlignment="Top" Width="117"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="DronesListButton_Click"/>
-        <Button x:Name="BSListButton" Content="Base stations List" HorizontalAlignment="Left" Height="68" Margin="245,35,0,0" VerticalAlignment="Top" Width="202"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="BSListButton_Click"/>
-
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource Arial Rounded MT Bold}"
+        Title="MainWindow" Height="650" Width="750">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/main-logo.jpg" />
+    </Window.Background> 
+    <Grid x:Name="mainGrid" Height="130" Margin="16,492,16,12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="DronesListButton" Grid.Column="0" Content="Drones List" HorizontalAlignment="Left" Height="130" VerticalAlignment="Center" Width="175"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="DronesListButton_Click" Foreground="#DD975387"/>
+        <Button x:Name="BSListButton" Grid.Column="1" Content="displayBase stations List" HorizontalAlignment="Center" Height="130" VerticalAlignment="Center" Width="175"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="BSListButton_Click" Foreground="#DD975387"/>
     </Grid>
+
+
+
+
 </Window>

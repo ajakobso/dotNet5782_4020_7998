@@ -104,7 +104,13 @@ namespace PL
                 }
             }
         }
-
+        /*<ListView x:Name="DronesListView" MouseDoubleClick="DronesListView_MouseDoubleClick" Margin="-6,69,6,0" Grid.RowSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>*/
         private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();

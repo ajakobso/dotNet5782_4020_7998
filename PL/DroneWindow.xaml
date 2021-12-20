@@ -65,7 +65,7 @@
                 <Label Content="Drone's Data"  Background="#FFFFFDE7" FontFamily="Berlin Sans FB Demi" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="136,4,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
                 <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" VerticalAlignment="Center" Width="64" Click="CloseButton_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/close-button.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/close-button.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -86,7 +86,7 @@
                 <Label x:Name="DroneModelL" Background="#FFFFFDE7" Content="Drone Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
                 <Button x:Name="ModelUpdate" Grid.Column="2" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ModelUpdate_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/update-button.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/update-button.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -98,7 +98,7 @@
                 <Label x:Name="ChargeInLabel" Background="#FFFFFDE7" Content="Send Drone To Charge" Grid.Column="0" HorizontalAlignment="Left" Height="38" VerticalAlignment="Center" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="ChargeIn" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeIn_Click" Margin="34,0,0,0" >
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/lowBattery-button.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/lowBattery-button.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -110,7 +110,7 @@
                 <Label x:Name="ChargeOutLabel" Background="#FFFFFDE7" Content="Realese Drone Frome Charge" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="9,-6,0,0" />
                 <Button x:Name="ChargeOut" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeOut_Click" Margin="2,0,0,0" >
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/highBattery-icon.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/highBattery-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -122,7 +122,7 @@
                 <Label x:Name="SendDroneLabel" Background="#FFFFFDE7" Content="Ascript Drone To Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="SendDrone" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendDrone_Click" >
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/drone-icon.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/drone-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -134,7 +134,7 @@
                 <Label x:Name="PickUpParcelLabel" Background="#FFFFFDE7" Content="Send Drone To Pick Up Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" Margin="39,0,0,0" >
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/dronePickUpParcel-icon.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/dronePickUpParcel-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -146,7 +146,7 @@
                 <Label x:Name="DeliverParcelLabel" Background="#FFFFFDE7" Content="Drone Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
                 <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
                     <Button.Background>
-                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/droneDeliverParcel-icon.jpg"/>
+                        <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/droneDeliverParcel-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
