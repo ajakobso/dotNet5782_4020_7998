@@ -32,8 +32,8 @@ namespace BL
             IEnumerable<BaseStationForList> DisplayBaseStationsList(Predicate<BaseStationForList> predicate);
             IEnumerable<DroneForList> DisplayDronesList(Predicate<DroneForList> predicate);
             IEnumerable<int> DisplayBaseStationsId();
-            IEnumerable<CustomerForList> DisplayCustomersList();
-            IEnumerable<ParcelToList> DisplayParcelsList();
+            IEnumerable<CustomerForList> DisplayCustomersList(Predicate<CustomerForList> predicate);
+            IEnumerable<ParcelToList> DisplayParcelsList(Predicate<ParcelToList> predicate);
             IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();//predict
             IEnumerable<BaseStationForList> DisplayAvailableChargingStation();//predict
 

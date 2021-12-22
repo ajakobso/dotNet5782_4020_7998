@@ -83,7 +83,7 @@ namespace BL
             Customer nCustomer = new Customer { CustomerId = customer.Id, CustomerName = customer.Name, CustomerPhone = customer.Phone, Place = location, ParcelsToCustomer = PtoC, ParcelsFromCustomer = PfromC };
             return nCustomer;
         }
-        public IEnumerable<CustomerForList> DisplayCustomersList()
+        public IEnumerable<CustomerForList> DisplayCustomersList(Predicate<CustomerForList> predicate)
         {
             List<CustomerForList> responce = new List<CustomerForList>();
             foreach (var customer in myDalObject.CopyCustomersList())
@@ -106,6 +106,7 @@ namespace BL
                 CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfDeliveredParcels = deliveredP, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUnDeliveredParcels = unDeliveredP };
                 responce.Add(nCustomer);
             }
+            responce = responce.FindAll(predicate);
             return responce;
         }//
 

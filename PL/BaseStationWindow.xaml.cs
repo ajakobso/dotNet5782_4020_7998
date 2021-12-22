@@ -71,14 +71,14 @@ namespace PL
         {
             string input;
             input = BaseStationNameTextBox.Text;
-            Name = input;
+            name = input;
             NameTextBoxChanged = true;
         }
         private void BaseStationCSTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string input;
             input = BaseStationIdTextBox.Text;
-            bool isInt = int.TryParse(input, out id);
+            bool isInt = int.TryParse(input, out numChargeS);
             if (isInt == false || id < 0)
             {
                 BaseStationCSTextBox.Foreground = Brushes.Red;

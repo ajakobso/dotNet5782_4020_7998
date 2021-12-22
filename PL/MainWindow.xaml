@@ -13,22 +13,88 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource Arial Rounded MT Bold}"
-        Title="MainWindow" Height="650" Width="750">
+        Title="MainWindow" Height="640" Width="750">
     <Window.Background>
         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\main-logo.jpg" />
     </Window.Background>
-    <Grid x:Name="mainGrid" Margin="16,492,16,20">
+    <Grid x:Name="mainGrid" Margin="14,474,16,16">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="DronesListButton" Grid.Column="0" Content="Drones List" HorizontalAlignment="Stretch"  Height="106" VerticalAlignment="Stretch" Width="157"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="DronesListButton_Click" Foreground="#DD975387"/>
-        <Button x:Name="BSListButton" Grid.Column="1" Content="displayBase stations List" HorizontalAlignment="Stretch" Height="110" VerticalAlignment="Stretch" Width="163"  Background="#FFFFFDE7" FontFamily="Arial Rounded MT Bold" FontSize="18" Click="BSListButton_Click" Foreground="#DD975387"/>
+        <Button x:Name="DronesListButton" Grid.Column="0" Content="DRONES"  Height="110" FontFamily="Arial Black" FontSize="18" Click="DronesListButton_Click" Foreground="White" Margin="3,7,0,9" FontWeight="Bold" BorderBrush="Blue" HorizontalAlignment="Left" Width="165" >
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FE6FD5FB" Offset="0.500"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.700"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.300"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.900"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.100"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.400"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.600"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.200"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.800"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="BSListButton" Content="BASE STATIONS" Height="110" FontFamily="Arial Black" FontSize="18" Click="BSListButton_Click" Foreground="White" Margin="2,6,176,10" FontWeight="Bold" BorderBrush="Blue" Grid.ColumnSpan="2" Grid.Column="1">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FE6FD5FB" Offset="0.500"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.700"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.300"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.900"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.100"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.400"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.600"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.200"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.800"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="ParcelsListButton" Grid.Column="2" Content="PARCELS" Height="110" FontFamily="Arial Black" FontSize="18" Click="ParcelsListButton_Click" Foreground="White" Margin="14,6,0,10" FontWeight="Bold" BorderBrush="Blue">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FE6FD5FB" Offset="0.500"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.700"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.300"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.900"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.100"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.400"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.600"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.200"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.800"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="CustomersListButton" Grid.Column="3" Content="CUSTOMERS" Height="110" FontFamily="Arial Black" FontSize="18" Click="CustomersListButton_Click" Foreground="White" Margin="10,6,4,10" FontWeight="Bold" BorderBrush="Blue">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FE6FD5FB" Offset="0.500"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.700"/>
+                    <GradientStop Color="#FE83D0EE" Offset="0.300"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.900"/>
+                    <GradientStop Color="#FEA8E8FF" Offset="0.100"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.400"/>
+                    <GradientStop Color="#FE75CFF1" Offset="0.600"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.200"/>
+                    <GradientStop Color="#FE99DCF5" Offset="0.800"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
     </Grid>
-
-
-
-
 </Window>

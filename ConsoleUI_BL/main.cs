@@ -331,13 +331,13 @@ namespace ConsoleUI_BL
                                 }
                                 break;
                             case Enums.ListsDisplaying.CustomersList:
-                                foreach(var customer in bl.DisplayCustomersList())
+                                foreach (var customer in bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId)) 
                                 {
                                     Console.WriteLine(customer);
                                 }
                                 break;
                             case Enums.ListsDisplaying.ParcelsList:
-                                foreach(var parcel in bl.DisplayParcelsList())
+                                foreach (var parcel in bl.DisplayParcelsList(x => x.ParcelId == x.ParcelId))
                                 {
                                     Console.WriteLine(parcel);
                                 }

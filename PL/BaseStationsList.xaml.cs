@@ -28,12 +28,12 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             BaseStation = new();
-            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);//predicate that always true to show all BaseStations
+            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
         }
         
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -42,13 +42,13 @@ namespace PL
         }
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.AvailableChargingS > 0);
+            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.AvailableChargingS > 0);
             filterButtonIsClicked = true;
         }
         private void AddBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
             new BaseStationWindow(bl).ShowDialog();
-            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
             if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
         }
@@ -56,14 +56,14 @@ namespace PL
         private void RemoveBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
             _ = new BaseStationWindow(bl, true).ShowDialog();
-            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
             if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
         }
         private void UpdateBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
             _ = new BaseStationWindow(bl, 0).ShowDialog();
-            BaseStationsListView.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
             if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
         }

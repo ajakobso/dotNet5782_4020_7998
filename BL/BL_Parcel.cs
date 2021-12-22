@@ -264,7 +264,7 @@ namespace BL
             Parcel nParcel = new Parcel { ParcelId = parcel.Id, ParcelWC = WeightParcel(parcel.Weight), ParcelCreationTime = parcel.Requested, ParcelAscriptionTime = parcel.Scheduleded, ParcelPickUpTime = parcel.PickedUp, ParcelDeliveringTime = parcel.Delivered, ParcelPriority = (Enums.Priorities)parcel.Priority, DInParcel = droneInParcel, DCIParcel = destination, SCIParcel = source };
             return nParcel;
         }//
-        public IEnumerable<ParcelToList> DisplayParcelsList()
+        public IEnumerable<ParcelToList> DisplayParcelsList(Predicate<ParcelToList> predicate)
         {
             IEnumerable<DAL.DO.Parcel> p = myDalObject.CopyParcelsList();
             List<ParcelToList> nPList = new List<ParcelToList>();
@@ -282,6 +282,7 @@ namespace BL
                 ParcelToList nP = new ParcelToList { ParcelId = parcel.Id, ParcelPriority = (Enums.Priorities)parcel.Priority, SenderName = myDalObject.CopyCustomer(parcel.SenderId).Name, ReceiverName = myDalObject.CopyCustomer(parcel.TargetId).Name, ParcelWC = WeightParcel(parcel.Weight), ParcelState = pState };
                 nPList.Add(nP);
             }
+            nPList = nPList.FindAll(predicate);
             return nPList;
         }//
         public IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList()

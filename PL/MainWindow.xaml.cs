@@ -37,5 +37,15 @@ namespace PL
         {
             new BaseStationsListWindow(bl).Show();
         }
+
+        private void ParcelsListButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelsListWindow(bl).Show();
+        }
+
+        private void CustomersListButton_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomersListWindow(bl).Show();
+        }
     }
 }

@@ -112,7 +112,7 @@ namespace BL
                 BaseStationForList baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation };
                 nStationsList.Add(baseStationForList);
             }
-            //List<BaseStationForList> nStationsList = baseStations.FindAll(predicate);
+            nStationsList = nStationsList.FindAll(predicate);
             return nStationsList;
         }
         public IEnumerable<int> DisplayBaseStationsId()

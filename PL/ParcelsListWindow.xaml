@@ -1,14 +1,14 @@
-﻿<Window x:Class="PL.BaseStationsListWindow"
+﻿<Window x:Class="PL.ParcelsListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="BaseStationsListWindow" Height="640" Width="800">
+        Title="ParcelsList" Background="FloralWhite" Height="450" Width="800">
     <Grid Name="MainGrid" Margin="3,0,-3,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="80*"/>
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="0" Width="800"  Background="FloralWhite" Margin="-12,0,0,0">
@@ -20,17 +20,17 @@
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions >
-            <Button x:Name="AddBaseStationWindowButton" Grid.Column="3" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddBaseStationWindowButton_Click" >
+            <Button x:Name="AddParcelButton" Grid.Column="3" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
                 <Button.Background>
                     <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/add-icon.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="RemoveBaseStationWindowButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="RemoveBaseStationWindowButton_Click">
+            <Button x:Name="RemoveParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="RemoveParcelButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/remove-icon.jpg"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="UpdateBaseStationWindowButton" Grid.Column="5" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="UpdateBaseStationWindowButton_Click">
+            <Button x:Name="UpdateParcelButton" Grid.Column="5" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="UpdateParcelButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/update-icon.png"/>
                 </Button.Background>
@@ -45,10 +45,8 @@
                     <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/close-button.jpg"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="FilterButton" Grid.Column="2" Content="Base stations with available charging stations" Background="{x:Null}" FontFamily="Berlin Sans FB Demi" FontSize="14" Foreground="Black" Click="FilterButton_Click" Margin="1,19,0,18" BorderBrush="FloralWhite">
-            </Button>
         </Grid>
-        <DataGrid x:Name="BaseStationForListDataGrid" IsReadOnly="True" AutoGenerateColumns="True" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite">
+        <DataGrid x:Name="ParcelForListDataGrid" IsReadOnly="True" AutoGenerateColumns="True" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite">
         </DataGrid>
     </Grid>
 </Window>

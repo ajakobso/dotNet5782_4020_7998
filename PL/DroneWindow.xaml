@@ -37,7 +37,7 @@
             <Label x:Name="DroneWeight" Content="Drone weight" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <Label x:Name="BsID" Content="Base station ID" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="148" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <ComboBox x:Name="BsIdSelector" Text="choose Base station id" Grid.Column="1" HorizontalAlignment="Center" Height="20" Width="120" Grid.Row="3" VerticalAlignment="Center" SelectionChanged="BsIdSelector_SelectionChanged"/>
-            <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="40" Margin="150,20,0,0" Grid.Row="4" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="#FFFFFDE7" Click="AddDroneButton_Click" FontWeight="Bold">
+            <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="40" Margin="150,20,0,0" Grid.Row="4" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Click="AddDroneButton_Click" FontWeight="Bold">
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
@@ -62,7 +62,7 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions >
-                <Label Content="Drone's Data"  Background="#FFFFFDE7" FontFamily="Berlin Sans FB Demi" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="136,4,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
+                <Label Content="Drone's Data"  Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="136,4,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
                 <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" VerticalAlignment="Center" Width="64" Click="CloseButton_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\close-button.jpg"/>
@@ -83,7 +83,7 @@
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions >
                 <TextBox x:Name="DroneModelTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="DroneModelTBox_TextChanged"/>
-                <Label x:Name="DroneModelL" Background="#FFFFFDE7" Content="Drone Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Label x:Name="DroneModelL" Background="FloralWhite" Content="Drone Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
                 <Button x:Name="ModelUpdate" Grid.Column="2" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ModelUpdate_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\update-button.jpg"/>
@@ -95,7 +95,7 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="ChargeInLabel" Background="#FFFFFDE7" Content="Send Drone To Charge" Grid.Column="0" HorizontalAlignment="Left" Height="38" VerticalAlignment="Center" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
+                <Label x:Name="ChargeInLabel" Background="FloralWhite" Content="Send Drone To Charge" Grid.Column="0" HorizontalAlignment="Left" Height="38" VerticalAlignment="Center" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="ChargeIn" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeIn_Click" Margin="34,0,0,0" >
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\lowBattery-button.jpg"/>
@@ -107,7 +107,7 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="ChargeOutLabel" Background="#FFFFFDE7" Content="Realese Drone Frome Charge" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="9,-6,0,0" />
+                <Label x:Name="ChargeOutLabel" Background="FloralWhite" Content="Realese Drone Frome Charge" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="9,-6,0,0" />
                 <Button x:Name="ChargeOut" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeOut_Click" Margin="2,0,0,0" >
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\highBattery-icon.jpg"/>
@@ -119,7 +119,7 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="SendDroneLabel" Background="#FFFFFDE7" Content="Ascript Drone To Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
+                <Label x:Name="SendDroneLabel" Background="FloralWhite" Content="Ascript Drone To Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="SendDrone" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendDrone_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\drone-icon.jpg"/>
@@ -131,7 +131,7 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="PickUpParcelLabel" Background="#FFFFFDE7" Content="Send Drone To Pick Up Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
+                <Label x:Name="PickUpParcelLabel" Background="FloralWhite" Content="Send Drone To Pick Up Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" Margin="39,0,0,0" >
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\dronePickUpParcel-icon.jpg"/>
@@ -143,7 +143,7 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="DeliverParcelLabel" Background="#FFFFFDE7" Content="Drone Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
+                <Label x:Name="DeliverParcelLabel" Background="FloralWhite" Content="Drone Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
                 <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\droneDeliverParcel-icon.jpg"/>
