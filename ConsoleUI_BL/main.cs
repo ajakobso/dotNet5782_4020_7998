@@ -319,37 +319,37 @@ namespace ConsoleUI_BL
                         switch (l)
                         {
                             case Enums.ListsDisplaying.BaseStationsList:
-                                foreach(var baseStation in bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId))
+                                foreach(var baseStation in bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId))//////////////not linq
                                 {
                                     Console.WriteLine(baseStation);
                                 }
                                 break;
                             case Enums.ListsDisplaying.DronesList:
-                                foreach(var drone in bl.DisplayDronesList(x => x.DroneId == x.DroneId))
+                                foreach(var drone in bl.DisplayDronesList(x => x.DroneId == x.DroneId))/////////not linq
                                 {
                                     Console.WriteLine(drone);
                                 }
                                 break;
                             case Enums.ListsDisplaying.CustomersList:
-                                foreach (var customer in bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId)) 
+                                foreach (var customer in bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId)) /////////not linq
                                 {
                                     Console.WriteLine(customer);
                                 }
                                 break;
                             case Enums.ListsDisplaying.ParcelsList:
-                                foreach (var parcel in bl.DisplayParcelsList(x => x.ParcelId == x.ParcelId))
+                                foreach (var parcel in bl.DisplayParcelsList(x => x.ParcelId == x.ParcelId))//////////not linq
                                 {
                                     Console.WriteLine(parcel);
                                 }
                                 break;
                             case Enums.ListsDisplaying.UnAscriptedParcelsLict:
-                                foreach(var fParcel in bl.DisplayUnAscriptedParcelsList())//free parcel
+                                foreach(var fParcel in bl.DisplayUnAscriptedParcelsList())//free parcel///////////not linq
                                 {
                                     Console.WriteLine(fParcel);
                                 }
                                 break;
                             case Enums.ListsDisplaying.AvailableChargingStationsList:
-                                foreach(var aBaseStation in bl.DisplayAvailableChargingStation())//available base stations
+                                foreach (var aBaseStation in bl.DisplayAvailableChargingStation())//available base stations/////////////not linq
                                 {
                                     Console.WriteLine(aBaseStation);
                                 }

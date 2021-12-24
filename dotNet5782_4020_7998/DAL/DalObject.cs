@@ -18,13 +18,19 @@ namespace DAL.DalObject//add exception of id that didnt found
         }
         public void AddBaseStation(int id, string name, int chargeSlots,int availableChargeSlots, double longitude, double lattitude)
         {
-            foreach (BaseStation bStation in DataSource.Config.BaseStations)
+            foreach (var _ in from BaseStation bStation in DataSource.Config.BaseStations
+                              where bStation.Id == id
+                              select new { })
             {
-                if (bStation.Id == id)
-                {
-                    throw new AddExistingBaseStationException();
-                }
+                throw new AddExistingBaseStationException();
             }
+            //foreach (BaseStation bStation in DataSource.Config.BaseStations)-not linq
+            //{
+            //    if (bStation.Id == id)
+            //    {
+            //        throw new AddExistingBaseStationException();
+            //    }
+            //}
             //if ((longitude > 35.3) || (longitude < 35.1) || (lattitude > 3.9) || (lattitude < 3.7))
             //{
             //    throw new LocationOutOfRangeException();
@@ -34,25 +40,37 @@ namespace DAL.DalObject//add exception of id that didnt found
         }
         public void AddDrone(int id, double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
-            foreach (Drone drone in DataSource.Config.Drones)
+            foreach (var _ in from Drone drone in DataSource.Config.Drones
+                              where drone.Id == id
+                              select new { })
             {
-                if (drone.Id == id)
-                {
-                    throw new AddExistingDroneException();
-                }
-
+                throw new AddExistingDroneException();
             }
+            //foreach (Drone drone in DataSource.Config.Drones)
+            //{
+            //    if (drone.Id == id)
+            //    {
+            //        throw new AddExistingDroneException();
+            //    }
+
+            //}
             DataSource.Config.Drones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
         }
         public void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
-            foreach (Customer customer in DataSource.Config.Customers)
+            foreach (var _ in from Customer customer in DataSource.Config.Customers
+                              where customer.Id == id
+                              select new { })
             {
-                if (customer.Id == id)
-                {
-                    throw new AddExistingCustomerException();
-                }
+                throw new AddExistingCustomerException();
             }
+            //foreach (Customer customer in DataSource.Config.Customers)
+            //{
+            //    if (customer.Id == id)
+            //    {
+            //        throw new AddExistingCustomerException();
+            //    }
+            //}
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });
         }
         public void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered)
@@ -61,59 +79,96 @@ namespace DAL.DalObject//add exception of id that didnt found
             if (id != -1)
             { parcelID = id; }
             else { parcelID = DataSource.Config.RunningParcelId++; }
-            foreach (Parcel parcel in DataSource.Config.Parcels)
+
+            foreach (var _ in from Parcel parcel in DataSource.Config.Parcels
+                              where parcel.DroneId == droneId
+                              select new { })
             {
-                if (parcel.DroneId == droneId)
-                {
-                    DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
-                    throw new AddParcelToAnAsscriptedDroneException();
-                }
+                DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
+                throw new AddParcelToAnAsscriptedDroneException();
             }
+            //foreach (Parcel parcel in DataSource.Config.Parcels)-not linq
+            //{
+            //    if (parcel.DroneId == droneId)
+            //    {
+            //        DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
+            //        throw new AddParcelToAnAsscriptedDroneException();
+            //    }
+            //}
             DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
 
         public void RemoveCustomer(int id)
         {
-            foreach (var customer in DataSource.Config.Customers)
+            foreach (var customer in from customer in DataSource.Config.Customers
+                                     where customer.Id == id
+                                     select customer)
             {
-                if (customer.Id == id)
-                { DataSource.Config.Customers.Remove(customer); return; }
+                DataSource.Config.Customers.Remove(customer);
+                return;
             }
+            //foreach (var customer in DataSource.Config.Customers)
+            //{
+            //    if (customer.Id == id)
+            //    { DataSource.Config.Customers.Remove(customer); return; }
+            //}
             throw new CustomerNotFoundException();
         }
         public void RemoveParcel(int id)
         {
-            foreach (var parcel in DataSource.Config.Parcels)
+            foreach (var parcel in from parcel in DataSource.Config.Parcels
+                                   where parcel.Id == id
+                                   select parcel)
             {
-                if (parcel.Id == id)
-                { DataSource.Config.Parcels.Remove(parcel); return; }
-
+                DataSource.Config.Parcels.Remove(parcel);
+                return;
             }
+            //foreach (var parcel in DataSource.Config.Parcels)-not linq
+            //{
+            //    if (parcel.Id == id)
+            //    { DataSource.Config.Parcels.Remove(parcel); return; }
+
+            //}
+
             throw new ParcelIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
         public void RemoveDrone(int id)
         {
-            foreach (var drone in DataSource.Config.Drones)
+            foreach (var drone in from drone in DataSource.Config.Drones
+                                  where drone.Id == id
+                                  select drone)
             {
-                if (drone.Id == id)
-                {
-                    DataSource.Config.Drones.Remove(drone);
-                    return;
-                }
+                DataSource.Config.Drones.Remove(drone);
+                return;
             }
+            //foreach (var drone in DataSource.Config.Drones)-not linq
+            //{
+            //    if (drone.Id == id)
+            //    {
+            //        DataSource.Config.Drones.Remove(drone);
+            //        return;
+            //    }
+            //}
             throw new DroneIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
         public void RemoveBaseStation(int id)
         {
-            foreach (var bs in DataSource.Config.BaseStations)
+            foreach (var bs in from bs in DataSource.Config.BaseStations
+                               where bs.Id == id
+                               select bs)
             {
-                if (bs.Id == id)
-                {
-                    DataSource.Config.BaseStations.Remove(bs);
-                    return;
-                }
-
+                DataSource.Config.BaseStations.Remove(bs);
+                return;
             }
+            //foreach (var bs in DataSource.Config.BaseStations)-not linq
+            //{
+            //    if (bs.Id == id)
+            //    {
+            //        DataSource.Config.BaseStations.Remove(bs);
+            //        return;
+            //    }
+
+            //}
             throw new BaseStationNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
         public void AscriptionPtoD(int parcelId, int droneId)// ascription a parcel with drone
@@ -121,23 +176,36 @@ namespace DAL.DalObject//add exception of id that didnt found
             Parcel p = new Parcel();
             bool droneExsists = false;
             bool parcelExsists = false;
-            foreach (Drone drone in DataSource.Config.Drones)
+            foreach (var _ in from Drone drone in DataSource.Config.Drones
+                              where/*drone.Status == DroneStatuses.Available &&*/droneId == drone.Id
+                              select new { })
             {
-                if (/*drone.Status == DroneStatuses.Available &&*/ droneId == drone.Id)
-                {
-                    droneExsists = true;
-                }
+                droneExsists = true;
             }
+            //foreach (Drone drone in DataSource.Config.Drones)-not linq
+            //{
+            //    if (/*drone.Status == DroneStatuses.Available &&*/ droneId == drone.Id)
+            //    {
+            //        droneExsists = true;
+            //    }
+            //}
             if (droneExsists == false)
                 throw new DroneIdNotFoundException();
-            foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel
+            foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels//finding our parcel
+                                   where parcel.Id == parcelId
+                                   select parcel)
             {
-                if (parcel.Id == parcelId)
-                {
-                    p = parcel;
-                    parcelExsists = true;
-                }
+                p = parcel;
+                parcelExsists = true;
             }
+            //foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel-not linq
+            //{
+            //    if (parcel.Id == parcelId)
+            //    {
+            //        p = parcel;
+            //        parcelExsists = true;
+            //    }
+            //}
             if (parcelExsists)
             {
                 DataSource.Config.Parcels.Remove(p);
@@ -154,26 +222,42 @@ namespace DAL.DalObject//add exception of id that didnt found
             Parcel p = new Parcel();
             bool parcelExists = false;
             bool droneExists = false;
-            foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel
+            foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels//finding our parcel
+                                   where parcel.Id == parcelId
+                                   select parcel)
             {
-                if (parcel.Id == parcelId)
-                {
-                    p = parcel;
-                    parcelExists = true;
-                }
+                p = parcel;
+                parcelExists = true;
             }
+            //foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel-not linq
+            //{
+            //    if (parcel.Id == parcelId)
+            //    {
+            //        p = parcel;
+            //        parcelExists = true;
+            //    }
+            //}
             if (parcelExists)
             {
-                foreach (Drone drone in DataSource.Config.Drones)
+                foreach (var (drone, newDrone) in from Drone drone in DataSource.Config.Drones
+                                                  where drone.Id == p.DroneId
+                                                  let newDrone = new Drone { Id = drone.Id, /*Status = DroneStatuses.Shipping,*/ Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model }
+                                                  select (drone, newDrone))
                 {
-                    if (drone.Id == p.DroneId)
-                    {
-                        Drone newDrone = new Drone { Id = drone.Id, /*Status = DroneStatuses.Shipping,*/ Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
-                        DataSource.Config.Drones.Remove(drone);
-                        DataSource.Config.Drones.Add(newDrone);
-                        droneExists = true;
-                    }
+                    DataSource.Config.Drones.Remove(drone);
+                    DataSource.Config.Drones.Add(newDrone);
+                    droneExists = true;
                 }
+                //foreach (Drone drone in DataSource.Config.Drones)-not linq
+                //{
+                //    if (drone.Id == p.DroneId)
+                //    {
+                //        Drone newDrone = new Drone { Id = drone.Id, /*Status = DroneStatuses.Shipping,*/ Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
+                //        DataSource.Config.Drones.Remove(drone);
+                //        DataSource.Config.Drones.Add(newDrone);
+                //        droneExists = true;
+                //    }
+                //}
                 if (droneExists == false)
                     throw new DroneIdNotFoundException();
             }
@@ -184,88 +268,162 @@ namespace DAL.DalObject//add exception of id that didnt found
         {
             bool parcelExists = false;
             bool droneExists = false;
-            foreach (Parcel parcel in DataSource.Config.Parcels)///find the pacler by its id
+            foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels
+                                   where parcel.Id == parcelId
+                                   select parcel)
             {
-                if (parcel.Id == parcelId)
+                parcelExists = true;
+                foreach (Drone drone in DataSource.Config.Drones)///find the drone that ascribed to the pacler-not linq!!
                 {
-                    parcelExists = true;
-                    foreach (Drone drone in DataSource.Config.Drones)///find the drone that ascribed to the pacler
+                    if (parcelExists)
                     {
-                        if (parcelExists)
+                        if (drone.Id == parcel.DroneId)
                         {
-                            if (drone.Id == parcel.DroneId)
-                            {
-                                Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
-                                DataSource.Config.Drones.Remove(drone);
-                                DataSource.Config.Drones.Add(newDrone);///change the status of the drone into available because he finish the shipment.
-                                Parcel newParcel = new Parcel { Id = parcel.Id, Delivered = DateTime.Now, DroneId = parcel.DroneId, PickedUp = parcel.PickedUp, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight };
-                                DataSource.Config.Parcels.Remove(parcel);
-                                DataSource.Config.Parcels.Add(newParcel);//updating the delivering time of the parcel
-                                droneExists = true;
-                            }
+                            Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
+                            DataSource.Config.Drones.Remove(drone);
+                            DataSource.Config.Drones.Add(newDrone);///change the status of the drone into available because he finish the shipment.
+                            Parcel newParcel = new Parcel { Id = parcel.Id, Delivered = DateTime.Now, DroneId = parcel.DroneId, PickedUp = parcel.PickedUp, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight };
+                            DataSource.Config.Parcels.Remove(parcel);
+                            DataSource.Config.Parcels.Add(newParcel);//updating the delivering time of the parcel
+                            droneExists = true;
                         }
-                        else
-                            throw new ParcelIdNotFoundException();
                     }
-                    if (droneExists == false)
-                        throw new DroneIdNotFoundException();
+                    else
+                        throw new ParcelIdNotFoundException();
                 }
+
+                if (droneExists == false)
+                    throw new DroneIdNotFoundException();
             }
+            //foreach (Parcel parcel in DataSource.Config.Parcels)///find the pacler by its id
+            //{
+            //    if (parcel.Id == parcelId)
+            //    {
+            //        parcelExists = true;
+            //        foreach (Drone drone in DataSource.Config.Drones)///find the drone that ascribed to the pacler
+            //        {
+            //            if (parcelExists)
+            //            {
+            //                if (drone.Id == parcel.DroneId)
+            //                {
+            //                    Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
+            //                    DataSource.Config.Drones.Remove(drone);
+            //                    DataSource.Config.Drones.Add(newDrone);///change the status of the drone into available because he finish the shipment.
+            //                    Parcel newParcel = new Parcel { Id = parcel.Id, Delivered = DateTime.Now, DroneId = parcel.DroneId, PickedUp = parcel.PickedUp, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight };
+            //                    DataSource.Config.Parcels.Remove(parcel);
+            //                    DataSource.Config.Parcels.Add(newParcel);//updating the delivering time of the parcel
+            //                    droneExists = true;
+            //                }
+            //            }
+            //            else
+            //                throw new ParcelIdNotFoundException();
+            //        }
+            //        if (droneExists == false)
+            //            throw new DroneIdNotFoundException();
+            //    }
+            //}
         }
         public void DroneCharging(int droneId, int baseStationId)//inserting a drone into a charging station in order to charge his battery
         {
             bool droneExists = false;
-            foreach (Drone drone in DataSource.Config.Drones)
+            foreach (var (drone, newDrone) in from Drone drone in DataSource.Config.Drones
+                                              where drone.Id == droneId
+                                              let newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model }// Status = DroneStatuses.Maintenance, Battery = drone.Battery
+                                              select (drone, newDrone))
             {
-                if (drone.Id == droneId)
-                {
-                    Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };// Status = DroneStatuses.Maintenance, Battery = drone.Battery
-                    DataSource.Config.Drones.Remove(drone);
-                    DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into maintenance because he need to charge.
-                    DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId }; //what is this for??? and if we need to add it somewhere - then where??
-                    DataSource.Config.DroneCharges.Add(newDCharge);
-                    droneExists = true;
-                    return;
-                }
+                DataSource.Config.Drones.Remove(drone);
+                DataSource.Config.Drones.Add(newDrone);
+                DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId };//what is this for??? and if we need to add it somewhere - then where??
+                DataSource.Config.DroneCharges.Add(newDCharge);
+                droneExists = true;
+                return;
             }
+            //foreach (Drone drone in DataSource.Config.Drones)
+            //{
+            //    if (drone.Id == droneId)
+            //    {
+            //        Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };// Status = DroneStatuses.Maintenance, Battery = drone.Battery
+            //        DataSource.Config.Drones.Remove(drone);
+            //        DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into maintenance because he need to charge.
+            //        DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId }; //what is this for??? and if we need to add it somewhere - then where??
+            //        DataSource.Config.DroneCharges.Add(newDCharge);
+            //        droneExists = true;
+            //        return;
+            //    }
+            //}
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
         public void DroneRelease(int droneId, int baseStationId)//Release the drone from the charging station                                                                 
         {
             bool droneExists = false;
-            foreach (Drone drone in DataSource.Config.Drones)
+            foreach (var (drone, newDrone) in from Drone drone in DataSource.Config.Drones
+                                              where drone.Id == droneId
+                                              let newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model }//Status = DroneStatuses.Available, Battery = drone.Battery
+                                              select (drone, newDrone))
             {
-                if (drone.Id == droneId)
+                DataSource.Config.Drones.Remove(drone);
+                DataSource.Config.Drones.Add(newDrone);
+                foreach (var charger in from DroneCharge charger in DataSource.Config.DroneCharges
+                                        where charger.DroneId == droneId && charger.StationId == baseStationId
+                                        select charger)
                 {
-                    Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
-                    DataSource.Config.Drones.Remove(drone);
-                    DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into available because the user's request
-                    foreach (DroneCharge charger in DataSource.Config.DroneCharges)///remove the matching charging station from the list
-                    {
-                        if (charger.DroneId == droneId && charger.StationId == baseStationId)
-                        {
-                            DataSource.Config.DroneCharges.Remove(charger);
-                        }
-                    }
-                    droneExists = true;
+                    DataSource.Config.DroneCharges.Remove(charger);
                 }
-
+                //foreach (DroneCharge charger in DataSource.Config.DroneCharges)///remove the matching charging station from the list-not linq
+                //{
+                //    if (charger.DroneId == droneId && charger.StationId == baseStationId)
+                //    {
+                //        DataSource.Config.DroneCharges.Remove(charger);
+                //    }
+                //}
+                droneExists = true;
             }
+            //foreach (Drone drone in DataSource.Config.Drones)-not linq
+            //{
+            //    if (drone.Id == droneId)
+            //    {
+            //        Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
+            //        DataSource.Config.Drones.Remove(drone);
+            //        DataSource.Config.Drones.Add(newDrone);
+            //        foreach (var charger in from DroneCharge charger in DataSource.Config.DroneCharges
+            //                                where charger.DroneId == droneId && charger.StationId == baseStationId
+            //                                select charger)
+            //        {
+            //            DataSource.Config.DroneCharges.Remove(charger);
+            //        }
+            //        //foreach (DroneCharge charger in DataSource.Config.DroneCharges)///remove the matching charging station from the list-not linq
+            //        //{
+            //        //    if (charger.DroneId == droneId && charger.StationId == baseStationId)
+            //        //    {
+            //        //        DataSource.Config.DroneCharges.Remove(charger);
+            //        //    }
+            //        //}
+            //        droneExists = true;
+            //    }
+
+            //}
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
         public BaseStation CopyBaseStation(int baseStationId)//return copy of a base station
         {
+            foreach (var baseStation in
             //bool BSExsists = false;
             //BaseStation nBStation = new BaseStation();
-            foreach (BaseStation baseStation in DataSource.Config.BaseStations)
+            from BaseStation baseStation in DataSource.Config.BaseStations
+            where baseStation.Id == baseStationId
+            select baseStation)
             {
-                if (baseStation.Id == baseStationId)
-                {
-                    return baseStation;
-                }
+                return baseStation;
             }
+            //foreach (BaseStation baseStation in DataSource.Config.BaseStations)
+            //{
+            //    if (baseStation.Id == baseStationId)
+            //    {
+            //        return baseStation;
+            //    }
+            //}
             // if (BSExsists == false)
             throw new BaseStationNotFoundException();
             // return nBStation;//the function demend us to return a value, and because the return is inside a condition it cause an error
@@ -274,13 +432,19 @@ namespace DAL.DalObject//add exception of id that didnt found
         {
             Drone nDrone = new Drone();
             bool droneExists = false;
-            foreach (Drone drone in DataSource.Config.Drones)
+            foreach (var drone in from Drone drone in DataSource.Config.Drones
+                                  where drone.Id == droneId
+                                  select drone)
             {
-                if (drone.Id == droneId)
-                {
-                    return drone;
-                }
+                return drone;
             }
+            //foreach (Drone drone in DataSource.Config.Drones)-not linq
+            //{
+            //    if (drone.Id == droneId)
+            //    {
+            //        return drone;
+            //    }
+            //}
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
             return nDrone;//the function demend us to return a value, and because the return is inside a condition it cause an error
@@ -289,13 +453,19 @@ namespace DAL.DalObject//add exception of id that didnt found
         {
             bool customerExists = false;
             Customer nCustomer = new Customer();
-            foreach (Customer customer in DataSource.Config.Customers)
+            foreach (var customer in from Customer customer in DataSource.Config.Customers
+                                     where customer.Id == customerId
+                                     select customer)
             {
-                if (customer.Id == customerId)
-                {
-                    return customer;
-                }
+                return customer;
             }
+            //foreach (Customer customer in DataSource.Config.Customers)-not linq
+            //{
+            //    if (customer.Id == customerId)
+            //    {
+            //        return customer;
+            //    }
+            //}
             if (customerExists == false)
                 throw new CustomerNotFoundException();
             return nCustomer;//the function demend us to return a value, and because the return is inside a condition it cause an error
@@ -304,13 +474,19 @@ namespace DAL.DalObject//add exception of id that didnt found
         {
             bool parcelExists = false;
             Parcel nParcel = new Parcel();
-            foreach (Parcel parcel in DataSource.Config.Parcels)
+            foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels
+                                   where parcel.Id == parcelId
+                                   select parcel)
             {
-                if (parcel.Id == parcelId)
-                {
-                    return parcel;
-                }
+                return parcel;
             }
+            //foreach (Parcel parcel in DataSource.Config.Parcels)-not linq!
+            //{
+            //    if (parcel.Id == parcelId)
+            //    {
+            //        return parcel;
+            //    }
+            //}
             if (parcelExists == false)
                 throw new ParcelIdNotFoundException();
             return nParcel;//the function demend us to return a value, and because the return is inside a condition it cause an error
@@ -357,27 +533,29 @@ namespace DAL.DalObject//add exception of id that didnt found
         }
         public IEnumerable<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
         {
-            List<Parcel> nList = new List<Parcel>();
-            foreach (Parcel parcel in DataSource.Config.Parcels)
-            {
-                if (parcel.DroneId == 0)
-                {
-                    nList.Add(parcel);
-                }
-            }
-            return nList;
+            return (from Parcel parcel in DataSource.Config.Parcels
+                    where parcel.DroneId == 0
+                    select parcel).ToList();
+            //foreach (Parcel parcel in DataSource.Config.Parcels)-not linq
+            //{
+            //    if (parcel.DroneId == 0)
+            //    {
+            //        nList.Add(parcel);
+            //    }
+            //}
         }
         public IEnumerable<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
         {
-            List<BaseStation> nList = new List<BaseStation>();
-            foreach (BaseStation baseStation in DataSource.Config.BaseStations)
-            {
-                if (baseStation.ChargeSlots > 0)
-                {
-                    nList.Add(baseStation);
-                }
-            }
-            return nList;
+            return (from BaseStation baseStation in DataSource.Config.BaseStations
+                    where baseStation.ChargeSlots > 0
+                    select baseStation).ToList();
+            //foreach (BaseStation baseStation in DataSource.Config.BaseStations)-not linq
+            //{
+            //    if (baseStation.ChargeSlots > 0)
+            //    {
+            //        nList.Add(baseStation);
+            //    }
+            //}
         }
         public static Coordinate Fromdouble(double angleInDegrees)
         {

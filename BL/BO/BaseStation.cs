@@ -19,13 +19,19 @@ namespace BL.BO
         }
        public void removeDInCharge(int id)
         {
-            foreach(var drone in DInChargeList)
+            foreach (var drone in from drone in DInChargeList
+                                  where drone.DroneId == id
+                                  select drone)
             {
-                if(drone.DroneId==id)
-                {
-                    DInChargeList.Remove(drone);
-                }
+                DInChargeList.Remove(drone);
             }
+            //foreach (var drone in DInChargeList)-not linq
+            //{
+            //    if (drone.DroneId == id)
+            //    {
+            //        DInChargeList.Remove(drone);
+            //    }
+            //}
         }
     }
 }
