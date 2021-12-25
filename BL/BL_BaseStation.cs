@@ -37,13 +37,13 @@ namespace BL
                 {
                     nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
                 }
-                else
-                    nBaseStation.Name = baseStation.Name;
+                //else
+                //    nBaseStation.Name = baseStation.Name;
                 if (!(NumOfChargeSlots == -1))
                 {
-                    if (nBaseStation.AvailableChargeSlots < nBaseStation.ChargeSlots)
+                    if (baseStation.AvailableChargeSlots < baseStation.ChargeSlots)
                     {
-                        nBaseStation.AvailableChargeSlots = (NumOfChargeSlots - (nBaseStation.ChargeSlots - nBaseStation.AvailableChargeSlots));
+                        nBaseStation.AvailableChargeSlots += NumOfChargeSlots - baseStation.ChargeSlots;
                         nBaseStation.ChargeSlots = NumOfChargeSlots;
                     }
                     else
@@ -52,8 +52,8 @@ namespace BL
                         nBaseStation.ChargeSlots = NumOfChargeSlots;
                     }
                 }
-                else
-                    nBaseStation.ChargeSlots = baseStation.ChargeSlots;
+                //else
+                //    nBaseStation.ChargeSlots = baseStation.ChargeSlots;
                 try
                 {
                     myDalObject.RemoveBaseStation(baseStation.Id);
@@ -63,26 +63,7 @@ namespace BL
 
                 return;
             }
-            //foreach (BaseStationForList baseStation1 in baseStations) -dont have this list anymore
-            //{
-            //    if (baseStation1.BaseStationId == Id)
-            //    {
-            //        BaseStationForList nbaseStation = new BaseStationForList();
-            //        nbaseStation = baseStation1;
-
-            //        if (!(Name == " "))
-            //        {
-            //            nbaseStation.StationName = Name;
-            //        }
-            //        if (!(NumOfChargeSlots == -1))
-            //        {
-            //            nbaseStation.AvailableChargingS = (NumOfChargeSlots - nbaseStation.UnAvailableChargingS);
-            //        }
-            //    }
-            ///////not sure which exceptions to de here or what you did here, i think maby you need to add the nBaseStation somewhere? or not? 
-            // }
-            //if (Check == 0)
-            throw new BaseStationNotFoundException();
+                  throw new BaseStationNotFoundException();
         }
         public BaseStationForList DisplayBaseStation(int id)
         {

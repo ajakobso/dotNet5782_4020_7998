@@ -143,9 +143,9 @@ namespace BL
                         break;
                     }
 
-                    foreach (var baseStation in from baseStation in myDalObject.CopyBaseStations()//linq
+                    foreach (var baseStation in from baseStation in myDalObject.CopyBaseStations()
                                                 where (baseStation.Longitude == location.Long) && (baseStation.Lattitude == location.Lat) && (baseStation.ChargeSlots > 0)
-                                                select baseStation)
+                                                select baseStation)//linq
                     {
                         try { myDalObject.RemoveBaseStation(baseStation.Id); }
                         catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }

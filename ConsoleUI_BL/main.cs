@@ -139,7 +139,7 @@ namespace ConsoleUI_BL
                               "BaseStation: Update a base station\n" +
                               "RBaseStation: remove a base station\n"+
                               "Customer: Update a customer\n" +
-                              "DroneToAscriptionPToDCharge: Sending a drone to charge at a base station \n" +
+                              "DroneToCharge: Sending a drone to charge at a base station \n" +
                               "DroneRealese: Release drone from charging at a base station\n" +
                               "Asc: Ascription of a parcel to a drone\n" +
                               "PickUpParcel: picking up parcel by a drone\n" +
@@ -227,7 +227,7 @@ namespace ConsoleUI_BL
                                 case Enums.NewUpdating.PickUpParcel:
                                     Console.WriteLine("please enter drone's id:\n");
                                     inp = Console.ReadLine();
-                                    int DId3;
+                                    int DId3;//drone id
                                     int.TryParse(inp, out DId3);
                                     try { bl.PickUpParcel(DId3); }
                                     catch (ParcelCantBePickedUPException) { Console.WriteLine("ERROR - sorry, we were unable to pick up the parcel\n"); }

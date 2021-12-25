@@ -77,7 +77,7 @@ namespace BL
             IEnumerable<Location> LocList = new List<Location>();
             IEnumerable<DAL.DO.Parcel> ParceList = new List<DAL.DO.Parcel>();
             //(ParceList as List<DAL.DO.Parcel>).ForEach(x => customer = DisplayCustomer(x.TargetId), (customer.ParcelsFromCustomer
-                 != null) ? (LocList as List<Location>).Add(customer.Place));/////////////////////////////
+             //    != null) ? (LocList as List<Location>).Add(customer.Place));/////////////////////////////
             foreach (DAL.DO.Parcel p in myDalObject.CopyParcelsList())////////////////////////not linq, doesnt working
             {
                 customer = DisplayCustomer(p.TargetId);
