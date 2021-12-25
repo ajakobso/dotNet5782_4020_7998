@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DAL.DO;
 using DAL.DalApi;
 using DAL.DalObject;
@@ -305,14 +306,14 @@ namespace ConsoleUI
                                 IEnumerable<BaseStation> BaseStations;
                                 BaseStations = myDalObject.CopyBaseStations();
                                 { Console.WriteLine("ERROR - attempt to copy a non-existing base station"); }
-                                foreach (BaseStation basestation in BaseStations)
+                                foreach (var basestation in BaseStations)
                                 {
                                     Console.WriteLine(basestation);
                                 }
                                 break;
                             case ListsDisplaying.DronesList:
                                 IEnumerable<Drone> Drones = myDalObject.CopyDronesList();
-                                foreach (Drone drones in Drones)
+                                foreach (var drones in Drones)
                                 {
                                     Console.WriteLine(drones);
                                 }
@@ -320,7 +321,7 @@ namespace ConsoleUI
                             case ListsDisplaying.CustomersList:
                                 IEnumerable<Customer> Customers;
                                 Customers = myDalObject.CopyCustomersList();
-                                foreach (Customer customer in Customers)
+                                foreach (var customer in Customers)
                                 {
                                     Console.WriteLine(customer);
                                 }
@@ -328,7 +329,7 @@ namespace ConsoleUI
                             case ListsDisplaying.ParcelsList:
                                 IEnumerable<Parcel> Parcels;
                                 Parcels = myDalObject.CopyParcelsList();
-                                foreach (Parcel parcel in Parcels)
+                                foreach (var parcel in Parcels)
                                 {
                                     Console.WriteLine(parcel);
                                 }
@@ -336,7 +337,7 @@ namespace ConsoleUI
                             case ListsDisplaying.UnAscriptedParcelsList:
                                 IEnumerable<Parcel> UAParcels = new List<Parcel>();
                                 UAParcels = myDalObject.UnAscriptedParcels();
-                                foreach (Parcel parcel in UAParcels)
+                                foreach (var parcel in UAParcels)
                                 {
                                     Console.WriteLine(parcel);
                                 }
@@ -344,7 +345,7 @@ namespace ConsoleUI
                             case ListsDisplaying.AvailableChargingStationsList:
                                 IEnumerable<BaseStation> ACSList = new List<BaseStation>();
                                 ACSList = myDalObject.AvailableBaseStation();
-                                foreach (BaseStation basestation in ACSList)
+                                foreach (var basestation in ACSList)
                                 {
                                     Console.WriteLine(basestation);
                                 }

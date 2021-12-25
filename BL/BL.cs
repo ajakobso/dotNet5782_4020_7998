@@ -37,7 +37,10 @@ namespace BL
         private Location RandomCustomerLocation(int num)//location is Random between customers that parcels has just delivered to them
         {
             int counter = 0;
-            foreach (Location l in customersWithReceivedParcelsList())/////////////////////////////
+            IEnumerable<Location> locations = new List<Location>();
+            locations = customersWithReceivedParcelsList();
+            //(locations as List<Location>).ForEach()
+            foreach (var l in locations)/////////////////////////////not linq, doesnt working
             {
                 if (counter == num)
                 {
@@ -57,7 +60,7 @@ namespace BL
             baseStations = myDalObject.CopyBaseStations();
             //(baseStations as List<DAL.DO.BaseStation>).ForEach(from bs in myDalObject.CopyBaseStations() where (counter == num) 
             //                                                   let baseStation=myDalObject.CopyBaseStation(bs.Id) select baseStation);
-            foreach (DAL.DO.BaseStation bs in myDalObject.CopyBaseStations())////////////////////////////////////
+            foreach (var bs in baseStations)////////////////////////////////////not linq, doesnt working
             {
                 if (counter == num)
                 {
@@ -73,20 +76,20 @@ namespace BL
             Customer customer=new();
             IEnumerable<Location> LocList = new List<Location>();
             IEnumerable<DAL.DO.Parcel> ParceList = new List<DAL.DO.Parcel>();
-            (ParceList as List<DAL.DO.Parcel>).ForEach(x => customer = DisplayCustomer(x.TargetId), (customer.ParcelsFromCustomer
+            //(ParceList as List<DAL.DO.Parcel>).ForEach(x => customer = DisplayCustomer(x.TargetId), (customer.ParcelsFromCustomer
                  != null) ? (LocList as List<Location>).Add(customer.Place));/////////////////////////////
-            //foreach (DAL.DO.Parcel p in myDalObject.CopyParcelsList())////////////////////////
-            //{
-            //    customer = DisplayCustomer(p.TargetId);
-            //    if (customer.ParcelsFromCustomer != null)
-            //        (LocList as List<Location>).Add(customer.Place);
-            //}
+            foreach (DAL.DO.Parcel p in myDalObject.CopyParcelsList())////////////////////////not linq, doesnt working
+            {
+                customer = DisplayCustomer(p.TargetId);
+                if (customer.ParcelsFromCustomer != null)
+                    (LocList as List<Location>).Add(customer.Place);
+            }
             return LocList;
         }
         private void initializeDrones()
         {
 
-            foreach (var dalDrone in myDalObject.CopyDronesList())/////////////
+            foreach (var dalDrone in myDalObject.CopyDronesList())/////////////not linq, doesnt working
             {
                 DroneForList drone = new DroneForList
                 {

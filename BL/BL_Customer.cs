@@ -13,7 +13,7 @@ namespace BL
         {
             List<ParcelInCustomer> res1 = new List<ParcelInCustomer> { };
             List<ParcelInCustomer> res2 = new List<ParcelInCustomer> { };
-            foreach (var parcel in myDalObject.CopyParcelsList())
+            foreach (var parcel in myDalObject.CopyParcelsList())//////////////////not linq-doesnt working
             {
                 ParcelInCustomer nParcel;
                 Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be DAL.DOne is to catch exception if parcel not found
@@ -38,6 +38,7 @@ namespace BL
                     res2.Add(nParcel);
                 }
             }
+     
             if (option == "PtoC")
                 return res1;
             else
@@ -86,6 +87,33 @@ namespace BL
         public IEnumerable<CustomerForList> DisplayCustomersList(Predicate<CustomerForList> predicate)
         {
             List<CustomerForList> responce = new List<CustomerForList>();
+            //foreach (var (blC, deliveredP, unDeliveredP, recivedP, onTheWayP) in from customer in myDalObject.CopyCustomersList()//linq-doesnt working
+            //                                                                     let blC = DisplayCustomer(customer.Id)
+            //                                                                     let deliveredP = 0
+            //                                                                     let unDeliveredP = 0
+            //                                                                     let recivedP = 0
+            //                                                                     let onTheWayP = 0
+            //                                                                     select (blC, deliveredP, unDeliveredP, recivedP, onTheWayP))
+            //{
+            //    foreach (var parcel in blC.ParcelsToCustomer)
+            //    {
+            //        recivedP++;
+            //    }
+
+            //    foreach (var parcel in blC.ParcelsFromCustomer)
+            //    {
+            //        if (parcel.ParcelState == Enums.ParcelState.Delivered)
+            //            deliveredP++;
+            //        if (parcel.ParcelState == Enums.ParcelState.PickedUp)
+            //            onTheWayP++;
+            //        if (parcel.ParcelState == Enums.ParcelState.Created || parcel.ParcelState == Enums.ParcelState.Ascripted)
+            //            unDeliveredP++;
+            //    }
+
+            //    CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfDeliveredParcels = deliveredP, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUnDeliveredParcels = unDeliveredP };
+            //    responce.Add(nCustomer);
+            //}
+
             foreach (var customer in myDalObject.CopyCustomersList())
             {
                 Customer blC = DisplayCustomer(customer.Id);
@@ -103,6 +131,7 @@ namespace BL
                     if (parcel.ParcelState == Enums.ParcelState.Created || parcel.ParcelState == Enums.ParcelState.Ascripted)
                         unDeliveredP++;
                 }
+
                 CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfDeliveredParcels = deliveredP, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUnDeliveredParcels = unDeliveredP };
                 responce.Add(nCustomer);
             }

@@ -29,7 +29,7 @@ namespace BL
         }
         public void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
-            foreach (var baseStation in myDalObject.CopyBaseStations().Where(baseStation => baseStation.Id == Id))///////////////////////////////////
+            foreach (var baseStation in myDalObject.CopyBaseStations().Where(baseStation => baseStation.Id == Id))///////////////////////////////////kind of linq
             {
                 DAL.DO.BaseStation nBaseStation = new DAL.DO.BaseStation();
                 nBaseStation = baseStation;
@@ -86,7 +86,7 @@ namespace BL
         }
         public BaseStationForList DisplayBaseStation(int id)
         {
-            foreach (var nBaseStation in from baseStation in myDalObject.CopyBaseStations()
+            foreach (var nBaseStation in from baseStation in myDalObject.CopyBaseStations()//linq
                                          where baseStation.Id == id
                                          let sLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
                                          let nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = sLocation }
@@ -100,7 +100,7 @@ namespace BL
         public IEnumerable<BaseStationForList> DisplayBaseStationsList(Predicate<BaseStationForList> predicate)
         {
             IEnumerable<BaseStationForList> nStationList = new List<BaseStationForList>();
-            nStationList = (from DAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations()
+            nStationList = (from DAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations()//linq, not foreach
                                                       let ForListLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
                                                       let baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation }
                                                       select baseStationForList).ToList();
@@ -110,14 +110,14 @@ namespace BL
         public IEnumerable<int> DisplayBaseStationsId()
         {
             IEnumerable<int> responce = new List<int>();
-            (responce as List<int>).AddRange(from bs in myDalObject.CopyBaseStations()
+            (responce as List<int>).AddRange(from bs in myDalObject.CopyBaseStations()//linq, not for each
                               select bs.Id);
             return responce;
         }
         public IEnumerable<BaseStationForList> DisplayAvailableChargingStation()
         {
             IEnumerable<BaseStationForList> BsList = new List<BaseStationForList>();
-            (BsList as List<BaseStationForList>).AddRange(from bs in myDalObject.CopyBaseStations()
+            (BsList as List<BaseStationForList>).AddRange(from bs in myDalObject.CopyBaseStations()//linq, not foreach
                           where bs.AvailableChargeSlots > 0
                           let bsLocation = new Location(bs.Longitude, bs.Lattitude)
                           let baseStationForList = new BaseStationForList { BaseStationId = bs.Id, StationName = bs.Name, AvailableChargingS = bs.AvailableChargeSlots, UnAvailableChargingS = (bs.ChargeSlots - bs.AvailableChargeSlots), StationLocation = bsLocation }

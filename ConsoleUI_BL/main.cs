@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using BL.BO;
 namespace ConsoleUI_BL
 {
@@ -319,13 +322,13 @@ namespace ConsoleUI_BL
                         switch (l)
                         {
                             case Enums.ListsDisplaying.BaseStationsList:
-                                foreach(var baseStation in bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId))//////////////not linq
+                                foreach (var baseStation in bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId))//////////////not linq
                                 {
                                     Console.WriteLine(baseStation);
                                 }
                                 break;
                             case Enums.ListsDisplaying.DronesList:
-                                foreach(var drone in bl.DisplayDronesList(x => x.DroneId == x.DroneId))/////////not linq
+                                foreach (var drone in bl.DisplayDronesList(x => x.DroneId == x.DroneId))/////////not linq
                                 {
                                     Console.WriteLine(drone);
                                 }
