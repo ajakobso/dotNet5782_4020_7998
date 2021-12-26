@@ -152,37 +152,67 @@ namespace PL
 
         #endregion
         #region remove BaseStation
-        public BaseStationWindow(IBL bl, bool nothing)//remove an existing BaseStation constractor
-        {
-            this.bl = bl;
-            InitializeComponent();
-            RemoveBaseStationGrid.Visibility = Visibility.Visible;
-        }
-        private void RemoveBaseStationButton_Click(object sender, RoutedEventArgs e)
-        {
-            try { bl.removeBaseStation(id); }
-            catch (BaseStationNotFoundException) { MessageBox.Show("sorry, this BaseStation is not exist in our company yet!\n please choose enother BaseStation to remove", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        private void BaseStationRemoveIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string input;
-            input = BaseStationRemoveIdTextBox.Text;
-            bool isInt = int.TryParse(input, out id);
-            if (isInt == false || id < 0)
-            {
-                BaseStationRemoveIdTextBox.Foreground = Brushes.Red;
-                _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
-            else
-            {
-                if (isInt && id >= 0)
-                {
-                    BaseStationRemoveIdTextBox.Foreground = Brushes.Black;
-                    IdTextBoxChanged = true;
-                }
-            }
-        }
+        //public BaseStationWindow(IBL bl, bool nothing)//remove an existing BaseStation constractor
+        //{
+        //    this.bl = bl;
+        //    InitializeComponent();
+        //    RemoveBaseStationGrid.Visibility = Visibility.Visible;
+        //}
+        //private void RemoveBaseStationButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try { bl.removeBaseStation(id); }
+        //    catch (BaseStationNotFoundException) { MessageBox.Show("sorry, this BaseStation is not exist in our company yet!\n please choose enother BaseStation to remove", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+        //    _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
+        //}
+        //private void BaseStationRemoveIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    string input;
+        //    input = BaseStationRemoveIdTextBox.Text;
+        //    bool isInt = int.TryParse(input, out id);
+        //    if (isInt == false || id < 0)
+        //    {
+        //        BaseStationRemoveIdTextBox.Foreground = Brushes.Red;
+        //        _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+        //    }
+        //    else
+        //    {
+        //        if (isInt && id >= 0)
+        //        {
+        //            BaseStationRemoveIdTextBox.Foreground = Brushes.Black;
+        //            IdTextBoxChanged = true;
+        //        }
+        //    }
+        //}
+        /*        <Grid x:Name="RemoveBaseStationGrid" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="BaseStationRemoveIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationRemoveIdTextBox_TextChanged" />
+            <Label x:Name="BaseStationRemoveIDLabel" Content="ID" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="64,19,79,15" />
+            <Button x:Name="RemoveBaseStationButton" Content="Remove BaseStation" Height="40" Margin="118,16,138,16" Grid.Row="5" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18"  FontWeight="Bold" Foreground="Black" Click="RemoveBaseStationButton_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC5FBF5"/>
+                        <GradientStop Color="#FEB4FFFB" Offset="0.139"/>
+                        <GradientStop Color="#FEA5F9F5" Offset="0.357"/>
+                        <GradientStop Color="#FE92F2ED" Offset="0.648"/>
+                        <GradientStop Color="#FE76EAE4" Offset="0.726"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFCBC8A2" Opacity="0.75"/>
+                </Button.BorderBrush>
+            </Button>
+        </Grid>
+*/
         #endregion
         #region update BaseStation
         public BaseStationWindow(IBL bl, int nothing)//update an existing BaseStation constractor

@@ -16,6 +16,7 @@
             </Grid>
         </ControlTemplate>
     </Window.Resources>
+    <Window.Background>FloralWhite</Window.Background>
     <Grid Name="MainGrid">
         <Grid x:Name="AddBaseStationGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
@@ -41,35 +42,6 @@
             <TextBox x:Name="BaseStationCSTextBox" Grid.Row="4" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationCSTextBox_TextChanged"/>
             <Label x:Name="BaseStationCSLabel" Content="Charging Slots" Grid.Row="4" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="22,18,32,17" />
             <Button x:Name="AddBaseStationButton" Content="Add BaseStation" Height="40" Margin="118,16,138,16" Grid.Row="5" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Click="AddBaseStationButton_Click" FontWeight="Bold" Foreground="Black">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFC5FBF5"/>
-                        <GradientStop Color="#FEB4FFFB" Offset="0.139"/>
-                        <GradientStop Color="#FEA5F9F5" Offset="0.357"/>
-                        <GradientStop Color="#FE92F2ED" Offset="0.648"/>
-                        <GradientStop Color="#FE76EAE4" Offset="0.726"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-                <Button.Effect>
-                    <DropShadowEffect/>
-                </Button.Effect>
-                <Button.BorderBrush>
-                    <SolidColorBrush Color="#FFCBC8A2" Opacity="0.75"/>
-                </Button.BorderBrush>
-            </Button>
-        </Grid>
-        <Grid x:Name="RemoveBaseStationGrid" Visibility="Hidden">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="BaseStationRemoveIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationRemoveIdTextBox_TextChanged" />
-            <Label x:Name="BaseStationRemoveIDLabel" Content="ID" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="64,19,79,15" />
-            <Button x:Name="RemoveBaseStationButton" Content="Remove BaseStation" Height="40" Margin="118,16,138,16" Grid.Row="5" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18"  FontWeight="Bold" Foreground="Black" Click="RemoveBaseStationButton_Click">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFC5FBF5"/>

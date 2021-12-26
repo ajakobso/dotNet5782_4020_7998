@@ -35,11 +35,6 @@ namespace PL
 
         }
 
-        private void RemoveCustomerButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
         {
 

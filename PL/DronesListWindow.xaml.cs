@@ -27,6 +27,7 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             drone = new();
+            DroneForListDataGrid.DataContext = ;
             DroneForListDataGrid.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));

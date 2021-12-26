@@ -20,14 +20,9 @@
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions >
-            <Button x:Name="AddParcelButton" Grid.Column="3" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
+            <Button x:Name="AddParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
                 <Button.Background>
                     <ImageBrush ImageSource="/Images/add-icon.png"/>
-                </Button.Background>
-            </Button>
-            <Button x:Name="RemoveParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="RemoveParcelButton_Click">
-                <Button.Background>
-                    <ImageBrush ImageSource="/Images/remove-icon.jpg"/>
                 </Button.Background>
             </Button>
             <Button x:Name="UpdateParcelButton" Grid.Column="5" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="UpdateParcelButton_Click">
@@ -37,16 +32,15 @@
             </Button>
             <Button x:Name="Reset" Grid.Column="1" Height="70" HorizontalContentAlignment="Stretch" Margin="1,-1,5,0" FontFamily="Berlin Sans FB Demi" FontSize="20" Click="Reset_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Images/reset-button.jpg"/>
+                    <ImageBrush ImageSource="\Images\reset-icon.png"/>
                 </Button.Background>
             </Button>
             <Button x:Name="CloseButton" Grid.Column="0" Height="70" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="CloseButton_Click" Margin="5,-1,1,0">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Images/close-button.jpg"/>
+                    <ImageBrush ImageSource="/Images/close-icon.png" Stretch="Fill"/>
                 </Button.Background>
             </Button>
         </Grid>
-        <DataGrid x:Name="ParcelForListDataGrid" IsReadOnly="True" AutoGenerateColumns="True" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite">
-        </DataGrid>
+        <DataGrid x:Name="ParcelForListDataGrid" IsReadOnly="True" AutoGenerateColumns="True" EnableRowVirtualization="True" Margin="-9,69,9,8" Grid.RowSpan="2" Background="FloralWhite"/>
     </Grid>
 </Window>

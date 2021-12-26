@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Images\add-icon.png" />
     <None Remove="Images\close-button.jpg" />
+    <None Remove="Images\close-icon.png" />
     <None Remove="Images\drone-icon.jpg" />
     <None Remove="Images\droneDeliverParcel-icon.jpg" />
     <None Remove="Images\dronePickUpParcel-icon.jpg" />
@@ -17,6 +18,8 @@
     <None Remove="Images\main-logo.jpg" />
     <None Remove="Images\remove-icon.jpg" />
     <None Remove="Images\reset-button.jpg" />
+    <None Remove="Images\reset-icon.png" />
+    <None Remove="Images\reset.png" />
     <None Remove="Images\update-button.jpg" />
     <None Remove="Images\update-icon.png" />
   </ItemGroup>
@@ -25,7 +28,7 @@
     <Content Include="Images\add-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\close-button.jpg">
+    <Content Include="Images\close-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\drone-icon.jpg">
@@ -47,6 +50,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\reset-button.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\reset-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\reset.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\update-button.jpg">

@@ -53,13 +53,13 @@ namespace PL
             { FilterButton_Click(FilterButton, null); }
         }
         
-        private void RemoveBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
-        {
-            _ = new BaseStationWindow(bl, true).ShowDialog();
-            BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
-            if (filterButtonIsClicked)
-            { FilterButton_Click(FilterButton, null); }
-        }
+        //private void RemoveBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _ = new BaseStationWindow(bl, true).ShowDialog();
+        //    BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
+        //    if (filterButtonIsClicked)
+        //    { FilterButton_Click(FilterButton, null); }
+        //}
         private void UpdateBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
             _ = new BaseStationWindow(bl, 0).ShowDialog();
