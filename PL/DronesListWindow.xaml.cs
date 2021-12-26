@@ -24,23 +24,17 @@ namespace PL
         private readonly IBL bl;
         private Drone drone;
         static readonly DependencyProperty DronesListProperty = DependencyProperty.Register("Drones List", typeof(ObservableCollection<DroneForList>), typeof(DronesListWindow));
-        public ObservableCollection<DroneForList> dronesList { get => (ObservableCollection<DroneForList>)GetValue(DronesListProperty); set => SetValue(DronesListProperty, value); }
+        public ObservableCollection<PO.DroneForList> dronesList { get => (ObservableCollection<PO.DroneForList>)GetValue(DronesListProperty); set => SetValue(DronesListProperty, value); }
         public DronesListWindow(IBL bl)
         {
             InitializeComponent();
             this.bl = bl;
             drone = new();
-            dronesList = new();
+            dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
             DroneForListDataGrid.DataContext = dronesList;
             DroneForListDataGrid.ItemsSource = dronesList;
-            dronesList = (ObservableCollection<DroneForList>)bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            CollectionViewSource droneForListViewSource = (CollectionViewSource)FindResource("droneForListViewSource");
-            
         }
 
         public void RefreshDronesListWindow()
@@ -119,7 +113,8 @@ namespace PL
         private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();
-            DroneForListDataGrid.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);
+            //DroneForListDataGrid.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);
+            dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
             WeightSelector_SelectionChanged(WeightSelector, null);
             StatusSelector_SelectionChanged(StatusSelector, null);
         }

@@ -15,10 +15,10 @@ namespace PL.PO
         static readonly DependencyProperty BatteryProperty = DependencyProperty.Register("Battery", typeof(double), typeof(DroneForList));
         static readonly DependencyProperty LocationProperty = DependencyProperty.Register("Location", typeof(Location), typeof(DroneForList));
         static readonly DependencyProperty InDeliveryParcelProperty = DependencyProperty.Register("Parcel Id", typeof(int), typeof(DroneForList));
-        public int DroneForListId { get => (int)GetValue(IdProperty); set => SetValue(IdProperty, value);}
+        public int DroneId { get => (int)GetValue(IdProperty); set => SetValue(IdProperty, value);}
         public string Model { get => (string)GetValue(ModelProperty); set => SetValue(ModelProperty, value); }
         public Enums.WeightCategories MaxWeight { get => (Enums.WeightCategories)GetValue(MaxWeightProperty); set => SetValue(MaxWeightProperty, value); }
-        public Enums.DroneStatuses DroneForListStatus { get => (Enums.DroneStatuses)GetValue(DroneForListStatusProperty); set => SetValue(DroneForListStatusProperty, value); }
+        public Enums.DroneStatuses DroneState { get => (Enums.DroneStatuses)GetValue(DroneForListStatusProperty); set => SetValue(DroneForListStatusProperty, value); }
         public Location CurrentLocation { get => (Location)GetValue(LocationProperty); set => SetValue(LocationProperty, value); }
         public double Battery { get => (double)GetValue(BatteryProperty); set => SetValue(BatteryProperty, value); }
         public int InDeliveringParcelId { get => (int)GetValue(InDeliveryParcelProperty); set => SetValue(InDeliveryParcelProperty, value); }//of course just in case there is a parcel in delivering

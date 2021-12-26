@@ -5,10 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.PO"
         mc:Ignorable="d"
-        Title="DronesListWindow" Height="640" Width="800" Loaded="Window_Loaded" >
-    <Window.Resources>
-        <CollectionViewSource x:Key="droneForListViewSource" d:DesignSource="{d:DesignInstance {x:Type local:DroneForList}, CreateList=True}"/>
-    </Window.Resources>
+        Title="DronesListWindow" Height="640" Width="800" >
+    
     <Grid Name="MainGrid" Margin="3,0,-3,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -41,14 +39,15 @@
             </Button>
 
         </Grid>
-        <DataGrid x:Name="DroneForListDataGrid" ItemsSource="{Binding Source={StaticResource droneForListViewSource}}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
+        <DataGrid x:Name="DroneForListDataGrid" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="droneForListIdColumn" Binding="{Binding DroneForListId}" Header="Drone For List Id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneForListStatus}" Header="Drone For List Status" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="droneForListIdColumn" Binding="{Binding DroneForListId}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneForListStatus}" Header="Status" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="locationColumn" Binding="{Binding CurrentLocation}" Header="Location" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
         
