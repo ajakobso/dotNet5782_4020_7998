@@ -86,7 +86,7 @@ namespace BL
         }
         public IEnumerable<CustomerForList> DisplayCustomersList(Predicate<CustomerForList> predicate)
         {
-            List<CustomerForList> responce = new List<CustomerForList>();
+            IEnumerable<CustomerForList> responce = new List<CustomerForList>();
             //foreach (var (blC, deliveredP, unDeliveredP, recivedP, onTheWayP) in from customer in myDalObject.CopyCustomersList()//linq-doesnt working
             //                                                                     let blC = DisplayCustomer(customer.Id)
             //                                                                     let deliveredP = 0
@@ -133,9 +133,9 @@ namespace BL
                 }
 
                 CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfDeliveredParcels = deliveredP, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUnDeliveredParcels = unDeliveredP };
-                responce.Add(nCustomer);
+                (responce as List<CustomerForList>).Add(nCustomer);
             }
-            responce = responce.FindAll(predicate);
+            responce = (responce as List<CustomerForList>).FindAll(predicate);
             return responce;
         }//
 

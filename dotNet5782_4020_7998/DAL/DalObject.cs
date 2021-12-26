@@ -64,7 +64,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             {
                 throw new AddExistingCustomerException();
             }
-            //foreach (Customer customer in DataSource.Config.Customers)
+            //foreach (Customer customer in DataSource.Config.Customers)-not linq
             //{
             //    if (customer.Id == id)
             //    {

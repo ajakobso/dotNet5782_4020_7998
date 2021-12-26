@@ -40,7 +40,6 @@ namespace PL
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource droneForListViewSource = (CollectionViewSource)FindResource("droneForListViewSource");
-            
         }
 
         public void RefreshDronesListWindow()

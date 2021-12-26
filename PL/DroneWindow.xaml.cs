@@ -66,7 +66,6 @@ namespace PL
             {
                 MessageBox.Show("please insert all the requested information,\nwithout it you cant add the drone!", "WARNING!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
         }
         private void BsIdSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
