@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <None Remove="Images\add-icon.png" />
-    <None Remove="Images\close-button.jpg" />
     <None Remove="Images\close-icon.png" />
     <None Remove="Images\drone-icon.jpg" />
     <None Remove="Images\droneDeliverParcel-icon.jpg" />

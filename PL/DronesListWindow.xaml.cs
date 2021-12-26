@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BL.BO;
 using BL.BlApi;
 namespace PL
@@ -22,13 +23,19 @@ namespace PL
     {
         private readonly IBL bl;
         private Drone drone;
+        static readonly DependencyProperty DronesListProperty = DependencyProperty.Register("Drones List", typeof(ObservableCollection<DroneForList>), typeof(DronesListWindow));
+
+        public ObservableCollection<DroneForList> dronesList { get => (ObservableCollection<DroneForList>)GetValue(DronesListProperty); set => SetValue(DronesListProperty, value); }
         public DronesListWindow(IBL bl)
         {
+            //        public ObservableCollection<PO.ListedPerson> StudentIDs { get => (ObservableCollection<PO.ListedPerson>)GetValue(StudentIDsProperty); set => SetValue(StudentIDsProperty, value); }
+
             InitializeComponent();
             this.bl = bl;
             drone = new();
-            DroneForListDataGrid.DataContext = ;
-            DroneForListDataGrid.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
+            DroneForListDataGrid.DataContext = dronesList;
+            dronesList = (ObservableCollection<DroneForList>)bl.DisplayDronesList(x => x.DroneId == x.DroneId); 
+            //DroneForListDataGrid.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }

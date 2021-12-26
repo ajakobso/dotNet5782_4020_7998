@@ -111,7 +111,7 @@ namespace PL
             try
             { drone = bl.DisplayDrone(droneId); }
             catch (DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            DroneView.ItemsSource = drone.ToString();
+            DroneDataGrid.DataContext = drone;
 
         }
         private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)//working
@@ -234,7 +234,7 @@ namespace PL
             if (result == MessageBoxResult.OK)
             {
                 try
-                { DroneView.ItemsSource = bl.DisplayDrone(drone.DroneId).ToString(); }
+                { DroneDataGrid.ItemsSource = bl.DisplayDrone(drone.DroneId).ToString(); }
                 catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
         }

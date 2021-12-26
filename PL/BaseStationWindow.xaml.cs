@@ -145,7 +145,7 @@ namespace PL
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             AddBaseStationGrid.Visibility = Visibility.Hidden;
-            RemoveBaseStationGrid.Visibility = Visibility.Hidden;
+            //RemoveBaseStationGrid.Visibility = Visibility.Hidden;
             UpdateBaseStationGrid.Visibility = Visibility.Hidden;
             Close();
         }
