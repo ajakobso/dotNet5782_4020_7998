@@ -24,21 +24,25 @@ namespace PL
         private readonly IBL bl;
         private Drone drone;
         static readonly DependencyProperty DronesListProperty = DependencyProperty.Register("Drones List", typeof(ObservableCollection<DroneForList>), typeof(DronesListWindow));
-
         public ObservableCollection<DroneForList> dronesList { get => (ObservableCollection<DroneForList>)GetValue(DronesListProperty); set => SetValue(DronesListProperty, value); }
         public DronesListWindow(IBL bl)
         {
-            //        public ObservableCollection<PO.ListedPerson> StudentIDs { get => (ObservableCollection<PO.ListedPerson>)GetValue(StudentIDsProperty); set => SetValue(StudentIDsProperty, value); }
-
             InitializeComponent();
             this.bl = bl;
             drone = new();
+            dronesList = new();
             DroneForListDataGrid.DataContext = dronesList;
-            dronesList = (ObservableCollection<DroneForList>)bl.DisplayDronesList(x => x.DroneId == x.DroneId); 
-            //DroneForListDataGrid.ItemsSource = bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
+            DroneForListDataGrid.ItemsSource = dronesList;
+            dronesList = (ObservableCollection<DroneForList>)bl.DisplayDronesList(x => x.DroneId == x.DroneId);//predicate that always true to show all drones
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CollectionViewSource droneForListViewSource = (CollectionViewSource)FindResource("droneForListViewSource");
+            
+        }
+
         public void RefreshDronesListWindow()
         {
             new DronesListWindow(bl);
@@ -136,6 +140,5 @@ namespace PL
             new DroneWindow(bl, drone.DroneId).Show();
         }
 
-        
     }
 }
