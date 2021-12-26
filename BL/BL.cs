@@ -25,6 +25,8 @@ namespace BL
         }
         private int droneWhileShipping(int droneId)//check if there is a parcel that the drone is ascripted to
         {
+            IEnumerable<DAL.DO.Parcel> parcels = new List<DAL.DO.Parcel>();
+            //(parcels as List<DAL.DO.Parcel>).ForEach();
             foreach (var parcel in from parcel in myDalObject.CopyParcelsList()
                                    where parcel.DroneId == droneId
                                    select parcel)
