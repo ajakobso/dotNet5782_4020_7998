@@ -29,114 +29,81 @@ namespace BL
         }
         public void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
-            // bool Check = false;
-            foreach (var baseStation in myDalObject.CopyBaseStations())
+            foreach (var baseStation in myDalObject.CopyBaseStations().Where(baseStation => baseStation.Id == Id))///////////////////////////////////kind of linq
             {
-                if (baseStation.Id == Id)
+                DAL.DO.BaseStation nBaseStation = new DAL.DO.BaseStation();
+                nBaseStation = baseStation;
+                if (!(Name == " "))
                 {
-                    //Check = true;
-                    DAL.DO.BaseStation nBaseStation = new DAL.DO.BaseStation();
-                    nBaseStation = baseStation;
-
-                    if (!(Name == " "))
-                    {
-                        nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
-                    }
-                    else
-                        nBaseStation.Name = baseStation.Name;
-                    if (!(NumOfChargeSlots == -1))
-                    {
-                        if (nBaseStation.AvailableChargeSlots < nBaseStation.ChargeSlots)
-                        {
-                            nBaseStation.AvailableChargeSlots = (NumOfChargeSlots - (nBaseStation.ChargeSlots - nBaseStation.AvailableChargeSlots));
-                            nBaseStation.ChargeSlots = NumOfChargeSlots;
-                        }
-                        else
-                        {
-                            nBaseStation.AvailableChargeSlots = NumOfChargeSlots;
-                            nBaseStation.ChargeSlots = NumOfChargeSlots;
-                        }
-                    }
-                    else
-                        nBaseStation.ChargeSlots = baseStation.ChargeSlots;
-                    try
-                    {
-                        myDalObject.RemoveBaseStation(baseStation.Id);
-                        myDalObject.AddBaseStation(nBaseStation.Id, nBaseStation.Name, nBaseStation.ChargeSlots, nBaseStation.AvailableChargeSlots, baseStation.Longitude, baseStation.Lattitude);
-                    }
-                    catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                    return;
+                    nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
                 }
-            }
-            //foreach (BaseStationForList baseStation1 in baseStations)
-            //{
-            //    if (baseStation1.BaseStationId == Id)
-            //    {
-            //        BaseStationForList nbaseStation = new BaseStationForList();
-            //        nbaseStation = baseStation1;
+                //else
+                //    nBaseStation.Name = baseStation.Name;
+                if (!(NumOfChargeSlots == -1))
+                {
+                    if (baseStation.AvailableChargeSlots < baseStation.ChargeSlots)
+                    {
+                        nBaseStation.AvailableChargeSlots += NumOfChargeSlots - baseStation.ChargeSlots;
+                        nBaseStation.ChargeSlots = NumOfChargeSlots;
+                    }
+                    else
+                    {
+                        nBaseStation.AvailableChargeSlots = NumOfChargeSlots;
+                        nBaseStation.ChargeSlots = NumOfChargeSlots;
+                    }
+                }
+                //else
+                //    nBaseStation.ChargeSlots = baseStation.ChargeSlots;
+                try
+                {
+                    myDalObject.RemoveBaseStation(baseStation.Id);
+                    myDalObject.AddBaseStation(nBaseStation.Id, nBaseStation.Name, nBaseStation.ChargeSlots, nBaseStation.AvailableChargeSlots, baseStation.Longitude, baseStation.Lattitude);
+                }
+                catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
 
-            //        if (!(Name == " "))
-            //        {
-            //            nbaseStation.StationName = Name;
-            //        }
-            //        if (!(NumOfChargeSlots == -1))
-            //        {
-            //            nbaseStation.AvailableChargingS = (NumOfChargeSlots - nbaseStation.UnAvailableChargingS);
-            //        }
-            //    }
-            ///////not sure which exceptions to de here or what you did here, i think maby you need to add the nBaseStation somewhere? or not? 
-            // }
-            //if (Check == 0)
-            throw new BaseStationNotFoundException();
+                return;
+            }
+                  throw new BaseStationNotFoundException();
         }
         public BaseStationForList DisplayBaseStation(int id)
         {
-
-            foreach (var baseStation in myDalObject.CopyBaseStations())
+            foreach (var nBaseStation in from baseStation in myDalObject.CopyBaseStations()//linq
+                                         where baseStation.Id == id
+                                         let sLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
+                                         let nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = sLocation }
+                                         select nBaseStation)
             {
-                if (baseStation.Id == id)
-                {
-                    Location sLocation = new Location(baseStation.Longitude, baseStation.Lattitude);
-                    BaseStationForList nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = sLocation };
-                    return nBaseStation;
-                }
+                return nBaseStation;
             }
+
             throw new BaseStationNotFoundException();
         }//
         public IEnumerable<BaseStationForList> DisplayBaseStationsList(Predicate<BaseStationForList> predicate)
         {
-            List<BaseStationForList> nStationsList = new List<BaseStationForList>();
-            foreach (DAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations())
-            {
-                Location ForListLocation = new Location(baseStation.Longitude, baseStation.Lattitude);
-                BaseStationForList baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation };
-                nStationsList.Add(baseStationForList);
-            }
-            nStationsList = nStationsList.FindAll(predicate);
-            return nStationsList;
+            IEnumerable<BaseStationForList> nStationList = new List<BaseStationForList>();
+            nStationList = (from DAL.DO.BaseStation baseStation in myDalObject.CopyBaseStations()//linq, not foreach
+                                                      let ForListLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
+                                                      let baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation }
+                                                      select baseStationForList).ToList();
+            nStationList = (nStationList as List<BaseStationForList>).FindAll(predicate);
+            return nStationList;
         }
         public IEnumerable<int> DisplayBaseStationsId()
         {
-            List<int> responce = new();
-            foreach (var bs in myDalObject.CopyBaseStations())
-            {
-                responce.Add(bs.Id);
-            }
+            IEnumerable<int> responce = new List<int>();
+            (responce as List<int>).AddRange(from bs in myDalObject.CopyBaseStations()//linq, not for each
+                              select bs.Id);
             return responce;
         }
         public IEnumerable<BaseStationForList> DisplayAvailableChargingStation()
         {
-            List<BaseStationForList> list = new();
-            foreach (var bs in myDalObject.CopyBaseStations())
-            {
-                if (bs.AvailableChargeSlots > 0)
-                {
-                    Location bsLocation = new Location(bs.Longitude, bs.Lattitude);
-                    BaseStationForList baseStationForList = new BaseStationForList { BaseStationId = bs.Id, StationName = bs.Name, AvailableChargingS = bs.AvailableChargeSlots, UnAvailableChargingS = (bs.ChargeSlots - bs.AvailableChargeSlots), StationLocation = bsLocation };
-                    list.Add(baseStationForList);
-                }
-            }
-            return list;
+            IEnumerable<BaseStationForList> BsList = new List<BaseStationForList>();
+            (BsList as List<BaseStationForList>).AddRange(from bs in myDalObject.CopyBaseStations()//linq, not foreach
+                          where bs.AvailableChargeSlots > 0
+                          let bsLocation = new Location(bs.Longitude, bs.Lattitude)
+                          let baseStationForList = new BaseStationForList { BaseStationId = bs.Id, StationName = bs.Name, AvailableChargingS = bs.AvailableChargeSlots, UnAvailableChargingS = (bs.ChargeSlots - bs.AvailableChargeSlots), StationLocation = bsLocation }
+                          select baseStationForList);
+            return BsList;
         }
     }
 

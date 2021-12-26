@@ -25,19 +25,22 @@ namespace BL
         }
         private int droneWhileShipping(int droneId)//check if there is a parcel that the drone is ascripted to
         {
-            foreach (var parcel in myDalObject.CopyParcelsList())
+            foreach (var parcel in from parcel in myDalObject.CopyParcelsList()
+                                   where parcel.DroneId == droneId
+                                   select parcel)
             {
-                if (parcel.DroneId == droneId)
-                {
-                    return parcel.Id;
-                }
+                return parcel.Id;
             }
+
             return -1;
         }
         private Location RandomCustomerLocation(int num)//location is Random between customers that parcels has just delivered to them
         {
             int counter = 0;
-            foreach (var l in customersWithReceivedParcelsList())
+            IEnumerable<Location> locations = new List<Location>();
+            locations = customersWithReceivedParcelsList();
+            //(locations as List<Location>).ForEach()
+            foreach (var l in locations)/////////////////////////////not linq, doesnt working
             {
                 if (counter == num)
                 {
@@ -53,7 +56,11 @@ namespace BL
         private DAL.DO.BaseStation RandomBSLocation(int num)//location is Random between the basestations
         {
             int counter = 0;//mistake maybe here
-            foreach (var bs in myDalObject.CopyBaseStations())
+            IEnumerable<DAL.DO.BaseStation> baseStations = new List<DAL.DO.BaseStation>();
+            baseStations = myDalObject.CopyBaseStations();
+            //(baseStations as List<DAL.DO.BaseStation>).ForEach(from bs in myDalObject.CopyBaseStations() where (counter == num) 
+            //                                                   let baseStation=myDalObject.CopyBaseStation(bs.Id) select baseStation);
+            foreach (var bs in baseStations)////////////////////////////////////not linq, doesnt working
             {
                 if (counter == num)
                 {
@@ -64,22 +71,25 @@ namespace BL
             }
             throw new Exception();
         }
-        private List<Location> customersWithReceivedParcelsList()//return a list of customers that received parcels
+        private IEnumerable<Location> customersWithReceivedParcelsList()//return a list of customers that received parcels
         {
-            Customer customer;
-            List<Location> list = new List<Location>();
-            foreach (var p in myDalObject.CopyParcelsList())
+            Customer customer=new();
+            IEnumerable<Location> LocList = new List<Location>();
+            IEnumerable<DAL.DO.Parcel> ParceList = new List<DAL.DO.Parcel>();
+            //(ParceList as List<DAL.DO.Parcel>).ForEach(x => customer = DisplayCustomer(x.TargetId), (customer.ParcelsFromCustomer
+             //    != null) ? (LocList as List<Location>).Add(customer.Place));/////////////////////////////
+            foreach (DAL.DO.Parcel p in myDalObject.CopyParcelsList())////////////////////////not linq, doesnt working
             {
                 customer = DisplayCustomer(p.TargetId);
                 if (customer.ParcelsFromCustomer != null)
-                    list.Add(customer.Place);
+                    (LocList as List<Location>).Add(customer.Place);
             }
-            return list;
+            return LocList;
         }
         private void initializeDrones()
         {
 
-            foreach (var dalDrone in myDalObject.CopyDronesList())
+            foreach (var dalDrone in myDalObject.CopyDronesList())/////////////not linq, doesnt working
             {
                 DroneForList drone = new DroneForList
                 {
@@ -87,7 +97,7 @@ namespace BL
                     Model = dalDrone.Model,
                     MaxWeight = WeightParcel(dalDrone.MaxWeight)
                 };
-               // DroneInCharge nDIC;
+                // DroneInCharge nDIC;
                 List<DroneInCharge> dicList = new();
                 //BaseStationForList nBsForList;
                 //BaseStationForList oldBs = new();
@@ -99,10 +109,10 @@ namespace BL
                     drone.InDeliveringParcelId = parcelId;
                     var c = myDalObject.CopyCustomer(parcel.SenderId);
                     Location sLocation = AddLocation(c.Longitude, c.Lattitude);
-                    
+
                     if (parcel.PickedUp == null)//the drone didnt pick up the parcel yet - location: the closest base station to the sender customer
                     {
-                        var bs= new DAL.DO.BaseStation();
+                        var bs = new DAL.DO.BaseStation();
                         try { bs = myDalObject.CopyBaseStation((int)distanceFromBS(sLocation)[1]); }
                         catch (BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                         Location bsLocation = AddLocation(bs.Longitude, bs.Lattitude);
@@ -150,20 +160,20 @@ namespace BL
                         //nDIC = new DroneInCharge { DroneId = drone.DroneId, Battery = drone.Battery, InsertionTime = DateTime.Now };
                         //try 
                         //{ 
-                            //oldBs = DisplayBaseStation(randomBS.Id);
-                            //dicList = oldBs.DInChargeList;// the list contains nothingfor some reason
-                            //dicList.Add(nDIC);
-                           // nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
-                           // baseStations.Remove(oldBs);
-                           // baseStations.Add(nBsForList);
-                       // }
+                        //oldBs = DisplayBaseStation(randomBS.Id);
+                        //dicList = oldBs.DInChargeList;// the list contains nothingfor some reason
+                        //dicList.Add(nDIC);
+                        // nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
+                        // baseStations.Remove(oldBs);
+                        // baseStations.Add(nBsForList);
+                        // }
                         //catch (BaseStationNotFoundException)
                         //{
                         //    dicList.Add(nDIC);
                         //    nBsForList = new BaseStationForList { BaseStationId = randomBS.Id, StationLocation = drone.CurrentLocation, StationName = randomBS.Name, DInChargeList = dicList, AvailableChargingS = randomBS.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
                         //    baseStations.Add(nBsForList);
                         //}
-                       // #endregion
+                        // #endregion
                     }
                     else
                     {
