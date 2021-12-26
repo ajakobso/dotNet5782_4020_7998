@@ -22,27 +22,27 @@
             </Grid.ColumnDefinitions >
             <Button x:Name="AddParcelButton" Grid.Column="3" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/add-icon.png"/>
+                    <ImageBrush ImageSource="/Images/add-icon.png"/>
                 </Button.Background>
             </Button>
             <Button x:Name="RemoveParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="RemoveParcelButton_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/remove-icon.jpg"/>
+                    <ImageBrush ImageSource="/Images/remove-icon.jpg"/>
                 </Button.Background>
             </Button>
             <Button x:Name="UpdateParcelButton" Grid.Column="5" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="UpdateParcelButton_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/update-icon.png"/>
+                    <ImageBrush ImageSource="/Images/update-icon.png"/>
                 </Button.Background>
             </Button>
             <Button x:Name="Reset" Grid.Column="1" Height="70" HorizontalContentAlignment="Stretch" Margin="1,-1,5,0" FontFamily="Berlin Sans FB Demi" FontSize="20" Click="Reset_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/reset-button.jpg"/>
+                    <ImageBrush ImageSource="/Images/reset-button.jpg"/>
                 </Button.Background>
             </Button>
             <Button x:Name="CloseButton" Grid.Column="0" Height="70" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="CloseButton_Click" Margin="5,-1,1,0">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/PL/Images/close-button.jpg"/>
+                    <ImageBrush ImageSource="/Images/close-button.jpg"/>
                 </Button.Background>
             </Button>
         </Grid>

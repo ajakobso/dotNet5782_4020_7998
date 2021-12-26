@@ -15,7 +15,7 @@
         FontFamily="{DynamicResource Arial Rounded MT Bold}"
         Title="MainWindow" Height="640" Width="750">
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\Ayele\source\repos\ajakobso\dotNet5782_4020_7998\PL\Resources\Images\main-logo.jpg" />
+        <ImageBrush ImageSource="/Images/main-logo.jpg" />
     </Window.Background>
     <Grid x:Name="mainGrid" Margin="14,474,16,16">
         <Grid.ColumnDefinitions>

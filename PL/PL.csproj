@@ -7,6 +7,57 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\add-icon.png" />
+    <None Remove="Images\close-button.jpg" />
+    <None Remove="Images\drone-icon.jpg" />
+    <None Remove="Images\droneDeliverParcel-icon.jpg" />
+    <None Remove="Images\dronePickUpParcel-icon.jpg" />
+    <None Remove="Images\highBattery-icon.jpg" />
+    <None Remove="Images\lowBattery-button.jpg" />
+    <None Remove="Images\main-logo.jpg" />
+    <None Remove="Images\remove-icon.jpg" />
+    <None Remove="Images\reset-button.jpg" />
+    <None Remove="Images\update-button.jpg" />
+    <None Remove="Images\update-icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\add-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\close-button.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\drone-icon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\droneDeliverParcel-icon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\dronePickUpParcel-icon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\lowBattery-button.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\main-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\remove-icon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\reset-button.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\update-button.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\update-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
@@ -58,6 +109,12 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\highBattery-icon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
