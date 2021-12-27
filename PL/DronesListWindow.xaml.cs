@@ -45,7 +45,6 @@ namespace PL
             else
                 MessageBox.Show("there is no parcel ascripted to the drone,\n cant open parcel's window.", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
-       
         public void RefreshDronesListWindow()
         {
             new DronesListWindow(bl);
@@ -154,7 +153,5 @@ namespace PL
             drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
             new DroneWindow(bl, drone.DroneId).Show();
         }
-
-        
     }
 }

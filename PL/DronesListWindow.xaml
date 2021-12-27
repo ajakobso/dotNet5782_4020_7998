@@ -32,13 +32,11 @@
                     <ImageBrush ImageSource="\Images\reset-button.jpg"/>
                 </Button.Background>
             </Button>
-            
             <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="63" Click="CloseButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="\Images\close-icon.png"/>
                 </Button.Background>
             </Button>
-
         </Grid>
         <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
             <DataGrid.Resources>
@@ -54,9 +52,7 @@
                 <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="locationColumn" Binding="{Binding CurrentLocation}" Header="Location" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader" />
-
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </Window>

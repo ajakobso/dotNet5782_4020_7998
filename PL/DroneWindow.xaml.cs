@@ -21,7 +21,7 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private readonly IBL bl;
-        private PO.DroneForList drone;//for action
+        private PO.DroneForList drone=new PO.DroneForList();//for action
         int BsId;
         private bool IdTextBoxChanged, ModelTextBoxChanged;
         private DateTime In, Out;//in and out time of sending drone to charge
@@ -51,6 +51,7 @@ namespace PL
                 {
                     try { bl.AddDrone(drone.DroneId, drone.Model, (Enums.WeightCategories)drone.MaxWeight, BsId); }//add try and catch with the proper exceptions from the bl.exceptions
                     catch (LocationOutOfRangeException) { MessageBox.Show("the location of the base station tou choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    catch(AddExistingDroneException) { MessageBox.Show("you are trying to add an existing drone, \nplease add drone who not existing yet", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                     MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
                     ModelTextBoxChanged = false;
                     IdTextBoxChanged = false;
@@ -84,12 +85,10 @@ namespace PL
             }
             else
             {
-                if (isInt && id >= 0)
-                {
                     DroneIdTextBox.Foreground = Brushes.Black;
                     drone.DroneId = id;
                     IdTextBoxChanged = true;
-                }
+                
             }
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
