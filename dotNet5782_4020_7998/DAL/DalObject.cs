@@ -587,7 +587,6 @@ namespace DAL.DalObject//add exception of id that didnt found
 
             return result;
         }
-
     }
 }
 

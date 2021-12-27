@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BL.BO;
 using BL.BlApi;
-
 namespace PL
 {
     /// <summary>
@@ -32,17 +31,14 @@ namespace PL
         {
             new DronesListWindow(bl).Show();
         }
-
         private void BSListButton_Click(object sender, RoutedEventArgs e)
         {
             new BaseStationsListWindow(bl).Show();
         }
-
         private void ParcelsListButton_Click(object sender, RoutedEventArgs e)
         {
             new ParcelsListWindow(bl).Show();
         }
-
         private void CustomersListButton_Click(object sender, RoutedEventArgs e)
         {
             new CustomersListWindow(bl).Show();

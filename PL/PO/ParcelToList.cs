@@ -9,7 +9,7 @@ namespace PL.PO
     public class ParcelToList: DependencyObject
     {
         static readonly DependencyProperty IdProperty = DependencyProperty.Register("Id", typeof(int), typeof(ParcelToList));
-        static readonly DependencyProperty StateProperty = DependencyProperty.Register("Picked Up?", typeof(bool), typeof(ParcelToList));
+        static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(Enums.ParcelState), typeof(ParcelToList));
         static readonly DependencyProperty MaxWeightProperty = DependencyProperty.Register("Weight", typeof(Enums.WeightCategories), typeof(ParcelToList));
         static readonly DependencyProperty PriorityProperty = DependencyProperty.Register("Priority", typeof(Enums.Priorities), typeof(ParcelToList));
         static readonly DependencyProperty SenderNameProperty = DependencyProperty.Register("Sender Name", typeof(string), typeof(ParcelToList));

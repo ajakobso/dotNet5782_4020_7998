@@ -47,7 +47,6 @@ namespace PL
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }//suppose to work
-        
         public void RefreshCustomerButton_Click()
         {
             new CustomersListWindow(bl);
