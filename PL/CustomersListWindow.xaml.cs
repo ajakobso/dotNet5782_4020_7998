@@ -33,6 +33,15 @@ namespace PL
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.ParcelInCustomer s = cell.DataContext as PO.ParcelInCustomer;
+            if (cell.DataContext.ToString() != "")
+            { new DroneWindow(bl, s.ParcelId).ShowDialog(); }
+            else
+                MessageBox.Show("there is no available parcel parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+        }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
         {
             new CustomerWindow(bl).ShowDialog();

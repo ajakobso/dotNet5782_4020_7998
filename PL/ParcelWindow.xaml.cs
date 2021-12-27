@@ -22,7 +22,7 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         private readonly IBL bl;
-        private PO.ParcelToList Parcel;//for action
+        private PO.Parcel Parcel;//for action
         int SID, DID;//variables for binding - add parcel
         PO.Enums.WeightCategories weight;//variable for binding - add parcel
         PO.Enums.Priorities priority;//variable for binding - add parcel
@@ -87,12 +87,24 @@ namespace PL
             InitializeComponent();
             ActionsOnParcelGrid.Visibility = Visibility.Visible;
             try
-            { Parcel = PO.BoPoAdapter.ParcelToParcelToListBoPo(bl.DisplayParcel(ParcelId)); }
+            { Parcel = PO.BoPoAdapter.ParcelBoPo(bl.DisplayParcel(ParcelId)); }
             catch (ParcelIdNotFoundException) { MessageBox.Show("sorry, this Parcel is not exist in our company yet!\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             ParcelDataGrid.DataContext = Parcel;
-            IEnumerable<PO.ParcelToList> l = new List<PO.ParcelToList>();
+            IEnumerable<PO.Parcel> l = new List<PO.Parcel>();
             l.Append(Parcel);
             ParcelDataGrid.ItemsSource = l;
+        }
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.CustomerInParcel s = Parcel.SCIParcel;
+            new CustomerWindow(bl, s.CustomerId).ShowDialog();
+            PO.CustomerInParcel d = Parcel.DCIParcel;
+            new CustomerWindow(bl, d.CustomerId).ShowDialog();
+            PO.DroneInParcel drone = Parcel.DInParcel;
+            new CustomerWindow(bl, drone.DroneId).ShowDialog();
+            // else
+            //   MessageBox.Show("there is no available sender", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
         //private void ParcelModelTBox_TextChanged(object sender, TextChangedEventArgs e)//what is this?
         //{
@@ -123,17 +135,13 @@ namespace PL
         //        MessageBox.Show("this Parcel can't be charged", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         //    }
         //}
-       //private void ChargeOut_Click(object sender, RoutedEventArgs e)//what is this?
-       // {
+        //private void ChargeOut_Click(object sender, RoutedEventArgs e)//what is this?
+        // {
 
-       // }
+        // }
         private void PickUpParcel_Click(object sender, RoutedEventArgs e)//the drone is taking our parcel
         {
-            Parcel parcel = new();
-            try
-            { parcel = bl.DisplayParcel(Parcel.ParcelId); }//in delivering parcel id?
-            catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime == null && Parcel.ParcelState == PO.Enums.ParcelState.PickedUp)//deliver or pick up?
+            if (Parcel.ParcelAscriptionTime != null && Parcel.ParcelPickUpTime == null)//deliver or pick up?
             {
                 try
                 { bl.PickUpParcel(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
@@ -153,7 +161,7 @@ namespace PL
             try
             { parcel = bl.DisplayParcel(Parcel.ParcelId); }//Parcel.InDeliveringParcelId
             catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null && Parcel.ParcelState == PO.Enums.ParcelState.PickedUp)
+            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null)
             {
                 try
                 { bl.DeliveringParcelByDrone(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
@@ -169,7 +177,7 @@ namespace PL
         }
         private void SendParcel_Click(object sender, RoutedEventArgs e)//Asctipted parcel to drone for delivery
         {
-            if (Parcel.ParcelState == PO.Enums.ParcelState.Created)
+            if (Parcel.ParcelCreationTime != null)
             {
                 try
                 { bl.AscriptionParcelToDrone(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.

@@ -76,7 +76,7 @@
             <Label x:Name="UpdateBaseStationNameLabel" Content="Name" Grid.Column="0" Grid.Row="1" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="49,0,70,0" />
             <TextBox x:Name="UpdateBaseStationCSTextBox" Grid.Row="2" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationCSTextBox_TextChanged"/>
             <Label x:Name="UpdateBaseStationCSLabel" Content="Charging Slots" Grid.Row="2" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="22,18,32,17" />
-            <Button x:Name="UpdateBaseStationButton" Content="Add BaseStation" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="40" Margin="118,16,138,16" Grid.Row="3" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" FontWeight="Bold" Foreground="Black" Click="UpdateBaseStationButton_Click">
+            <Button x:Name="UpdateBaseStationButton" Content="Update BaseStation" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="40" Margin="118,16,138,16" Grid.Row="3" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" FontWeight="Bold" Foreground="Black" Click="UpdateBaseStationButton_Click">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFC5FBF5"/>

@@ -42,6 +42,11 @@
             </Button>
         </Grid>
         <DataGrid x:Name="CustomerForListDataGrid" ItemsSource="{Binding}"  Foreground="#DD975387" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="customerIdColumn" Binding="{Binding CustomerId}" Header="Customer Id" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="customerNameColumn" Binding="{Binding CustomerName}" Header="Customer Name" Width="SizeToHeader" Foreground="#DD975387"/>
