@@ -20,9 +20,8 @@
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
-            </Grid.ColumnDefinitions >
-
-            <Button x:Name="AddParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
+            </Grid.ColumnDefinitions>
+            <Button x:Name="AddParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="\Images\add-icon.png"/>
                 </Button.Background>
@@ -44,7 +43,7 @@
             </Button>
             <Button x:Name="CloseButton" Grid.Column="0" Height="70" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="CloseButton_Click" Margin="5,-1,1,0">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Images/close-icon.png" Stretch="Fill"/>
+                    <ImageBrush ImageSource="\Images\close-icon.png"/>
                 </Button.Background>
             </Button>
         </Grid>

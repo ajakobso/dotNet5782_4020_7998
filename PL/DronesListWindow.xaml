@@ -40,6 +40,11 @@
 
         </Grid>
         <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="droneForListIdColumn" Binding="{Binding DroneId}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader"/>

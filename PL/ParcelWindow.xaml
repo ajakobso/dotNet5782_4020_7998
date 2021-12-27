@@ -18,7 +18,7 @@
         </ControlTemplate>
     </Window.Resources>
     <Grid Name="MainGrid">
-        <Grid x:Name="AddParcelGrid" Visibility="Visible">
+        <Grid x:Name="AddParcelGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -126,7 +126,7 @@
                 <Label x:Name="SendParcelLabel" Background="FloralWhite" Content="Ascript Parcel To Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="SendParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendParcel_Click" >
                     <Button.Background>
-                        <ImageBrush ImageSource="\Images\Parcel-icon.jpg"/>
+                        <ImageBrush ImageSource="\Images\Drone-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -138,7 +138,7 @@
                 <Label x:Name="PickUpParcelLabel" Background="FloralWhite" Content="Send Parcel To Pick Up Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
                 <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" Margin="39,0,0,0" >
                     <Button.Background>
-                        <ImageBrush ImageSource="\Images\ParcelPickUpParcel-icon.jpg"/>
+                        <ImageBrush ImageSource="\Images\DronePickUpParcel-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -150,7 +150,7 @@
                 <Label x:Name="DeliverParcelLabel" Background="FloralWhite" Content="Parcel Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
                 <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
                     <Button.Background>
-                        <ImageBrush ImageSource="\Images\ParcelDeliverParcel-icon.jpg"/>
+                        <ImageBrush ImageSource="\Images\DroneDeliverParcel-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>

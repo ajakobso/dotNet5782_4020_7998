@@ -36,6 +36,12 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var dataGridCellTarget = (DataGridCell)sender;
+
+            //new ParcelWindow(bl, dronesList[(int)dataGridCellTarget.Selected].InDeliveringParcelId);
+        }
         public void RefreshDronesListWindow()
         {
             new DronesListWindow(bl);
