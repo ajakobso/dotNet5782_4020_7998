@@ -32,6 +32,7 @@
                     <ImageBrush ImageSource="\Images\reset-button.jpg"/>
                 </Button.Background>
             </Button>
+            
             <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="63" Click="CloseButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="\Images\close-icon.png"/>
@@ -52,8 +53,8 @@
                 <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneState}" Header="Status" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="locationColumn" Binding="{Binding CurrentLocation}" Header="Location" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader"/>
-            
+                <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader" />
+
             </DataGrid.Columns>
         </DataGrid>
 

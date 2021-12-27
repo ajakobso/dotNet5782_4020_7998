@@ -38,10 +38,14 @@ namespace PL
         }
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var dataGridCellTarget = (DataGridCell)sender;
-
-            //new ParcelWindow(bl, dronesList[(int)dataGridCellTarget.Selected].InDeliveringParcelId);
+            DataGridCell cell = sender as DataGridCell;
+            PO.ParcelToList s = cell.DataContext as PO.ParcelToList;
+            if ((string)cell.DataContext != "0")
+            { new ParcelWindow(bl, s.ParcelId).ShowDialog(); }
+            else
+                MessageBox.Show("there is no parcel ascripted to the drone,\n cant open parcel's window.", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
+       
         public void RefreshDronesListWindow()
         {
             new DronesListWindow(bl);
@@ -150,5 +154,7 @@ namespace PL
             drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
             new DroneWindow(bl, drone.DroneId).Show();
         }
+
+        
     }
 }
