@@ -73,6 +73,7 @@
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                        
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
