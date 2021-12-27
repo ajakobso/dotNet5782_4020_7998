@@ -304,6 +304,19 @@ namespace BL
             Parcel nParcel = new Parcel { ParcelId = parcel.Id, ParcelWC = WeightParcel(parcel.Weight), ParcelCreationTime = parcel.Requested, ParcelAscriptionTime = parcel.Scheduleded, ParcelPickUpTime = parcel.PickedUp, ParcelDeliveringTime = parcel.Delivered, ParcelPriority = (Enums.Priorities)parcel.Priority, DInParcel = droneInParcel, DCIParcel = destination, SCIParcel = source };
             return nParcel;
         }
+        public void RemoveParcel(int id)
+        {
+            foreach (var parcel in myDalObject.CopyParcelsList())
+            {
+                if(parcel.Id==id)
+                {
+                    try { myDalObject.RemoveParcel(id); }
+                    catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    return;
+                }
+            }
+            throw new ParcelIdNotFoundException();
+        }
         public IEnumerable<ParcelToList> DisplayParcelsList(Predicate<ParcelToList> predicate)
         {
             IEnumerable<DAL.DO.Parcel> p = myDalObject.CopyParcelsList();

@@ -24,6 +24,7 @@ namespace BL
             void AscriptionParcelToDrone(int Id);
             void PickUpParcel(int DId);
             void DeliveringParcelByDrone(int Id);
+            public void RemoveParcel(int id);
             DateTime GetInsertionTime(int droneID);
             BaseStationForList DisplayBaseStation(int id);
             DroneForList DisplayDrone(int id);

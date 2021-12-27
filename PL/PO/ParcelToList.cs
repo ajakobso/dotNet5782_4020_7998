@@ -20,6 +20,5 @@ namespace PL.PO
         public Enums.WeightCategories ParcelWC { get => (Enums.WeightCategories)GetValue(MaxWeightProperty); set => SetValue(MaxWeightProperty, value); }
         public Enums.Priorities ParcelPriority { get => (Enums.Priorities)GetValue(PriorityProperty); set => SetValue(PriorityProperty, value); }
         public Enums.ParcelState ParcelState { get => (Enums.ParcelState)GetValue(StateProperty); set => SetValue(StateProperty, value); }
-
     }
 }

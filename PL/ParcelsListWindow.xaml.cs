@@ -42,9 +42,15 @@ namespace PL
         }
         private void RemoveParcelButton_Click(object sender, RoutedEventArgs e)
         {
-           // if(parcel.)
-            //צריך לבדוק אם המס רחפן שווה 0 ורק אם כן אז אפשר למחוק את החבילה, אם לא להדפיס הודעה מתאימה
-            //איזה רחפן? ולמה?
+            BL.BO.Parcel ParcelToRemove=new BL.BO.Parcel();
+            try {ParcelToRemove = bl.DisplayParcel(parcel.ParcelId);            }
+            catch (BL.BO.ParcelIdNotFoundException) { MessageBox.Show("This parcel does not exist in here,\n", "please choose another parcel\n", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+           if (ParcelToRemove.DInParcel.DroneId!=0)
+            {
+                try { bl.RemoveParcel(ParcelToRemove.ParcelId); }
+                catch (BL.BO.ParcelIdNotFoundException ){ MessageBox.Show("This parcel does not exist in here,\n", "please choose another parcel\n", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                }
+            }
         }
         private void UpdateParcelButton_Click(object sender, RoutedEventArgs e)
         {
