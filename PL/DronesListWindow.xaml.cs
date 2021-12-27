@@ -35,9 +35,7 @@ namespace PL
             DroneForListDataGrid.ItemsSource = dronesList;
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
-            
         }
-
         public void RefreshDronesListWindow()
         {
             new DronesListWindow(bl);
@@ -84,7 +82,6 @@ namespace PL
             }
 
         }
-      
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusSelector.SelectedItem != null)
@@ -105,7 +102,6 @@ namespace PL
                 }
             }
         }
-
         private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (WeightSelector.SelectedItem != null)
@@ -134,23 +130,19 @@ namespace PL
             WeightSelector_SelectionChanged(WeightSelector, null);
             StatusSelector_SelectionChanged(StatusSelector, null);
         }
-
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
             DroneForListDataGrid.ItemsSource = dronesList;
         }
-
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
         private void DroneForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
             new DroneWindow(bl, drone.DroneId).Show();
         }
-
     }
 }

@@ -14,9 +14,9 @@ namespace BL.BO
             public int ParcelId { get; set; }
             public CustomerInParcel SCIParcel { get; set; }//the sender
             public CustomerInParcel DCIParcel { get; set; }//the reciever
-            public Enums.WeightCategories ParcelWC { get; set; }
+            public Enums.WeightCategories ParcelWC { get; set; }//parcel wheight category
             public Enums.Priorities ParcelPriority { get; set; }
-            public DroneInParcel DInParcel { get; set; }
+            public DroneInParcel DInParcel { get; set; }//drone in parcel
             public DateTime? ParcelCreationTime { get; set; }
             public DateTime? ParcelAscriptionTime { get; set; }
             public DateTime? ParcelPickUpTime { get; set; }

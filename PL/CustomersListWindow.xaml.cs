@@ -42,11 +42,12 @@ namespace PL
         }
         private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(bl).ShowDialog();
+            new CustomerWindow(bl, customer.CustomerId).ShowDialog();//
             CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
-        }
+        }//suppose to work
+        
         public void RefreshCustomerButton_Click()
         {
             new CustomersListWindow(bl);

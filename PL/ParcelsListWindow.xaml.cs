@@ -33,7 +33,6 @@ namespace PL
             ParcelForListDataGrid.DataContext = ParcelsList;
             ParcelForListDataGrid.ItemsSource = ParcelsList;
         }
-
         private void AddParcelButton_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(bl).ShowDialog();
@@ -41,32 +40,30 @@ namespace PL
             ParcelForListDataGrid.DataContext = ParcelsList;
             ParcelForListDataGrid.ItemsSource = ParcelsList;
         }
-
         private void RemoveParcelButton_Click(object sender, RoutedEventArgs e)
         {
+           // if(parcel.)
             //צריך לבדוק אם המס רחפן שווה 0 ורק אם כן אז אפשר למחוק את החבילה, אם לא להדפיס הודעה מתאימה
+            //איזה רחפן? ולמה?
         }
-
         private void UpdateParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            /*<syncfusion:ComboBoxAdv x:Name="filterComboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="FloralWhite" Foreground="#DD975387" BorderBrush="{x:Null}">
-                
-                
+            new ParcelWindow(bl, parcel.ParcelId).ShowDialog();
+            /*<syncfusion:ComboBoxAdv x:Name="filterComboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="FloralWhite" Foreground="#DD975387" BorderBrush="{x:Null}"> 
             </syncfusion:ComboBoxAdv>
              <Button x:Name="AddParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
                 <Button.Background>
                     <ImageBrush ImageSource="\Images\add-icon.png"/>
                 </Button.Background>
             </Button>s*/
-        }
 
+        }
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             ParcelsList = PO.BoPoAdapter.ParcelToListAdapter(bl.DisplayParcelsList(x => x.ParcelId == x.ParcelId));
             ParcelForListDataGrid.DataContext = ParcelsList;
             ParcelForListDataGrid.ItemsSource = ParcelsList;
         }
-
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();

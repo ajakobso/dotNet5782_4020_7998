@@ -173,6 +173,12 @@ namespace PL.PO
             Cloning.Clone(boParcelInDelivering, nParcelInDelivering);
             return nParcelInDelivering;
         }
+        public static ParcelToList ParcelToParcelToListBoPo(BL.BO.Parcel boParcelToList)
+        {
+            ParcelToList nParcelToList = new();
+            Cloning.Clone(boParcelToList, nParcelToList);
+            return nParcelToList;
+        }
         public static ParcelToList ParcelToListBoPo(BL.BO.ParcelToList boParcelToList)
         {
             ParcelToList nParcelToList = new();

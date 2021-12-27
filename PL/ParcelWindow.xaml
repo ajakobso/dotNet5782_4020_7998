@@ -45,7 +45,6 @@
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
-                
             </Button>
         </Grid>
         <Grid x:Name="ActionsOnParcelGrid" Visibility="Hidden">
@@ -81,7 +80,7 @@
                     <DataGridTextColumn x:Name="senderNameColumn" Binding="{Binding SenderName}" Header="Sender Name" Width="SizeToHeader" Foreground="#DD975387"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid x:Name="ModelUpdateGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="400">
+            <!--<Grid x:Name="ModelUpdateGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -94,8 +93,8 @@
                         <ImageBrush ImageSource="\Images\update-button.jpg"/>
                     </Button.Background>
                 </Button>
-            </Grid>
-            <Grid x:Name="ChargeInGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="3" VerticalAlignment="Top" Width="400">
+            </Grid>-->
+            <!--<Grid x:Name="ChargeInGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="3" VerticalAlignment="Top" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
@@ -106,8 +105,8 @@
                         <ImageBrush ImageSource="\Images\lowBattery-button.jpg"/>
                     </Button.Background>
                 </Button>
-            </Grid>
-            <Grid x:Name="ChargeOutGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="400">
+            </Grid>-->
+            <!--<Grid x:Name="ChargeOutGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.2*"/>
@@ -118,7 +117,7 @@
                         <ImageBrush ImageSource="\Images\highBattery-icon.jpg"/>
                     </Button.Background>
                 </Button>
-            </Grid>
+            </Grid>-->
             <Grid x:Name="SendParcelGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="5" VerticalAlignment="Top" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>

@@ -29,7 +29,6 @@ namespace BL
             dist = dist * 60 * 1.1515;
             return dist * 1.609344;
         }
-
         private double minimumBattery(DroneForList drone, DAL.DO.Parcel parcel)
         {
             Location location;
@@ -132,7 +131,7 @@ namespace BL
         {
             try { myDalObject.AddParcel(-1,0, SCustomerId, DCustomerId, (DAL.DO.Priorities)Priority, (DAL.DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
             catch (DAL.DO.AddParcelToAnAsscriptedDroneException) { }
-        }
+        }//
         public void AscriptionParcelToDrone(int Id)
         {
             DroneForList drone = DisplayDrone(Id);
@@ -235,7 +234,7 @@ namespace BL
             {
                 throw new NoParcelAscriptedToDroneException();
             }
-        }
+        }//
         public void PickUpParcel(int DId)
         {
             DroneForList drone = DisplayDrone(DId);
@@ -294,7 +293,7 @@ namespace BL
             }
             else
                 throw new ParcelCantBeDeliveredException();
-        }
+        }//
         public Parcel DisplayParcel(int id)
         {
             var parcel = myDalObject.CopyParcel(id);
@@ -304,7 +303,7 @@ namespace BL
             CustomerInParcel destination = new CustomerInParcel { CustomerId = parcel.TargetId, CustomerName = myDalObject.CopyCustomer(parcel.TargetId).Name };
             Parcel nParcel = new Parcel { ParcelId = parcel.Id, ParcelWC = WeightParcel(parcel.Weight), ParcelCreationTime = parcel.Requested, ParcelAscriptionTime = parcel.Scheduleded, ParcelPickUpTime = parcel.PickedUp, ParcelDeliveringTime = parcel.Delivered, ParcelPriority = (Enums.Priorities)parcel.Priority, DInParcel = droneInParcel, DCIParcel = destination, SCIParcel = source };
             return nParcel;
-        }//
+        }
         public IEnumerable<ParcelToList> DisplayParcelsList(Predicate<ParcelToList> predicate)
         {
             IEnumerable<DAL.DO.Parcel> p = myDalObject.CopyParcelsList();
