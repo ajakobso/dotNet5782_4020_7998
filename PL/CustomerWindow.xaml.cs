@@ -29,14 +29,13 @@ namespace PL
         private int NumOfUnDeliveredParcels;
         private int NumOfRecivedParcels;
         private int NumOfParcelsOnTheWay;
-        private Location location;
-        double longitude, latitude;
-        private bool IdTextBoxChanged, PhoneTextBoxChanged, NameTextBoxChanged, LongitudeTextBoxChanged, LatitudeTextBoxChanged;
+        double longitude, lattitude;
+        private bool IdTextBoxChanged, PhoneTextBoxChanged, NameTextBoxChanged, LongitudeTextBoxChanged, lattitudeTextBoxChanged;
         #region add customer
         public CustomerWindow(IBL bl)//add customer (constructor)
         {
             InitializeComponent();
-            this.bl=bl;
+            this.bl = bl;
             AddCustomerGrid.Visibility = Visibility.Visible;
             _ = MessageBox.Show("in order to add a customer insert the\n required information in the designated places", "", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
         }
@@ -49,39 +48,39 @@ namespace PL
         }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to add this customer?", "Add Customer", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-                if (result == MessageBoxResult.Yes)//the exe callapse here//////////////////////////
-                {
-                    location = new Location(longitude,latitude);
-                    try { bl.AddCustomer(id, name, phone, location); }//add try and catch with the proper exceptions from the bl.exceptions
-                    catch (LocationOutOfRangeException) { MessageBox.Show("the location you choose is out of range,\n please choose different location", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to add this customer?", "Add Customer", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)//the exe callapse here//////////////////////////
+            {
+                try { bl.AddCustomer(id, name, phone, new Location(longitude, lattitude)); }//add try and catch with the proper exceptions from the bl.exceptions
+                catch (LocationOutOfRangeException) { MessageBox.Show("the location you choose is out of range,\n please choose different location", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                 catch (AddExistingCustomerException) { MessageBox.Show("you are trying to add an existing customer,\n please try enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                    MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NameTextBoxChanged = false;
-                    IdTextBoxChanged = false;
-                    LongitudeTextBoxChanged = false;
-                    LatitudeTextBoxChanged = false;
-                    Close();
-                    return;
-                }
-                MessageBox.Show("please insert all the requested information,\nwithout it you cant add the customer!", "WARNING!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
+                NameTextBoxChanged = false;
+                IdTextBoxChanged = false;
+                LongitudeTextBoxChanged = false;
+                lattitudeTextBoxChanged = false;
+                Close();
+                return;
+            }
+            MessageBox.Show("please insert all the requested information,\nwithout it you cant add the customer!", "WARNING!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         private void CustomerIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string input;
-            input = CustomerIdTextBox.Text;
-            bool isInt = int.TryParse(input, out id);
-            if (isInt == false || id < 0)
-            {
-                CustomerIdTextBox.Foreground = Brushes.Red;
-                _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
-            else
-            {
-                    CustomerIdTextBox.Foreground = Brushes.Black;
-                    IdTextBoxChanged = true;
-            }
+            //string input;
+            //input = CustomerIdTextBox.Text;
+            //bool isInt = int.TryParse(input, out id);
+            //if (isInt == false || id < 0)
+            //{
+            //    CustomerIdTextBox.Foreground = Brushes.Red;
+            //    _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            //}
+            //else
+            //{
+            //    CustomerIdTextBox.Foreground = Brushes.Black;
+            //    IdTextBoxChanged = true;
+            //}
+            IdTextBoxChanged = true;
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -91,25 +90,25 @@ namespace PL
         }
         private void CustomerLongitudeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string input;
-            input = CustomerLongitudeTextBox.Text;
-            double.TryParse(input, out longitude);
-            CustomerLongitudeTextBox.Foreground = Brushes.Black;
+            //string input;
+            //input = CustomerLongitudeTextBox.Text;
+            //double.TryParse(input, out longitude);
+            //CustomerLongitudeTextBox.Foreground = Brushes.Black;
             LongitudeTextBoxChanged = true;
         }
-        private void CustomerLatitudeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void CustomerlattitudeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string input;
-            input = CustomerLatitudeTextBox.Text;
-            double.TryParse(input, out latitude);
-            CustomerLatitudeTextBox.Foreground = Brushes.Black;
-            LatitudeTextBoxChanged = true;
+            //string input;
+            //input = CustomerlattitudeTextBox.Text;
+            //double.TryParse(input, out lattitude);
+            //CustomerlattitudeTextBox.Foreground = Brushes.Black;
+            lattitudeTextBoxChanged = true;
         }
 
         private void CustomerPhoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            phone = CustomerPhoneTextBox.Text;
-            CustomerPhoneTextBox.Foreground = Brushes.Black;
+            //phone = CustomerPhoneTextBox.Text;
+            //CustomerPhoneTextBox.Foreground = Brushes.Black;
             PhoneTextBoxChanged = true;
         }
         #endregion

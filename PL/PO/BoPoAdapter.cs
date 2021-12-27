@@ -96,18 +96,21 @@ namespace PL.PO
         {
             BaseStation nBaseStation = new();
             Cloning.Clone(boBaseStation,nBaseStation);
+            nBaseStation.StationLocation = LocationBoPo(boBaseStation.StationLocation);
             return nBaseStation;
         }
         public static BaseStationForList BaseStationForListBoPo(BL.BO.BaseStationForList boBaseStationForList)
         {
             BaseStationForList nBaseStationForList = new();
             Cloning.Clone(boBaseStationForList,nBaseStationForList);
+            nBaseStationForList.StationLocation = LocationBoPo(boBaseStationForList.StationLocation);
             return nBaseStationForList;
         }
         public static Customer CustomerBoPo(BL.BO.Customer boCustomer)
         {
             Customer nCustomer = new();
             Cloning.Clone(boCustomer, nCustomer);
+            nCustomer.Place = LocationBoPo(boCustomer.Place);
             return nCustomer;
         }
         public static CustomerForList CustomerForListBoPo(BL.BO.CustomerForList boCustomerForList)
@@ -126,12 +129,14 @@ namespace PL.PO
         {
             Drone nDrone = new();
             Cloning.Clone(boDrone, nDrone);
+            nDrone.CurrentLocation = LocationBoPo(boDrone.CurrentLocation);
             return nDrone;
         }
         public static DroneForList DroneForListBoPo(BL.BO.DroneForList boDroneForList)
         {
             DroneForList nDroneForList = new();
             Cloning.Clone(boDroneForList, nDroneForList);
+            nDroneForList.CurrentLocation = LocationBoPo(boDroneForList.CurrentLocation);
             return nDroneForList;
         }
         public static DroneInCharge DroneInChargeBoPo(BL.BO.DroneInCharge boDroneInCharge)
@@ -146,11 +151,9 @@ namespace PL.PO
             Cloning.Clone(boDroneInParcel, nDroneInParcel);
             return nDroneInParcel;
         }
-        public static Location  LocationBoPo(BL.BO.Location  boLocation )
+        public static Location LocationBoPo(BL.BO.Location  boLocation )
         {
-            Location  nLocation  = new();
-            Cloning.Clone(boLocation, nLocation);
-            return nLocation ;
+           return new(boLocation.Long, boLocation.Lat);
         }
         public static Parcel ParcelBoPo(BL.BO.Parcel boParcel)
         {

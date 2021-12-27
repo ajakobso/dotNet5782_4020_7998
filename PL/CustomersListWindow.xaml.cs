@@ -23,30 +23,29 @@ namespace PL
     {
         private readonly IBL bl;
         private CustomerForList customer;
-        static readonly DependencyProperty CustomerListProperty = DependencyProperty.Register("Customer List", typeof(ObservableCollection<CustomerForList>), typeof(CustomersListWindow));
-        public ObservableCollection<CustomerForList> CustomersList { get => (ObservableCollection<CustomerForList>)GetValue(CustomerListProperty); set => SetValue(CustomerListProperty, value); }
+        public ObservableCollection<PO.CustomerForList> CustomersList { get; set; }
         public CustomersListWindow(IBL bl)
         {
             InitializeComponent();
             this.bl = bl;
             customer = new();
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
             CustomerForListDataGrid.DataContext = CustomersList;
-            CustomersList = (bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId) as ObservableCollection<CustomerForList>);
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            CollectionViewSource customerForListViewSource = (CollectionViewSource)FindResource("customerForListViewSource");
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
         {
-                new CustomerWindow(bl).ShowDialog();
-                CustomerForListDataGrid.ItemsSource = bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId);            
+            new CustomerWindow(bl).ShowDialog();
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }
         private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-          //  new CustomerWindow(bl).ShowDialog();
-          new CustomerWindow.CustomerWindow()
-            CustomerForListDataGrid.ItemsSource = bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId);
+            new CustomerWindow(bl).ShowDialog();
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }
         public void RefreshCustomerButton_Click()
         {
@@ -59,7 +58,9 @@ namespace PL
         }
         private void Reset_Click(object sender, RoutedEventArgs e)//work
         {
-            CustomerForListDataGrid.ItemsSource = bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId);
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }
     }
 }

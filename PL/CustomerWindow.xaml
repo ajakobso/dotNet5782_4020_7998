@@ -1,27 +1,25 @@
-﻿<Window x:Class="PL.CustomerWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="PL.CustomerWindow"
         mc:Ignorable="d"
         Title="CustomerWindow" Height="450" Width="400">
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
-                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center">Please insert a integer</Label>
+                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Please insert a integer"/>
                 <Border BorderThickness="1" BorderBrush="Red">
                     <AdornedElementPlaceholder />
                 </Border>
             </Grid>
         </ControlTemplate>
     </Window.Resources>
-    <Grid Name="MainGrid">
-        <Grid x:Name="AddCustomerGrid" Visibility="Hidden">
+    <Grid x:Name="MainGrid" Background="FloralWhite">
+        <Grid x:Name="AddCustomerGrid" Visibility="Hidden" Background="FloralWhite" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -33,56 +31,48 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="CustomerIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black" TextChanged="CustomerIdTextBox_TextChanged"/>
-            <Label x:Name="CustomerIDLabel" Content="ID" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox x:Name="CustomerNameTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTextBox_TextChanged"/>
-            <Label x:Name="CustomerNamelLabel" Content="Name" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox x:Name="CustomerPhoneTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerPhoneTextBox_TextChanged"/>
-            <Label x:Name="CustomerPhoneLabel" Content="Phone" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox x:Name="CustomerLongitudeTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerLongitudeTextBox_TextChanged"/>
-            <Label x:Name="CustomerLongitudeLabel" Content="longitude" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox x:Name="CustomerLatitudeTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerLatitudeTextBox_TextChanged"/>
-            <Label x:Name="CustomerLatitudeLabel" Content="latitude" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <Button x:Name="AddCustomerButton" Content="Add Customer" HorizontalAlignment="Left" Height="40" Margin="150,20,0,0" Grid.Row="5" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Click="AddCustomerButton_Click" FontWeight="Bold">
+            <syncfusion:IntegerTextBox x:Name="CustomerIdTextBox" Background="FloralWhite" Text="{Binding id, Mode=TwoWay}" Grid.Row="0" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#DD975387" TextChanged="CustomerIdTextBox_TextChanged"/>
+            <Label x:Name="CustomerIDLabel" Foreground="#DD975387" Grid.Row="0" Content="ID" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <TextBox x:Name="CustomerNameTextBox" Text="{Binding name, Mode=TwoWay}" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTextBox_TextChanged"/>
+            <Label x:Name="CustomerNamelLabel"  Foreground="#DD975387" Content="Name" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <TextBox x:Name="CustomerPhoneTextBox" Text="{Binding phone, Mode=TwoWay}" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerPhoneTextBox_TextChanged"/>
+            <Label x:Name="CustomerPhoneLabel"  Foreground="#DD975387" Content="Phone" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <syncfusion:DoubleTextBox x:Name="CustomerLongitudeTextBox" Text="{Binding longitude, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerLongitudeTextBox_TextChanged"/>
+            <Label x:Name="CustomerLongitudeLabel"  Foreground="#DD975387" Content="longitude" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <syncfusion:DoubleTextBox x:Name="CustomerlattitudeTextBox" Text="{Binding lattitude, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerlattitudeTextBox_TextChanged"/>
+            <Label x:Name="CustomerlattitudeLabel"  Foreground="#DD975387" Content="lattitude" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <Button x:Name="AddCustomerButton"  Foreground="#DD975387" Content="Add Customer" HorizontalAlignment="Left" Height="40" Margin="120,20,0,0" Grid.Row="5" VerticalAlignment="Top" Width="149" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Click="AddCustomerButton_Click" FontWeight="Bold">
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
-                <Button.BorderBrush>
-                    <SolidColorBrush Color="#FF0AEEB0" Opacity="0.75"/>
-                </Button.BorderBrush>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnCustomerGrid" Visibility="Hidden">
+        <Grid x:Name="ActionsOnCustomerGrid" Background="FloralWhite" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+
             </Grid.RowDefinitions>
-            <Grid Name="UpGrid" HorizontalAlignment="Right" Height="auto" Grid.Row="0" Width="400" >
+            <Grid x:Name="UpGrid" HorizontalAlignment="Right" Height="auto" Grid.Row="0" Width="400" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions >
-                <Label Content="Customer's Data"  Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="136,4,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
-                <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" VerticalAlignment="Center" Width="64" Click="CloseButton_Click">
+                </Grid.ColumnDefinitions>
+                <Label Content="Customer's Data"  Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="22" HorizontalAlignment="Left" Height="53" Margin="136,4,0,0" VerticalAlignment="Top" Width="197" Grid.ColumnSpan="2"/>
+                <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" VerticalAlignment="Top" Width="64" Click="CloseButton_Click" Margin="-4,8,0,0">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\close-icon.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <DataGrid x:Name="CustomerDataGrid" IsReadOnly="True" AutoGenerateColumns="True" EnableRowVirtualization="True" Grid.Row="0" HorizontalAlignment="Center" Height="48" Margin="0,46,0,0" VerticalAlignment="Top" Width="400" Background="FloralWhite">
-            </DataGrid>
+            <DataGrid x:Name="CustomerDataGrid" IsReadOnly="True" AutoGenerateColumns="True" EnableRowVirtualization="True" Grid.Row="1" HorizontalAlignment="Center" Height="48" Margin="0,46,0,0" VerticalAlignment="Top" Width="400" Background="FloralWhite"/>
             <Grid x:Name="NameUpdateGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions >
+                </Grid.ColumnDefinitions>
                 <TextBox x:Name="CustomerNameTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTBox_TextChanged"/>
                 <Label x:Name="CustomerName" Background="FloralWhite" Content="Customer's name" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
                 <Button x:Name="NameUpdate" Grid.Column="2" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="NameUpdate_Click">
@@ -96,9 +86,9 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions >
-                <TextBox x:Name="CustomerPhoneTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTBox_TextChanged"/>
-                <Label x:Name="CustomerPhone" Background="FloralWhite" Content="Customer's phone" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="CustomerPhoneTBox" Height="20" Width="74" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTBox_TextChanged"/>
+                <Label x:Name="CustomerPhone" Background="FloralWhite" Content="new phone" Grid.Column="0" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="172" FontFamily="Berlin Sans FB Demi" FontSize="22" />
                 <Button x:Name="PhoneUpdate" Grid.Column="2" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PhoneUpdate_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\update-button.jpg"/>
