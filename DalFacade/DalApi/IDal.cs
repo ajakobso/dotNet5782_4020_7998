@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.DalObject;
-using DAL.DO;
-namespace DAL.DalApi
+using DO;
+namespace DalApi
 {
     public interface IDAL//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
     {
@@ -22,6 +21,7 @@ namespace DAL.DalApi
         void ParcelDelivering(int parcelId);
         void DroneCharging(int droneId, int baseStationId);
         void DroneRelease(int droneId, int baseStationId);
+        Coordinate Fromdouble(double angleInDegrees);
         BaseStation CopyBaseStation(int baseStationId);
         Drone CopyDrone(int droneId);
         Customer CopyCustomer(int customerId);

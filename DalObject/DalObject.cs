@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.DalApi;
-using DAL.DO;
-namespace DAL.DalObject//add exception of id that didnt found
+using DalApi;
+using DO;
+namespace Dal
 {
     internal sealed class DalObject : IDAL
     {
@@ -557,7 +557,7 @@ namespace DAL.DalObject//add exception of id that didnt found
             //    }
             //}
         }
-        public static Coordinate Fromdouble(double angleInDegrees)
+        public Coordinate Fromdouble(double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]
             while (angleInDegrees < -180.0)

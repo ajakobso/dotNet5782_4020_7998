@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BL.BO;
+using BO;
 namespace ConsoleUI_BL
 {
     class ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            BL.BlApi.IBL bl = BL.BlApi.BLFactory.GetBL("1");
+            BlApi.IBL bl = BlApi.BLFactory.GetBL("1");
             Enums.Inputs option;
             do
             {

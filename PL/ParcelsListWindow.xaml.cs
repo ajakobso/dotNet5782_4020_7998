@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using BL.BO;
-using BL.BlApi;
+using BO;
+using BlApi;
 namespace PL
 {
     /// <summary>
@@ -42,13 +42,13 @@ namespace PL
         }
         private void RemoveParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            BL.BO.Parcel ParcelToRemove=new BL.BO.Parcel();
+            BO.Parcel ParcelToRemove=new BO.Parcel();
             try {ParcelToRemove = bl.DisplayParcel(parcel.ParcelId);            }
-            catch (BL.BO.ParcelIdNotFoundException) { MessageBox.Show("This parcel does not exist in here,\n", "please choose another parcel\n", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+            catch (BO.ParcelIdNotFoundException) { MessageBox.Show("This parcel does not exist in here,\n", "please choose another parcel\n", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
            if (ParcelToRemove.DInParcel.DroneId!=0)
             {
                 try { bl.RemoveParcel(ParcelToRemove.ParcelId); }
-                catch (BL.BO.ParcelIdNotFoundException ){ MessageBox.Show("This parcel does not exist in here,\n", "please choose another parcel\n", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                catch (BO.ParcelIdNotFoundException ){ MessageBox.Show("This parcel does not exist in here,\n", "please choose another parcel\n", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                 }
             }
         }

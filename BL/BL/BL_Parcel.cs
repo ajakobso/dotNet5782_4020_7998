@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.BO;
-
+using BO;
 namespace BL
 {
     internal sealed partial class BL// : BO.BlApi
@@ -29,7 +28,7 @@ namespace BL
             dist = dist * 60 * 1.1515;
             return dist * 1.609344;
         }
-        private double minimumBattery(DroneForList drone, DAL.DO.Parcel parcel)
+        private double minimumBattery(DroneForList drone, DO.Parcel parcel)
         {
             Location location;
             location = AddLocation(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
@@ -55,7 +54,7 @@ namespace BL
             double possBlApieDistance = (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDroneAndSender) + (myDalObject.DronePowerConsumingPerKM()[0] * distanceBetweenDstAndBs) + (batteryPerKM * distanceBetweenSenderAndDst);//calculation of the amount of battery in percent needed for the
             return possBlApieDistance;                                                                                                                                                                                                                             //
         }
-        private bool droneMakeIt(DroneForList drone, DAL.DO.Parcel parcel)//בודק אם לרחפן יש מספיק בטריה להגיע לשולח, ליעד ולתחנה הקרובה ביותר מיעד המשלוח
+        private bool droneMakeIt(DroneForList drone, DO.Parcel parcel)//בודק אם לרחפן יש מספיק בטריה להגיע לשולח, ליעד ולתחנה הקרובה ביותר מיעד המשלוח
         {
             double minimum = minimumBattery(drone, parcel);
             if (minimum <= drone.Battery)//check if there is enough battery
@@ -67,7 +66,7 @@ namespace BL
         {
             double[] res = new double[2];
             double dis;
-            res[0] = 1000;//very big number just to start with, since our company DAL.DO delivering in jerusalem so 1000 km is higher than the distance between the actual places.
+            res[0] = 1000;//very big number just to start with, since our company DO delivering in jerusalem so 1000 km is higher than the distance between the actual places.
             foreach (var bs in myDalObject.CopyBaseStations())////////////////////////////////////////////not linq
             {
                 dis = Distance(location.Long, location.Lat, bs.Longitude, bs.Lattitude);
@@ -81,20 +80,20 @@ namespace BL
             //res[1] = bsID;//the bs id
             return res;
         }
-        private Enums.WeightCategories WeightParcel(DAL.DO.WeightCategories v)//convert frome DAL.DO.WeightCategories to BO.WeightCategories 
+        private Enums.WeightCategories WeightParcel(DO.WeightCategories v)//convert frome DO.WeightCategories to BO.WeightCategories 
         {
             Enums.WeightCategories w;
             switch (v)
             {
 
-                case DAL.DO.WeightCategories.Light:
+                case DO.WeightCategories.Light:
                     w = Enums.WeightCategories.Light;
                     return w;
 
-                case DAL.DO.WeightCategories.Middle:
+                case DO.WeightCategories.Middle:
                     w = Enums.WeightCategories.Middle;
                     return w;
-                case DAL.DO.WeightCategories.Heavy:
+                case DO.WeightCategories.Heavy:
                     w = Enums.WeightCategories.Heavy;
                     return w;
                 default:
@@ -129,8 +128,8 @@ namespace BL
         }
         public void AddParcelToDeliver(int SCustomerId, int DCustomerId, Enums.WeightCategories Weight, Enums.Priorities Priority)
         {
-            try { myDalObject.AddParcel(-1,0, SCustomerId, DCustomerId, (DAL.DO.Priorities)Priority, (DAL.DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
-            catch (DAL.DO.AddParcelToAnAsscriptedDroneException) { }
+            try { myDalObject.AddParcel(-1,0, SCustomerId, DCustomerId, (DO.Priorities)Priority, (DO.WeightCategories)Weight, DateTime.Now, null, null, null); }
+            catch (DO.AddParcelToAnAsscriptedDroneException) { }
         }//
         public void AscriptionParcelToDrone(int Id)
         {
@@ -139,12 +138,12 @@ namespace BL
             if (drone.DroneState == Enums.DroneStatuses.Available)
             {
                 foreach (var parcel in from parcel in myDalObject.CopyParcelsList()
-                                       where parcel.Priority == (DAL.DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel)
+                                       where parcel.Priority == (DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel)
                                        select parcel)//linq
                 {
                     try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                    catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                    catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
 
                     drone.DroneState = Enums.DroneStatuses.Shipping;
                     drone.InDeliveringParcelId = parcel.Id;
@@ -153,11 +152,11 @@ namespace BL
                 }
                 //foreach (var parcel in myDalObject.CopyParcelsList())-not linq
                 //{
-                //    if (parcel.Priority == (DAL.DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel))
+                //    if (parcel.Priority == (DO.Priorities)Enums.Priorities.Urgent && ProperWeight(drone.MaxWeight, WeightParcel(parcel.Weight)) && droneMakeIt(drone, parcel))
                 //    {
                 //        try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                //        catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                //        catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                //        catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                //        catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 //        drone.DroneState = Enums.DroneStatuses.Shipping;
                 //        drone.InDeliveringParcelId = parcel.Id;
                 //        parcelFound = true;
@@ -171,8 +170,8 @@ namespace BL
                                            select parcel)//linq
                     {
                         try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                        catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                        catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                        catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                        catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
 
                         drone.DroneState = Enums.DroneStatuses.Shipping;
                         drone.InDeliveringParcelId = parcel.Id;
@@ -184,8 +183,8 @@ namespace BL
                     //    if (drone.MaxWeight == WeightParcel(parcel.Weight) && droneMakeIt(drone, parcel))
                     //    {
                     //        try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                    //        catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                    //        catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    //        catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    //        catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                     //        drone.DroneState = Enums.DroneStatuses.Shipping;
                     //        drone.InDeliveringParcelId = parcel.Id;
                     //        parcelFound = true;
@@ -202,8 +201,8 @@ namespace BL
                         {
                             maxDistance = distanceBetweenDroneAndSender;
                             try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                            catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                            catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                            catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                            catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
 
                             drone.DroneState = Enums.DroneStatuses.Shipping;
                             drone.InDeliveringParcelId = parcel.Id;
@@ -218,8 +217,8 @@ namespace BL
                         //    {
                         //        maxDistance = distanceBetweenDroneAndSender;
                         //        try { myDalObject.AscriptionPtoD(parcel.Id, drone.DroneId); }
-                        //        catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                        //        catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                        //        catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                        //        catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                         //        drone.DroneState = Enums.DroneStatuses.Shipping;
                         //        drone.InDeliveringParcelId = parcel.Id;
                         //        parcelFound = true;
@@ -245,12 +244,12 @@ namespace BL
                 drone.Battery -= distanceBetweenDroneAndSender * myDalObject.DronePowerConsumingPerKM()[0];
                 drone.CurrentLocation = AddLocation(myDalObject.CopyCustomer(parcel.SenderId).Longitude, myDalObject.CopyCustomer(parcel.SenderId).Lattitude);
                 try { myDalObject.RemoveParcel(parcel.Id); }
-                catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
                 parcel.PickedUp = DateTime.Now;
                 try { myDalObject.AddParcel(parcel.Id, parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
-                catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
             }
             else
                 throw new ParcelCantBePickedUPException();
@@ -284,17 +283,17 @@ namespace BL
                 drone.CurrentLocation = AddLocation(myDalObject.CopyCustomer(parcel.TargetId).Longitude, myDalObject.CopyCustomer(parcel.TargetId).Lattitude);
                 drone.DroneState = Enums.DroneStatuses.Available;
                 try { myDalObject.RemoveParcel(parcel.Id); }
-                catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                catch (DO.DroneIdNotFoundException) { throw new BO.DroneIdNotFoundException(); }
+                catch (DO.ParcelIdNotFoundException) { throw new BO.ParcelIdNotFoundException(); }
                 parcel.Delivered = DateTime.Now;
                 try { myDalObject.AddParcel(parcel.Id, parcel.DroneId, parcel.SenderId, parcel.TargetId, parcel.Priority, parcel.Weight, parcel.Requested, parcel.Scheduleded, parcel.PickedUp, parcel.Delivered); }
-                catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                catch (DO.DroneIdNotFoundException) { throw new BO.DroneIdNotFoundException(); }
+                catch (DO.ParcelIdNotFoundException) { throw new BO.ParcelIdNotFoundException(); }
             }
             else
                 throw new ParcelCantBeDeliveredException();
         }//
-        public Parcel DisplayParcel(int id)
+        public BO.Parcel DisplayParcel(int id)
         {
             var parcel = myDalObject.CopyParcel(id);
             DroneForList drone = DisplayDrone(parcel.DroneId);
@@ -311,18 +310,18 @@ namespace BL
                 if(parcel.Id==id)
                 {
                     try { myDalObject.RemoveParcel(id); }
-                    catch (DAL.DO.ParcelIdNotFoundException) { throw new ParcelIdNotFoundException(); }
+                    catch (DO.ParcelIdNotFoundException) { throw new BO.ParcelIdNotFoundException(); }
                     return;
                 }
             }
-            throw new ParcelIdNotFoundException();
+            throw new BO.ParcelIdNotFoundException();
         }
         public IEnumerable<ParcelToList> DisplayParcelsList(Predicate<ParcelToList> predicate)
         {
-            IEnumerable<DAL.DO.Parcel> p = myDalObject.CopyParcelsList();
+            IEnumerable<DO.Parcel> p = myDalObject.CopyParcelsList();
             List<ParcelToList> nPList = new List<ParcelToList>();
             //foreach (var (parcel, pState) in from parcel in p
-            //                                 let pState = Enums.ParcelState.Created//for now just fpr defalt, what need ro be DAL.DOne is to catch exception if parcel not found
+            //                                 let pState = Enums.ParcelState.Created//for now just fpr defalt, what need ro be DOne is to catch exception if parcel not found
             //                                 select (parcel, pState))//linq
             //{
             //    if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
@@ -338,7 +337,7 @@ namespace BL
             //}
             foreach (var parcel in p)//the linq doesnt working
             {
-                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be DAL.DOne is to catch exception if parcel not found
+                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be DOne is to catch exception if parcel not found
                 if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Created;
                 if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null && parcel.Delivered == null)
@@ -355,10 +354,10 @@ namespace BL
         }//
         public IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList()
         {
-            IEnumerable<DAL.DO.Parcel> p = myDalObject.UnAscriptedParcels();
+            IEnumerable<DO.Parcel> p = myDalObject.UnAscriptedParcels();
             List<ParcelToList> nPList = new List<ParcelToList>();
             //foreach (var (parcel, pState) in from parcel in p
-            //                                 let pState = Enums.ParcelState.Created//for now just fpr defalt, what need ro be DAL.DOne is to catch exception if parcel not found
+            //                                 let pState = Enums.ParcelState.Created//for now just fpr defalt, what need ro be DOne is to catch exception if parcel not found
             //                                 select (parcel, pState))//linq
             //{
             //    if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
@@ -374,7 +373,7 @@ namespace BL
             //}
             foreach (var parcel in p)//linq doesnt working
             {
-                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be DAL.DOne is to catch exception if parcel not found
+                Enums.ParcelState pState = Enums.ParcelState.Created;//for now just fpr defalt, what need ro be DOne is to catch exception if parcel not found
                 if (parcel.Requested != null && parcel.Scheduleded == null && parcel.PickedUp == null && parcel.Delivered == null)
                     pState = Enums.ParcelState.Created;
                 if (parcel.Requested != null && parcel.Scheduleded != null && parcel.PickedUp == null && parcel.Delivered == null)
