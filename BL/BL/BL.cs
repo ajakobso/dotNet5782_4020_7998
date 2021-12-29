@@ -1,36 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.DalApi;
-using BL.BO;
-using BL.BlApi;
+using DalApi;
+using BO;
+using BlApi;
 namespace BL
 {
     internal sealed partial class BL : IBL
     {
         static readonly BL instance = new BL();
-        public static BL Instance { get => instance; }
+        public static BL GetInstance() { return instance; }
         static BL() { }
         private IDAL myDalObject;
         public List<DroneForList> drones;
         //public List<BaseStationForList> baseStations;
         private Random rand = new Random();
-
         BL()
         {
-            myDalObject = DalFactory.GetDal("1");//initialize myDalObject
+            myDalObject = DalFactory.GetDal();//initialize myDalObject
             drones = new List<DroneForList>();//drones list
             //baseStations = new();
             initializeDrones();
         }
         private int droneWhileShipping(int droneId)//check if there is a parcel that the drone is ascripted to
         {
-            IEnumerable<DAL.DO.Parcel> parcels = new List<DAL.DO.Parcel>();
-            //(parcels as List<DAL.DO.Parcel>).ForEach();
-            DAL.DO.Parcel selectedParcel=new();
+            IEnumerable<DO.Parcel> parcels = new List<DO.Parcel>();
+            //(parcels as List<DO.Parcel>).ForEach();
+            DO.Parcel selectedParcel=new();
             bool Check = false;
             parcels = myDalObject.CopyParcelsList();
-            selectedParcel=(parcels as List<DAL.DO.Parcel>).Find(x => (x.DroneId == droneId) /* Check = true) */);//if ERROR- do .FirstOrDefault!!
+            selectedParcel=(parcels as List<DO.Parcel>).Find(x => (x.DroneId == droneId) /* Check = true) */);//if ERROR- do .FirstOrDefault!!
             ////foreach (var parcel in from parcel in myDalObject.CopyParcelsList()
             ////                       where parcel.DroneId == droneId
             ////                       select parcel)
@@ -62,13 +61,15 @@ namespace BL
             }
             throw new Exception();
         }
-        private DAL.DO.BaseStation RandomBSLocation(int num)//location is Random between the basestations
+        private DO.BaseStation RandomBSLocation(int num)//location is Random between the basestations
         {
             int counter = 0;//mistake maybe here
-            IEnumerable<DAL.DO.BaseStation> baseStations = new List<DAL.DO.BaseStation>();
+            IEnumerable<DO.BaseStation> baseStations = new List<DO.BaseStation>();
             baseStations = myDalObject.CopyBaseStations();
-            //(baseStations as List<DAL.DO.BaseStation>).ForEach(from bs in myDalObject.CopyBaseStations() where (counter == num) 
+            //(baseStations as List<DO.BaseStation>).ForEach(from bs in myDalObject.CopyBaseStations() where (counter == num) 
             //                                                   let baseStation=myDalObject.CopyBaseStation(bs.Id) select baseStation);
+            //baseStations.ToList().ForEach(from bs in baseStations where counter == num
+              //                                                 let baseStation = myDalObject.CopyBaseStation(bs.Id) select baseStation);
             foreach (var bs in baseStations)////////////////////////////////////not linq, doesnt working
             {
                 if (counter == num)
@@ -84,10 +85,10 @@ namespace BL
         {
             Customer customer=new();
             IEnumerable<Location> LocList = new List<Location>();
-            IEnumerable<DAL.DO.Parcel> ParceList = new List<DAL.DO.Parcel>();
-            //(ParceList as List<DAL.DO.Parcel>).ForEach(x => customer = DisplayCustomer(x.TargetId), (customer.ParcelsFromCustomer
+            IEnumerable<DO.Parcel> ParceList = new List<DO.Parcel>();
+            //(ParceList as List<DO.Parcel>).ForEach(x => customer = DisplayCustomer(x.TargetId), (customer.ParcelsFromCustomer
              //    != null) ? (LocList as List<Location>).Add(customer.Place));/////////////////////////////
-            foreach (DAL.DO.Parcel p in myDalObject.CopyParcelsList())////////////////////////not linq, doesnt working
+            foreach (DO.Parcel p in myDalObject.CopyParcelsList())////////////////////////not linq, doesnt working
             {
                 customer = DisplayCustomer(p.TargetId);
                 if (customer.ParcelsFromCustomer != null)
@@ -121,7 +122,7 @@ namespace BL
 
                     if (parcel.PickedUp == null)//the drone didnt pick up the parcel yet - location: the closest base station to the sender customer
                     {
-                        var bs = new DAL.DO.BaseStation();
+                        var bs = new DO.BaseStation();
                         try { bs = myDalObject.CopyBaseStation((int)distanceFromBS(sLocation)[1]); }
                         catch (BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                         Location bsLocation = AddLocation(bs.Longitude, bs.Lattitude);

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BO
+namespace BO
 {
     public class Location
     {
         
-        public DAL.DO.Coordinate Longitude { get; set; }
-        public DAL.DO.Coordinate Latitude { get; set; }
+        public DO.Coordinate Longitude { get; set; }
+        public DO.Coordinate Latitude { get; set; }
         public double Long { get; set; }
         public double Lat { get; set; }
         public Location(double longitude, double lat) 
@@ -23,7 +23,7 @@ namespace BL.BO
         {
             return $"{Longitude.ToString("WE")} {Latitude.ToString("NS")}";
         }
-        private DAL.DO.Coordinate Fromdouble(double angleInDegrees)
+        private DO.Coordinate Fromdouble(double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]
             while (angleInDegrees < -180.0)
@@ -32,7 +32,7 @@ namespace BL.BO
             while (angleInDegrees > 180.0)
                 angleInDegrees -= 360.0;
 
-            var result = new DAL.DO.Coordinate();
+            var result = new DO.Coordinate();
 
             //switch the value to positive
             result.IsNegative = angleInDegrees < 0;

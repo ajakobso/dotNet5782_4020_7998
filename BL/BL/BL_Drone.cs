@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.BO;
+using BO;
 namespace BL
 {
     internal sealed partial class BL
@@ -22,8 +22,8 @@ namespace BL
                 catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
 
                 double battery = r.NextDouble() * (40 - 20) + 20;
-                try { myDalObject.AddDrone(Id, battery, (DAL.DO.WeightCategories)MaxWeight, Model); }
-                catch (DAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
+                try { myDalObject.AddDrone(Id, battery, (DO.WeightCategories)MaxWeight, Model); }
+                catch (DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
 
                 try { myDalObject.DroneCharging(Id, Bstation); }
                 catch (DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
@@ -40,8 +40,8 @@ namespace BL
             //        try { BStationLocation = AddLocation(baseStation.Longitude, baseStation.Lattitude); }
             //        catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
             //        double battery = r.NextDouble() * (40 - 20) + 20;
-            //        try { myDalObject.AddDrone(Id, battery, (DAL.DO.WeightCategories)MaxWeight, Model); }
-            //        catch (DAL.DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
+            //        try { myDalObject.AddDrone(Id, battery, (DO.WeightCategories)MaxWeight, Model); }
+            //        catch (DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
             //        try { myDalObject.DroneCharging(Id, Bstation); }
             //        catch (DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
             //        drones.Add(new DroneForList { DroneId = Id, Model = Model, MaxWeight = MaxWeight, DroneState = Enums.DroneStatuses.Maintenance, Battery = r.NextDouble() * (40 - 20) + 20, CurrentLocation = BStationLocation });
@@ -93,7 +93,7 @@ namespace BL
             //    }
             //}
             if (!Check)
-                throw new DAL.DO.DroneIdNotFoundException();
+                throw new DO.DroneIdNotFoundException();
             foreach (var droneForList in from DroneForList droneForList in drones
                                          where droneForList.DroneId == Id
                                          select droneForList)
@@ -148,10 +148,10 @@ namespace BL
                                                 select baseStation)//linq
                     {
                         try { myDalObject.RemoveBaseStation(baseStation.Id); }
-                        catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                        catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
 
                         try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots, baseStation.AvailableChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude); }
-                        catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                        catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
 
                         check = true;
                         break;
@@ -187,11 +187,11 @@ namespace BL
                                             select baseStation)
                 {
                     try { myDalObject.RemoveBaseStation(baseStation.Id); }
-                    catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
 
                     try { myDalObject.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots, baseStation.AvailableChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude); }
-                    catch (DAL.DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                    catch (DAL.DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
+                    catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    catch (DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
 
                     break;
                 }
@@ -230,7 +230,7 @@ namespace BL
             {
                 try
                 { myDalObject.RemoveDrone(Id); }
-                catch (DAL.DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
 
                 drones.Remove(drone);
                 Check = true;

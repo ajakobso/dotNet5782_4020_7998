@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace DAL.DO
+namespace DO
 {
     public class Coordinate
     {
@@ -25,9 +25,36 @@ namespace DAL.DO
                 this.Minutes,
                 this.Seconds);
         }
+        public Coordinate Fromdouble(double angleInDegrees)
+        {
+            //ensure the value will fall within the primary range [-180.0..+180.0]
+            while (angleInDegrees < -180.0)
+                angleInDegrees += 360.0;
 
+            while (angleInDegrees > 180.0)
+                angleInDegrees -= 360.0;
 
+            var result = new Coordinate();
 
+            //switch the value to positive
+            result.IsNegative = angleInDegrees < 0;
+            angleInDegrees = Math.Abs(angleInDegrees);
+
+            //gets the degree
+            result.Degrees = (int)Math.Floor(angleInDegrees);
+            var delta = angleInDegrees - result.Degrees;
+
+            //gets minutes and seconds
+            var seconds = (int)Math.Floor(3600.0 * delta);
+            result.Seconds = seconds % 60;
+            result.Minutes = (int)Math.Floor(seconds / 60.0);
+            delta = delta * 3600.0 - seconds;
+
+            //gets fractions
+            result.Milliseconds = (int)(1000.0 * delta);
+
+            return result;
+        }
         public string ToString(string format)
         {
             switch (format)

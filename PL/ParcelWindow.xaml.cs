@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using BL.BO;
-using BL.BlApi;
+using BO;
+using BlApi;
 namespace PL
 {
     /// <summary>
@@ -199,7 +199,7 @@ namespace PL
             {
                 try
                 { ParcelDataGrid.ItemsSource = bl.DisplayParcel(Parcel.ParcelId).ToString(); }
-                catch (BL.BO.ParcelIdNotFoundException) { MessageBox.Show("this Parcel is not exist\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                catch (BO.ParcelIdNotFoundException) { MessageBox.Show("this Parcel is not exist\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
         }
     }
