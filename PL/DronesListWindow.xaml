@@ -38,7 +38,7 @@
                 </Button.Background>
             </Button>
         </Grid>
-        <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
+        <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="Visible" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>

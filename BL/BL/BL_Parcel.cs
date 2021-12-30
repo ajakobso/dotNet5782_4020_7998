@@ -296,8 +296,13 @@ namespace BL
         public BO.Parcel DisplayParcel(int id)
         {
             var parcel = myDalObject.CopyParcel(id);
-            DroneForList drone = DisplayDrone(parcel.DroneId);
-            DroneInParcel droneInParcel = new DroneInParcel { BatteryState = drone.Battery, DroneId = drone.DroneId, CurrentLocation = drone.CurrentLocation };
+            DroneInParcel droneInParcel;
+            try
+            {
+                DroneForList drone = DisplayDrone(parcel.DroneId);
+                droneInParcel = new DroneInParcel { BatteryState = drone.Battery, DroneId = drone.DroneId, CurrentLocation = drone.CurrentLocation };
+            }
+            catch (DroneIdNotFoundException) { droneInParcel = new DroneInParcel { DroneId = 0 }; }
             CustomerInParcel source = new CustomerInParcel { CustomerId = parcel.SenderId, CustomerName = myDalObject.CopyCustomer(parcel.SenderId).Name };
             CustomerInParcel destination = new CustomerInParcel { CustomerId = parcel.TargetId, CustomerName = myDalObject.CopyCustomer(parcel.TargetId).Name };
             Parcel nParcel = new Parcel { ParcelId = parcel.Id, ParcelWC = WeightParcel(parcel.Weight), ParcelCreationTime = parcel.Requested, ParcelAscriptionTime = parcel.Scheduleded, ParcelPickUpTime = parcel.PickedUp, ParcelDeliveringTime = parcel.Delivered, ParcelPriority = (Enums.Priorities)parcel.Priority, DInParcel = droneInParcel, DCIParcel = destination, SCIParcel = source };
