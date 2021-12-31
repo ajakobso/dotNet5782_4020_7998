@@ -110,8 +110,9 @@ namespace PL.PO
         {
             //return (PO.Parcel)Cloning.CloneNew(boParcel, typeof(Parcel));
             //Cloning.Clone(boCustomer, nCustomer);
-            Customer nCustomer = (Customer)Cloning.CloneNew(boCustomer, typeof(Customer));
-            nCustomer.Place = LocationBoPo(boCustomer.Place);
+            Customer nCustomer = new Customer { CustomerId = boCustomer.CustomerId, CustomerName = boCustomer.CustomerName, CustomerPhone = boCustomer.CustomerPhone, Place = LocationBoPo(boCustomer.Place), ParcelsFromCustomer = (ObservableCollection<ParcelInCustomer>)boCustomer.ParcelsFromCustomer, ParcelsToCustomer = (ObservableCollection<ParcelInCustomer>)boCustomer.ParcelsToCustomer };
+            //Customer nCustomer = (Customer)Cloning.CloneNew(boCustomer, typeof(Customer));
+            //nCustomer.Place = LocationBoPo(boCustomer.Place);
             return nCustomer;
         }
         public static CustomerForList CustomerForListBoPo(BO.CustomerForList boCustomerForList)

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfCustomers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!--add longitude and lattitude - in the data cource it wad random but here i dont know yet-->
+	<Customer>
+		<Id>326456189</Id>
+		<Name>Avital</Name>
+		<Phone>0548651821</Phone>
+	</Customer>
+	<Customer>
+		<Id>204168946</Id>
+		<Name>Yosi</Name>
+		<Phone>0548679821</Phone>
+	</Customer>
+	<Customer>	
+		<Id>425891358</Id>
+		<Name>Lulu</Name>
+		<Phone>0548768521</Phone>
+	</Customer>
+	<Customer>
+		<Id>702594863</Id>
+		<Name>Talya</Name>
+		<Phone>0548619897</Phone>
+	</Customer>
+	<Customer>
+		<Id>203459782</Id>
+		<Name>Monica</Name>
+		<Phone>0548679846</Phone>
+	</Customer>
+	<Customer>	
+		<Id>306894751</Id>
+		<Name>Taylor</Name>
+		<Phone>0548489651</Phone>
+	</Customer>
+	<Customer>
+		<Id>451620785</Id>
+		<Name>Ben</Name>
+		<Phone>0548498147</Phone>
+	</Customer>
+	<Customer>
+		<Id>410258943</Id>
+		<Name>Nati</Name>
+		<Phone>0589756121</Phone>
+	</Customer>
+	<Customer>
+		<Id>327498510</Id>
+		<Name>Ayelet</Name>
+		<Phone>0542235829</Phone>
+	</Customer>
+	<Customer>
+		<Id>610845302</Id>
+		<Name>Rachel</Name>
+		<Phone>0548645679</Phone>
+	</Customer>
+</ArrayOfCustomers>
