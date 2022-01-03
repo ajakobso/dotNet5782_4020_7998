@@ -1,54 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfCustomers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<!--add longitude and lattitude - in the data cource it wad random but here i dont know yet-->
 	<Customer>
 		<Id>326456189</Id>
 		<Name>Avital</Name>
 		<Phone>0548651821</Phone>
+		<Longitude>35.183698325743947</Longitude>
+		<Lattitude>31.709831425747662</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>204168946</Id>
 		<Name>Yosi</Name>
 		<Phone>0548679821</Phone>
+		<Longitude>35.252931375133493</Longitude>
+		<Lattitude>31.785266353711982</Lattitude>
 	</Customer>
 	<Customer>	
 		<Id>425891358</Id>
 		<Name>Lulu</Name>
 		<Phone>0548768521</Phone>
+		<Longitude>35.262655921095082</Longitude>
+		<Lattitude>31.828361711491905</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>702594863</Id>
 		<Name>Talya</Name>
 		<Phone>0548619897</Phone>
+		<Longitude>35.126143996157005</Longitude>
+		<Lattitude>31.81664994994609</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>203459782</Id>
 		<Name>Monica</Name>
 		<Phone>0548679846</Phone>
+		<Longitude>35.212268712692278</Longitude>
+		<Lattitude>31.768185446981708</Lattitude>
 	</Customer>
 	<Customer>	
 		<Id>306894751</Id>
 		<Name>Taylor</Name>
 		<Phone>0548489651</Phone>
+		<Longitude>35.131040047754276</Longitude>
+		<Lattitude>31.720742393214696</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>451620785</Id>
 		<Name>Ben</Name>
 		<Phone>0548498147</Phone>
+		<Longitude>35.14488931708005</Longitude>
+		<Lattitude>31.760856607940728</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>410258943</Id>
 		<Name>Nati</Name>
 		<Phone>0589756121</Phone>
+		<Longitude>35.174091768605862</Longitude>
+		<Lattitude>31.728139775296647</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>327498510</Id>
 		<Name>Ayelet</Name>
 		<Phone>0542235829</Phone>
+		<Longitude>35.172477449148836</Longitude>
+		<Lattitude>31.882363577860112</Lattitude>
 	</Customer>
 	<Customer>
 		<Id>610845302</Id>
 		<Name>Rachel</Name>
 		<Phone>0548645679</Phone>
+		<Longitude>35.257637444873829</Longitude>
+		<Lattitude>31.758748889468123</Lattitude>
 	</Customer>
-</ArrayOfCustomers>
+</ArrayOfCustomer>

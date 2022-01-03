@@ -36,15 +36,15 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.ParcelToList s = cell.DataContext as PO.ParcelToList;
-            if ((string)cell.DataContext != "0")
-            { new ParcelWindow(bl, s.ParcelId).ShowDialog(); }
-            else
-                MessageBox.Show("there is no parcel ascripted to the drone,\n cant open parcel's window.", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-        }
+        //private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    DataGridCell cell = sender as DataGridCell;
+        //    PO.ParcelToList s = cell.DataContext as PO.ParcelToList;
+        //    if ((string)cell.DataContext != "0")
+        //    { new ParcelWindow(bl, s.ParcelId).ShowDialog(); }
+        //    else
+        //        MessageBox.Show("there is no parcel ascripted to the drone,\n cant open parcel's window.", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+        //}
         public void RefreshDronesListWindow()
         {
             new DronesListWindow(bl);

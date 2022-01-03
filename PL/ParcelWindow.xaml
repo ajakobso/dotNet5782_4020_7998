@@ -10,7 +10,7 @@
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
-                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center">Please insert a integer</Label>
+                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Stretch">Please insert a integer</Label>
                 <Border BorderThickness="1" BorderBrush="Red">
                     <AdornedElementPlaceholder />
                 </Border>
@@ -30,14 +30,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <syncfusion:IntegerTextBox x:Name="IdParcelSTextBox" Text="{Binding SID, Mode=TwoWay}" Background="FloralWhite"  Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="IdParcelSTextBox_TextChanged"/>
-            <Label x:Name="SIDLabel" Content="Sender's ID" Foreground="#DD975387" Height="38" VerticalAlignment="Center" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="39,0,50,0" />
-            <syncfusion:IntegerTextBox x:Name="IdParcelDTextBox" Text="{Binding DID, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="IdParcelDTextBox_TextChanged"/>
-            <Label x:Name="DIDLabel" Content="Receiver's ID" Foreground="#DD975387" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <ComboBox x:Name="ParcelWeightSelector" Text="{Binding weight, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" Height="18" Grid.Row="2" VerticalAlignment="Center" Width="122" SelectionChanged="ParcelWeightSelector_SelectionChanged"/>
-            <Label x:Name="ParcelWeight" Foreground="#DD975387" Content="Parcel weight" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <Label x:Name="ParcelPriority" Foreground="#DD975387" Content="Parcel Priority" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Center" Width="148" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <ComboBox x:Name="PrioritySelector" Text="{Binding priority, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" Height="20" Width="120" Grid.Row="3" VerticalAlignment="Center" SelectionChanged="PrioritySelector_SelectionChanged"/>
+            <syncfusion:IntegerTextBox x:Name="IdParcelSTextBox" Text="{Binding SID, Mode=TwoWay}" Background="FloralWhite"  Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="IdParcelSTextBox_TextChanged"/>
+            <Label x:Name="SIDLabel" Content="Sender's ID" Foreground="#DD975387" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="39,0,50,0" />
+            <syncfusion:IntegerTextBox x:Name="IdParcelDTextBox" Text="{Binding DID, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="IdParcelDTextBox_TextChanged"/>
+            <Label x:Name="DIDLabel" Content="Receiver's ID" Foreground="#DD975387" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <ComboBox x:Name="ParcelWeightSelector" Text="{Binding weight, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" Height="18" Grid.Row="2" VerticalAlignment="Stretch" Width="122" SelectionChanged="ParcelWeightSelector_SelectionChanged"/>
+            <Label x:Name="ParcelWeight" Foreground="#DD975387" Content="Parcel weight" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <Label x:Name="ParcelPriority" Foreground="#DD975387" Content="Parcel Priority" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="148" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <ComboBox x:Name="PrioritySelector" Text="{Binding priority, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" Height="20" Width="120" Grid.Row="3" VerticalAlignment="Stretch" SelectionChanged="PrioritySelector_SelectionChanged"/>
             <Button x:Name="AddParcelButton" Content="Add Parcel" Height="40" Margin="127,19,143,28" Grid.Row="4" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Foreground="#DD975387" Click="AddParcelButton_Click" FontWeight="Bold">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FFA242D8" Opacity="0.75"/>
@@ -47,7 +47,7 @@
                 </Button.Effect>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnParcelGrid" Visibility="Visible">
+        <Grid x:Name="ActionsOnParcelGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
@@ -121,9 +121,9 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions >
-                <TextBox x:Name="ParcelModelTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="ParcelModelTBox_TextChanged"/>
-                <Label x:Name="ParcelModelL" Background="FloralWhite" Content="Parcel Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-                <Button x:Name="ModelUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ModelUpdate_Click">
+                <TextBox x:Name="ParcelModelTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="ParcelModelTBox_TextChanged"/>
+                <Label x:Name="ParcelModelL" Background="FloralWhite" Content="Parcel Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Button x:Name="ModelUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ModelUpdate_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\update-button.jpg"/>
                     </Button.Background>
@@ -134,8 +134,8 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="ChargeInLabel" Background="FloralWhite" Content="Send Parcel To Charge" Grid.Column="0" HorizontalAlignment="Left" Height="38" VerticalAlignment="Center" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
-                <Button x:Name="ChargeIn" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeIn_Click" Margin="34,0,0,0" >
+                <Label x:Name="ChargeInLabel" Background="FloralWhite" Content="Send Parcel To Charge" Grid.Column="0" HorizontalAlignment="Left" Height="38" VerticalAlignment="Stretch" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
+                <Button x:Name="ChargeIn" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeIn_Click" Margin="34,0,0,0" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\lowBattery-button.jpg"/>
                     </Button.Background>
@@ -159,7 +159,7 @@
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
                 <Label x:Name="SendParcelLabel" Background="FloralWhite" Content="Ascript Parcel To Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
-                <Button x:Name="SendParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendParcel_Click" >
+                <Button x:Name="SendParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\Drone-icon.jpg"/>
                     </Button.Background>
@@ -171,7 +171,7 @@
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
                 <Label x:Name="PickUpParcelLabel" Background="FloralWhite" Content="Send Parcel To Pick Up Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
-                <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" Margin="39,0,0,0" >
+                <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" Margin="39,0,0,0" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\DronePickUpParcel-icon.jpg"/>
                     </Button.Background>
@@ -183,7 +183,7 @@
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions >
                 <Label x:Name="DeliverParcelLabel" Background="FloralWhite" Content="Parcel Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
-                <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Center" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
+                <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\DroneDeliverParcel-icon.jpg"/>
                     </Button.Background>

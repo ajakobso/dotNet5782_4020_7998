@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfDrones xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<Drone>
 		<Id>1</Id>
 		<MaxWeight>Light</MaxWeight>
@@ -30,4 +30,4 @@
 		<MaxWeight>Heavy</MaxWeight>
 		<Model>15D</Model>
 	</Drone>
-</ArrayOfDrones>
+</ArrayOfDrone>

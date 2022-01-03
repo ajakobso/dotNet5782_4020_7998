@@ -1,37 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<Available>
-		<!--100 KM for a full battery-->
+<ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<string>1.0</string> <!--available-->
+	<string>3.0</string> <!--light weight-->
+	<string>4.0</string> <!--middle weight-->
+	<string>5.0</string> <!--heavy weight-->
+	<string>60.0</string> <!--battery consuming per hour-->
+	<string>1010</string> <!--running number for the parcel's id-->
+	<string>35.1252</string> <!--longitude range - jerusalem coordinates-->
+	<string>35.2642</string>
+	<string>31.7082</string> <!--lattitude range - jerusalem coordinates-->
+	<string>31.8830</string>
+	<!--<Available>
+		100 KM for a full battery
 		<double>1.0</double>
 	</Available>
 	<LightWheight>
-		<!--33+- KM for a full battery-->
+		33+- KM for a full battery
 		<double>3.0</double>
 	</LightWheight>/>
 	<MiddleWheight>
-		<!--25 KM for a full battery-->
+		25 KM for a full battery
 		<double>4.0</double>
 	</MiddleWheight>
 	<HeavyWeight>
-		<!--20 KM for a full battery-->
+		20 KM for a full battery
 		<double>5.0</double>
 	</HeavyWeight>
 	<BatteryPerHour>
-		<!--we have dicided that the delivering company will operate only in jerusalem, so 1 precent per minut make sense.-->
+		we have dicided that the delivering company will operate only in jerusalem, so 1 precent per minut make sense.
 		<double>60.0</double>
 	</BatteryPerHour>
 	<RunningParcelId>
-		<!--running number for the parcels id-->
+		running number for the parcels id
 		<int>1010</int>
 	</RunningParcelId>
 	<LongitudeRange>
-		<!--longitude coordinates of jerusalem-->
+		longitude coordinates of jerusalem
 		<double>35.1252</double>
 		<double>35.2642</double>
 	</LongitudeRange>
 	<LattitudeRange>
-		<!--lattitude coordinates of jerusalem-->
+		lattitude coordinates of jerusalem
 		<double>31.7082</double>
 		<double>31.8830</double>
-	</LattitudeRange>
-</config>
+	</LattitudeRange>-->
+</ArrayOfString>

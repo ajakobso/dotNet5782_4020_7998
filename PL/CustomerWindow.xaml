@@ -10,7 +10,7 @@
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
-                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Please insert a integer"/>
+                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="Please insert a integer"/>
                 <Border BorderThickness="1" BorderBrush="Red">
                     <AdornedElementPlaceholder />
                 </Border>
@@ -31,16 +31,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <syncfusion:IntegerTextBox x:Name="CustomerIdTextBox" Background="FloralWhite" Text="{Binding id, Mode=TwoWay}" Grid.Row="0" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#DD975387" TextChanged="CustomerIdTextBox_TextChanged"/>
-            <Label x:Name="CustomerIDLabel" Foreground="#DD975387" Grid.Row="0" Content="ID" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox x:Name="CustomerNameTextBox" Text="{Binding name, Mode=TwoWay}" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTextBox_TextChanged"/>
-            <Label x:Name="CustomerNamelLabel"  Foreground="#DD975387" Content="Name" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <TextBox x:Name="CustomerPhoneTextBox" Text="{Binding phone, Mode=TwoWay}" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerPhoneTextBox_TextChanged"/>
-            <Label x:Name="CustomerPhoneLabel"  Foreground="#DD975387" Content="Phone" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <syncfusion:DoubleTextBox x:Name="CustomerLongitudeTextBox" Text="{Binding longitude, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerLongitudeTextBox_TextChanged"/>
-            <Label x:Name="CustomerLongitudeLabel"  Foreground="#DD975387" Content="longitude" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-            <syncfusion:DoubleTextBox x:Name="CustomerlattitudeTextBox" Text="{Binding lattitude, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerlattitudeTextBox_TextChanged"/>
-            <Label x:Name="CustomerlattitudeLabel"  Foreground="#DD975387" Content="lattitude" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <syncfusion:IntegerTextBox x:Name="CustomerIdTextBox" Background="FloralWhite" Text="{Binding id, Mode=TwoWay}" Grid.Row="0" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="#DD975387" TextChanged="CustomerIdTextBox_TextChanged"/>
+            <Label x:Name="CustomerIDLabel" Foreground="#DD975387" Grid.Row="0" Content="ID" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="100" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <TextBox x:Name="CustomerNameTextBox" Text="{Binding name, Mode=TwoWay}" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerNameTextBox_TextChanged"/>
+            <Label x:Name="CustomerNamelLabel"  Foreground="#DD975387" Content="Name" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <TextBox x:Name="CustomerPhoneTextBox" Text="{Binding phone, Mode=TwoWay}" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerPhoneTextBox_TextChanged"/>
+            <Label x:Name="CustomerPhoneLabel"  Foreground="#DD975387" Content="Phone" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <syncfusion:DoubleTextBox x:Name="CustomerLongitudeTextBox" Text="{Binding longitude, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerLongitudeTextBox_TextChanged"/>
+            <Label x:Name="CustomerLongitudeLabel"  Foreground="#DD975387" Content="longitude" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+            <syncfusion:DoubleTextBox x:Name="CustomerlattitudeTextBox" Text="{Binding lattitude, Mode=TwoWay}" Background="FloralWhite" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerlattitudeTextBox_TextChanged"/>
+            <Label x:Name="CustomerlattitudeLabel"  Foreground="#DD975387" Content="lattitude" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <Button x:Name="AddCustomerButton"  Foreground="#DD975387" Content="Add Customer" HorizontalAlignment="Left" Height="40" Margin="120,20,0,0" Grid.Row="5" VerticalAlignment="Top" Width="149" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Click="AddCustomerButton_Click" FontWeight="Bold">
                 <Button.Effect>
                     <DropShadowEffect/>

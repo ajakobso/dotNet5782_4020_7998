@@ -215,6 +215,50 @@ namespace BL
             throw new DroneIdNotFoundException();
             //the function demend us to return a value, and because the return is inside a condition it cause an error
         }
+        public Drone GetDrone(int id)
+        {
+            DroneForList nDrone = new DroneForList();
+            foreach (var drone in from DroneForList drone in drones
+                                  where drone.DroneId == id
+                                  select drone)//linq
+            {
+                
+                foreach (var parcel in from Parcel parcel in myDalObject.CopyParcelsList()
+                                       where drone.InDeliveringParcelId == parcel.ParcelId
+                                       select parcel)
+                {
+                    Customer sender = DisplayCustomer(parcel.SCIParcel.CustomerId);
+                    Customer target = DisplayCustomer(parcel.DCIParcel.CustomerId);
+                    ParcelInDelivering p = null;
+                    if (drone.DroneState == Enums.DroneStatuses.Shipping || drone.InDeliveringParcelId > 1000)
+                    {
+                        p = new ParcelInDelivering
+                        {
+                            ParcelId = parcel.ParcelId,
+                            ParcelPriority = parcel.ParcelPriority,
+                            ParcelWC = parcel.ParcelWC,
+                            Distance = Distance(sender.Place.Long, sender.Place.Lat, target.Place.Long, target.Place.Lat),
+                            SenderLocation = sender.Place,
+                            TargetLocation = target.Place,
+                            Sender = new CustomerInParcel { CustomerId = sender.CustomerId, CustomerName = sender.CustomerName },
+                            Target = new CustomerInParcel { CustomerId = target.CustomerId, CustomerName = target.CustomerName },
+                            ParcelState = parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null
+                        };
+                    }
+                    return new Drone
+                    {
+                        DroneId = drone.DroneId,
+                        Model = drone.Model,
+                        MaxWeight = drone.MaxWeight,
+                        CurrentLocation = drone.CurrentLocation,
+                        DeliveryParcel = p,
+                        DroneStatus = drone.DroneState,
+                        Battery = drone.Battery
+                    };
+                }
+            }
+            throw new DroneIdNotFoundException();
+        }
         public IEnumerable<DroneForList> DisplayDronesList(Predicate<DroneForList> predicate)
         {
             IEnumerable<DroneForList> DronesList = drones.FindAll(predicate);

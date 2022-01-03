@@ -26,29 +26,29 @@
             <Label Name="StatusSelectorLabel" Foreground="#DD975387" Content="Status Selector" Grid.Column="2" Margin="4,18,2,-4" FontFamily="Berlin Sans FB Demi" FontSize="18"/>
             <ComboBox Name="WeightSelector" Foreground="#DD975387" Height="71.1111111" Margin="1,0,4,-2" Grid.Column="5" Background="FloralWhite" SelectionChanged="WeightSelector_SelectionChanged" BorderBrush="#FFFFFDE7"/>
             <Label Name="WeightSelectorLabel" Foreground="#DD975387" Content="Weight Selector" Grid.Column="4" Margin="0,18,1,-19" FontFamily="Berlin Sans FB Demi" FontSize="18"/>
-            <Button x:Name="AddDroneWindowButton" Foreground="#DD975387" Content="Add drone" Grid.Column="5" HorizontalAlignment="Left" Height="71" VerticalAlignment="Center" Width="140" FontFamily="Berlin Sans FB Demi" FontSize="22" Background="FloralWhite" Click="AddDroneWindowButton_Click" Grid.ColumnSpan="2" Margin="122,0,0,0"/>
-            <Button x:Name="Reset" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" Margin="66,0,0,0" VerticalAlignment="Center" Width="66" FontFamily="Berlin Sans FB Demi" FontSize="20" Click="Reset_Click" Grid.ColumnSpan="2">
+            <Button x:Name="AddDroneWindowButton" Foreground="#DD975387" Content="Add drone" Grid.Column="5" HorizontalAlignment="Left" Height="71" VerticalAlignment="Stretch" Width="140" FontFamily="Berlin Sans FB Demi" FontSize="22" Background="FloralWhite" Click="AddDroneWindowButton_Click" Grid.ColumnSpan="2" Margin="122,0,0,0"/>
+            <Button x:Name="Reset" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" Margin="66,0,0,0" VerticalAlignment="Stretch" Width="66" FontFamily="Berlin Sans FB Demi" FontSize="20" Click="Reset_Click" Grid.ColumnSpan="2">
                 <Button.Background>
                     <ImageBrush ImageSource="\Images\reset-button.jpg"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="63" Click="CloseButton_Click">
+            <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Stretch" Height="69" VerticalAlignment="Stretch" Width="63" Click="CloseButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="\Images\close-icon.png"/>
                 </Button.Background>
             </Button>
         </Grid>
         <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="Visible" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
-            <DataGrid.Resources>
+            <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
-            </DataGrid.Resources>
+            </DataGrid.Resources>-->
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="droneForListIdColumn" Binding="{Binding DroneId}" Header="Id" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader" Foreground="#DD975387"/>
-                <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneState}" Header="Status" Width="SizeToHeader" Foreground="#DD975387"/>
+                <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneStatus}" Header="Status" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="locationColumn" Binding="{Binding CurrentLocation}" Header="Location" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader" Foreground="#DD975387"/>

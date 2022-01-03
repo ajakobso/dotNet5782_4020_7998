@@ -9,9 +9,21 @@ using System.Xml.Serialization;
 
 namespace Dal
 {
+    static public class Tools
+    {
+        public static XElement ToXml<T>(this T obj)
+        {
+            using (StringWriter textWriter = new StringWriter())
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                xmlSerializer.Serialize(textWriter, obj);
+                return XElement.Parse(textWriter.ToString());
+            }
+        }
+    }
     class XmlTools
     {
-        static string dir = @"xml\";
+        static string dir = @"C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/";
         static XmlTools()
         {
             if (!Directory.Exists(dir))

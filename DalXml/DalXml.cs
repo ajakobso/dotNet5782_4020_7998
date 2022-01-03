@@ -16,7 +16,7 @@ namespace Dal
         #region singelton
         static readonly DalXml instance = new DalXml();
         static DalXml() { }// static ctor to ensure instance init is done just before first usage
-        DalXml() { } // default => private
+        DalXml() {} // default => private
         public static DalXml Instance { get => instance; }// The public Instance property to use
         #endregion
 
@@ -92,7 +92,7 @@ namespace Dal
                              select c).FirstOrDefault();
             if (cus != null)
                 throw new DO.AddExistingCustomerException();
-            XElement CustomerElem = new XElement("Customer", 
+            XElement CustomerElem = new XElement("Customer",
                                   new XElement("Id", id),
                                   new XElement("Name", name),
                                   new XElement("Phone", phone),
@@ -120,16 +120,15 @@ namespace Dal
         public Customer CopyCustomer(int customerId)
         {
             XElement customersRootElem = XmlTools.LoadListFromXmlElement(CustomersPath);
-
             Customer cus = (from c in customersRootElem.Elements()
                             where int.Parse(c.Element("Id").Value) == customerId
                             select new Customer()
-                            { 
-                                Id = Int32.Parse(c.Element("Id").Value), 
+                            {
+                                Id = Int32.Parse(c.Element("Id").Value),
                                 Name = c.Element("Name").Value,
                                 Phone = c.Element("Phone").Value,
-                                //Longitude = c.Element("Longitude").Value, //idk what to do here
-                                //Lattitude = c.Element("Lattitude").Value
+                                Longitude = double.Parse(c.Element("Longitude").Value),
+                                Lattitude = double.Parse(c.Element("Lattitude").Value)
                             }
                                 ).FirstOrDefault();
             return cus;
@@ -143,8 +142,8 @@ namespace Dal
                        Id = Int32.Parse(c.Element("Id").Value),
                        Name = c.Element("Name").Value,
                        Phone = c.Element("Phone").Value,
-                       //Longitude = c.Element("Longitude").Value, //idk what to do here
-                       //Lattitude = c.Element("Lattitude").Value
+                       Longitude = double.Parse(c.Element("Longitude").Value), //idk what to do here
+                       Lattitude = double.Parse(c.Element("Lattitude").Value)
                    };
         }
         #endregion
@@ -425,15 +424,16 @@ namespace Dal
             List<string> config = XmlTools.LoadListFromXmlSerializer<string>(ConfigPath);
 
             double[] responce = new double[2];
-            //_ = double.TryParse(config[6][0], out responce[0]);
+            _ = double.TryParse(config[6], out responce[0]);
+            _ = double.TryParse(config[7], out responce[1]);
             return responce;
         }
         public double[] CopyLattitudeRange()
         {
             List<string> config = XmlTools.LoadListFromXmlSerializer<string>(ConfigPath);
             double[] responce = new double[2];
-            //we need to acsses the needed fields in the config.xml file but idk how, or matbe define it deferent??
-            return responce;
+            _ = double.TryParse(config[8], out responce[0]);
+            _ = double.TryParse(config[9], out responce[1]); return responce;
         }
         #endregion
     }

@@ -175,9 +175,9 @@ namespace PL
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="CustomerNameTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTBox_TextChanged"/>
-                <Label x:Name="CustomerName" Background="FloralWhite" Content="Customer's name" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-                <Button x:Name="NameUpdate" Grid.Column="2" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="NameUpdate_Click">
+                <TextBox x:Name="CustomerNameTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerNameTBox_TextChanged"/>
+                <Label x:Name="CustomerName" Background="FloralWhite" Content="Customer's name" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Button x:Name="NameUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="NameUpdate_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\update-button.jpg"/>
                     </Button.Background>
@@ -189,9 +189,9 @@ namespace PL
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="CustomerPhoneTBox" Height="20" Width="74" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="CustomerNameTBox_TextChanged"/>
-                <Label x:Name="CustomerPhone" Background="FloralWhite" Content="new phone" Grid.Column="0" HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="172" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-                <Button x:Name="PhoneUpdate" Grid.Column="2" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PhoneUpdate_Click">
+                <TextBox x:Name="CustomerPhoneTBox" Height="20" Width="74" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerNameTBox_TextChanged"/>
+                <Label x:Name="CustomerPhone" Background="FloralWhite" Content="new phone" Grid.Column="0" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="172" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Button x:Name="PhoneUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PhoneUpdate_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\update-button.jpg"/>
                     </Button.Background>

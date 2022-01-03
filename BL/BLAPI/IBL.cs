@@ -26,6 +26,7 @@ namespace BlApi
         DateTime GetInsertionTime(int droneID);
         BaseStationForList DisplayBaseStation(int id);
         DroneForList DisplayDrone(int id);
+        Drone GetDrone(int id);
         Customer DisplayCustomer(int id);
         Parcel DisplayParcel(int id);
         IEnumerable<BaseStationForList> DisplayBaseStationsList(Predicate<BaseStationForList> predicate);

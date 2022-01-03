@@ -9,7 +9,7 @@
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
-                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Center">Please insert a integer</Label>
+                <Label Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Stretch">Please insert a integer</Label>
                 <Border BorderThickness="1" BorderBrush="Red">
                     <AdornedElementPlaceholder />
                 </Border>
@@ -38,7 +38,7 @@
             <syncfusion:DoubleTextBox x:Name="doubleLongitudeTextBox" Width="100" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2" TextChanged="doubleLongitudeTextBox_TextChanged" />
             <Label x:Name="BaseStationLong" Content="Longitude" Grid.Column="0" Grid.Row="2" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="34,0,57,0" />
             <syncfusion:DoubleTextBox x:Name="doubleLattitudeTextBox" Width="100" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" TextChanged="doubleLattitudeTextBox_TextChanged" />
-            <Label x:Name="BaseStationLatt" Content="Lattitude" Grid.Column="0" Grid.Row="3" Height="38" VerticalAlignment="Center" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="36,0,57,0" />
+            <Label x:Name="BaseStationLatt" Content="Lattitude" Grid.Column="0" Grid.Row="3" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="36,0,57,0" />
             <TextBox x:Name="BaseStationCSTextBox" Grid.Row="4" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="BaseStationCSTextBox_TextChanged"/>
             <Label x:Name="BaseStationCSLabel" Content="Charging Slots" Grid.Row="4" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="22,18,32,17" />
             <Button x:Name="AddBaseStationButton" Content="Add BaseStation" Height="40" Margin="118,16,138,16" Grid.Row="5" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" Click="AddBaseStationButton_Click" FontWeight="Bold" Foreground="Black">

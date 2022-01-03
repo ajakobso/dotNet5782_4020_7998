@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfParcels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<!--Id need to be equal to a running number which im not sure how to de-->
 	<Parcel>
 		<Id>1001</Id>
@@ -8,10 +8,10 @@
 		<TargetId>326456189</TargetId>
 		<Priority>Fast</Priority>
 		<Weight>Heavy</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>DateTime.Now</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:06</Requested>
+		<Scheduleded>2022-03-01T13:02:06</Scheduleded>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1002</Id>
@@ -20,10 +20,10 @@
 		<TargetId>610845302</TargetId>
 		<Priority>Standart</Priority>
 		<Weight>Heavy</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>null</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1003</Id>
@@ -32,10 +32,10 @@
 		<TargetId>326456189</TargetId>
 		<Priority>Fast</Priority>
 		<Weight>Middle</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded></Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1004</Id>
@@ -44,10 +44,10 @@
 		<TargetId>203459782</TargetId>
 		<Priority>Urgent</Priority>
 		<Weight>Heavy</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>DateTime.Now</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded>2022-03-01T13:00:07</Scheduleded>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1005</Id>
@@ -56,10 +56,10 @@
 		<TargetId>425891358</TargetId>
 		<Priority>Fast</Priority>
 		<Weight>Heavy</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>null</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1006</Id>
@@ -68,10 +68,10 @@
 		<TargetId>326456189</TargetId>
 		<Priority>Standart</Priority>
 		<Weight>Middle</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>null</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1007</Id>
@@ -80,10 +80,10 @@
 		<TargetId>327498510</TargetId>
 		<Priority>Fast</Priority>
 		<Weight>Heavy</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>null</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1008</Id>
@@ -92,10 +92,10 @@
 		<TargetId>326456189</TargetId>
 		<Priority>Standart</Priority>
 		<Weight>Middle</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>DateTime.Now</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded>2022-03-01T13:00:07</Scheduleded>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1009</Id>
@@ -104,10 +104,10 @@
 		<TargetId>204168946</TargetId>
 		<Priority>Standart</Priority>
 		<Weight>Heavy</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>null</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
 	<Parcel>
 		<Id>1010</Id>
@@ -116,9 +116,9 @@
 		<TargetId>702594863</TargetId>
 		<Priority>Standart</Priority>
 		<Weight>Middle</Weight>
-		<Requested>DateTime.Now</Requested>
-		<Scheduleded>null</Scheduleded>
-		<PickedUp>null</PickedUp>
-		<Delivered>null</Delivered>
+		<Requested>2022-03-01T13:00:07</Requested>
+		<Scheduleded xsi:nil="true"/>
+		<PickedUp xsi:nil="true"/>
+		<Delivered xsi:nil="true"/>
 	</Parcel>
-</ArrayOfParcels>
+</ArrayOfParcel>
