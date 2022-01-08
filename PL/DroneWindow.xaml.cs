@@ -22,7 +22,7 @@ namespace PL
     {
         private readonly IBL bl;
         //private PO.DroneForList droneForList=new PO.DroneForList();//binding for add
-        private PO.Drone drone = new();//binding for actions od drone and display
+        private BO.Drone drone = new();//binding for actions od drone and display
         int BsId,droneId;
         string model;
         Enums.WeightCategories weight;
@@ -104,13 +104,16 @@ namespace PL
             InitializeComponent();
             ActionsOnDroneGrid.Visibility = Visibility.Visible;
             try
-            { drone = PO.BoPoAdapter.DroneBoPo(bl.GetDrone(droneId)); }
+            { drone = bl.GetDrone(droneId); }
             catch (DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             DroneDataGrid.DataContext = drone;
-            IEnumerable<PO.Drone> l = new List<PO.Drone>();
-            l.Append(drone);
+            List<BO.Drone> l = new List<BO.Drone>();
+            l.Add(drone);
             DroneDataGrid.ItemsSource = l;
+            //if (drone.DeliveryParcel == null)
+                //deliveryParcelCell.Visibility = Visibility.Hidden;
         }
+        // <DataGridTemplateColumn x:Name="deliveryParcelCell" Header="Parcel" CellTemplate="{StaticResource ParcelInDeliveringTemplate}" />
         private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)//working
         {
             drone.Model = DroneModelTBox.Text;
@@ -125,7 +128,7 @@ namespace PL
         }
         private void ChargeIn_Click(object sender, RoutedEventArgs e)
         {
-            if (drone.DroneStatus == PO.Enums.DroneStatuses.Available)
+            if (drone.DroneStatus == BO.Enums.DroneStatuses.Available)
             {
                 In = DateTime.Now;
                 try
@@ -142,7 +145,7 @@ namespace PL
         }
         private void ChargeOut_Click(object sender, RoutedEventArgs e)//overall its working except in BL_Drone line 166 at the base stations list in BL - not all BS in there - therefor it may not delete the drone in charge from the dic list in the bs in the list of bs
         {
-            if (drone.DroneStatus == PO.Enums.DroneStatuses.Maintenance)
+            if (drone.DroneStatus == BO.Enums.DroneStatuses.Maintenance)
             {
                 Out = DateTime.Now;
                 if (In == DateTime.MinValue)
@@ -174,7 +177,7 @@ namespace PL
             try
             { parcel = bl.DisplayParcel(drone.DeliveryParcel.ParcelId); }
             catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime == null && drone.DroneStatus == PO.Enums.DroneStatuses.Shipping)
+            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime == null && drone.DroneStatus == BO.Enums.DroneStatuses.Shipping)
             {
                 try
                 { bl.PickUpParcel(drone.DroneId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
@@ -194,7 +197,7 @@ namespace PL
             try
             { parcel = bl.DisplayParcel(drone.DeliveryParcel.ParcelId); }
             catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null && drone.DroneStatus == PO.Enums.DroneStatuses.Shipping)
+            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null && drone.DroneStatus == BO.Enums.DroneStatuses.Shipping)
             {
                 try
                 { bl.DeliveringParcelByDrone(drone.DroneId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
@@ -210,7 +213,7 @@ namespace PL
         }
         private void SendDrone_Click(object sender, RoutedEventArgs e)
         {
-            if (drone.DroneStatus == PO.Enums.DroneStatuses.Available)
+            if (drone.DroneStatus == BO.Enums.DroneStatuses.Available)
             {
                 try
                 { bl.AscriptionParcelToDrone(drone.DroneId); }//we to do this in try and catch and catch any exception that might be thrown from bl.

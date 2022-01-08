@@ -121,8 +121,8 @@ namespace PL
             try
             { customer = PO.BoPoAdapter.CustomerBoPo(bl.DisplayCustomer(CustomerId)); }
             catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            IEnumerable<PO.Customer> l = new List<PO.Customer>();
-            l.ToList().Add(customer);
+            List<PO.Customer> l = new List<PO.Customer>();
+            l.Add(customer);
             CustomerDataGrid.ItemsSource = l;
             CustomerDataGrid.DataContext = customer;
             //if the name is changed then update the name - same about the phone, i just dont know how to check if the text changed.
@@ -169,7 +169,7 @@ namespace PL
                 catch (DroneIdNotFoundException) { MessageBox.Show("this customer is not exist\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
         }
-        /*      <Grid x:Name="NameUpdateGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="400">
+        /*      <Grid x:Name="NameUpdateGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -183,7 +183,7 @@ namespace PL
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="PhoneUpdateGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="PhoneUpdateGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>

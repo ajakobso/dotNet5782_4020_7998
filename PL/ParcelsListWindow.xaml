@@ -13,13 +13,13 @@
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="0" Width="800"  Background="FloralWhite" Margin="-12,0,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.1*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="AddParcelButton" Grid.Column="5" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click">
                 <Button.Background>

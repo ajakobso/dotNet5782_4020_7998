@@ -16,6 +16,22 @@
                 </Border>
             </Grid>
         </ControlTemplate>
+       
+        <Style x:Key="ColumnHeaderStyles" TargetType="DataGridColumnHeader">
+            <Setter Property="Foreground" Value="#DD975387"/>
+            <Setter Property="FontFamily" Value="Berlin Sans FB Demi"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="15,0,0,0"/>
+        </Style>
+        <Style x:Key="DataGridS" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyles}"/>
+        </Style>
     </Window.Resources>
     <Grid Name="MainGrid">
         <Grid x:Name="AddDroneGrid" Visibility="Hidden">
@@ -38,7 +54,7 @@
             <Label x:Name="DroneWeight" Content="Drone weight" Grid.Column="0" Foreground="#DD975387" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <Label x:Name="BsID" Content="Base station ID" Grid.Column="0" Foreground="#DD975387" Grid.Row="3" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="148" FontFamily="Berlin Sans FB Demi" FontSize="22" />
             <ComboBox x:Name="BsIdSelector" Text="{Binding BsId}" Foreground="#DD975387" Grid.Column="1" HorizontalAlignment="Stretch" Height="20" Width="120" Grid.Row="3" VerticalAlignment="Stretch" SelectionChanged="BsIdSelector_SelectionChanged"/>
-            <Button x:Name="AddDroneButton" Content="Add Drone" Foreground="#DD975387" HorizontalAlignment="Right" Height="40" Margin="0,17,315,0" Grid.Row="4" VerticalAlignment="Top" Width="133" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Click="AddDroneButton_Click" FontWeight="Bold" Grid.ColumnSpan="2">
+            <Button x:Name="AddDroneButton" Content="Add Drone" Foreground="#DD975387" HorizontalAlignment="Right" Height="40" Margin="0,17,315,0" Grid.Row="4" VerticalAlignment="Stretch" Width="133" FontFamily="Berlin Sans FB Demi" FontSize="18" Background="FloralWhite" Click="AddDroneButton_Click" FontWeight="Bold" Grid.ColumnSpan="2">
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
@@ -64,90 +80,101 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions >
                 <Label Content="Drone's Data" Foreground="#DD975387" Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="18" HorizontalAlignment="Stretch" Height="32" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="132" Grid.ColumnSpan="2"/>
-                <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Left" Height="69" VerticalAlignment="Stretch" Width="64" Click="CloseButton_Click">
+                <Button x:Name="CloseButton" Grid.Column="0" Content="" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" Click="CloseButton_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\close-icon.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <DataGrid x:Name="DroneDataGrid" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" Height="71" VerticalAlignment="Stretch" Width="400" Background="FloralWhite" Foreground="#DD975387" Grid.Row="1">
+            <DataGrid x:Name="DroneDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}"  IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" Background="FloralWhite" Foreground="#DD975387" Grid.Row="1">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="droneIdColumn" Binding="{Binding DroneId}" Header="Drone Id" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="droneStatusColumn" Binding="{Binding DroneStatus}" Header="Drone Status" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="droneIdColumn" Binding="{Binding DroneId}" Header="Drone Id" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="droneStatusColumn" Binding="{Binding DroneStatus}" Header="Drone Status" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="locationColumn" IsReadOnly="True" Binding="{Binding CurrentLocation}" Header="Location"  Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding DeliveryParcel.ParcelId}" Header="Parcel Id" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="parcelStateColumn" Binding="{Binding DeliveryParcel.ParcelState}" Header="Parcel State" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="parcelWCColumn" Binding="{Binding DeliveryParcel.ParcelWC}" Header="Parcel WC" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding DeliveryParcel.ParcelPriority}" Header="Parcel Priority" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="sCustomerIdColumn" Binding="{Binding DeliveryParcel.Sender.CustomerId}" Header="Sender's Id" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="sCustomerNameColumn" Binding="{Binding DeliveryParcel.Sender.CustomerName}" Header="Sender's Name" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="dCustomerIdColumn" Binding="{Binding DeliveryParcel.Target.CustomerId}" Header="Customer Id" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="dCustomerNameColumn" Binding="{Binding DeliveryParcel.Target.CustomerName}" Header="Customer Name" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="SlocationColumn" IsReadOnly="True" Binding="{Binding DeliveryParcel.SenderLocation}" Header="Sender Location"  Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="DlocationColumn" IsReadOnly="True" Binding="{Binding DeliveryParcel.TargetLocation}" Header="Target Location"  Foreground="#DD975387"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid x:Name="ModelUpdateGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="ModelUpdateGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions >
                 <TextBox x:Name="DroneModelTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="DroneModelTBox_TextChanged"/>
-                <Label x:Name="DroneModelL" Background="FloralWhite" Content="Drone Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
-                <Button x:Name="ModelUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ModelUpdate_Click">
+                <Label x:Name="DroneModelL" Foreground="#DD975387" Background="FloralWhite" Content="Drone Model" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Button x:Name="ModelUpdate" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ModelUpdate_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="\Images\update-button.jpg"/>
+                        <ImageBrush ImageSource="\Images\update-icon.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="ChargeInGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="3" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="ChargeInGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="3" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="ChargeInLabel" Background="FloralWhite" Content="Send Drone To Charge" Grid.Column="0" HorizontalAlignment="Left" Height="38" VerticalAlignment="Stretch" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
-                <Button x:Name="ChargeIn" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeIn_Click" Margin="34,0,0,0" >
+                <Label x:Name="ChargeInLabel" Foreground="#DD975387" Background="FloralWhite" Content="Send Drone To Charge" Grid.Column="0" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="278" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,0,0,0" Grid.ColumnSpan="2" />
+                <Button x:Name="ChargeIn" Grid.Column="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeIn_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\lowBattery-button.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="ChargeOutGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="ChargeOutGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="4" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="ChargeOutLabel" Background="FloralWhite" Content="Realese Drone Frome Charge" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="9,-6,0,0" />
-                <Button x:Name="ChargeOut" Grid.Column="1" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeOut_Click" Margin="2,0,0,0" >
+                <Label x:Name="ChargeOutLabel" Foreground="#DD975387" Background="FloralWhite" Content="Realese Drone Frome Charge" Height="38" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="195,-3,25,1"  />
+                <Button x:Name="ChargeOut" Grid.Column="1" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="ChargeOut_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\highBattery-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="SendDroneGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="5" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="SendDroneGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="5" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="SendDroneLabel" Background="FloralWhite" Content="Ascript Drone To Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
-                <Button x:Name="SendDrone" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendDrone_Click" >
+                <Label x:Name="SendDroneLabel" Foreground="#DD975387" Background="FloralWhite" Content="Ascript Drone To Parcel" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
+                <Button x:Name="SendDrone" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="SendDrone_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\drone-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="PickUpParcelGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="6" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="PickUpParcelGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="6" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="PickUpParcelLabel" Background="FloralWhite" Content="Send Drone To Pick Up Parcel" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
-                <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" Margin="39,0,0,0" >
+                <Label x:Name="PickUpParcelLabel" Foreground="#DD975387" Background="FloralWhite" Content="Send Drone To Pick Up Parcel" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
+                <Button x:Name="PickUpParcel" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PickUpParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\dronePickUpParcel-icon.jpg"/>
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="DeliverParcelGrid" HorizontalAlignment="Left" Height="36" Margin="2,8,0,0" Grid.Row="7" VerticalAlignment="Top" Width="400">
+            <Grid x:Name="DeliverParcelGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="7" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="DeliverParcelLabel" Background="FloralWhite" Content="Drone Deliver The Parcel" HorizontalAlignment="Left" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
-                <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="DeliverParcel_Click" >
+                <Label x:Name="DeliverParcelLabel" Foreground="#DD975387" Background="FloralWhite" Content="Drone Deliver The Parcel" HorizontalAlignment="Stretch" Width="283" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,6" Grid.ColumnSpan="2" />
+                <Button x:Name="DeliverParcel" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="DeliverParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\droneDeliverParcel-icon.jpg"/>
                     </Button.Background>

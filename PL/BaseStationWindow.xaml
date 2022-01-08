@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d"
-        Title="BaseStationWindow" Height="450" Width="400">
+        Title="BaseStationWindow" Height="450" Width="auto">
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
