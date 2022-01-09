@@ -22,7 +22,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         private readonly IBL bl;
-        public MainWindow()
+        public MainWindow(IBL bl)
         {
             bl = BLFactory.GetBL("1");
             InitializeComponent();

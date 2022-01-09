@@ -15,6 +15,7 @@ namespace Dal
             internal static List<BaseStation> BaseStations = new List<BaseStation>();
             internal static List<Customer> Customers = new List<Customer>();
             internal static List<Parcel> Parcels = new List<Parcel>();
+            internal static List<User> Users = new List<User>();
             internal static List<DroneCharge> DroneCharges = new List<DroneCharge>();
             internal static double Available = 1;//100 KM for a full battery
             internal static double LightWheight = 3;//33+- KM for a full battery

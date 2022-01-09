@@ -12,6 +12,7 @@ namespace DalApi
         void AddDrone(int id, double Battery, WeightCategories maxW, string model);
         void AddCustomer(int id, string name, string phone, double longitude, double lattitude);
         void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered);
+        public void AddUser(int id, string name, string phone, string password);
         void RemoveCustomer(int id);
         void RemoveParcel(int id);
         void RemoveDrone(int id);

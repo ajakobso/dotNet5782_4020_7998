@@ -97,7 +97,15 @@ namespace Dal
             //}
             DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
-
+        public void AddUser(int id, string name, string phone, string password)
+        {
+            foreach (var _ in from User user in DataSource.Config.Users
+                              where user.Id == id
+                              select new { })
+            {
+                throw new AddExistingUserException();
+            }
+        }
         public void RemoveCustomer(int id)
         {
             foreach (var customer in from customer in DataSource.Config.Customers

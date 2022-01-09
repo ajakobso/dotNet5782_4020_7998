@@ -9,7 +9,7 @@ namespace ConsoleUI
     {
         public static IDAL myDalObject;
         public enum Inputs { a = 1, p, d, l, e };
-        public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
+        public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel, nUser };//for the main
         public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
         public enum Displaying { DBaseStation = 1, DDrone, DCustomer, DParcel };//for the main
         public enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
@@ -33,6 +33,7 @@ namespace ConsoleUI
                 {
                     case Inputs.a:
                         Console.WriteLine("What DO you want to add?\n" +
+                            "nUser: Add new user\n" +
                 "nBaseStation: Add new base station\n" +
                 "nDrone: Add new drone\n" +
                 "nCustomer: Add new customer\n" +
@@ -43,6 +44,11 @@ namespace ConsoleUI
                         Adding.TryParse(input1, out a);
                         switch (a)
                         {
+                            case Adding.nUser:
+                                Console.WriteLine("please enter:\n user's id:")
+                                    int UId;//user id
+                                inp = Console.ReadLine();
+                                int.TryParse(inp, out UId);//////////////////////////////////////////////////////////////////
                             case Adding.nBaseStation:
                                 Console.WriteLine("please enter:\n" + "base station's id:\n");
                                 //string inp;
@@ -86,7 +92,7 @@ namespace ConsoleUI
                                 string DModel;
                                 DModel = Console.ReadLine();
                                 try
-                                { myDalObject.AddDrone(DId, DBattery, DWC, DModel);}//create a new drone with new values
+                                { myDalObject.AddDrone(DId, DBattery, DWC, DModel); }//create a new drone with new values
                                 catch (AddExistingDroneException)
                                 { Console.WriteLine("ERROR - attempt to add an existing drone!\n"); }
                                 break;
@@ -140,7 +146,7 @@ namespace ConsoleUI
                                 DateTime? PPUT = null;//parcel pick up time
                                 DateTime? PDT = null;//parcel delivery time
                                 try
-                                { myDalObject.AddParcel(-1,PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
+                                { myDalObject.AddParcel(-1, PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
                                 catch (DO.AddParcelToAnAsscriptedDroneException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!\n"); }
                                 break;

@@ -25,6 +25,12 @@ namespace DO
 
     }
     [Serializable]
+    public class AddExistingUserException : Exception
+    {
+        public AddExistingUserException() { }
+
+    }
+    [Serializable]
     public class AddParcelToAnAsscriptedDroneException : Exception
     {
         public AddParcelToAnAsscriptedDroneException() { }
