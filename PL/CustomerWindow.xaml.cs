@@ -21,7 +21,7 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         private readonly IBL bl;
-        private Customer customer;
+        private PO.Customer customer;
         private int id;
         private string name;
         private string phone;
@@ -119,41 +119,45 @@ namespace PL
             InitializeComponent();
             ActionsOnCustomerGrid.Visibility = Visibility.Visible;
             try
-            { customer = bl.DisplayCustomer(CustomerId); }
+            { customer = PO.BoPoAdapter.CustomerBoPo(bl.DisplayCustomer(CustomerId)); }
             catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+            List<PO.Customer> l = new List<PO.Customer>();
+            l.Add(customer);
+            CustomerDataGrid.ItemsSource = l;
             CustomerDataGrid.DataContext = customer;
+            //if the name is changed then update the name - same about the phone, i just dont know how to check if the text changed.
         }
-        private void CustomerNameTBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            customer.CustomerName = CustomerNameTBox.Text;
-            NameTextBoxChanged = true;
-        }
-        private void CustomerPhoneTBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            customer.CustomerPhone = CustomerPhoneTextBox.Text;
-            PhoneTextBoxChanged = true;
-        }
-        private void NameUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            if (NameTextBoxChanged)
-            {
-                try
-                { bl.UpdateCustomer(customer.CustomerId, CustomerNameTextBox.Text, customer.CustomerPhone); }//try catch
-                catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                NameTextBoxChanged = false;
-            }
-            SuccessOperation();
-        }
-        private void PhoneUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            if (PhoneTextBoxChanged)
-            {
-                try
-                { bl.UpdateCustomer(customer.CustomerId, customer.CustomerName, CustomerPhoneTextBox.Text); }//try catch
-                catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                PhoneTextBoxChanged = false;
-            }
-        }
+        //private void CustomerNameTBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    customer.CustomerName = CustomerNameTBox.Text;
+        //    NameTextBoxChanged = true;
+        //}
+        //private void CustomerPhoneTBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    customer.CustomerPhone = CustomerPhoneTextBox.Text;
+        //    PhoneTextBoxChanged = true;
+        //}
+        //private void NameUpdate_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (NameTextBoxChanged)
+        //    {
+        //        try
+        //        { bl.UpdateCustomer(customer.CustomerId, CustomerNameTextBox.Text, customer.CustomerPhone); }//try catch
+        //        catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+        //        NameTextBoxChanged = false;
+        //    }
+        //    SuccessOperation();
+        //}
+        //private void PhoneUpdate_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (PhoneTextBoxChanged)
+        //    {
+        //        try
+        //        { bl.UpdateCustomer(customer.CustomerId, customer.CustomerName, CustomerPhoneTextBox.Text); }//try catch
+        //        catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+        //        PhoneTextBoxChanged = false;
+        //    }
+        //}
         #endregion
         private void SuccessOperation()
         {
@@ -165,5 +169,34 @@ namespace PL
                 catch (DroneIdNotFoundException) { MessageBox.Show("this customer is not exist\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
         }
+        /*      <Grid x:Name="NameUpdateGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="CustomerNameTBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerNameTBox_TextChanged"/>
+                <Label x:Name="CustomerName" Background="FloralWhite" Content="Customer's name" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Button x:Name="NameUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="NameUpdate_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="\Images\update-button.jpg"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Grid x:Name="PhoneUpdateGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="CustomerPhoneTBox" Height="20" Width="74" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" TextChanged="CustomerNameTBox_TextChanged"/>
+                <Label x:Name="CustomerPhone" Background="FloralWhite" Content="new phone" Grid.Column="0" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="172" FontFamily="Berlin Sans FB Demi" FontSize="22" />
+                <Button x:Name="PhoneUpdate" Grid.Column="2" HorizontalAlignment="Stretch" Height="32" VerticalAlignment="Stretch" Width="130" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Click="PhoneUpdate_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="\Images\update-button.jpg"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+   */
     }
 }

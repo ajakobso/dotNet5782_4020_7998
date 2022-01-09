@@ -28,8 +28,7 @@ namespace DalApi
     &lt;dal&gt;data&lt;/dal&gt;<br/>
     &lt;dal-packages&gt;<br/>
     &lt;data&gt;DalObject&lt;/data&gt;<br/>
-    &lt;xml namespace="DAL" class="DalXml"&gt;DalXml&lt;/xml&gt;<br/>
-    &lt;oracle namespace="DL" class="DalDbOracle"&gt;DalOracle&lt;/oracle&gt;<br/>
+    &lt;xml namespace="Dal" class="DalXml"&gt;DalXml&lt;/xml&gt;<br/>
     &lt;/dal-packages&gt;<br/>
 &lt;/config&gt;<br/>
      </code>

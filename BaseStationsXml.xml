@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ArrayOfBaseStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BaseStation>
+    <Id>101</Id>
+    <Name>station1</Name>
+    <ChargeSlots>3</ChargeSlots>
+    <AvailableChargeSlots>3</AvailableChargeSlots>
+    <Longitude>35.139781663410915</Longitude>
+    <Lattitude>31.81134246856642</Lattitude>
+  </BaseStation>
+  <BaseStation>
+    <Id>102</Id>
+    <Name>station2</Name>
+    <ChargeSlots>5</ChargeSlots>
+    <AvailableChargeSlots>5</AvailableChargeSlots>
+    <Longitude>35.129248402818405</Longitude>
+    <Lattitude>31.751978124616194</Lattitude>
+  </BaseStation>
+  <BaseStation>
+    <Id>103</Id>
+    <Name>station3</Name>
+    <ChargeSlots>103</ChargeSlots>
+    <AvailableChargeSlots>103</AvailableChargeSlots>
+    <Longitude>35.2</Longitude>
+    <Lattitude>31.78</Lattitude>
+  </BaseStation>
+</ArrayOfBaseStation>

@@ -227,109 +227,39 @@ namespace Dal
         }
         public void PickUpParcel(int parcelId)
         {
-            Parcel p = new Parcel();
-            bool parcelExists = false;
-            bool droneExists = false;
             foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels//finding our parcel
                                    where parcel.Id == parcelId
                                    select parcel)
             {
-                p = parcel;
-                parcelExists = true;
-            }
-            //foreach (Parcel parcel in DataSource.Config.Parcels)//finding our parcel-not linq
-            //{
-            //    if (parcel.Id == parcelId)
-            //    {
-            //        p = parcel;
-            //        parcelExists = true;
-            //    }
-            //}
-            if (parcelExists)
-            {
-                foreach (var (drone, newDrone) in from Drone drone in DataSource.Config.Drones
-                                                  where drone.Id == p.DroneId
-                                                  let newDrone = new Drone { Id = drone.Id, /*Status = DroneStatuses.Shipping,*/ Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model }
-                                                  select (drone, newDrone))
-                {
-                    DataSource.Config.Drones.Remove(drone);
-                    DataSource.Config.Drones.Add(newDrone);
-                    droneExists = true;
-                }
-                //foreach (Drone drone in DataSource.Config.Drones)-not linq
-                //{
-                //    if (drone.Id == p.DroneId)
-                //    {
-                //        Drone newDrone = new Drone { Id = drone.Id, /*Status = DroneStatuses.Shipping,*/ Battery = drone.Battery, MaxWeight = drone.MaxWeight, Model = drone.Model };
-                //        DataSource.Config.Drones.Remove(drone);
-                //        DataSource.Config.Drones.Add(newDrone);
-                //        droneExists = true;
-                //    }
-                //}
-                if (droneExists == false)
+                if (parcel.DroneId == 0)
                     throw new DroneIdNotFoundException();
+                else
+                {
+                    Parcel nParcel = new Parcel { Id = parcel.Id, DroneId = parcel.DroneId, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, PickedUp = DateTime.Now, Delivered = parcel.Delivered };
+                    DataSource.Config.Parcels.Remove(parcel);
+                    DataSource.Config.Parcels.Add(nParcel);
+                    return;
+                }
             }
-            else
-                throw new ParcelIdNotFoundException();
+            throw new ParcelIdNotFoundException();
         }
         public void ParcelDelivering(int parcelId)//אם קלט הפונקציה זה איבר מסוג חבילה אז אפשר למחוק את הלולאה של פוראיצ הראשונה, העיקרון שעשיתי פה אבל ישמש אותנו בפונקציות של ההצגה של איבר/רשימה.
         {
-            bool parcelExists = false;
-            bool droneExists = false;
-            foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels
+            foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels//finding our parcel
                                    where parcel.Id == parcelId
                                    select parcel)
             {
-                parcelExists = true;
-                foreach (Drone drone in DataSource.Config.Drones)///find the drone that ascribed to the pacler-not linq!!
-                {
-                    if (parcelExists)
-                    {
-                        if (drone.Id == parcel.DroneId)
-                        {
-                            Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
-                            DataSource.Config.Drones.Remove(drone);
-                            DataSource.Config.Drones.Add(newDrone);///change the status of the drone into available because he finish the shipment.
-                            Parcel newParcel = new Parcel { Id = parcel.Id, Delivered = DateTime.Now, DroneId = parcel.DroneId, PickedUp = parcel.PickedUp, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight };
-                            DataSource.Config.Parcels.Remove(parcel);
-                            DataSource.Config.Parcels.Add(newParcel);//updating the delivering time of the parcel
-                            droneExists = true;
-                        }
-                    }
-                    else
-                        throw new ParcelIdNotFoundException();
-                }
-
-                if (droneExists == false)
+                if (parcel.DroneId == 0)
                     throw new DroneIdNotFoundException();
+                else
+                {
+                    Parcel nParcel = new Parcel { Id = parcel.Id, DroneId = parcel.DroneId, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, PickedUp = parcel.PickedUp, Delivered = DateTime.Now };
+                    DataSource.Config.Parcels.Remove(parcel);
+                    DataSource.Config.Parcels.Add(nParcel);
+                    return;
+                }
             }
-            //foreach (Parcel parcel in DataSource.Config.Parcels)///find the pacler by its id
-            //{
-            //    if (parcel.Id == parcelId)
-            //    {
-            //        parcelExists = true;
-            //        foreach (Drone drone in DataSource.Config.Drones)///find the drone that ascribed to the pacler
-            //        {
-            //            if (parcelExists)
-            //            {
-            //                if (drone.Id == parcel.DroneId)
-            //                {
-            //                    Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };//Status = DroneStatuses.Available, Battery = drone.Battery
-            //                    DataSource.Config.Drones.Remove(drone);
-            //                    DataSource.Config.Drones.Add(newDrone);///change the status of the drone into available because he finish the shipment.
-            //                    Parcel newParcel = new Parcel { Id = parcel.Id, Delivered = DateTime.Now, DroneId = parcel.DroneId, PickedUp = parcel.PickedUp, Priority = parcel.Priority, Requested = parcel.Requested, Scheduleded = parcel.Scheduleded, SenderId = parcel.SenderId, TargetId = parcel.TargetId, Weight = parcel.Weight };
-            //                    DataSource.Config.Parcels.Remove(parcel);
-            //                    DataSource.Config.Parcels.Add(newParcel);//updating the delivering time of the parcel
-            //                    droneExists = true;
-            //                }
-            //            }
-            //            else
-            //                throw new ParcelIdNotFoundException();
-            //        }
-            //        if (droneExists == false)
-            //            throw new DroneIdNotFoundException();
-            //    }
-            //}
+            throw new ParcelIdNotFoundException();
         }
         public void DroneCharging(int droneId, int baseStationId)//inserting a drone into a charging station in order to charge his battery
         {

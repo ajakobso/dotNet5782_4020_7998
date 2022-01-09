@@ -8,7 +8,6 @@ namespace BL
 {
     internal sealed partial class BL
     {
-
         public void AddDrone(int Id, string Model, Enums.WeightCategories MaxWeight, int Bstation)
         {
             Random r = new Random();//אין לי שמץ של מושג אם ככה מגדירים רנדום
@@ -202,7 +201,7 @@ namespace BL
         }//לממש
         public DroneForList DisplayDrone(int id)
         {
-            
+
             DroneForList nDrone = new DroneForList();
             foreach (var drone in from DroneForList drone in drones
                                   where drone.DroneId == id
@@ -215,6 +214,67 @@ namespace BL
             throw new DroneIdNotFoundException();
             //the function demend us to return a value, and because the return is inside a condition it cause an error
         }
+        public Drone GetDrone(int id)
+        {
+            DroneForList nDrone = new DroneForList();
+            foreach (var drone in from DroneForList drone in drones
+                                  where drone.DroneId == id
+                                  select drone)//linq
+            {
+                ParcelInDelivering p = null;
+                if (drone.InDeliveringParcelId != 0)
+                {
+                    foreach (var parcel in from DO.Parcel parcel in myDalObject.CopyParcelsList()
+                                           where drone.InDeliveringParcelId == parcel.Id
+                                           select parcel)
+                    {
+                        Parcel boParcel = DisplayParcel(parcel.Id);
+                        Customer sender = DisplayCustomer(boParcel.SCIParcel.CustomerId);
+                        Customer target = DisplayCustomer(boParcel.DCIParcel.CustomerId);
+                        if (drone.DroneState == Enums.DroneStatuses.Shipping || drone.InDeliveringParcelId > 1000)
+                        {
+                            return new Drone
+                            {
+                                DroneId = drone.DroneId,
+                                Model = drone.Model,
+                                MaxWeight = drone.MaxWeight,
+                                CurrentLocation = drone.CurrentLocation,
+                                DeliveryParcel = new ParcelInDelivering
+                                {
+                                    ParcelId = boParcel.ParcelId,
+                                    ParcelPriority = boParcel.ParcelPriority,
+                                    ParcelWC = boParcel.ParcelWC,
+                                    Distance = Distance(sender.Place.Long, sender.Place.Lat, target.Place.Long, target.Place.Lat),
+                                    SenderLocation = sender.Place,
+                                    TargetLocation = target.Place,
+                                    Sender = new CustomerInParcel { CustomerId = sender.CustomerId, CustomerName = sender.CustomerName },
+                                    Target = new CustomerInParcel { CustomerId = target.CustomerId, CustomerName = target.CustomerName },
+                                    ParcelState = boParcel.ParcelPickUpTime != null && boParcel.ParcelDeliveringTime == null
+                                },
+                                DroneStatus = drone.DroneState,
+                                Battery = drone.Battery
+                            };
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    return new Drone
+                    {
+                        DroneId = drone.DroneId,
+                        Model = drone.Model,
+                        MaxWeight = drone.MaxWeight,
+                        CurrentLocation = drone.CurrentLocation,
+                        DeliveryParcel = new ParcelInDelivering(),
+                        DroneStatus = drone.DroneState,
+                        Battery = drone.Battery
+                    };
+                }
+            }
+            throw new DroneIdNotFoundException();
+        }
         public IEnumerable<DroneForList> DisplayDronesList(Predicate<DroneForList> predicate)
         {
             IEnumerable<DroneForList> DronesList = drones.FindAll(predicate);
@@ -223,7 +283,7 @@ namespace BL
 
         public void RemoveDroneForList(int Id)
         {
-            bool Check=false;
+            bool Check = false;
             foreach (var drone in from drone in drones
                                   where drone.DroneId == Id
                                   select drone)//linq
@@ -257,6 +317,5 @@ namespace BL
             throw new BaseStationNotFoundException();
         }
     }
-    
 }
 

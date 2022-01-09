@@ -26,21 +26,14 @@ namespace BL
         {
             IEnumerable<DO.Parcel> parcels = new List<DO.Parcel>();
             //(parcels as List<DO.Parcel>).ForEach();
-            DO.Parcel selectedParcel=new();
-            bool Check = false;
             parcels = myDalObject.CopyParcelsList();
-            selectedParcel=(parcels as List<DO.Parcel>).Find(x => (x.DroneId == droneId) /* Check = true) */);//if ERROR- do .FirstOrDefault!!
-            ////foreach (var parcel in from parcel in myDalObject.CopyParcelsList()
-            ////                       where parcel.DroneId == droneId
-            ////                       select parcel)
-            ////{
-            ////    selectedParcel = parcel;
-            ////    Check = true;
-            ////   // return parcel.Id;
-            ////}
-            if (Check)
-                return selectedParcel.Id;
-            return -1;
+            //var selectedParcel = from p in parcels where p.DroneId == droneId select p;
+            var selectedParcel = parcels.Where(x => x.DroneId == droneId);
+            if (selectedParcel.FirstOrDefault().Id != 0 && selectedParcel.FirstOrDefault().SenderId != 0 && selectedParcel.FirstOrDefault().TargetId != 0)//check if there is parcel that maches
+                return selectedParcel.First().Id;
+            else
+                return -1;
+
         }
         private Location RandomCustomerLocation(int num)//location is Random between customers that parcels has just delivered to them
         {

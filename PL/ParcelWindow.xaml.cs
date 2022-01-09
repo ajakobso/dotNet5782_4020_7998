@@ -93,6 +93,7 @@ namespace PL
             IEnumerable<PO.Parcel> l = new List<PO.Parcel>();
             l.Append(Parcel);
             ParcelDataGrid.ItemsSource = l;
+            //if the drone id then make the grid of the drone in charge to be invisible
         }
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

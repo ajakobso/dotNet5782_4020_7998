@@ -108,9 +108,11 @@ namespace PL.PO
         }
         public static Customer CustomerBoPo(BO.Customer boCustomer)
         {
-            Customer nCustomer = new();
-            Cloning.Clone(boCustomer, nCustomer);
-            nCustomer.Place = LocationBoPo(boCustomer.Place);
+            //return (PO.Parcel)Cloning.CloneNew(boParcel, typeof(Parcel));
+            //Cloning.Clone(boCustomer, nCustomer);
+            Customer nCustomer = new Customer { CustomerId = boCustomer.CustomerId, CustomerName = boCustomer.CustomerName, CustomerPhone = boCustomer.CustomerPhone, Place = LocationBoPo(boCustomer.Place), ParcelsFromCustomer = (ObservableCollection<ParcelInCustomer>)boCustomer.ParcelsFromCustomer, ParcelsToCustomer = (ObservableCollection<ParcelInCustomer>)boCustomer.ParcelsToCustomer };
+            //Customer nCustomer = (Customer)Cloning.CloneNew(boCustomer, typeof(Customer));
+            //nCustomer.Place = LocationBoPo(boCustomer.Place);
             return nCustomer;
         }
         public static CustomerForList CustomerForListBoPo(BO.CustomerForList boCustomerForList)
@@ -157,9 +159,8 @@ namespace PL.PO
         }
         public static Parcel ParcelBoPo(BO.Parcel boParcel)
         {
-            Parcel nParcel = new();
-            Cloning.Clone(boParcel, nParcel);
-            return nParcel;
+            return (PO.Parcel)Cloning.CloneNew(boParcel, typeof(Parcel));
+            
         }
         public static ParcelInCustomer ParcelInCustomerBoPo(BO.ParcelInCustomer boParcelInCustomer)
         {

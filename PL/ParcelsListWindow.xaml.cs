@@ -74,5 +74,11 @@ namespace PL
         {
             Close();
         }
+
+        private void ParcelForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            parcel.ParcelId = ((PO.ParcelToList)ParcelForListDataGrid.SelectedItem).ParcelId;
+            new ParcelWindow(bl, parcel.ParcelId).ShowDialog();
+        }
     }
 }
