@@ -191,6 +191,28 @@ namespace PL
                 MessageBox.Show("this drone can't pick up this parcl", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
         }
+
+        private void automaticButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModelUpdateGrid.Visibility = Visibility.Hidden;
+            ChargeInGrid.Visibility = Visibility.Hidden;
+            ChargeOutGrid.Visibility = Visibility.Hidden;
+            SendDroneGrid.Visibility = Visibility.Hidden;
+            PickUpParcelGrid.Visibility = Visibility.Hidden;
+            DeliverParcelGrid.Visibility = Visibility.Hidden;
+
+        }
+
+        private void manualButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModelUpdateGrid.Visibility = Visibility.Visible;
+            ChargeInGrid.Visibility = Visibility.Visible;
+            ChargeOutGrid.Visibility = Visibility.Visible;
+            SendDroneGrid.Visibility = Visibility.Visible;
+            PickUpParcelGrid.Visibility = Visibility.Visible;
+            DeliverParcelGrid.Visibility = Visibility.Visible;
+        }
+
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
             Parcel parcel = new();

@@ -3,108 +3,136 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 
 namespace BL
 {
     internal sealed partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(int num, string name, Location location, int numOfAvailableDCharge)
         {
-            if ((myDalObject.CopyLongitudeRange()[0] > location.Long) || (myDalObject.CopyLongitudeRange()[1] < location.Long) || (myDalObject.CopyLattitudeRange()[0] > location.Lat) || (myDalObject.CopyLattitudeRange()[1] < location.Lat))
+            lock (myDal)
             {
-                throw new LocationOutOfRangeException();
+                if ((myDal.CopyLongitudeRange()[0] > location.Long) || (myDal.CopyLongitudeRange()[1] < location.Long) || (myDal.CopyLattitudeRange()[0] > location.Lat) || (myDal.CopyLattitudeRange()[1] < location.Lat))
+                {
+                    throw new LocationOutOfRangeException();
+                }
+                try { location = AddLocation(location.Long, location.Lat); }
+                catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this
+                try { myDal.AddBaseStation(num, name, numOfAvailableDCharge, numOfAvailableDCharge, location.Long, location.Lat); }//we have no drone who is charging here yet
+                catch (DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
             }
-            try { location = AddLocation(location.Long, location.Lat); }
-            catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//catch this
-            try { myDalObject.AddBaseStation(num, name, numOfAvailableDCharge, numOfAvailableDCharge, location.Long, location.Lat); }//we have no drone who is charging here yet
-            catch (DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
             //BaseStationForList nBs = new BaseStationForList { BaseStationId = num, StationLocation = location, StationName = name, AvailableChargingS = numOfAvailableDCharge, UnAvailableChargingS = 0, DInChargeList = new List<DroneInCharge>() };
             //baseStations.Add(nBs);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void removeBaseStation(int id)
         {
-            try { myDalObject.RemoveBaseStation(id); }
-            catch(DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+            lock (myDal)
+            {
+                try { myDal.RemoveBaseStation(id); }
+                catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+            }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStation(int Id, string Name, int NumOfChargeSlots)
         {
-            foreach (var baseStation in myDalObject.CopyBaseStations().Where(baseStation => baseStation.Id == Id))///////////////////////////////////kind of linq
+            lock (myDal)
             {
-                DO.BaseStation nBaseStation = new DO.BaseStation();
-                nBaseStation = baseStation;
-                if (!(Name == " "))
+                foreach (var baseStation in myDal.CopyBaseStations().Where(baseStation => baseStation.Id == Id))///////////////////////////////////kind of linq
                 {
-                    nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
-                }
-                //else
-                //    nBaseStation.Name = baseStation.Name;
-                if (!(NumOfChargeSlots == -1))
-                {
-                    if (baseStation.AvailableChargeSlots < baseStation.ChargeSlots)
+                    DO.BaseStation nBaseStation = new DO.BaseStation();
+                    nBaseStation = baseStation;
+                    if (!(Name == " "))
                     {
-                        nBaseStation.AvailableChargeSlots += NumOfChargeSlots - baseStation.ChargeSlots;
-                        nBaseStation.ChargeSlots = NumOfChargeSlots;
+                        nBaseStation.Name = Name;////////remove the old bs, and add the updated one.
                     }
-                    else
+                    //else
+                    //    nBaseStation.Name = baseStation.Name;
+                    if (!(NumOfChargeSlots == -1))
                     {
-                        nBaseStation.AvailableChargeSlots = NumOfChargeSlots;
-                        nBaseStation.ChargeSlots = NumOfChargeSlots;
+                        if (baseStation.AvailableChargeSlots < baseStation.ChargeSlots)
+                        {
+                            nBaseStation.AvailableChargeSlots += NumOfChargeSlots - baseStation.ChargeSlots;
+                            nBaseStation.ChargeSlots = NumOfChargeSlots;
+                        }
+                        else
+                        {
+                            nBaseStation.AvailableChargeSlots = NumOfChargeSlots;
+                            nBaseStation.ChargeSlots = NumOfChargeSlots;
+                        }
                     }
-                }
-                //else
-                //    nBaseStation.ChargeSlots = baseStation.ChargeSlots;
-                try
-                {
-                    myDalObject.RemoveBaseStation(baseStation.Id);
-                    myDalObject.AddBaseStation(nBaseStation.Id, nBaseStation.Name, nBaseStation.ChargeSlots, nBaseStation.AvailableChargeSlots, baseStation.Longitude, baseStation.Lattitude);
-                }
-                catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    //else
+                    //    nBaseStation.ChargeSlots = baseStation.ChargeSlots;
+                    try
+                    {
+                        myDal.RemoveBaseStation(baseStation.Id);
+                        myDal.AddBaseStation(nBaseStation.Id, nBaseStation.Name, nBaseStation.ChargeSlots, nBaseStation.AvailableChargeSlots, baseStation.Longitude, baseStation.Lattitude);
+                    }
+                    catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
 
-                return;
+                    return;
+                }
+                throw new BaseStationNotFoundException();
             }
-                  throw new BaseStationNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStationForList DisplayBaseStation(int id)
         {
-            foreach (var nBaseStation in from baseStation in myDalObject.CopyBaseStations()//linq
-                                         where baseStation.Id == id
-                                         let sLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
-                                         let nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = baseStation.ChargeSlots - baseStation.AvailableChargeSlots, StationLocation = sLocation }
-                                         select nBaseStation)
+            lock (myDal)
             {
-                return nBaseStation;
-            }
+                foreach (var nBaseStation in from baseStation in myDal.CopyBaseStations()//linq
+                                             where baseStation.Id == id
+                                             let sLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
+                                             let nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = baseStation.ChargeSlots - baseStation.AvailableChargeSlots, StationLocation = sLocation }
+                                             select nBaseStation)
+                {
+                    return nBaseStation;
+                }
 
-            throw new BaseStationNotFoundException();
-        }//
-        
+                throw new BaseStationNotFoundException();
+            }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationForList> DisplayBaseStationsList(Predicate<BaseStationForList> predicate)
         {
-            IEnumerable<BaseStationForList> nStationList = new List<BaseStationForList>();
-            nStationList = (from DO.BaseStation baseStation in myDalObject.CopyBaseStations()//linq, not foreach
-                                                      let ForListLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
-                                                      let baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation }
-                                                      select baseStationForList).ToList();
-            nStationList = (nStationList as List<BaseStationForList>).FindAll(predicate);
-            return nStationList;
+            lock (myDal)
+            {
+                IEnumerable<BaseStationForList> nStationList = new List<BaseStationForList>();
+                nStationList = (from DO.BaseStation baseStation in myDal.CopyBaseStations()//linq, not foreach
+                                let ForListLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
+                                let baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation }
+                                select baseStationForList).ToList();
+                nStationList = (nStationList as List<BaseStationForList>).FindAll(predicate);
+                return nStationList;
+            }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<int> DisplayBaseStationsId()
         {
-            IEnumerable<int> responce = new List<int>();
-            (responce as List<int>).AddRange(from bs in myDalObject.CopyBaseStations()//linq, not for each
-                              select bs.Id);
-            return responce;
+            lock (myDal)
+            {
+                IEnumerable<int> responce = new List<int>();
+                (responce as List<int>).AddRange(from bs in myDal.CopyBaseStations()//linq, not for each
+                                                 select bs.Id);
+                return responce;
+            }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationForList> DisplayAvailableChargingStation()
         {
-            IEnumerable<BaseStationForList> BsList = new List<BaseStationForList>();
-            (BsList as List<BaseStationForList>).AddRange(from bs in myDalObject.CopyBaseStations()//linq, not foreach
-                          where bs.AvailableChargeSlots > 0
-                          let bsLocation = new Location(bs.Longitude, bs.Lattitude)
-                          let baseStationForList = new BaseStationForList { BaseStationId = bs.Id, StationName = bs.Name, AvailableChargingS = bs.AvailableChargeSlots, UnAvailableChargingS = (bs.ChargeSlots - bs.AvailableChargeSlots), StationLocation = bsLocation }
-                          select baseStationForList);
-            return BsList;
+            lock (myDal)
+            {
+                IEnumerable<BaseStationForList> BsList = new List<BaseStationForList>();
+                (BsList as List<BaseStationForList>).AddRange(from bs in myDal.CopyBaseStations()//linq, not foreach
+                                                              where bs.AvailableChargeSlots > 0
+                                                              let bsLocation = new Location(bs.Longitude, bs.Lattitude)
+                                                              let baseStationForList = new BaseStationForList { BaseStationId = bs.Id, StationName = bs.Name, AvailableChargingS = bs.AvailableChargeSlots, UnAvailableChargingS = (bs.ChargeSlots - bs.AvailableChargeSlots), StationLocation = bsLocation }
+                                                              select baseStationForList);
+                return BsList;
+            }
         }
     }
 

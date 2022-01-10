@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
-//using System.Globalization;
-//using System.IO;
+using System.Globalization;
+using System.IO;
 using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
 using DalApi;
@@ -32,6 +33,7 @@ namespace Dal
         #endregion
 
         #region Base Station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(int id, string name, int chargeSlots, int availableChargeSlots, double longitude, double lattitude)
         {
             List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
@@ -44,6 +46,7 @@ namespace Dal
             ListBaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, AvailableChargeSlots = availableChargeSlots, Longitude = longitude, Lattitude = lattitude });
             XmlTools.SaveListToXmlSerializer(ListBaseStations, BaseStationsPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveBaseStation(int id)
         {
             List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
@@ -56,6 +59,7 @@ namespace Dal
             }
             throw new BaseStationNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation CopyBaseStation(int baseStationId)
         {
             List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
@@ -68,12 +72,14 @@ namespace Dal
             }
             throw new BaseStationNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> CopyBaseStations()
         {
             List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
             return from bs in ListBaseStations
                    select bs;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> AvailableBaseStation()
         {
             List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
@@ -84,6 +90,7 @@ namespace Dal
         #endregion
 
         #region Customer XElement
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
             XElement CustomersRootElem = XmlTools.LoadListFromXmlElement(CustomersPath);
@@ -101,6 +108,7 @@ namespace Dal
             CustomersRootElem.Add(CustomerElem);
             XmlTools.SaveListToXmlElement(CustomersRootElem, CustomersPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveCustomer(int id)
         {
             XElement customersRootElem = XmlTools.LoadListFromXmlElement(CustomersPath);
@@ -117,6 +125,7 @@ namespace Dal
             else
                 throw new DO.CustomerNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer CopyCustomer(int customerId)
         {
             XElement customersRootElem = XmlTools.LoadListFromXmlElement(CustomersPath);
@@ -133,6 +142,7 @@ namespace Dal
                                 ).FirstOrDefault();
             return cus;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> CopyCustomersList()
         {
             XElement customersRootElem = XmlTools.LoadListFromXmlElement(CustomersPath);
@@ -149,6 +159,7 @@ namespace Dal
         #endregion
 
         #region Drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int id, double Battery, WeightCategories maxW, string model)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -161,6 +172,7 @@ namespace Dal
             ListDrones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
             XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveDrone(int id)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -174,6 +186,7 @@ namespace Dal
             }
             throw new DroneIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone CopyDrone(int droneId)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -186,12 +199,14 @@ namespace Dal
             }
             throw new DroneIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> CopyDronesList()
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
             return from d in ListDrones
                    select d;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneCharging(int droneId, int baseStationId)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -211,6 +226,7 @@ namespace Dal
             }
             throw new DroneIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneRelease(int droneId, int baseStationId)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -234,6 +250,7 @@ namespace Dal
             }
             throw new DroneIdNotFoundException();//if the drone exists then the program wont get here
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] DronePowerConsumingPerKM()
         {
             List<string> config = XmlTools.LoadListFromXmlSerializer<string>(ConfigPath);
@@ -248,6 +265,7 @@ namespace Dal
         #endregion
 
         #region Parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered)
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -275,6 +293,7 @@ namespace Dal
             ListParcels.Add(new Parcel { Id = parcelId, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
             XmlTools.SaveListToXmlSerializer(ListParcels, ParcelsPath);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveParcel(int id)
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -289,6 +308,7 @@ namespace Dal
             }
             throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel CopyParcel(int parcelId)
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -300,12 +320,14 @@ namespace Dal
             }
             throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> CopyParcelsList()
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
             return from p in ListParcels
                    select p;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AscriptionPtoD(int parcelId, int droneId)
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -339,6 +361,7 @@ namespace Dal
             else
                 throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickUpParcel(int parcelId)
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -359,6 +382,7 @@ namespace Dal
             }
             throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ParcelDelivering(int parcelId)
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -379,6 +403,7 @@ namespace Dal
             }
             throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> UnAscriptedParcels()
         {
             List<Parcel> ListParcels = XmlTools.LoadListFromXmlSerializer<Parcel>(ParcelsPath);
@@ -389,6 +414,7 @@ namespace Dal
         #endregion
 
         #region Coordinate
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Coordinate Fromdouble(double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]
@@ -419,6 +445,7 @@ namespace Dal
 
             return result;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] CopyLongitudeRange()
         {
             List<string> config = XmlTools.LoadListFromXmlSerializer<string>(ConfigPath);
@@ -428,6 +455,7 @@ namespace Dal
             _ = double.TryParse(config[7], out responce[1]);
             return responce;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] CopyLattitudeRange()
         {
             List<string> config = XmlTools.LoadListFromXmlSerializer<string>(ConfigPath);
@@ -436,5 +464,6 @@ namespace Dal
             _ = double.TryParse(config[9], out responce[1]); return responce;
         }
         #endregion
+
     }
 }

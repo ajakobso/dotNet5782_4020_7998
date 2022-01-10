@@ -7,7 +7,7 @@ namespace ConsoleUI
 {
     public class ConsoleUI
     {
-        public static IDAL myDalObject;
+        public static IDAL myDal;
         public enum Inputs { a = 1, p, d, l, e };
         public enum Adding { nBaseStation = 1, nDrone, nCustomer, nParcel };//for the main
         public enum Updating { AscPtoD = 1, PUParcel, PDelivering, DCharging, DRelease };//for the main
@@ -15,7 +15,7 @@ namespace ConsoleUI
         public enum ListsDisplaying { BaseStationsList = 1, DronesList, CustomersList, ParcelsList, UnAscriptedParcelsList, AvailableChargingStationsList };//for the main
         static void Main(string[] args)
         {
-            myDalObject = DalFactory.GetDal();
+            myDal = DalFactory.GetDal();
             Inputs options;
             do
             {
@@ -65,7 +65,7 @@ namespace ConsoleUI
                                 double BSLattitude;
                                 double.TryParse(inp, out BSLattitude);
                                 try
-                                { myDalObject.AddBaseStation(BSId, BSName, BSChargeSlots, BSChargeSlots, BSLongitude, BSLattitude); }//create a new base station with new values, with no cherging drones
+                                { myDal.AddBaseStation(BSId, BSName, BSChargeSlots, BSChargeSlots, BSLongitude, BSLattitude); }//create a new base station with new values, with no cherging drones
                                 catch (AddExistingBaseStationException)
                                 { Console.WriteLine("ERROR - attempt to add an existing base station!\n"); }
                                 break;
@@ -86,7 +86,7 @@ namespace ConsoleUI
                                 string DModel;
                                 DModel = Console.ReadLine();
                                 try
-                                { myDalObject.AddDrone(DId, DBattery, DWC, DModel);}//create a new drone with new values
+                                { myDal.AddDrone(DId, DBattery, DWC, DModel);}//create a new drone with new values
                                 catch (AddExistingDroneException)
                                 { Console.WriteLine("ERROR - attempt to add an existing drone!\n"); }
                                 break;
@@ -110,7 +110,7 @@ namespace ConsoleUI
                                 double CLattitude;
                                 double.TryParse(inp, out CLattitude);
                                 try
-                                { myDalObject.AddCustomer(CId, CName, CPhone, CLongitude, CLattitude); }//adding new customer with new values
+                                { myDal.AddCustomer(CId, CName, CPhone, CLongitude, CLattitude); }//adding new customer with new values
                                 catch (AddExistingCustomerException)
                                 { Console.WriteLine("ERROR - attempt to add an existing customer!\n"); }
                                 break;
@@ -140,7 +140,7 @@ namespace ConsoleUI
                                 DateTime? PPUT = null;//parcel pick up time
                                 DateTime? PDT = null;//parcel delivery time
                                 try
-                                { myDalObject.AddParcel(-1,PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
+                                { myDal.AddParcel(-1,PDId, PSId, PTId, PPriority, PWC, PRT, PST, PPUT, PDT); }//create a new parcel with new values
                                 catch (DO.AddParcelToAnAsscriptedDroneException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to an ascripted drone!\n"); }
                                 break;
@@ -170,7 +170,7 @@ namespace ConsoleUI
                                 int UDId;//update drone id
                                 int.TryParse(inp, out UDId);
                                 try
-                                { myDalObject.AscriptionPtoD(UPId, UDId); }
+                                { myDal.AscriptionPtoD(UPId, UDId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to ascript a parcel to a non-exists drone!\n"); }
                                 catch (ParcelIdNotFoundException)
@@ -182,7 +182,7 @@ namespace ConsoleUI
                                 int PUP;//pick up parcel
                                 int.TryParse(inp, out PUP);
                                 try
-                                { myDalObject.PickUpParcel(PUP); }
+                                { myDal.PickUpParcel(PUP); }
                                 catch (ParcelIdNotFoundException)
                                 { Console.WriteLine("ERROR - attemp to pick up a non-existing parcel!\n"); }
                                 catch (DroneIdNotFoundException)
@@ -194,7 +194,7 @@ namespace ConsoleUI
                                 int PDeId;
                                 int.TryParse(inp, out PDeId);
                                 try
-                                { myDalObject.ParcelDelivering(PDeId); }
+                                { myDal.ParcelDelivering(PDeId); }
                                 catch (ParcelIdNotFoundException)
                                 { Console.WriteLine("ERROR - attemp to deliver a non-existing parcel!\n"); }
                                 catch (DroneIdNotFoundException)
@@ -210,7 +210,7 @@ namespace ConsoleUI
                                 int DCBSId;//drone charging base station id
                                 int.TryParse(inp, out DCBSId);
                                 try
-                                { myDalObject.DroneCharging(DCDId, DCBSId); }
+                                { myDal.DroneCharging(DCDId, DCBSId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to charge a non-exists drone!\n"); }
                                 break;
@@ -224,7 +224,7 @@ namespace ConsoleUI
                                 int DRBSId;//drone release base station id
                                 int.TryParse(inp, out DRBSId);
                                 try
-                                { myDalObject.DroneRelease(DRDId, DRBSId); }
+                                { myDal.DroneRelease(DRDId, DRBSId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to release a non-exists drone!\n"); }
                                 break;
@@ -249,7 +249,7 @@ namespace ConsoleUI
                                 int DBSId;//display base station id
                                 int.TryParse(inp, out DBSId);
                                 try
-                                { Console.WriteLine(myDalObject.CopyBaseStation(DBSId)); }
+                                { Console.WriteLine(myDal.CopyBaseStation(DBSId)); }
                                 catch (BaseStationNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non-existsing base station!\n"); }
                                 break;
@@ -259,7 +259,7 @@ namespace ConsoleUI
                                 int DDId;//display drone id
                                 int.TryParse(inp, out DDId);
                                 try
-                                { Console.WriteLine(myDalObject.CopyDrone(DDId)); }
+                                { Console.WriteLine(myDal.CopyDrone(DDId)); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non-existing drone!\n"); }
                                 break;
@@ -269,7 +269,7 @@ namespace ConsoleUI
                                 int DCId;//display customer id
                                 int.TryParse(inp, out DCId);
                                 try
-                                { Console.WriteLine(myDalObject.CopyCustomer(DCId)); }
+                                { Console.WriteLine(myDal.CopyCustomer(DCId)); }
                                 catch (CustomerNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non-existing cutomer!\n"); }
                                 break;
@@ -279,7 +279,7 @@ namespace ConsoleUI
                                 int DPId;//display parcel id
                                 int.TryParse(inp, out DPId);
                                 try
-                                { Console.WriteLine(myDalObject.CopyParcel(DPId)); }
+                                { Console.WriteLine(myDal.CopyParcel(DPId)); }
                                 catch (ParcelIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to display a non - existing parcel!\n"); }
                                 break;
@@ -302,7 +302,7 @@ namespace ConsoleUI
                         {
                             case ListsDisplaying.BaseStationsList:
                                 IEnumerable<BaseStation> BaseStations;
-                                BaseStations = myDalObject.CopyBaseStations();
+                                BaseStations = myDal.CopyBaseStations();
                                 { Console.WriteLine("ERROR - attempt to copy a non-existing base station"); }
                                 foreach (var basestation in BaseStations)
                                 {
@@ -310,7 +310,7 @@ namespace ConsoleUI
                                 }
                                 break;
                             case ListsDisplaying.DronesList:
-                                IEnumerable<Drone> Drones = myDalObject.CopyDronesList();
+                                IEnumerable<Drone> Drones = myDal.CopyDronesList();
                                 foreach (var drones in Drones)
                                 {
                                     Console.WriteLine(drones);
@@ -318,7 +318,7 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.CustomersList:
                                 IEnumerable<Customer> Customers;
-                                Customers = myDalObject.CopyCustomersList();
+                                Customers = myDal.CopyCustomersList();
                                 foreach (var customer in Customers)
                                 {
                                     Console.WriteLine(customer);
@@ -326,7 +326,7 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.ParcelsList:
                                 IEnumerable<Parcel> Parcels;
-                                Parcels = myDalObject.CopyParcelsList();
+                                Parcels = myDal.CopyParcelsList();
                                 foreach (var parcel in Parcels)
                                 {
                                     Console.WriteLine(parcel);
@@ -334,7 +334,7 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.UnAscriptedParcelsList:
                                 IEnumerable<Parcel> UAParcels = new List<Parcel>();
-                                UAParcels = myDalObject.UnAscriptedParcels();
+                                UAParcels = myDal.UnAscriptedParcels();
                                 foreach (var parcel in UAParcels)
                                 {
                                     Console.WriteLine(parcel);
@@ -342,7 +342,7 @@ namespace ConsoleUI
                                 break;
                             case ListsDisplaying.AvailableChargingStationsList:
                                 IEnumerable<BaseStation> ACSList = new List<BaseStation>();
-                                ACSList = myDalObject.AvailableBaseStation();
+                                ACSList = myDal.AvailableBaseStation();
                                 foreach (var basestation in ACSList)
                                 {
                                     Console.WriteLine(basestation);

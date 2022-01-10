@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Dal
         {
             DataSource.Initialize();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(int id, string name, int chargeSlots,int availableChargeSlots, double longitude, double lattitude)
         {
             foreach (var _ in from BaseStation bStation in DataSource.Config.BaseStations
@@ -38,6 +40,7 @@ namespace Dal
 
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots,AvailableChargeSlots=availableChargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int id, double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
             foreach (var _ in from Drone drone in DataSource.Config.Drones
@@ -56,6 +59,7 @@ namespace Dal
             //}
             DataSource.Config.Drones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
         {
             foreach (var _ in from Customer customer in DataSource.Config.Customers
@@ -73,6 +77,7 @@ namespace Dal
             //}
             DataSource.Config.Customers.Add(new Customer { Id = id, Name = name, Phone = phone, Longitude = longitude, Lattitude = lattitude });
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered)
         {
             int parcelID;
@@ -97,7 +102,7 @@ namespace Dal
             //}
             DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveCustomer(int id)
         {
             foreach (var customer in from customer in DataSource.Config.Customers
@@ -114,6 +119,7 @@ namespace Dal
             //}
             throw new CustomerNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveParcel(int id)
         {
             foreach (var parcel in from parcel in DataSource.Config.Parcels
@@ -132,6 +138,7 @@ namespace Dal
 
             throw new ParcelIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveDrone(int id)
         {
             foreach (var drone in from drone in DataSource.Config.Drones
@@ -151,6 +158,7 @@ namespace Dal
             //}
             throw new DroneIdNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveBaseStation(int id)
         {
             foreach (var bs in from bs in DataSource.Config.BaseStations
@@ -171,6 +179,7 @@ namespace Dal
             //}
             throw new BaseStationNotFoundException();//probably best to add new exception for attemp to remove unexists element bet i have no power
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AscriptionPtoD(int parcelId, int droneId)// ascription a parcel with drone
         {
             Parcel p = new Parcel();
@@ -217,6 +226,7 @@ namespace Dal
                 throw new ParcelIdNotFoundException();
 
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickUpParcel(int parcelId)
         {
             foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels//finding our parcel
@@ -235,6 +245,7 @@ namespace Dal
             }
             throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ParcelDelivering(int parcelId)//אם קלט הפונקציה זה איבר מסוג חבילה אז אפשר למחוק את הלולאה של פוראיצ הראשונה, העיקרון שעשיתי פה אבל ישמש אותנו בפונקציות של ההצגה של איבר/רשימה.
         {
             foreach (var parcel in from Parcel parcel in DataSource.Config.Parcels//finding our parcel
@@ -253,6 +264,7 @@ namespace Dal
             }
             throw new ParcelIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneCharging(int droneId, int baseStationId)//inserting a drone into a charging station in order to charge his battery
         {
             bool droneExists = false;
@@ -284,6 +296,7 @@ namespace Dal
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneRelease(int droneId, int baseStationId)//Release the drone from the charging station                                                                 
         {
             bool droneExists = false;
@@ -336,6 +349,7 @@ namespace Dal
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation CopyBaseStation(int baseStationId)//return copy of a base station
         {
             foreach (var baseStation in
@@ -358,6 +372,7 @@ namespace Dal
             throw new BaseStationNotFoundException();
             // return nBStation;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone CopyDrone(int droneId)//return copy of a drone
         {
             Drone nDrone = new Drone();
@@ -379,6 +394,7 @@ namespace Dal
                 throw new DroneIdNotFoundException();
             return nDrone;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer CopyCustomer(int customerId)//return copy of a customer
         {
             bool customerExists = false;
@@ -400,6 +416,7 @@ namespace Dal
                 throw new CustomerNotFoundException();
             return nCustomer;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel CopyParcel(int parcelId)//return copy of a parcel
         {
             bool parcelExists = false;
@@ -421,6 +438,7 @@ namespace Dal
                 throw new ParcelIdNotFoundException();
             return nParcel;//the function demend us to return a value, and because the return is inside a condition it cause an error
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] DronePowerConsumingPerKM()
         {
             double[] DPC = new double[5];
@@ -431,36 +449,43 @@ namespace Dal
             DPC[4] = DataSource.Config.BatteryPerHour;
             return DPC;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] CopyLongitudeRange()
         {
             double[] responce = { DataSource.Config.LongitudeRange[0], DataSource.Config.LongitudeRange[1] };
             return responce;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] CopyLattitudeRange()
         {
             double[] responce = { DataSource.Config.LattitudeRange[0], DataSource.Config.LattitudeRange[1] };
             return responce;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> CopyBaseStations()//return copy of the base stations's list
         {
             IEnumerable<BaseStation> copyBS = DataSource.Config.BaseStations;
             return copyBS;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> CopyDronesList()//return copy of the drones's list
         {
             IEnumerable<Drone> copyD = DataSource.Config.Drones;
             return copyD;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> CopyCustomersList()//return copy of the customer's list
         {
             IEnumerable<Customer> copyC = DataSource.Config.Customers;
             return copyC;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> CopyParcelsList()//return copy of the parcels's list
         {
             IEnumerable<Parcel> copyP = DataSource.Config.Parcels;
             return copyP;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
         {
             return (from Parcel parcel in DataSource.Config.Parcels
@@ -474,6 +499,7 @@ namespace Dal
             //    }
             //}
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
         {
             return (from BaseStation baseStation in DataSource.Config.BaseStations
@@ -487,6 +513,7 @@ namespace Dal
             //    }
             //}
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Coordinate Fromdouble(double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]

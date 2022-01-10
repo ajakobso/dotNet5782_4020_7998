@@ -33,15 +33,6 @@ namespace PL
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.ParcelInCustomer s = cell.DataContext as PO.ParcelInCustomer;
-            if (cell.DataContext.ToString() != "")
-            { new ParcelWindow(bl, s.ParcelId).ShowDialog(); }
-            else
-                MessageBox.Show("there is no available parcel parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-        }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
         {
             new CustomerWindow(bl).ShowDialog();
@@ -51,6 +42,7 @@ namespace PL
         }
         private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
         {
+            
             new CustomerWindow(bl, customer.CustomerId).ShowDialog();//
             CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
             CustomerForListDataGrid.DataContext = CustomersList;
@@ -80,10 +72,5 @@ namespace PL
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
-        /*<DataGrid.Resources>
-       <Style TargetType="{x:Type DataGridCell}">
-           <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
-       </Style>
-   </DataGrid.Resources>*/
     }
 }

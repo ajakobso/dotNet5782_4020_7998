@@ -70,12 +70,7 @@
                 </Button>
             </Grid>
             <DataGrid x:Name="ParcelDataGrid" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Width="auto" Background="FloralWhite" Foreground="#DD975387" Margin="0,1,0,44" Grid.RowSpan="2" Grid.Row="1">
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type DataGridCell}">
-                        <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
-
-                    </Style>
-                </DataGrid.Resources>
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelId}" Header="Parcel Id" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="senderColumn" Binding="{Binding SCIParcel}"  Header="Sender" Width="SizeToHeader"/>
@@ -111,7 +106,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Parcel Priority" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="parcelWCColumn" Binding="{Binding ParcelWC}" Header="Parcel WC" Width="SizeToHeader"/>
-
+                    
                 </DataGrid.Columns>
             </DataGrid>
 

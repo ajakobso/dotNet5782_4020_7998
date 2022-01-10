@@ -150,7 +150,7 @@ namespace PL
         }
         private void DroneForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;//meanwhile until i figure out how to get the drone id in the row clicked
+            drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;
             new DroneWindow(bl, drone.DroneId).Show();
         }
     }
