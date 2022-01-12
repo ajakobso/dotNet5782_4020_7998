@@ -39,15 +39,14 @@ namespace PL
             DataGridCell cell = sender as DataGridCell;
             PO.DroneInCharge s = cell.DataContext as PO.DroneInCharge;
             if (cell.DataContext.ToString() != "")
-            { new DroneWindow(bl, s.DroneId).ShowDialog(); }
+            { new DroneWindow(bl, s.DroneId).Show(); }
             else
                 MessageBox.Show("there is no drone in charge at this station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            baseStations = PO.BoPoAdapter.BaseStationForListAdapter(bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId));
-            BaseStationForListDataGrid.ItemsSource = baseStations;
-            BaseStationForListDataGrid.DataContext = baseStations;
+            filterButtonIsClicked = false;
+            refreshWindow();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +62,7 @@ namespace PL
         }
         private void AddBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationWindow(bl).ShowDialog();
+            new BaseStationWindow(bl).Show();
             BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
             if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
@@ -71,18 +70,24 @@ namespace PL
         
         //private void RemoveBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         //{
-        //    _ = new BaseStationWindow(bl, true).ShowDialog();
+        //    _ = new BaseStationWindow(bl, true).Show();
         //    BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
         //    if (filterButtonIsClicked)
         //    { FilterButton_Click(FilterButton, null); }
         //}
         private void UpdateBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = new BaseStationWindow(bl, 0).ShowDialog();
+            new BaseStationWindow(bl, 0).Show();
+            refreshWindow();
+        }
+        private void refreshWindow()
+        {
             baseStations = PO.BoPoAdapter.BaseStationForListAdapter(bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId));
             BaseStationForListDataGrid.ItemsSource = baseStations;
-            BaseStationForListDataGrid.DataContext = baseStations; if (filterButtonIsClicked)
+            BaseStationForListDataGrid.DataContext = baseStations;
+            if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
         }
+
     }
 }

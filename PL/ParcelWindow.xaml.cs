@@ -99,11 +99,11 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             CustomerInParcel s = Parcel.SCIParcel;
-            new CustomerWindow(bl, s.CustomerId).ShowDialog();
+            new CustomerWindow(bl, s.CustomerId).Show();
             CustomerInParcel d = Parcel.DCIParcel;
-            new CustomerWindow(bl, d.CustomerId).ShowDialog();
+            new CustomerWindow(bl, d.CustomerId).Show();
             DroneInParcel drone = Parcel.DInParcel;
-            new CustomerWindow(bl, drone.DroneId).ShowDialog();
+            new CustomerWindow(bl, drone.DroneId).Show();
             // else
             //   MessageBox.Show("there is no available sender", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }

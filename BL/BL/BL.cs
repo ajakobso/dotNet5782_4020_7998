@@ -18,13 +18,14 @@ namespace BL
         private Random rand = new Random();
         BL()
         {
-            lock (myDal)
+            object locker = "lock my empty dal";//object i use to lock the initialization of myDal, bc i cant lock an empty object
+            lock (locker)
             {
-                myDal = DalFactory.GetDal();//initialize myDal
-                drones = new List<DroneForList>();//drones list
-                                                  //baseStations = new();
-                initializeDrones();
-            }
+                myDal = DalFactory.GetDal();
+            }//initialize myDal
+            drones = new List<DroneForList>();//drones list
+            initializeDrones();
+
         }
         internal int droneWhileShipping(int droneId)//check if there is a parcel that the drone is ascripted to
         {
@@ -105,7 +106,8 @@ namespace BL
         {
             lock (myDal)
             {
-                foreach (var dalDrone in myDal.CopyDronesList())/////////////not linq, doesnt working
+                var dronesList = myDal.CopyDronesList();
+                foreach (var dalDrone in dronesList)
                 {
                     DroneForList drone = new DroneForList
                     {
@@ -113,10 +115,6 @@ namespace BL
                         Model = dalDrone.Model,
                         MaxWeight = WeightParcel(dalDrone.MaxWeight)
                     };
-                    // DroneInCharge nDIC;
-                    List<DroneInCharge> dicList = new();
-                    //BaseStationForList nBsForList;
-                    //BaseStationForList oldBs = new();
                     int parcelId = droneWhileShipping(drone.DroneId);
                     if (parcelId != -1)//the drone is ascripted to a parcel
                     {
@@ -125,7 +123,6 @@ namespace BL
                         drone.InDeliveringParcelId = parcelId;
                         var c = myDal.CopyCustomer(parcel.SenderId);
                         Location sLocation = AddLocation(c.Longitude, c.Lattitude);
-
                         if (parcel.PickedUp == null)//the drone didnt pick up the parcel yet - location: the closest base station to the sender customer
                         {
                             var bs = new DO.BaseStation();
@@ -172,24 +169,13 @@ namespace BL
                             var randomBS = RandomBSLocation(random);
                             drone.CurrentLocation = AddLocation(randomBS.Longitude, randomBS.Lattitude);
                             drone.Battery = rand.NextDouble() * 20;
-                            //#region add drone to first charge in base station
-                            //nDIC = new DroneInCharge { DroneId = drone.DroneId, Battery = drone.Battery, InsertionTime = DateTime.Now };
-                            //try 
-                            //{ 
-                            //oldBs = DisplayBaseStation(randomBS.Id);
-                            //dicList = oldBs.DInChargeList;// the list contains nothingfor some reason
-                            //dicList.Add(nDIC);
-                            // nBsForList = new BaseStationForList { BaseStationId = oldBs.BaseStationId, StationLocation = oldBs.StationLocation, StationName = oldBs.StationName, DInChargeList = dicList, AvailableChargingS = oldBs.AvailableChargingS - 1, UnAvailableChargingS = oldBs.UnAvailableChargingS++ };
-                            // baseStations.Remove(oldBs);
-                            // baseStations.Add(nBsForList);
-                            // }
-                            //catch (BaseStationNotFoundException)
-                            //{
-                            //    dicList.Add(nDIC);
-                            //    nBsForList = new BaseStationForList { BaseStationId = randomBS.Id, StationLocation = drone.CurrentLocation, StationName = randomBS.Name, DInChargeList = dicList, AvailableChargingS = randomBS.AvailableChargeSlots - 1, UnAvailableChargingS = 1 };
-                            //    baseStations.Add(nBsForList);
-                            //}
-                            // #endregion
+                            try { myDal.RemoveBaseStation(randomBS.Id); }
+                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            //myDal.AddDroneCharge(drone.DroneId, baseStation.Id);
+                            try { myDal.AddBaseStation(randomBS.Id, randomBS.Name, randomBS.ChargeSlots, randomBS.AvailableChargeSlots - 1, randomBS.Longitude, randomBS.Lattitude); }
+                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                            try { myDal.AddDroneCharge(drone.DroneId, randomBS.Id); }
+                            catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                         }
                         else
                         {

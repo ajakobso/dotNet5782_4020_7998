@@ -48,7 +48,7 @@
                 <DataGridTextColumn x:Name="droneForListIdColumn" Binding="{Binding DroneId}" Header="Id" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader" Foreground="#DD975387"/>
-                <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneStatus}" Header="Status" Width="SizeToHeader" Foreground="#DD975387"/>
+                <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneState}" Header="Status" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="locationColumn" Binding="{Binding CurrentLocation}" Header="Location" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader" Foreground="#DD975387"/>

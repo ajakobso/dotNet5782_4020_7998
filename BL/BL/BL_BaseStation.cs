@@ -83,10 +83,14 @@ namespace BL
         {
             lock (myDal)
             {
+                IEnumerable<DroneInCharge> dronesInCharge = from drone in myDal.CopyDronesInCharge()
+                                                            let nDrone = new DroneInCharge { DroneId = drone.DroneId, StationId = drone.StationId, InsertionTime = drone.InsertionTime }
+                                                            select nDrone;
                 foreach (var nBaseStation in from baseStation in myDal.CopyBaseStations()//linq
                                              where baseStation.Id == id
                                              let sLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
-                                             let nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = baseStation.ChargeSlots - baseStation.AvailableChargeSlots, StationLocation = sLocation }
+                                             let dronesInC = dronesInCharge.ToList().FindAll(x => x.StationId == baseStation.Id)
+                                             let nBaseStation = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = baseStation.ChargeSlots - baseStation.AvailableChargeSlots, StationLocation = sLocation, DInChargeList = dronesInC }
                                              select nBaseStation)
                 {
                     return nBaseStation;
@@ -101,9 +105,13 @@ namespace BL
             lock (myDal)
             {
                 IEnumerable<BaseStationForList> nStationList = new List<BaseStationForList>();
+                IEnumerable<DroneInCharge> dronesInCharge = from drone in myDal.CopyDronesInCharge()
+                                                            let nDrone = new DroneInCharge { DroneId = drone.DroneId, StationId = drone.StationId, InsertionTime = drone.InsertionTime }
+                                                            select nDrone;
                 nStationList = (from DO.BaseStation baseStation in myDal.CopyBaseStations()//linq, not foreach
                                 let ForListLocation = new Location(baseStation.Longitude, baseStation.Lattitude)
-                                let baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation }
+                                let dronesInC = dronesInCharge.ToList().FindAll(x => x.StationId == baseStation.Id)
+                                let baseStationForList = new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = (baseStation.ChargeSlots - baseStation.AvailableChargeSlots), StationLocation = ForListLocation, DInChargeList = dronesInC.ToList() }
                                 select baseStationForList).ToList();
                 nStationList = (nStationList as List<BaseStationForList>).FindAll(predicate);
                 return nStationList;
