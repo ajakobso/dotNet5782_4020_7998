@@ -36,61 +36,6 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
-        //private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    DataGridCell cell = sender as DataGridCell;
-        //    PO.ParcelToList s = cell.DataContext as PO.ParcelToList;
-        //    if ((string)cell.DataContext != "0")
-        //    { new ParcelWindow(bl, s.ParcelId).ShowDialog(); }
-        //    else
-        //        MessageBox.Show("there is no parcel ascripted to the drone,\n cant open parcel's window.", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-        //}
-        public void RefreshDronesListWindow()
-        {
-            new DronesListWindow(bl);
-            //int weightSelectoeSelectedIndex = WeightSelector.SelectedIndex;
-            //int statusSelectorSelectedIndex = StatusSelector.SelectedIndex;
-            if (WeightSelector != null || StatusSelector != null)
-            //if (weightSelectoeSelectedIndex > -1 || statusSelectorSelectedIndex > -1) 
-            {
-                if (WeightSelector != null && StatusSelector != null)
-                //if (WeightSelector.SelectedIndex > -1 && StatusSelector.SelectedIndex > -1)
-                {
-                    Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
-                    Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-                    dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight));
-                    DroneForListDataGrid.DataContext = dronesList;
-                    DroneForListDataGrid.ItemsSource = dronesList;
-                }
-                else
-                {
-                    if (WeightSelector != null)
-                    //if (WeightSelector.SelectedIndex > -1)
-                    {
-                        Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
-                        dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.MaxWeight == weight));
-                        DroneForListDataGrid.DataContext = dronesList;
-                        DroneForListDataGrid.ItemsSource = dronesList;
-                    }
-                    else
-                    {
-                        if (StatusSelector.SelectedIndex > -1)
-                        {
-                            Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
-                            dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneState == status));
-                            DroneForListDataGrid.DataContext = dronesList;
-                            DroneForListDataGrid.ItemsSource = dronesList;
-                        }
-
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("enjoy in your next action!\n", "Goodluck", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
-            }
-
-        }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusSelector.SelectedItem != null)
@@ -100,14 +45,10 @@ namespace PL
                 {
                     Enums.WeightCategories weight = (Enums.WeightCategories)WeightSelector.SelectedItem;
                     dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight));
-                    DroneForListDataGrid.DataContext = dronesList;
-                    DroneForListDataGrid.ItemsSource = dronesList;
                 }
                 else
                 {
                     dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneState == status));
-                    DroneForListDataGrid.DataContext = dronesList;
-                    DroneForListDataGrid.ItemsSource = dronesList;
                 }
             }
         }
@@ -120,29 +61,27 @@ namespace PL
                 {
                     Enums.DroneStatuses status = (Enums.DroneStatuses)StatusSelector.SelectedItem;
                     dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneState == status && x.MaxWeight == weight));
-                    DroneForListDataGrid.DataContext = dronesList;
-                    DroneForListDataGrid.ItemsSource = dronesList;
                 }
                 else
                 {
                     dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.MaxWeight == weight));
-                    DroneForListDataGrid.DataContext = dronesList;
-                    DroneForListDataGrid.ItemsSource = dronesList;
                 }
             }
         }
         private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).ShowDialog();
+            new DroneWindow(bl).Show();
+            refreshWindow();
+        }
+        private void refreshWindow()
+        {
             dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
-            DroneForListDataGrid.ItemsSource = dronesList;
             WeightSelector_SelectionChanged(WeightSelector, null);
             StatusSelector_SelectionChanged(StatusSelector, null);
         }
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
-            DroneForListDataGrid.ItemsSource = dronesList;
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -152,6 +91,7 @@ namespace PL
         {
             drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;
             new DroneWindow(bl, drone.DroneId).Show();
+            refreshWindow();
         }
     }
 }

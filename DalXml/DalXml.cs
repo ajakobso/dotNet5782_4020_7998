@@ -17,7 +17,7 @@ namespace Dal
         #region singelton
         static readonly DalXml instance = new DalXml();
         static DalXml() { }// static ctor to ensure instance init is done just before first usage
-        DalXml() {} // default => private
+        DalXml() { } // default => private
         public static DalXml Instance { get => instance; }// The public Instance property to use
         #endregion
 
@@ -95,8 +95,8 @@ namespace Dal
         {
             XElement CustomersRootElem = XmlTools.LoadListFromXmlElement(CustomersPath);
             XElement cus = (from c in CustomersRootElem.Elements()
-                             where int.Parse(c.Element("Id").Value) == id
-                             select c).FirstOrDefault();
+                            where int.Parse(c.Element("Id").Value) == id
+                            select c).FirstOrDefault();
             if (cus != null)
                 throw new DO.AddExistingCustomerException();
             XElement CustomerElem = new XElement("Customer",
@@ -173,6 +173,20 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public void AddDroneCharge(int droneId, int stationId)
+        {
+            List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
+            ListDrones.Add(new DroneCharge { DroneId = droneId, StationId = stationId, InsertionTime = DateTime.Now });
+            XmlTools.SaveListToXmlSerializer(ListDrones, DronesInChargePath);
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void RemoveDroneCharge(int droneId)
+        {
+            List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
+            ListDrones.Remove(ListDrones.Find(x => x.DroneId == droneId));
+            XmlTools.SaveListToXmlSerializer(ListDrones, DronesInChargePath);
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveDrone(int id)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -200,6 +214,13 @@ namespace Dal
             throw new DroneIdNotFoundException();
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<DroneCharge> CopyDronesInCharge()
+        {
+            List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
+            return from d in ListDrones
+                   select d;
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> CopyDronesList()
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
@@ -218,7 +239,7 @@ namespace Dal
             {
                 ListDrones.Remove(drone);
                 ListDrones.Add(newDrone);
-                DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId };//what is this for??? and if we need to add it somewhere - then where??
+                DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId, InsertionTime = DateTime.Now };//what is this for??? and if we need to add it somewhere - then where??
                 ListDronesInCharge.Add(newDCharge);
                 XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
                 XmlTools.SaveListToXmlSerializer(ListDronesInCharge, DronesInChargePath);
@@ -229,24 +250,15 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneRelease(int droneId, int baseStationId)
         {
-            List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
             List<DroneCharge> ListDronesInCharge = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
-            foreach (var (drone, newDrone) in from Drone drone in ListDrones
-                                              where drone.Id == droneId
-                                              let newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model }//Status = DroneStatuses.Available, Battery = drone.Battery
-                                              select (drone, newDrone))
+
+            foreach (var charger in from DroneCharge charger in ListDronesInCharge
+                                    where charger.DroneId == droneId && charger.StationId == baseStationId
+                                    select charger)
             {
-                ListDrones.Remove(drone);
-                ListDrones.Add(newDrone);
-                XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
-                foreach (var charger in from DroneCharge charger in ListDronesInCharge
-                                        where charger.DroneId == droneId && charger.StationId == baseStationId
-                                        select charger)
-                {
-                    ListDronesInCharge.Remove(charger);
-                    XmlTools.SaveListToXmlSerializer(ListDronesInCharge, DronesInChargePath);
-                    return;
-                }
+                ListDronesInCharge.Remove(charger);
+                XmlTools.SaveListToXmlSerializer(ListDronesInCharge, DronesInChargePath);
+                return;
             }
             throw new DroneIdNotFoundException();//if the drone exists then the program wont get here
         }
@@ -276,10 +288,10 @@ namespace Dal
             else
             {
                 #region running number update - parcel id
-            _ = Int32.TryParse(config[5], out parcelId);
-            parcelId++;
-            config[5] = parcelId.ToString();
-            XmlTools.SaveListToXmlSerializer(config, ConfigPath);
+                _ = Int32.TryParse(config[5], out parcelId);
+                parcelId++;
+                config[5] = parcelId.ToString();
+                XmlTools.SaveListToXmlSerializer(config, ConfigPath);
                 #endregion
             }
             foreach (var _ in from Parcel parcel in ListParcels

@@ -12,6 +12,8 @@ namespace DalApi
         void AddDrone(int id, double Battery, WeightCategories maxW, string model);
         void AddCustomer(int id, string name, string phone, double longitude, double lattitude);
         void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered);
+        void AddDroneCharge(int id, int sId);
+        void RemoveDroneCharge(int id);
         void RemoveCustomer(int id);
         void RemoveParcel(int id);
         void RemoveDrone(int id);
@@ -33,6 +35,7 @@ namespace DalApi
         IEnumerable<Drone> CopyDronesList();
         IEnumerable<Customer> CopyCustomersList();
         IEnumerable<Parcel> CopyParcelsList();
+        IEnumerable<DroneCharge> CopyDronesInCharge();
         IEnumerable<Parcel> UnAscriptedParcels();//change to predict
         IEnumerable<BaseStation> AvailableBaseStation();//change to predict
     }

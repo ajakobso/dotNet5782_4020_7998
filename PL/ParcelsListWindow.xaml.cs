@@ -35,7 +35,7 @@ namespace PL
         }
         private void AddParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(bl).ShowDialog();
+            new ParcelWindow(bl).Show();
             ParcelsList = PO.BoPoAdapter.ParcelToListAdapter(bl.DisplayParcelsList(x => x.ParcelId == x.ParcelId));
             ParcelForListDataGrid.DataContext = ParcelsList;
             ParcelForListDataGrid.ItemsSource = ParcelsList;
@@ -54,7 +54,7 @@ namespace PL
         }
         private void UpdateParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(bl, parcel.ParcelId).ShowDialog();
+            new ParcelWindow(bl, parcel.ParcelId).Show();
             /*<syncfusion:ComboBoxAdv x:Name="filterComboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="FloralWhite" Foreground="#DD975387" BorderBrush="{x:Null}"> 
             </syncfusion:ComboBoxAdv>
              <Button x:Name="AddParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
@@ -78,7 +78,8 @@ namespace PL
         private void ParcelForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             parcel.ParcelId = ((PO.ParcelToList)ParcelForListDataGrid.SelectedItem).ParcelId;
-            new ParcelWindow(bl, parcel.ParcelId).ShowDialog();
+            new ParcelWindow(bl, parcel.ParcelId).Show();
+            Reset_Click(sender, e);
         }
     }
 }
