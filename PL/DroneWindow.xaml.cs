@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
-using System.ComponentModel;
-
 namespace PL
 {
     /// <summary>
@@ -23,16 +21,13 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private readonly IBL bl;
-        BackgroundWorker worker;
-        private void updateDrone() => worker.ReportProgress(0);
-        private bool checkStop() => worker.CancellationPending;
-        private Drone drone = new();//binding for actions od drone and display
+        //private PO.DroneForList droneForList=new PO.DroneForList();//binding for add
+        private BO.Drone drone = new();//binding for actions od drone and display
         int BsId,droneId;
         string model;
         Enums.WeightCategories weight;
         private bool IdTextBoxChanged, ModelTextBoxChanged;
         private DateTime In, Out;//in and out time of sending drone to charge
-        private bool Auto = false;
         #region add drone
         public DroneWindow(IBL bl)//add drone constractor
         {
@@ -56,7 +51,7 @@ namespace PL
             if (BsIdSelector.SelectedIndex > -1 && DroneWeightSelector.SelectedIndex > -1 && ModelTextBoxChanged && IdTextBoxChanged)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to add this drone?", "Add Drone", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-                if (result == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes)//the exe callapse here//////////////////////////
                 {
                     try { bl.AddDrone(droneId, model, weight, BsId); }//add try and catch with the proper exceptions from the bl.exceptions
                     catch (LocationOutOfRangeException) { MessageBox.Show("the location of the base station tou choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
@@ -108,17 +103,6 @@ namespace PL
             this.bl = bl;
             InitializeComponent();
             ActionsOnDroneGrid.Visibility = Visibility.Visible;
-            updateDroneWindow(droneId);
-            //if (drone.DeliveryParcel == null)
-            //    DataGr.Visibility = Visibility.Hidden;
-        }
-        private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)//working
-        {
-            drone.Model = DroneModelTBox.Text;
-            ModelTextBoxChanged = true;
-        }
-        private void updateDroneWindow(int droneId)
-        {         
             try
             { drone = bl.GetDrone(droneId); }
             catch (DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
@@ -126,6 +110,14 @@ namespace PL
             List<BO.Drone> l = new List<BO.Drone>();
             l.Add(drone);
             DroneDataGrid.ItemsSource = l;
+            //if (drone.DeliveryParcel == null)
+                //deliveryParcelCell.Visibility = Visibility.Hidden;
+        }
+        // <DataGridTemplateColumn x:Name="deliveryParcelCell" Header="Parcel" CellTemplate="{StaticResource ParcelInDeliveringTemplate}" />
+        private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)//working
+        {
+            drone.Model = DroneModelTBox.Text;
+            ModelTextBoxChanged = true;
         }
         private void ModelUpdate_Click(object sender, RoutedEventArgs e)//working
         {
@@ -133,50 +125,6 @@ namespace PL
             { bl.UpdateDrone(drone.DroneId, DroneModelTBox.Text); }//try catch
             catch(DroneIdNotFoundException) { MessageBox.Show( "sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             SuccessOperation();
-        }
-        private void automaticButton_Click(object sender, RoutedEventArgs e)
-        {
-            ModelUpdateGrid.Visibility = Visibility.Hidden;
-            ChargeInGrid.Visibility = Visibility.Hidden;
-            ChargeOutGrid.Visibility = Visibility.Hidden;
-            AscriptionGrid.Visibility = Visibility.Hidden;
-            PickUpParcelGrid.Visibility = Visibility.Hidden;
-            DeliverParcelGrid.Visibility = Visibility.Hidden;
-            Auto = true;
-            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true};
-            worker.DoWork += Worker_DoWork;
-            worker.ProgressChanged += Worker_ProgressChanged;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.RunWorkerAsync(drone.DroneId);
-        }
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            bl.SimulatorActivation(drone.DroneId, updateDrone, checkStop);
-        }
-        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            updateDroneWindow(drone.DroneId);
-        }
-        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Auto = false;
-            worker = null;
-            //if the window need to be closed - boolean variable, that is true if the user want to close the window in the middle of auto mode
-        }
-        /*var lst = from drone in (IEnumerable<DroneToList>)droneToListDataGrid.ItemsSource
-                      group drone by drone.StatusOfDrone into statusGroup
-                      select new { StatusOfDrone = statusGroup.Key, lstSt = statusGroup };
-*/
-        #region manual
-        private void manualButton_Click(object sender, RoutedEventArgs e)
-        {
-            worker.CancelAsync();
-            ModelUpdateGrid.Visibility = Visibility.Visible;
-            ChargeInGrid.Visibility = Visibility.Visible;
-            ChargeOutGrid.Visibility = Visibility.Visible;
-            AscriptionGrid.Visibility = Visibility.Visible;
-            PickUpParcelGrid.Visibility = Visibility.Visible;
-            DeliverParcelGrid.Visibility = Visibility.Visible;
         }
         private void ChargeIn_Click(object sender, RoutedEventArgs e)
         {
@@ -209,7 +157,7 @@ namespace PL
                     { MessageBox.Show("can't stop charging non-existing drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); return; }
                 }
                 TimeSpan time = Out - In;
-                double timeInCharge = time.TotalSeconds;
+                double timeInCharge = time.TotalHours;
                 try
                 { bl.ReleaseDroneFromCharge(drone.DroneId, timeInCharge); }
                 catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
@@ -233,9 +181,9 @@ namespace PL
             {
                 try
                 { bl.PickUpParcel(drone.DroneId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
-                catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                catch (ParcelCantBePickedUPException) { MessageBox.Show("this parcel can not be picked up\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
+                catch(DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
+                catch(ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
+                catch(ParcelCantBePickedUPException) { MessageBox.Show("this parcel can not be picked up\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
                 SuccessOperation();
             }
             else
@@ -243,6 +191,28 @@ namespace PL
                 MessageBox.Show("this drone can't pick up this parcl", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
         }
+
+        private void automaticButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModelUpdateGrid.Visibility = Visibility.Hidden;
+            ChargeInGrid.Visibility = Visibility.Hidden;
+            ChargeOutGrid.Visibility = Visibility.Hidden;
+            SendDroneGrid.Visibility = Visibility.Hidden;
+            PickUpParcelGrid.Visibility = Visibility.Hidden;
+            DeliverParcelGrid.Visibility = Visibility.Hidden;
+
+        }
+
+        private void manualButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModelUpdateGrid.Visibility = Visibility.Visible;
+            ChargeInGrid.Visibility = Visibility.Visible;
+            ChargeOutGrid.Visibility = Visibility.Visible;
+            SendDroneGrid.Visibility = Visibility.Visible;
+            PickUpParcelGrid.Visibility = Visibility.Visible;
+            DeliverParcelGrid.Visibility = Visibility.Visible;
+        }
+
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
             Parcel parcel = new();
@@ -263,7 +233,7 @@ namespace PL
                 MessageBox.Show("this drone can't deliver this parcl", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
         }
-        private void SendDrone_Click(object sender, RoutedEventArgs e)//ascription
+        private void SendDrone_Click(object sender, RoutedEventArgs e)
         {
             if (drone.DroneStatus == BO.Enums.DroneStatuses.Available)
             {
@@ -280,13 +250,13 @@ namespace PL
             }
         }
         #endregion
-        #endregion
         private void SuccessOperation()
         {
             MessageBoxResult result = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
             if (result == MessageBoxResult.OK)
             {
-                try { updateDroneWindow(drone.DroneId); }
+                try
+                { DroneDataGrid.ItemsSource = bl.DisplayDrone(drone.DroneId).ToString(); }
                 catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
         }

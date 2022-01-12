@@ -4,7 +4,7 @@
 	<string>3.0</string> <!--light weight-->
 	<string>4.0</string> <!--middle weight-->
 	<string>5.0</string> <!--heavy weight-->
-	<string>60.0</string> <!--battery consuming per second-->
+	<string>60.0</string> <!--battery consuming per hour-->
 	<string>1010</string> <!--running number for the parcel's id-->
 	<string>35.1252</string> <!--longitude range - jerusalem coordinates-->
 	<string>35.2642</string>

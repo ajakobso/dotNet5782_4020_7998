@@ -65,7 +65,7 @@ namespace BL
             else
                 return false;
         }
-        internal double[] distanceFromBS(Location location)//return ths distance from the closest base station and its id
+        internal double[] distanceFromBS(Location location)//return ths distance from the closest base station
         {
             lock (myDal)
             {
@@ -309,8 +309,6 @@ namespace BL
                     drone.Battery -= batterySpent;
                     drone.CurrentLocation = AddLocation(myDal.CopyCustomer(parcel.TargetId).Longitude, myDal.CopyCustomer(parcel.TargetId).Lattitude);
                     drone.DroneState = Enums.DroneStatuses.Available;
-                    drone.InDeliveringParcelId = 0;
-                    updateDroneForList(drone);
                     try { myDal.RemoveParcel(parcel.Id); }
                     catch (DO.DroneIdNotFoundException) { throw new BO.DroneIdNotFoundException(); }
                     catch (DO.ParcelIdNotFoundException) { throw new BO.ParcelIdNotFoundException(); }

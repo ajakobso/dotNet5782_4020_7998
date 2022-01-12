@@ -18,7 +18,7 @@ namespace Dal
             DataSource.Initialize();
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddBaseStation(int id, string name, int chargeSlots, int availableChargeSlots, double longitude, double lattitude)
+        public void AddBaseStation(int id, string name, int chargeSlots,int availableChargeSlots, double longitude, double lattitude)
         {
             foreach (var _ in from BaseStation bStation in DataSource.Config.BaseStations
                               where bStation.Id == id
@@ -38,7 +38,7 @@ namespace Dal
             //    throw new LocationOutOfRangeException();
             //}
 
-            DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, AvailableChargeSlots = availableChargeSlots, Longitude = longitude, Lattitude = lattitude });
+            DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots,AvailableChargeSlots=availableChargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int id, double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
@@ -58,16 +58,6 @@ namespace Dal
 
             //}
             DataSource.Config.Drones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDroneCharge(int droneId, int stationId)
-        {
-            DataSource.Config.DroneCharges.Add(new DroneCharge { DroneId = droneId, StationId = stationId, InsertionTime = DateTime.Now });
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void RemoveDroneCharge(int droneId)
-        {
-            DataSource.Config.DroneCharges.Remove(DataSource.Config.DroneCharges.Find(x => x.DroneId == droneId));
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int id, string name, string phone, double longitude, double lattitude)
@@ -94,12 +84,21 @@ namespace Dal
             if (id != -1)
             { parcelID = id; }
             else { parcelID = DataSource.Config.RunningParcelId++; }
-            //foreach (var _ in from Parcel parcel in DataSource.Config.Parcels
-            //                  where parcel.DroneId == droneId
-            //                  select new { })
+
+            foreach (var _ in from Parcel parcel in DataSource.Config.Parcels
+                              where parcel.DroneId == droneId
+                              select new { })
+            {
+                DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
+                throw new AddParcelToAnAsscriptedDroneException();
+            }
+            //foreach (Parcel parcel in DataSource.Config.Parcels)-not linq
             //{
-            //    DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
-            //    throw new AddParcelToAnAsscriptedDroneException();
+            //    if (parcel.DroneId == droneId)
+            //    {
+            //        DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = 0, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
+            //        throw new AddParcelToAnAsscriptedDroneException();
+            //    }
             //}
             DataSource.Config.Parcels.Add(new Parcel { Id = parcelID, DroneId = droneId, SenderId = senderId, TargetId = targetId, Priority = priority, Weight = weight, Requested = requested, Scheduleded = scheduled, PickedUp = pickedUp, Delivered = delivered });
         }
@@ -276,25 +275,53 @@ namespace Dal
             {
                 DataSource.Config.Drones.Remove(drone);
                 DataSource.Config.Drones.Add(newDrone);
-                DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId, InsertionTime = DateTime.Now };//what is this for??? and if we need to add it somewhere - then where??
+                DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId };//what is this for??? and if we need to add it somewhere - then where??
                 DataSource.Config.DroneCharges.Add(newDCharge);
                 droneExists = true;
                 return;
             }
+            //foreach (Drone drone in DataSource.Config.Drones)
+            //{
+            //    if (drone.Id == droneId)
+            //    {
+            //        Drone newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model };// Status = DroneStatuses.Maintenance, Battery = drone.Battery
+            //        DataSource.Config.Drones.Remove(drone);
+            //        DataSource.Config.Drones.Add(newDrone); ///change the status of the drone into maintenance because he need to charge.
+            //        DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId }; //what is this for??? and if we need to add it somewhere - then where??
+            //        DataSource.Config.DroneCharges.Add(newDCharge);
+            //        droneExists = true;
+            //        return;
+            //    }
+            //}
             if (droneExists == false)
                 throw new DroneIdNotFoundException();
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneRelease(int droneId, int baseStationId)//Release the drone from the charging station                                                                 
         {
-            foreach (var charger in from DroneCharge charger in DataSource.Config.DroneCharges
-                                    where charger.DroneId == droneId && charger.StationId == baseStationId
-                                    select charger)
+            bool droneExists = false;
+            foreach (var (drone, newDrone) in from Drone drone in DataSource.Config.Drones
+                                              where drone.Id == droneId
+                                              let newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model }//Status = DroneStatuses.Available, Battery = drone.Battery
+                                              select (drone, newDrone))
             {
-                DataSource.Config.DroneCharges.Remove(charger);
-                return;
+                DataSource.Config.Drones.Remove(drone);
+                DataSource.Config.Drones.Add(newDrone);
+                foreach (var charger in from DroneCharge charger in DataSource.Config.DroneCharges
+                                        where charger.DroneId == droneId && charger.StationId == baseStationId
+                                        select charger)
+                {
+                    DataSource.Config.DroneCharges.Remove(charger);
+                }
+                //foreach (DroneCharge charger in DataSource.Config.DroneCharges)///remove the matching charging station from the list-not linq
+                //{
+                //    if (charger.DroneId == droneId && charger.StationId == baseStationId)
+                //    {
+                //        DataSource.Config.DroneCharges.Remove(charger);
+                //    }
+                //}
+                droneExists = true;
             }
-            throw new DroneIdNotFoundException();
             //foreach (Drone drone in DataSource.Config.Drones)-not linq
             //{
             //    if (drone.Id == droneId)
@@ -319,7 +346,8 @@ namespace Dal
             //    }
 
             //}
-
+            if (droneExists == false)
+                throw new DroneIdNotFoundException();
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation CopyBaseStation(int baseStationId)//return copy of a base station
@@ -457,13 +485,6 @@ namespace Dal
             IEnumerable<Parcel> copyP = DataSource.Config.Parcels;
             return copyP;
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneCharge> CopyDronesInCharge()
-        {
-            return from DroneCharge drone in DataSource.Config.DroneCharges
-                   select drone;
-        }
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
         {

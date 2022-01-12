@@ -35,20 +35,18 @@ namespace PL
         }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
         {
-            new CustomerWindow(bl).Show();
-            refreshWindow();
-        }
-        private void refreshWindow()
-        {
+            new CustomerWindow(bl).ShowDialog();
             CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
-            CustomerForListDataGrid.DataContext = CustomersList;//if the adapter is working then this two lines is not neccesarry
+            CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
         private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             
-            new CustomerWindow(bl, customer.CustomerId).Show();//
-            refreshWindow();
+            new CustomerWindow(bl, customer.CustomerId).ShowDialog();//
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }//suppose to work
         public void RefreshCustomerButton_Click()
         {
@@ -61,14 +59,18 @@ namespace PL
         }
         private void Reset_Click(object sender, RoutedEventArgs e)//work
         {
-            refreshWindow();
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }
 
         private void CustomerForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             customer.CustomerId = ((PO.CustomerForList)CustomerForListDataGrid.SelectedItem).CustomerId;
-            new CustomerWindow(bl, customer.CustomerId).Show();//
-            refreshWindow();
+            new CustomerWindow(bl, customer.CustomerId).ShowDialog();//
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.ItemsSource = CustomersList;
         }
     }
 }

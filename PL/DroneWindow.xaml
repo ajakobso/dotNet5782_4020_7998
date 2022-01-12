@@ -27,7 +27,7 @@
             <Setter Property="Width" Value="auto"/>
             <Setter Property="FontStretch" Value="Expanded"/>
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Margin" Value="15,0,0,0"/>
         </Style>
         <Style x:Key="DataGridS" TargetType="{x:Type DataGrid}">
             <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyles}"/>
@@ -66,7 +66,7 @@
                 </Button.BorderBrush>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnDroneGrid" Visibility="Visible">
+        <Grid x:Name="ActionsOnDroneGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
@@ -90,51 +90,10 @@
                 </Button>
             </Grid>
             <DataGrid x:Name="DroneDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}"  IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" Background="FloralWhite" Foreground="#DD975387" Grid.Row="1">
-                <DataGrid.Resources>
-                    <Style x:Key="MyProgressBarStyle"  TargetType="{x:Type ProgressBar}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ProgressBar}">
-                                    <Grid MinHeight="20" MinWidth="30">
-                                        <Border Name="PART_Track" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" Background="White" />
-                                        <Border 
-                                    Name="PART_Indicator" 
-                                    CornerRadius="2" 
-                                    BorderBrush="Transparent" 
-                                    BorderThickness="1" 
-                                    HorizontalAlignment="Left">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#FFE80C0C" Offset="0" ></GradientStop>
-                                                        <GradientStop Color="red" Offset="0.1" ></GradientStop>
-                                                        <GradientStop Color="#FFF58413" Offset=".2" ></GradientStop>
-                                                        <GradientStop Color="Orange" Offset=".25" ></GradientStop>
-                                                        <GradientStop Color="Yellow" Offset=".3" ></GradientStop>
-                                                        <GradientStop Color="#FFCEF16E" Offset=".4" ></GradientStop>
-                                                        <GradientStop Color="#FF75FB75" Offset="0.6" ></GradientStop>
-                                                        <GradientStop Color="#FF1EE81E" Offset="0.7" ></GradientStop>
-                                                        <GradientStop Color="#FF1DCF1D" Offset="0.9" ></GradientStop>
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                    <DataTemplate x:Key="batteryProgressBar">
-                        <Grid>
-                            <ProgressBar x:Name="BatteryStatus" Value="{Binding Battery}" Style="{StaticResource MyProgressBarStyle}" Orientation="Vertical" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top"  SnapsToDevicePixels="True" Margin="0" Height="25" Width="45"/>
-                            <TextBlock Text="{Binding Battery, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#DD975387" />
-                        </Grid>
-                    </DataTemplate>
-                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="droneIdColumn" Binding="{Binding DroneId}" Header="Drone Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <DataGridTemplateColumn x:Name="batteryColumn" CellTemplate="{StaticResource batteryProgressBar}" Header="Battery" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="droneStatusColumn" Binding="{Binding DroneStatus}" Header="Drone Status" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="locationColumn" IsReadOnly="True" Binding="{Binding CurrentLocation}" Header="Location"  Foreground="#DD975387"/>
@@ -190,7 +149,7 @@
                     </Button.Background>
                 </Button>
             </Grid>
-            <Grid x:Name="AscriptionGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="5" VerticalAlignment="Stretch" Width="auto">
+            <Grid x:Name="SendDroneGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="5" VerticalAlignment="Stretch" Width="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="172*"/>
                     <ColumnDefinition Width="469*"/>
