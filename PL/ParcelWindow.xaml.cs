@@ -22,7 +22,7 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         private readonly IBL bl;
-        private PO.Parcel Parcel;//for action
+        private Parcel Parcel;//for action
         int SID, DID;//variables for binding - add parcel
         PO.Enums.WeightCategories weight;//variable for binding - add parcel
         PO.Enums.Priorities priority;//variable for binding - add parcel
@@ -87,10 +87,10 @@ namespace PL
             InitializeComponent();
             ActionsOnParcelGrid.Visibility = Visibility.Visible;
             try
-            { Parcel = PO.BoPoAdapter.ParcelBoPo(bl.DisplayParcel(ParcelId)); }
+            { Parcel = bl.DisplayParcel(ParcelId); }
             catch (ParcelIdNotFoundException) { MessageBox.Show("sorry, this Parcel is not exist in our company yet!\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             ParcelDataGrid.DataContext = Parcel;
-            IEnumerable<PO.Parcel> l = new List<PO.Parcel>();
+            IEnumerable<Parcel> l = new List<Parcel>();
             l.Append(Parcel);
             ParcelDataGrid.ItemsSource = l;
             //if the drone id then make the grid of the drone in charge to be invisible
@@ -98,12 +98,12 @@ namespace PL
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
-            PO.CustomerInParcel s = Parcel.SCIParcel;
-            new CustomerWindow(bl, s.CustomerId).ShowDialog();
-            PO.CustomerInParcel d = Parcel.DCIParcel;
-            new CustomerWindow(bl, d.CustomerId).ShowDialog();
-            PO.DroneInParcel drone = Parcel.DInParcel;
-            new CustomerWindow(bl, drone.DroneId).ShowDialog();
+            CustomerInParcel s = Parcel.SCIParcel;
+            new CustomerWindow(bl, s.CustomerId).Show();
+            CustomerInParcel d = Parcel.DCIParcel;
+            new CustomerWindow(bl, d.CustomerId).Show();
+            DroneInParcel drone = Parcel.DInParcel;
+            new CustomerWindow(bl, drone.DroneId).Show();
             // else
             //   MessageBox.Show("there is no available sender", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }

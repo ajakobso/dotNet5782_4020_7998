@@ -21,7 +21,7 @@ namespace Dal
             internal static double LightWheight = 3;//33+- KM for a full battery
             internal static double MiddleWheight = 4;//25 KM for a full battery
             internal static double HeavyWeight = 5;//20 KM for a full battery
-            internal static double BatteryPerHour = 60;//we have dicided that the delivering company will operate only in jerusalem, so 1 precent per minut make sense.
+            internal static double BatteryPerHour = 60;//we have dicided that the delivering company will operate only in jerusalem, so 60 precent per second is fast enough because we dot have the patience to wait for the drone to charge
             internal static int RunningParcelId = 1001;//running number for the parcels id
             internal static double[] LongitudeRange = { 35.1252, 35.2642 };//longitude coordinates of jerusalem
             internal static double[] LattitudeRange = { 31.7082, 31.8830 };//lattitude coordinates of jerusalem

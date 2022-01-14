@@ -36,7 +36,7 @@ namespace BlApi
         IEnumerable<ParcelToList> DisplayParcelsList(Predicate<ParcelToList> predicate);
         IEnumerable<ParcelToList> DisplayUnAscriptedParcelsList();//predict
         IEnumerable<BaseStationForList> DisplayAvailableChargingStation();//predict
-
+        void SimulatorActivation(int droneId, Action updateDisplay, Func<bool> stopCheck);
     }
 }
 

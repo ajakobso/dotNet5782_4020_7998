@@ -33,28 +33,22 @@ namespace PL
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.ParcelInCustomer s = cell.DataContext as PO.ParcelInCustomer;
-            if (cell.DataContext.ToString() != "")
-            { new ParcelWindow(bl, s.ParcelId).ShowDialog(); }
-            else
-                MessageBox.Show("there is no available parcel parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-        }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
         {
-            new CustomerWindow(bl).ShowDialog();
+            new CustomerWindow(bl).Show();
+            refreshWindow();
+        }
+        private void refreshWindow()
+        {
             CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
-            CustomerForListDataGrid.DataContext = CustomersList;
+            CustomerForListDataGrid.DataContext = CustomersList;//if the adapter is working then this two lines is not neccesarry
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
         private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(bl, customer.CustomerId).ShowDialog();//
-            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
-            CustomerForListDataGrid.DataContext = CustomersList;
-            CustomerForListDataGrid.ItemsSource = CustomersList;
+            
+            new CustomerWindow(bl, customer.CustomerId).Show();//
+            refreshWindow();
         }//suppose to work
         public void RefreshCustomerButton_Click()
         {
@@ -67,23 +61,14 @@ namespace PL
         }
         private void Reset_Click(object sender, RoutedEventArgs e)//work
         {
-            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
-            CustomerForListDataGrid.DataContext = CustomersList;
-            CustomerForListDataGrid.ItemsSource = CustomersList;
+            refreshWindow();
         }
 
         private void CustomerForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             customer.CustomerId = ((PO.CustomerForList)CustomerForListDataGrid.SelectedItem).CustomerId;
-            new CustomerWindow(bl, customer.CustomerId).ShowDialog();//
-            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
-            CustomerForListDataGrid.DataContext = CustomersList;
-            CustomerForListDataGrid.ItemsSource = CustomersList;
+            new CustomerWindow(bl, customer.CustomerId).Show();//
+            refreshWindow();
         }
-        /*<DataGrid.Resources>
-       <Style TargetType="{x:Type DataGridCell}">
-           <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
-       </Style>
-   </DataGrid.Resources>*/
     }
 }

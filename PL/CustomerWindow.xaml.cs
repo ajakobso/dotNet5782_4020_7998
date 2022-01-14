@@ -21,7 +21,7 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         private readonly IBL bl;
-        private PO.Customer customer;
+        private Customer customer;
         private int id;
         private string name;
         private string phone;
@@ -119,45 +119,14 @@ namespace PL
             InitializeComponent();
             ActionsOnCustomerGrid.Visibility = Visibility.Visible;
             try
-            { customer = PO.BoPoAdapter.CustomerBoPo(bl.DisplayCustomer(CustomerId)); }
+            { customer = bl.DisplayCustomer(CustomerId); }
             catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            List<PO.Customer> l = new List<PO.Customer>();
+            List<Customer> l = new List<Customer>();
             l.Add(customer);
             CustomerDataGrid.ItemsSource = l;
             CustomerDataGrid.DataContext = customer;
             //if the name is changed then update the name - same about the phone, i just dont know how to check if the text changed.
         }
-        //private void CustomerNameTBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    customer.CustomerName = CustomerNameTBox.Text;
-        //    NameTextBoxChanged = true;
-        //}
-        //private void CustomerPhoneTBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    customer.CustomerPhone = CustomerPhoneTextBox.Text;
-        //    PhoneTextBoxChanged = true;
-        //}
-        //private void NameUpdate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (NameTextBoxChanged)
-        //    {
-        //        try
-        //        { bl.UpdateCustomer(customer.CustomerId, CustomerNameTextBox.Text, customer.CustomerPhone); }//try catch
-        //        catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-        //        NameTextBoxChanged = false;
-        //    }
-        //    SuccessOperation();
-        //}
-        //private void PhoneUpdate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (PhoneTextBoxChanged)
-        //    {
-        //        try
-        //        { bl.UpdateCustomer(customer.CustomerId, customer.CustomerName, CustomerPhoneTextBox.Text); }//try catch
-        //        catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-        //        PhoneTextBoxChanged = false;
-        //    }
-        //}
         #endregion
         private void SuccessOperation()
         {

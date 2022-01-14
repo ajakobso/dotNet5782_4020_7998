@@ -9,12 +9,14 @@
   <ItemGroup>
     <None Remove="Images\add-icon.png" />
     <None Remove="Images\close-icon.png" />
+    <None Remove="Images\Control-Panel-icon.png" />
     <None Remove="Images\drone-icon.jpg" />
     <None Remove="Images\droneDeliverParcel-icon.jpg" />
     <None Remove="Images\dronePickUpParcel-icon.jpg" />
     <None Remove="Images\highBattery-icon.jpg" />
     <None Remove="Images\lowBattery-button.jpg" />
     <None Remove="Images\main-logo.jpg" />
+    <None Remove="Images\manual-mode-icon.png" />
     <None Remove="Images\remove-icon.jpg" />
     <None Remove="Images\reset-button.jpg" />
     <None Remove="Images\reset-icon.png" />
@@ -30,6 +32,9 @@
     <Content Include="Images\close-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Control-Panel-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\drone-icon.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -43,6 +48,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\main-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\manual-mode-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\remove-icon.jpg">
