@@ -16,7 +16,7 @@ namespace DO
         public WeightCategories Weight { get; set; }
         public Priorities Priority { get; set; }
         public DateTime? Requested { get; set; }
-        public DateTime? Scheduleded { get; set; }
+        public DateTime? Scheduleded { get; set; }//ascription
         public DateTime? PickedUp { get; set; }
         public DateTime? Delivered { get; set; }
         public override string ToString()

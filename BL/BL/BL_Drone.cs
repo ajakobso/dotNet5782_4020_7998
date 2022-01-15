@@ -24,8 +24,7 @@ namespace BL
                     try { BStationLocation = AddLocation(baseStation.Longitude, baseStation.Lattitude); }
                     catch (LocationOutOfRangeException) { throw new LocationOutOfRangeException(); }//add throw of location exception in all the references of the AddLocation
 
-                    double battery = r.NextDouble() * (40 - 20) + 20;
-                    try { myDal.AddDrone(Id, battery, (DO.WeightCategories)MaxWeight, Model); }
+                    try { myDal.AddDrone(Id, (DO.WeightCategories)MaxWeight, Model); }
                     catch (DO.AddExistingDroneException) { throw new AddExistingDroneException(); }
 
                     try { myDal.DroneCharging(Id, Bstation); }
@@ -87,20 +86,10 @@ namespace BL
                                       select drone)
                 {
                     myDal.RemoveDrone(drone.Id);
-                    myDal.AddDrone(drone.Id, drone.Battery, drone.MaxWeight, Model);
+                    myDal.AddDrone(drone.Id, drone.MaxWeight, Model);
                     Check = true;
                     break;
                 }
-                //foreach (var drone in myDal.CopyDronesList())//the not-linq
-                //{
-                //    if (drone.Id == Id)
-                //    {
-                //        myDal.RemoveDrone(drone.Id);
-                //        myDal.AddDrone(drone.Id, drone.Battery, drone.MaxWeight, Model);
-                //        Check = true;
-                //        break;
-                //    }
-                //}
                 if (!Check)
                     throw new DO.DroneIdNotFoundException();
                 foreach (var droneForList in from DroneForList droneForList in drones
@@ -134,63 +123,58 @@ namespace BL
         {
             lock (myDal)
             {
-                double NBattery = 20.0;//minimum value as a default, in the meanwhile until we insert value.
                 bool check = false;
-                foreach (DroneForList drone in drones)
+                DroneForList oldDrone = new(), newDrone = new();//two variables to update the drones list after exit the foreach loop
+                foreach (var drone in from drone in drones
+                                      where drone.DroneState == Enums.DroneStatuses.Available && drone.DroneId == Id
+                                      select drone)
                 {
-                    double Battery;
-                    if (drone.DroneState == Enums.DroneStatuses.Available && drone.DroneId == Id)
+                    //ths distance return the distance first argument, and base station id second argument
+                    double[] bs = distanceFromBS(drone.CurrentLocation);
+                    double Battery = bs[0];
+                    var baseStation = DisplayBaseStation(Convert.ToInt32(bs[1]));
+                    Location droneLocation = AddLocation(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
+                    Location location = AddLocation(myDal.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDal.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
+                    Battery *= myDal.DronePowerConsumingPerKM()[0];
+                    if (Battery > drone.Battery)
                     {
-                        Location droneLocation = AddLocation(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
-                        Location location = AddLocation(myDal.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDal.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
-                        Battery = myDal.DronePowerConsumingPerKM()[0] * distanceFromBS(drone.CurrentLocation)[0];
-                        if (Battery > drone.Battery)
-                        {
-                            throw new DroneOutOfBatteryException();
-                        }
-
-                        foreach (var dalDrone in from dalDrone in myDal.CopyDronesList()//linq
-                                                 where dalDrone.Id == drone.DroneId
-                                                 select dalDrone)
-                        {
-                            myDal.RemoveDrone(dalDrone.Id);
-                            myDal.AddDrone(dalDrone.Id, dalDrone.Battery - Battery, dalDrone.MaxWeight, dalDrone.Model);
-                            NBattery = dalDrone.Battery - Battery;
-                            //dalDrone.Longitude = location.Longitude;
-                            //dalDrone.Latittude = location.Latitude;
-                            drone.DroneState = Enums.DroneStatuses.Maintenance;
-                            break;
-                        }
-
-                        foreach (var baseStation in from baseStation in myDal.CopyBaseStations()
-                                                    where (baseStation.Longitude == location.Long) && (baseStation.Lattitude == location.Lat) && (baseStation.ChargeSlots > 0)
-                                                    select baseStation)//linq
-                        {
-                            try { myDal.RemoveBaseStation(baseStation.Id); }
-                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                            //myDal.AddDroneCharge(drone.DroneId, baseStation.Id);
-                            try { myDal.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots, baseStation.AvailableChargeSlots - 1, baseStation.Longitude, baseStation.Lattitude); }
-                            catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                            try { myDal.DroneCharging(drone.DroneId, baseStation.Id); }
-                            catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
-                            check = true;
-                            break;
-                        }
-
-                        if (!check)
-                        {
-                            throw new NoChargingSlotIsAvailableException();
-                        }
+                        throw new DroneOutOfBatteryException();
                     }
+                    //foreach (var dalDrone in from dalDrone in myDal.CopyDronesList()
+                    //                         where dalDrone.Id == drone.DroneId
+                    //                         select dalDrone)
+                    //{
+                    //    myDal.RemoveDrone(dalDrone.Id);
+                    //    myDal.AddDrone(dalDrone.Id, dalDrone.MaxWeight, dalDrone.Model);
+                    oldDrone = drone;
+                    drone.DroneState = Enums.DroneStatuses.Maintenance;
+                    drone.Battery -= Battery;
+                    drone.CurrentLocation = location;
+                    newDrone = drone;
+                    try { removeBaseStation(baseStation.BaseStationId); }
+                    catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    try { myDal.AddBaseStation(baseStation.BaseStationId, baseStation.StationName, baseStation.AvailableChargingS + baseStation.UnAvailableChargingS, baseStation.AvailableChargingS, baseStation.StationLocation.Long, baseStation.StationLocation.Lat); }
+                    catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
+                    try { myDal.DroneCharging(drone.DroneId, baseStation.BaseStationId); }
+                    catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
+                    check = true;
+                    break;
                 }
+                if (check)
+                {
+                    drones.Remove(oldDrone);
+                    drones.Add(newDrone);
+                }
+                else
+                    throw new NoChargingSlotIsAvailableException();
             }
-        }//לממש
+        }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharge(int Id, double TimeInCharge)
         {
             lock (myDal)
             {
-                DroneForList nDrone = new DroneForList();
+                DroneForList nDrone = new(), oldDrone = new();
                 foreach (var drone in from DroneForList drone in drones
                                       where drone.DroneId == Id
                                       select drone)//linq
@@ -199,12 +183,11 @@ namespace BL
                     {
                         throw new DroneIdNotFoundException();
                     }
-
+                    oldDrone = drone;
                     nDrone = drone;
                     nDrone.Battery += TimeInCharge * myDal.DronePowerConsumingPerKM()[4];
                     if (nDrone.Battery > 100)
                     { nDrone.Battery = 100; }
-
                     nDrone.DroneState = Enums.DroneStatuses.Available;
                     foreach (var baseStation in from baseStation in myDal.CopyBaseStations()//linq
                                                 where (nDrone.CurrentLocation.Long == baseStation.Longitude) && (nDrone.CurrentLocation.Lat == baseStation.Lattitude)
@@ -215,32 +198,31 @@ namespace BL
                         try { myDal.AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots, baseStation.AvailableChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude); }
                         catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                         catch (DO.AddExistingBaseStationException) { throw new AddExistingBaseStationException(); }
-                        try { myDal.DroneRelease(drone.DroneId, baseStation.Id); }
+                        try { myDal.DroneRelease(drone.DroneId); }
                         catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                         break;
                     }
-
-                    drones.Add(nDrone);
-                    return;
+                    break;
                 }
+                drones.Remove(oldDrone);
+                drones.Add(nDrone);
             }
-        }//לממש
+        }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneForList DisplayDrone(int id)
         {
             lock (myDal)
             {
                 DroneForList nDrone = new DroneForList();
-                foreach (var drone in from DroneForList drone in drones
+                foreach (DroneForList drone in from DroneForList drone in drones
                                       where drone.DroneId == id
-                                      select drone)//linq
+                                      select drone)
                 {
                     nDrone = drone;
                     return nDrone;
                 }
                 throw new DroneIdNotFoundException();
             }
-            //the function demend us to return a value, and because the return is inside a condition it cause an error
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
@@ -352,7 +334,7 @@ namespace BL
                     {
                         return dic.InsertionTime;
                     }
-                    
+
                 }
                 throw new BaseStationNotFoundException();
                 throw new DroneIdNotFoundException();
@@ -360,7 +342,7 @@ namespace BL
         }
         public void SimulatorActivation(int droneId, Action updateDisplay, Func<bool> stopCheck)
         {
-            _= new Simulator(this, droneId, updateDisplay, stopCheck);
+            _ = new Simulator(this, droneId, updateDisplay, stopCheck);
         }//implement this
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal void updateDroneForList(DroneForList d)

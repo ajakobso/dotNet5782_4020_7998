@@ -22,11 +22,12 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
+
         private readonly IBL bl;
         BackgroundWorker worker;
         private void updateDrone() => worker.ReportProgress(0);
         private bool checkStop() => worker.CancellationPending;
-        private Drone drone = new();//binding for actions od drone and display
+        public Drone drone = new();//binding for actions on drone and display
         int BsId,droneId;
         string model;
         Enums.WeightCategories weight;
@@ -118,7 +119,7 @@ namespace PL
             ModelTextBoxChanged = true;
         }
         private void updateDroneWindow(int droneId)
-        {         
+        {
             try
             { drone = bl.GetDrone(droneId); }
             catch (DroneIdNotFoundException) { MessageBox.Show("sorry, this drone is not exist in our company yet!\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }

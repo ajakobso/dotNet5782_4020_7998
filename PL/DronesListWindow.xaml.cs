@@ -23,6 +23,7 @@ namespace PL
     {
         private readonly IBL bl;
         private Drone drone;
+        private List<int> IdOfOpenedDroneWindow = new();
         //static readonly DependencyProperty DronesListProperty = DependencyProperty.Register("Drones List", typeof(ObservableCollection<DroneForList>), typeof(DronesListWindow));
         public ObservableCollection<PO.DroneForList> dronesList; /*{ get => (ObservableCollection<PO.DroneForList>)GetValue(DronesListProperty); set => SetValue(DronesListProperty, value); }*/
         public DronesListWindow(IBL bl)
@@ -90,7 +91,15 @@ namespace PL
         private void DroneForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;
-            new DroneWindow(bl, drone.DroneId).Show();
+            /*if (IdOfOpenedDroneWindow.Exists(x => x == drone.DroneId))//check if there is an opened window of the 
+            {
+                Application.Current.Windows.OfType<DroneWindow>().Where(x => x.IsActive && x.drone.DroneId == drone.DroneId).First().Topmost = true;
+            }
+            else
+            {*/
+                new DroneWindow(bl, drone.DroneId).Show();
+            //    IdOfOpenedDroneWindow.Add(drone.DroneId);
+            //}
             refreshWindow();
         }
     }

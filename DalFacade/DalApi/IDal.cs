@@ -9,7 +9,7 @@ namespace DalApi
     public interface IDAL//in the intire interface i changed every function to not be public and static, and it solved some errors, i think its ok cause its public static in dalobject
     {
         void AddBaseStation(int id, string name, int chargeSlots, int availableChargeSlots, double longitude, double lattitude);
-        void AddDrone(int id, double Battery, WeightCategories maxW, string model);
+        void AddDrone(int id, WeightCategories maxW, string model);
         void AddCustomer(int id, string name, string phone, double longitude, double lattitude);
         void AddParcel(int id, int droneId, int senderId, int targetId, Priorities priority, WeightCategories weight, DateTime? requested, DateTime? scheduled, DateTime? pickedUp, DateTime? delivered);
         void AddDroneCharge(int id, int sId);
@@ -22,7 +22,7 @@ namespace DalApi
         void PickUpParcel(int parcelId);
         void ParcelDelivering(int parcelId);
         void DroneCharging(int droneId, int baseStationId);
-        void DroneRelease(int droneId, int baseStationId);
+        void DroneRelease(int droneId);
         Coordinate Fromdouble(double angleInDegrees);
         BaseStation CopyBaseStation(int baseStationId);
         Drone CopyDrone(int droneId);

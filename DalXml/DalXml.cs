@@ -160,7 +160,7 @@ namespace Dal
 
         #region Drone
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDrone(int id, double Battery, WeightCategories maxW, string model)
+        public void AddDrone(int id, WeightCategories maxW, string model)
         {
             List<Drone> ListDrones = XmlTools.LoadListFromXmlSerializer<Drone>(DronesPath);
             foreach (var _ in from Drone drone in ListDrones
@@ -169,7 +169,7 @@ namespace Dal
             {
                 throw new AddExistingDroneException();
             }
-            ListDrones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
+            ListDrones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
             XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -234,26 +234,25 @@ namespace Dal
             List<DroneCharge> ListDronesInCharge = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
             foreach (var (drone, newDrone) in from Drone drone in ListDrones
                                               where drone.Id == droneId
-                                              let newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model }// Status = DroneStatuses.Maintenance, Battery = drone.Battery
+                                              let newDrone = new DroneCharge { DroneId = droneId, StationId = baseStationId, InsertionTime = DateTime.Now }// Status = DroneStatuses.Maintenance, Battery = drone.Battery
                                               select (drone, newDrone))
             {
-                ListDrones.Remove(drone);
-                ListDrones.Add(newDrone);
-                DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId, InsertionTime = DateTime.Now };//what is this for??? and if we need to add it somewhere - then where??
-                ListDronesInCharge.Add(newDCharge);
-                XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
+                //ListDrones.Remove(drone);
+                //ListDrones.Add(newDrone);
+                ListDronesInCharge.Add(newDrone);
+                //XmlTools.SaveListToXmlSerializer(ListDrones, DronesPath);
                 XmlTools.SaveListToXmlSerializer(ListDronesInCharge, DronesInChargePath);
                 return;
             }
             throw new DroneIdNotFoundException();
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DroneRelease(int droneId, int baseStationId)
+        public void DroneRelease(int droneId)
         {
             List<DroneCharge> ListDronesInCharge = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
 
             foreach (var charger in from DroneCharge charger in ListDronesInCharge
-                                    where charger.DroneId == droneId && charger.StationId == baseStationId
+                                    where charger.DroneId == droneId
                                     select charger)
             {
                 ListDronesInCharge.Remove(charger);

@@ -41,7 +41,7 @@ namespace Dal
             DataSource.Config.BaseStations.Add(new BaseStation { Id = id, Name = name, ChargeSlots = chargeSlots, AvailableChargeSlots = availableChargeSlots, Longitude = longitude, Lattitude = lattitude });
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDrone(int id, double Battery, WeightCategories maxW, string model)//double battery, DroneStatuses status
+        public void AddDrone(int id, WeightCategories maxW, string model)//double battery, DroneStatuses status
         {
             foreach (var _ in from Drone drone in DataSource.Config.Drones
                               where drone.Id == id
@@ -57,7 +57,7 @@ namespace Dal
             //    }
 
             //}
-            DataSource.Config.Drones.Add(new Drone { Id = id, Battery = Battery, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
+            DataSource.Config.Drones.Add(new Drone { Id = id, MaxWeight = maxW, Model = model });//Battery = battery, Status = status
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(int droneId, int stationId)
@@ -274,8 +274,8 @@ namespace Dal
                                               let newDrone = new Drone { Id = drone.Id, MaxWeight = drone.MaxWeight, Model = drone.Model }// Status = DroneStatuses.Maintenance, Battery = drone.Battery
                                               select (drone, newDrone))
             {
-                DataSource.Config.Drones.Remove(drone);
-                DataSource.Config.Drones.Add(newDrone);
+                //DataSource.Config.Drones.Remove(drone);
+                //DataSource.Config.Drones.Add(newDrone);
                 DroneCharge newDCharge = new DroneCharge { DroneId = droneId, StationId = baseStationId, InsertionTime = DateTime.Now };//what is this for??? and if we need to add it somewhere - then where??
                 DataSource.Config.DroneCharges.Add(newDCharge);
                 droneExists = true;
@@ -285,10 +285,10 @@ namespace Dal
                 throw new DroneIdNotFoundException();
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DroneRelease(int droneId, int baseStationId)//Release the drone from the charging station                                                                 
+        public void DroneRelease(int droneId)//Release the drone from the charging station                                                                 
         {
             foreach (var charger in from DroneCharge charger in DataSource.Config.DroneCharges
-                                    where charger.DroneId == droneId && charger.StationId == baseStationId
+                                    where charger.DroneId == droneId
                                     select charger)
             {
                 DataSource.Config.DroneCharges.Remove(charger);
@@ -467,9 +467,9 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> UnAscriptedParcels()//return new list with all the un-ascripted parcels.
         {
-            return (from Parcel parcel in DataSource.Config.Parcels
+            return from Parcel parcel in DataSource.Config.Parcels
                     where parcel.DroneId == 0
-                    select parcel).ToList();
+                    select parcel;
             //foreach (Parcel parcel in DataSource.Config.Parcels)-not linq
             //{
             //    if (parcel.DroneId == 0)
@@ -481,9 +481,9 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> AvailableBaseStation()//return new list with the base stations who have available charge slots.
         {
-            return (from BaseStation baseStation in DataSource.Config.BaseStations
-                    where baseStation.ChargeSlots > 0
-                    select baseStation).ToList();
+            return from BaseStation baseStation in DataSource.Config.BaseStations
+                   where baseStation.ChargeSlots > 0
+                   select baseStation;
             //foreach (BaseStation baseStation in DataSource.Config.BaseStations)-not linq
             //{
             //    if (baseStation.ChargeSlots > 0)

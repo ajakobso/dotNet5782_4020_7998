@@ -12,7 +12,7 @@ namespace BL
     internal class Simulator
     {
         private const double VELOCITY = 1.0;//1 kilometer per second
-        private const int DELAY = 1000; //every 1000 milisec - 1 second of delay 
+        private const int DELAY = 500; //every 1000 milisec - 1 second of delay 
         private const double TIME_STEP = DELAY / 1000.0;//time in seconds of each pause step
         private const double STEP = VELOCITY * TIME_STEP;//the distance the drone is moving in 1 delay
         private double[] batteryConsuming = new double[5];
@@ -53,14 +53,16 @@ namespace BL
                     battery = drone.Battery;
                     while (battery < 100.0)
                     {
-
                         lock (myBl) { time = DateTime.Now - myBl.GetInsertionTime(droneId); }
                         timeInCharge = time.TotalSeconds;
                         lock (myBl) { myBl.ReleaseDroneFromCharge(droneId, timeInCharge); myBl.DroneToCharge(droneId); }
                         battery += batteryConsuming[4] * timeInCharge;
+                        if(battery >= 100)
+                            lock (myBl) { myBl.ReleaseDroneFromCharge(droneId, 0); }
                         updateDisplay();
                         Thread.Sleep(DELAY);
                     }
+
                 }
                 //in the display update, its update the batter and location in the bl and data source, so in order of the pickup/delivery to work as excpected 
                 //we need to save the battery and location before the udpate, then udpate the data source with the original battery and location
@@ -74,16 +76,25 @@ namespace BL
                         displayUpdate(drone, 'd');
                         drone.Battery = originalBattery;
                         drone.CurrentLocation = originalLoction;
+                        ///in the displayUpdate function, i updated the battery and location of the drone - 
+                        ///so in order to make the deliver function to work as it should be, 
+                        ///we need to update the drone to be with the pre display update changes
+                        updateDrone(drone);
                         lock (myBl) { bl.DeliveringParcelByDrone(droneId); updateDisplay(); }
                         Thread.Sleep(DELAY);
                     }
                     else
                     {
                         //the parcel need to be picked up
-                        displayUpdate(drone, 'p'); //here implement an update of the location and battery each DELAY - didnt yet
+                        ///update the display - only battery and location - in cycels
+                        displayUpdate(drone, 'p');
                         drone.Battery = originalBattery;
                         drone.CurrentLocation = originalLoction;
-                        lock (myBl) { bl.PickUpParcel(droneId); updateDisplay(); }
+                        ///in the displayUpdate function, i updated the battery and location of the drone - 
+                        ///so in order to make the pick up function to work as it should be, 
+                        ///we need to update the drone to be with the pre display update changes
+                        updateDrone(drone);
+                        lock (myBl) { try { bl.PickUpParcel(droneId); updateDisplay(); } catch (ParcelCantBePickedUPException) { } }
                         Thread.Sleep(DELAY);
                     }
                 }
@@ -109,15 +120,21 @@ namespace BL
                 end = drone.DeliveryParcel.TargetLocation;
             }
             int countSteps = 1;
-            //לולאה שנמשכת עד שהמיקום של הרחפן מגיע למיקום היעד
-            while (drone.CurrentLocation != end)
+            //check if the drone isn't already at the destination
+            if (start != end)
             {
-                drone.CurrentLocation = StepLocation(start, end, STEP * countSteps);
-                countSteps++;
-                lock (myBl) { drone.Battery -= batteryConsuming[(int)drone.DeliveryParcel.ParcelWC] * STEP * countSteps; }//battery consuming acording to the weight of the parcel multiply the distance
-                lock (myBl) { updateDrone(drone); }//update the bl and dal with the new values of the battery and the location of the drone
-                updateDisplay();//display the changes in the PL layer
-                Thread.Sleep(DELAY);
+                //loop that update the battery and location of the drone until the drone reached the destination
+                while (drone.CurrentLocation != end)
+                {
+                    drone.CurrentLocation = StepLocation(start, end, STEP * countSteps);
+                    lock (myBl) { drone.Battery -= batteryConsuming[(int)drone.DeliveryParcel.ParcelWC] * STEP * countSteps; }//battery consuming acording to the weight of the parcel multiply the distance
+                    countSteps++;
+                    if (countSteps == 3)
+                        countSteps = 3;
+                    lock (myBl) { updateDrone(drone); }//update the bl and dal with the new values of the battery and the location of the drone
+                    updateDisplay();//display the changes in the PL layer
+                    Thread.Sleep(DELAY);
+                }
             }
         }
         /// <summary>
@@ -148,7 +165,7 @@ namespace BL
             lock (myDal) { myDal.RemoveDrone(drone.DroneId); }
             lock (myDal)
             {
-                myDal.AddDrone(drone.DroneId, drone.Battery, (DO.WeightCategories)drone.MaxWeight, drone.Model);
+                myDal.AddDrone(drone.DroneId, (DO.WeightCategories)drone.MaxWeight, drone.Model);
             }
             lock (myBl)
             {

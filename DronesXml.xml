@@ -4,36 +4,36 @@
     <Id>2</Id>
     <Model>5A</Model>
     <MaxWeight>Heavy</MaxWeight>
-    <Battery>0</Battery>
+    <Battery>20</Battery>
   </Drone>
   <Drone>
     <Id>3</Id>
     <Model>10B</Model>
     <MaxWeight>Middle</MaxWeight>
-    <Battery>0</Battery>
+    <Battery>20</Battery>
   </Drone>
   <Drone>
     <Id>4</Id>
     <Model>15C</Model>
     <MaxWeight>Heavy</MaxWeight>
-    <Battery>0</Battery>
+    <Battery>25</Battery>
   </Drone>
   <Drone>
     <Id>5</Id>
     <Model>10D</Model>
     <MaxWeight>Heavy</MaxWeight>
-    <Battery>0</Battery>
+    <Battery>15</Battery>
   </Drone>
   <Drone>
     <Id>6</Id>
     <Model>15D</Model>
     <MaxWeight>Heavy</MaxWeight>
-    <Battery>0</Battery>
+    <Battery>30</Battery>
   </Drone>
   <Drone>
     <Id>1</Id>
     <Model>10A</Model>
     <MaxWeight>Light</MaxWeight>
-    <Battery>5.0370647915992475</Battery>
+    <Battery>50</Battery>
   </Drone>
 </ArrayOfDrone>
