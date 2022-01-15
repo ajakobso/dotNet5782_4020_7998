@@ -129,7 +129,7 @@ namespace BL
                     drone.CurrentLocation = StepLocation(start, end, STEP * countSteps);
                     lock (myBl) { drone.Battery -= batteryConsuming[(int)drone.DeliveryParcel.ParcelWC] * STEP * countSteps; }//battery consuming acording to the weight of the parcel multiply the distance
                     countSteps++;
-                    if (countSteps == 3)
+                    if (countSteps == 2)
                         countSteps = 3;
                     lock (myBl) { updateDrone(drone); }//update the bl and dal with the new values of the battery and the location of the drone
                     updateDisplay();//display the changes in the PL layer
