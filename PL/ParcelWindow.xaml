@@ -16,6 +16,18 @@
                 </Border>
             </Grid>
         </ControlTemplate>
+        <Style x:Key="ColumnHeaderStyles" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="#DD975387"/>
+            <Setter Property="FontFamily" Value="Berlin Sans FB Demi"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
     </Window.Resources>
     <Grid Name="MainGrid">
         <Grid x:Name="AddParcelGrid" Visibility="Hidden">
@@ -69,7 +81,7 @@
                     </Button.Background>
                 </Button>
             </Grid>
-            <DataGrid x:Name="ParcelDataGrid" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Width="auto" Background="FloralWhite" Foreground="#DD975387" Margin="0,1,0,44" Grid.RowSpan="2" Grid.Row="1">
+            <DataGrid x:Name="ParcelDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Width="auto" Background="FloralWhite" Foreground="#DD975387" Margin="0,1,0,44" Grid.RowSpan="2" Grid.Row="1">
                 
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelId}" Header="Parcel Id" Width="SizeToHeader"/>
@@ -97,7 +109,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="parcelPickUpTimeColumn" Header="Parcel Pick Up Time" Width="SizeToHeader">
+                    <DataGridTemplateColumn x:Name="parcelPickUpTimeColumn" IsReadOnly="true" Header="Parcel Pick Up Time" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding ParcelPickUpTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>

@@ -6,6 +6,20 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="CustomersListWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="ColumnHeaderStyles" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="#DD975387"/>
+            <Setter Property="FontFamily" Value="Berlin Sans FB Demi"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
+    </Window.Resources>
     <Grid Name="MainGrid" Margin="3,0,-3,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/>

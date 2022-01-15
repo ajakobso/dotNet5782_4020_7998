@@ -6,6 +6,21 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="BaseStationsListWindow" Height="640" Width="800">
+    <Window.Resources>
+        <Style x:Key="ColumnHeaderStyles" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="#DD975387"/>
+            <Setter Property="FontFamily" Value="Berlin Sans FB Demi"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
+
+    </Window.Resources>
     <Grid Name="MainGrid" Margin="3,0,-3,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -43,19 +58,19 @@
             <Button x:Name="FilterButton" Grid.Column="2" Content="Base stations with available charging stations" Background="{x:Null}" FontFamily="Berlin Sans FB Demi" FontSize="14" Foreground="Black" Click="FilterButton_Click" Margin="1,19,0,18" BorderBrush="FloralWhite">
             </Button>
         </Grid>
-        <DataGrid x:Name="BaseStationForListDataGrid" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite">
+        <DataGrid x:Name="BaseStationForListDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="FloralWhite">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="baseStationIdColumn" Binding="{Binding BaseStationId}" Header="Base Station Id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="stationNameColumn" Binding="{Binding StationName}" Header="Station Name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="availableChargingSColumn" Binding="{Binding AvailableChargingS}" Header="Available Charging S" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="unAvailableChargingSColumn" Binding="{Binding UnAvailableChargingS}" Header="Un Available Charging S" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="locationColumn" Binding="{Binding StationLocation}" Header="Location" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="dronesColumn" Binding="{Binding DInChargeList}" Header="Drones In Charge" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="baseStationIdColumn" Foreground="#DD975387" Binding="{Binding BaseStationId}" Header="Base Station Id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="stationNameColumn" Foreground="#DD975387" Binding="{Binding StationName}" Header="Station Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="availableChargingSColumn" Foreground="#DD975387" Binding="{Binding AvailableChargingS}" Header="Available Charging S" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="unAvailableChargingSColumn" Foreground="#DD975387" Binding="{Binding UnAvailableChargingS}" Header="Un Available Charging S" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="locationColumn" Binding="{Binding StationLocation}" Foreground="#DD975387" Header="Location" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="dronesColumn" Binding="{Binding DInChargeList}" Foreground="#DD975387" Header="Drones In Charge" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

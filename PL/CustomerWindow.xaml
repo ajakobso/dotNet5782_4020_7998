@@ -59,7 +59,7 @@
                 </Button.Effect>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnCustomerGrid" Height="auto" Width="auto" Background="FloralWhite" Visibility="Hidden">
+        <Grid x:Name="ActionsOnCustomerGrid" Height="auto" Width="auto" Background="FloralWhite" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
