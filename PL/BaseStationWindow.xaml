@@ -15,6 +15,7 @@
                 </Border>
             </Grid>
         </ControlTemplate>
+        
     </Window.Resources>
     <Window.Background>FloralWhite</Window.Background>
     <Grid Name="MainGrid">

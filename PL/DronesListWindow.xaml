@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:PL.PO"
         mc:Ignorable="d"
         Title="DronesListWindow" Height="640" Width="800" >
-
+    <Window.Resources>
+        <Style x:Key="ColumnHeaderStyles" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="#DD975387"/>
+            <Setter Property="FontFamily" Value="Berlin Sans FB Demi"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
+    </Window.Resources>
     <Grid Name="MainGrid" Margin="3,0,-3,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -38,7 +51,7 @@
                 </Button.Background>
             </Button>
         </Grid>
-        <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="Visible" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
+        <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="Visible" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>

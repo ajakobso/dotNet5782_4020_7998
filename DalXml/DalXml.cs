@@ -30,12 +30,12 @@ namespace Dal
         static DalXml() { }// static ctor to ensure instance init is done just before first usage
         DalXml()
         {
-            List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
-            foreach(var drone in from drone in ListDrones
-                                 select drone)
-            {
-                DroneRelease(drone.DroneId);
-            }
+            //List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
+            //foreach(var drone in from drone in ListDrones
+            //                     select drone)
+            //{
+            //    DroneRelease(drone.DroneId);
+            //}
         } // default => private
         public static DalXml Instance { get => instance; }// The public Instance property to use
         #endregion
