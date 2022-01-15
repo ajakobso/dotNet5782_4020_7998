@@ -20,7 +20,7 @@
     <Id>103</Id>
     <Name>station3</Name>
     <ChargeSlots>103</ChargeSlots>
-    <AvailableChargeSlots>103</AvailableChargeSlots>
+    <AvailableChargeSlots>106</AvailableChargeSlots>
     <Longitude>35.2</Longitude>
     <Lattitude>31.78</Lattitude>
   </BaseStation>

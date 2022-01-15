@@ -66,7 +66,7 @@
                 </Button.BorderBrush>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnDroneGrid" Visibility="Visible">
+        <Grid x:Name="ActionsOnDroneGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>

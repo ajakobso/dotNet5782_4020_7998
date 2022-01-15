@@ -104,13 +104,13 @@ namespace BL
             IEnumerable<CustomerForList> responce = new List<CustomerForList>();
             #region notes
             /*
-             foreach (var (blC, deliveredP, unDeliveredP, recivedP, onTheWayP) in from customer in myDal.CopyCustomersList()//linq-doesnt working
+             foreach (var (blC, deliveredParcels, undeliveredParcels, recivedP, onTheWayP) in from customer in myDal.CopyCustomersList()//linq-doesnt working
             //                                                                     let blC = DisplayCustomer(customer.Id)
-            //                                                                     let deliveredP = 0
-            //                                                                     let unDeliveredP = 0
+            //                                                                     let deliveredParcels = 0
+            //                                                                     let undeliveredParcels = 0
             //                                                                     let recivedP = 0
             //                                                                     let onTheWayP = 0
-            //                                                                     select (blC, deliveredP, unDeliveredP, recivedP, onTheWayP))
+            //                                                                     select (blC, deliveredParcels, undeliveredParcels, recivedP, onTheWayP))
             //{
             //    foreach (var parcel in blC.ParcelsToCustomer)
             //    {
@@ -120,42 +120,29 @@ namespace BL
             //    foreach (var parcel in blC.ParcelsFromCustomer)
             //    {
             //        if (parcel.ParcelState == Enums.ParcelState.Delivered)
-            //            deliveredP++;
+            //            deliveredParcels++;
             //        if (parcel.ParcelState == Enums.ParcelState.PickedUp)
             //            onTheWayP++;
             //        if (parcel.ParcelState == Enums.ParcelState.Created || parcel.ParcelState == Enums.ParcelState.Ascripted)
-            //            unDeliveredP++;
+            //            undeliveredParcels++;
             //    }
 
-            //    CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfDeliveredParcels = deliveredP, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUnDeliveredParcels = unDeliveredP };
+            //    CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfdeliveredParcelsarcels = deliveredParcels, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUndeliveredParcelsarcels = undeliveredParcels };
             //    responce.Add(nCustomer);
             //}*/
             #endregion
             lock (myDal)
             {
-                foreach (var customer in myDal.CopyCustomersList())
-                {
-                    Customer blC = DisplayCustomer(customer.Id);
-                    int deliveredP = 0, unDeliveredP = 0, recivedP = 0, onTheWayP = 0;
-                    foreach (var parcel in blC.ParcelsToCustomer)
-                    {
-                        recivedP++;
-                    }
-                    foreach (var parcel in blC.ParcelsFromCustomer)
-                    {
-                        if (parcel.ParcelState == Enums.ParcelState.Delivered)
-                            deliveredP++;
-                        if (parcel.ParcelState == Enums.ParcelState.PickedUp)
-                            onTheWayP++;
-                        if (parcel.ParcelState == Enums.ParcelState.Created || parcel.ParcelState == Enums.ParcelState.Ascripted)
-                            unDeliveredP++;
-                    }
-
-                    CustomerForList nCustomer = new CustomerForList { CustomerId = blC.CustomerId, CustomerName = blC.CustomerName, CustomerPhone = blC.CustomerPhone, NumOfDeliveredParcels = deliveredP, NumOfParcelsOnTheWay = onTheWayP, NumOfRecivedParcels = recivedP, NumOfUnDeliveredParcels = unDeliveredP };
-                    (responce as List<CustomerForList>).Add(nCustomer);
-                }
-                responce = (responce as List<CustomerForList>).FindAll(predicate);
-                return responce;
+                responce = from DO.Customer DalCustomer in myDal.CopyCustomersList()
+                           let blCustomer = DisplayCustomer(DalCustomer.Id)
+                           let deliveredParcels = blCustomer.ParcelsFromCustomer.Where(x => x.ParcelState == Enums.ParcelState.Delivered).Count()
+                           let undeliveredParcels = blCustomer.ParcelsFromCustomer.Where(x => x.ParcelState == Enums.ParcelState.Created || x.ParcelState == Enums.ParcelState.Ascripted).Count()
+                           let recivedParcels = blCustomer.ParcelsToCustomer.Count()
+                           let onTheWayParcels = blCustomer.ParcelsFromCustomer.Where(x => x.ParcelState == Enums.ParcelState.PickedUp).Count()
+                           select new CustomerForList { CustomerId = blCustomer.CustomerId, CustomerName = blCustomer.CustomerName, CustomerPhone = blCustomer.CustomerPhone, NumOfdeliveredParcelsarcels = deliveredParcels, NumOfParcelsOnTheWay = onTheWayParcels, NumOfRecivedParcels = recivedParcels, NumOfUndeliveredParcelsarcels = undeliveredParcels };
+                Func<CustomerForList, bool> func = new(predicate);//non-direct convertion between the predicate to Fucn in order to use the Where method
+                return responce.Where(func);
+                
             }
         }
     }

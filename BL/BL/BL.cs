@@ -174,7 +174,7 @@ namespace BL
                             //myDal.AddDroneCharge(drone.DroneId, baseStation.Id);
                             try { myDal.AddBaseStation(randomBS.Id, randomBS.Name, randomBS.ChargeSlots, randomBS.AvailableChargeSlots - 1, randomBS.Longitude, randomBS.Lattitude); }
                             catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                            try { myDal.AddDroneCharge(drone.DroneId, randomBS.Id); }
+                            try { myDal.DroneCharging(drone.DroneId, randomBS.Id); }
                             catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }
                         }
                         else

@@ -92,7 +92,7 @@ namespace ConsoleUI
                                 string DModel;
                                 DModel = Console.ReadLine();
                                 try
-                                { myDal.AddDrone(DId, DBattery, DWC, DModel);}//create a new drone with new values
+                                { myDal.AddDrone(DId, DWC, DModel);}//create a new drone with new values
                                 catch (AddExistingDroneException)
                                 { Console.WriteLine("ERROR - attempt to add an existing drone!\n"); }
                                 break;
@@ -230,7 +230,7 @@ namespace ConsoleUI
                                 int DRBSId;//drone release base station id
                                 int.TryParse(inp, out DRBSId);
                                 try
-                                { myDal.DroneRelease(DRDId, DRBSId); }
+                                { myDal.DroneRelease(DRDId); }
                                 catch (DroneIdNotFoundException)
                                 { Console.WriteLine("ERROR - attempt to release a non-exists drone!\n"); }
                                 break;
