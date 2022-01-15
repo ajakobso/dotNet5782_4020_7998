@@ -45,7 +45,7 @@ namespace ConsoleUI
                         switch (a)
                         {
                             case Adding.nUser:
-                                Console.WriteLine("please enter:\n user's id:")
+                                Console.WriteLine("please enter:\n user's id:");
                                     int UId;//user id
                                 inp = Console.ReadLine();
                                 int.TryParse(inp, out UId);//////////////////////////////////////////////////////////////////
