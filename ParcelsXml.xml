@@ -1,36 +1,12 @@
 <?xml version="1.0"?>
 <ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Parcel>
-    <Id>1001</Id>
-    <SenderId>425891358</SenderId>
-    <TargetId>326456189</TargetId>
-    <DroneId>6</DroneId>
-    <Weight>Heavy</Weight>
-    <Priority>Fast</Priority>
-    <Requested>2022-03-01T13:00:06</Requested>
-    <Scheduleded>2022-03-01T13:02:06</Scheduleded>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
-  </Parcel>
-  <Parcel>
     <Id>1006</Id>
     <SenderId>425891358</SenderId>
     <TargetId>326456189</TargetId>
     <DroneId>0</DroneId>
     <Weight>Middle</Weight>
     <Priority>Standart</Priority>
-    <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>1007</Id>
-    <SenderId>204168946</SenderId>
-    <TargetId>327498510</TargetId>
-    <DroneId>0</DroneId>
-    <Weight>Heavy</Weight>
-    <Priority>Fast</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
     <Scheduleded xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -118,6 +94,30 @@
     <Requested>2022-03-01T13:00:07</Requested>
     <Scheduleded>2022-01-15T20:23:55.9720757+02:00</Scheduleded>
     <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>1001</Id>
+    <SenderId>425891358</SenderId>
+    <TargetId>326456189</TargetId>
+    <DroneId>6</DroneId>
+    <Weight>Heavy</Weight>
+    <Priority>Fast</Priority>
+    <Requested>2022-03-01T13:00:06</Requested>
+    <Scheduleded>2022-03-01T13:02:06</Scheduleded>
+    <PickedUp>2022-01-15T21:01:59.3440809+02:00</PickedUp>
+    <Delivered>2022-01-15T21:02:00.4064605+02:00</Delivered>
+  </Parcel>
+  <Parcel>
+    <Id>1007</Id>
+    <SenderId>204168946</SenderId>
+    <TargetId>327498510</TargetId>
+    <DroneId>0</DroneId>
+    <Weight>Heavy</Weight>
+    <Priority>Fast</Priority>
+    <Requested>2022-03-01T13:00:07</Requested>
+    <Scheduleded>2022-01-15T21:02:03.7499361+02:00</Scheduleded>
+    <PickedUp>2022-01-15T21:02:04.805782+02:00</PickedUp>
     <Delivered xsi:nil="true" />
   </Parcel>
 </ArrayOfParcel>

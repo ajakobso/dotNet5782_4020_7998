@@ -247,14 +247,14 @@ namespace Dal
             {
                 ListDronesInCharge.Add(new DroneCharge { DroneId = droneId, StationId = baseStationId, InsertionTime = DateTime.Now });
                 XmlTools.SaveListToXmlSerializer(ListDronesInCharge, DronesInChargePath);
-                foreach(BaseStation baseStation in from baseStation in ListOfBaseStations
-                                                   where baseStation.Id == baseStationId
-                                                   select baseStation)
-                {
-                    ListOfBaseStations.Remove(baseStation);
-                    ListOfBaseStations.Add(new BaseStation { Id = baseStation.Id, AvailableChargeSlots = baseStation.AvailableChargeSlots - 1,  })
+                //foreach(BaseStation baseStation in from baseStation in ListOfBaseStations
+                //                                   where baseStation.Id == baseStationId
+                //                                   select baseStation)
+                //{
+                    //ListOfBaseStations.Remove(baseStation);
+                    //ListOfBaseStations.Add(new BaseStation { Id = baseStation.Id, AvailableChargeSlots = baseStation.AvailableChargeSlots - 1,  })
 
-                }
+                //}
                 return;
             }
             throw new DroneIdNotFoundException();
