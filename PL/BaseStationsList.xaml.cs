@@ -38,7 +38,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.DroneInCharge s = cell.DataContext as PO.DroneInCharge;
-            if (cell.DataContext.ToString() != "")
+            if (cell.DataContext.ToString() != ""&&s!=null)
             { new DroneWindow(bl, s.DroneId).Show(); }
             else
                 MessageBox.Show("there is no drone in charge at this station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);

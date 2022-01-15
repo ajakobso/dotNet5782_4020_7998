@@ -97,7 +97,7 @@ namespace PL
             }
             else
             {*/
-                new DroneWindow(bl, drone.DroneId).Show();
+            new DroneWindow(bl, drone.DroneId).Show();
             //    IdOfOpenedDroneWindow.Add(drone.DroneId);
             //}
             refreshWindow();

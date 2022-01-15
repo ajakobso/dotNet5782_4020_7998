@@ -22,7 +22,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         private readonly IBL bl;
-        public MainWindow(IBL bl)
+        public MainWindow(/*IBL bl*/)//to change for the passwords
         {
             bl = BLFactory.GetBL("1");
             InitializeComponent();
