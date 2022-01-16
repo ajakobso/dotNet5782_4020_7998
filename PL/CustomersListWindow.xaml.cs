@@ -29,24 +29,23 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             customer = new();
-            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
+            CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));//list of customers
             CustomerForListDataGrid.DataContext = CustomersList;
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
-        private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
+        private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//add new customer, open new customer window
         {
             new CustomerWindow(bl).ShowDialog();
             refreshWindow();
         }
-        private void refreshWindow()
+        private void refreshWindow()//refresh
         {
             CustomersList = PO.BoPoAdapter.CustomerForListAdapter(bl.DisplayCustomersList(x => x.CustomerId == x.CustomerId));
             CustomerForListDataGrid.DataContext = CustomersList;//if the adapter is working then this two lines is not neccesarry
             CustomerForListDataGrid.ItemsSource = CustomersList;
         }
-        private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateCustomerButton_Click(object sender, RoutedEventArgs e)//open new customer window with option to update
         {
-            
             new CustomerWindow(bl, customer.CustomerId).Show();//
             refreshWindow();
         }//suppose to work
@@ -55,15 +54,14 @@ namespace PL
             new CustomersListWindow(bl);
             MessageBox.Show("enjoy in your next action!\n", "Goodluck", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
         }
-        private void CloseButton_Click(object sender, RoutedEventArgs e)//work
+        private void CloseButton_Click(object sender, RoutedEventArgs e)//close
         {
             Close();
         }
-        private void Reset_Click(object sender, RoutedEventArgs e)//work
+        private void Reset_Click(object sender, RoutedEventArgs e)//reset
         {
             refreshWindow();
         }
-
         private void CustomerForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             customer.CustomerId = ((PO.CustomerForList)CustomerForListDataGrid.SelectedItem).CustomerId;
