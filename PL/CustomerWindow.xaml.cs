@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -22,13 +23,11 @@ namespace PL
     {
         private readonly IBL bl;
         private Customer customer;
+        IEnumerable<ParcelInCustomer> parcelsFromCustomer;
+        IEnumerable<ParcelInCustomer> parcelsToCustomer;
         private int id;
         private string name;
         private string phone;
-        private int NumOfDeliveredParcels;
-        private int NumOfUnDeliveredParcels;
-        private int NumOfRecivedParcels;
-        private int NumOfParcelsOnTheWay;
         double longitude, lattitude;
         private bool IdTextBoxChanged, PhoneTextBoxChanged, NameTextBoxChanged, LongitudeTextBoxChanged, lattitudeTextBoxChanged;
         #region add customer
@@ -113,18 +112,22 @@ namespace PL
         }
         #endregion
         #region actions on customer
-        public CustomerWindow(IBL bl, int CustomerId)//actions on existing customer constractor
+        public CustomerWindow(IBL bl, int customerId)//actions on existing customer constractor
         {
             this.bl = bl;
             InitializeComponent();
             ActionsOnCustomerGrid.Visibility = Visibility.Visible;
             try
-            { customer = bl.DisplayCustomer(CustomerId); }
+            { customer = /*PO.BoPoAdapter.CustomerBoPo(*/bl.DisplayCustomer(customerId)/*)*/; }
             catch (CustomerNotFoundException) { MessageBox.Show("sorry, this customer is not exist in our company yet!\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            List<Customer> l = new List<Customer>();
-            l.Add(customer);
-            CustomerDataGrid.ItemsSource = l;
-            CustomerDataGrid.DataContext = customer;
+            CustomerId.Text = customer.CustomerId.ToString();
+            CustomerName.Text = customer.CustomerName;
+            CustomerPhone.Text = customer.CustomerPhone;
+            CustomerLocation.Text = customer.Place.ToString();
+            parcelsFromCustomer = customer.ParcelsFromCustomer;
+            parcelsToCustomer = customer.ParcelsToCustomer;
+            ParcelsFromDataGrid.DataContext = parcelsFromCustomer;
+            ParcelsToDataGrid.DataContext = parcelsToCustomer;
             //if the name is changed then update the name - same about the phone, i just dont know how to check if the text changed.
         }
         #endregion
@@ -134,8 +137,8 @@ namespace PL
             if (result == MessageBoxResult.OK)
             {
                 try
-                { CustomerDataGrid.ItemsSource = bl.DisplayDrone(customer.CustomerId).ToString(); }
-                catch (DroneIdNotFoundException) { MessageBox.Show("this customer is not exist\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                { customer = /*PO.BoPoAdapter.CustomerBoPo(*/bl.DisplayCustomer(customer.CustomerId)/*)*/; }
+                catch (CustomerNotFoundException) { MessageBox.Show("this customer is not exist\n please choose enother customer", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
             }
         }
         /*      <Grid x:Name="NameUpdateGrid" HorizontalAlignment="Stretch" Height="36" Margin="2,8,0,0" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">

@@ -52,17 +52,53 @@
             </Button>
         </Grid>
         <DataGrid x:Name="DroneForListDataGrid" Foreground="#DD975387" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" ItemsSource="{Binding}" IsReadOnly="True" RowDetailsVisibilityMode="Visible" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,5,8" Grid.RowSpan="2" Background="FloralWhite" MouseDoubleClick="DroneForListDataGrid_MouseDoubleClick">
-            <!--<DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+            <DataGrid.Resources>
+                <Style x:Key="MyProgressBarStyle"  TargetType="{x:Type ProgressBar}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ProgressBar}">
+                                <Grid MinHeight="20" MinWidth="30">
+                                    <Border Name="PART_Track" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" Background="White" />
+                                    <Border 
+                                    Name="PART_Indicator" 
+                                    CornerRadius="2" 
+                                    BorderBrush="Transparent" 
+                                    BorderThickness="1" 
+                                    HorizontalAlignment="Left">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Color="#FFE80C0C" Offset="0" ></GradientStop>
+                                                    <GradientStop Color="red" Offset="0.1" ></GradientStop>
+                                                    <GradientStop Color="#FFF58413" Offset=".2" ></GradientStop>
+                                                    <GradientStop Color="Orange" Offset=".25" ></GradientStop>
+                                                    <GradientStop Color="Yellow" Offset=".3" ></GradientStop>
+                                                    <GradientStop Color="#FFCEF16E" Offset=".4" ></GradientStop>
+                                                    <GradientStop Color="#FF75FB75" Offset="0.6" ></GradientStop>
+                                                    <GradientStop Color="#FF1EE81E" Offset="0.7" ></GradientStop>
+                                                    <GradientStop Color="#FF1DCF1D" Offset="0.9" ></GradientStop>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
-            </DataGrid.Resources>-->
+                <DataTemplate x:Key="batteryProgressBar">
+                    <Grid>
+                        <ProgressBar x:Name="BatteryStatus" Value="{Binding Battery}" Style="{StaticResource MyProgressBarStyle}" Orientation="Vertical" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top"  SnapsToDevicePixels="True" Margin="0" Height="25" Width="45"/>
+                        <TextBlock Text="{Binding Battery, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#DD975387" />
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="droneForListIdColumn" Binding="{Binding DroneId}" Header="Id" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="droneForListStatusColumn" Binding="{Binding DroneState}" Header="Status" Width="SizeToHeader" Foreground="#DD975387"/>
-                <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader" Foreground="#DD975387"/>
+                <DataGridTemplateColumn x:Name="batteryColumn" CellTemplate="{StaticResource batteryProgressBar}" Header="Battery" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="locationColumn" Binding="{Binding CurrentLocation}" Header="Location" Width="SizeToHeader" Foreground="#DD975387"/>
                 <DataGridTextColumn x:Name="inDeliveringParcelIdColumn" Binding="{Binding InDeliveringParcelId}" Header="In Delivering Parcel Id" Width="SizeToHeader" Foreground="#DD975387"/>
             </DataGrid.Columns>

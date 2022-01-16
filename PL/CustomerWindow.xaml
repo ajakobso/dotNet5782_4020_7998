@@ -59,42 +59,105 @@
                 </Button.Effect>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnCustomerGrid" Height="auto" Width="auto" Background="FloralWhite" Visibility="Visible">
+        <Grid x:Name="ActionsOnCustomerGrid" Height="auto" Width="auto" Background="FloralWhite" Visibility="Hidden">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.4*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="Customer's Data" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="30" Height="auto" Width="auto" Foreground="#DD975387"/>
-            <DataGrid x:Name="CustomerDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" IsReadOnly="False" AutoGenerateColumns="True" EnableRowVirtualization="True" Margin="74,157,96,139" Background="FloralWhite" Grid.RowSpan="2">
+            <Label Content="Customer's Data" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="30" Height="40" Width="212" Foreground="#DD975387"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Id" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <Label Content="Name" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="1" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <Label Content="Phone" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="2" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <Label Content="Location" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="3" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <TextBox x:Name="CustomerId" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+                <TextBox x:Name="CustomerName" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="1" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+                <TextBox x:Name="CustomerPhone" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="2" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+                <TextBox x:Name="CustomerLocation" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="3" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Parcels sent from the customer" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <DataGrid x:Name="ParcelsFromDataGrid" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Foreground="#DD975387" Background="FloralWhite" ColumnHeaderStyle="{StaticResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelId}" Header="Id" Width="auto"/>
+                        <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Priority" Width="auto"/>
+                        <DataGridTextColumn x:Name="parcelStateColumn" Binding="{Binding ParcelState}" Header="State" Width="auto"/>
+                        <DataGridTextColumn x:Name="parcelWCColumn" Binding="{Binding ParcelWC}" Header="Weight" Width="auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label Content="Parcels sent to the customer" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="1" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <DataGrid x:Name="ParcelsToDataGrid" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="1" Foreground="#DD975387" Background="FloralWhite" ColumnHeaderStyle="{StaticResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="ParcelIdColumn" Binding="{Binding ParcelId}" Header="Id" Width="auto"/>
+                        <DataGridTextColumn x:Name="ParcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Priority" Width="auto"/>
+                        <DataGridTextColumn x:Name="ParcelStateColumn" Binding="{Binding ParcelState}" Header="State" Width="auto"/>
+                        <DataGridTextColumn x:Name="ParcelWCColumn" Binding="{Binding ParcelWC}" Header="Weight" Width="auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+
+            <!--<DataGrid x:Name="CustomerDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" IsReadOnly="False" AutoGenerateColumns="True" EnableRowVirtualization="True" Margin="74,31,96,139" Background="FloralWhite" Grid.Row="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="IdColumn" IsReadOnly="True" Binding="{Binding CustomerId}" Header="Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="NameColumn" IsReadOnly="False" Binding="{Binding CustomerName}" Header="Name" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="PhoneColumn" IsReadOnly="False" Binding="{Binding CustomerPhone}" Header="Phone" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="locationColumn" IsReadOnly="True" Binding="{Binding Place}" Header="Location" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <!--parcels frome customer-->
+                    -->
+            <!--parcels from customer-->
+            <!--
                     <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelsFromCustomer.ParcelId}" Header="Parcel Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="parcelWCColumn" Binding="{Binding ParcelsFromCustomer.ParcelWC}" Header="Parcel Weight" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding ParcelsFromCustomer.ParcelPriority}" Header="Parcel Priority" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="parcelStateColumn" Binding="{Binding ParcelsFromCustomer.ParcelState}" Header="Parcel State" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <!--sender of the parcel-->
+                    -->
+            <!--sender of the parcel-->
+            <!--
                     <DataGridTextColumn x:Name="scustomerIdColumn" Binding="{Binding ParcelsFromCustomer.SourceCustomer.CustomerId}" Header="Sender's Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="scustomerNameColumn" Binding="{Binding ParcelsFromCustomer.SourceCustomer.CustomerName}" Header="Sender's Name" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <!--receiver of the parcel-->
+                    -->
+            <!--receiver of the parcel-->
+            <!--
                     <DataGridTextColumn x:Name="rcustomerIdColumn" Binding="{Binding ParcelsFromCustomer.DestinationCustomer.CustomerId}" Header="Receiver's Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="rcustomerNameColumn" Binding="{Binding ParcelsFromCustomer.DestinationCustomer.CustomerName}" Header="Receiver's Name" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <!--parcels To customer-->
+                    -->
+            <!--parcels To customer-->
+            <!--
                     <DataGridTextColumn x:Name="tParcelIdColumn" Binding="{Binding ParcelsToCustomer.ParcelId}" Header="Parcel Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="tParcelWCColumn" Binding="{Binding ParcelsToCustomer.ParcelWC}" Header="Parcel Weight" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="tParcelPriorityColumn" Binding="{Binding ParcelsToCustomer.ParcelPriority}" Header="Parcel Priority" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="tParcelStateColumn" Binding="{Binding ParcelsToCustomer.ParcelState}" Header="Parcel State" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <!--sender of the parcel-->
+                    -->
+            <!--sender of the parcel-->
+            <!--
                     <DataGridTextColumn x:Name="tScustomerIdColumn" Binding="{Binding ParcelsToCustomer.SourceCustomer.CustomerId}" Header="Sender's Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="tScustomerNameColumn" Binding="{Binding ParcelsToCustomer.SourceCustomer.CustomerName}" Header="Sender's Name" Width="SizeToHeader" Foreground="#DD975387"/>
-                    <!--receiver of the parcel-->
+                    -->
+            <!--receiver of the parcel-->
+            <!--
                     <DataGridTextColumn x:Name="tDcustomerIdColumn" Binding="{Binding ParcelsToCustomer.DestinationCustomer.CustomerId}" Header="Receiver's Id" Width="SizeToHeader" Foreground="#DD975387"/>
                     <DataGridTextColumn x:Name="tDcustomerNameColumn" Binding="{Binding ParcelsToCustomer.DestinationCustomer.CustomerName}" Header="Receiver's Name" Width="SizeToHeader" Foreground="#DD975387"/>
                 </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
         </Grid>
     </Grid>
 </Window>

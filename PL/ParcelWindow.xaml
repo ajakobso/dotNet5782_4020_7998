@@ -59,7 +59,7 @@
                 </Button.Effect>
             </Button>
         </Grid>
-        <Grid x:Name="ActionsOnParcelGrid" Visibility="Hidden">
+        <Grid x:Name="ActionsOnParcelGrid" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
@@ -69,56 +69,30 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Name="UpGrid" HorizontalAlignment="Right" Height="auto" Grid.Row="0" Width="auto" >
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="0" Width="auto" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions >
-                <Label Content="Parcel's Data" Foreground="#DD975387" Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="18" HorizontalAlignment="Stretch" Height="32" Margin="136,4,0,0" VerticalAlignment="Stretch" Width="132" Grid.ColumnSpan="2"/>
-                <Button x:Name="CloseButton" Grid.Column="0" Content="" Height="52" Width="64" Click="CloseButton_Click" Margin="0,-1,136,3">
+                <Label Content="Parcel's Data" Height="auto" Width="auto"  HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#DD975387" Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="22" Grid.Column="1" Margin="318,0,0,0"/>
+                <Button x:Name="CloseButton"  Height="auto" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="CloseButton_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\close-icon.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
             <DataGrid x:Name="ParcelDataGrid" ItemsSource="{Binding}" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Width="auto" Background="FloralWhite" Foreground="#DD975387" Margin="0,1,0,44" Grid.RowSpan="2" Grid.Row="1">
-                
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelId}" Header="Parcel Id" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="senderColumn" Binding="{Binding SCIParcel}"  Header="Sender" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="dstColumn" Binding="{Binding DCIParcel}"  Header="Receiver" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="droneColumn" Binding="{Binding DInParcel}"  Header="Drone" Width="SizeToHeader"/>
-                    <DataGridTemplateColumn x:Name="parcelAscriptionTimeColumn" Header="Parcel Ascription Time" Width="SizeToHeader">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ParcelAscriptionTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="parcelCreationTimeColumn" Header="Parcel Creation Time" Width="SizeToHeader">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ParcelCreationTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="parcelDeliveringTimeColumn" Header="Parcel Delivering Time" Width="SizeToHeader">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ParcelDeliveringTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="parcelPickUpTimeColumn" IsReadOnly="true" Header="Parcel Pick Up Time" Width="auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ParcelPickUpTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Parcel Priority" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="parcelWCColumn" Binding="{Binding ParcelWC}" Header="Parcel WC" Width="SizeToHeader"/>
-                    
+                    <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelId}" Header="Id" Width="auto"/>
+                    <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Priority" Width="auto"/>
+                    <DataGridTextColumn x:Name="parcelWCColumn" Binding="{Binding ParcelWC}" Header="Weight" Width="auto"/>
+                    <DataGridTextColumn x:Name="senderColumn" Binding="{Binding SCIParcel}"  Header="Sender" Width="auto"/>
+                    <DataGridTextColumn x:Name="dstColumn" Binding="{Binding DCIParcel}"  Header="Receiver" Width="auto"/>
+                    <DataGridTextColumn x:Name="droneColumn" Binding="{Binding DInParcel}"  Header="Delivery Drone" Width="auto"/>
+                    <DataGridTextColumn x:Name="parcelCreationTimeColumn" Binding="{Binding ParcelCreationTime}" Header="Creation Time" Width="auto"/>
+                    <DataGridTextColumn x:Name="parcelAscriptionTimeColumn" Binding="{Binding ParcelAscriptionTime}" Header="Ascription Time" Width="auto"/>
+                    <DataGridTextColumn x:Name="parcelPickUpTimeColumn" Binding="{Binding ParcelPickUpTime}" Header="Pick Up Time" Width="auto"/>
+                    <DataGridTextColumn x:Name="parcelDeliveryTimeColumn" Binding="{Binding ParcelDeliveringTime}" Header="Delivery Time" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -165,7 +139,7 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions >
-                <Label x:Name="SendParcelLabel" Background="FloralWhite" Content="Ascript Parcel To Parcel" HorizontalAlignment="Stretch" Height="38" VerticalAlignment="Stretch" Width="279" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="11,-8,0,0" Grid.ColumnSpan="2" />
+                <Label x:Name="SendParcelLabel" Background="FloralWhite" Content="Ascript Parcel To Parcel" HorizontalAlignment="Stretch" Height="38" Foreground="#DD975387" VerticalAlignment="Stretch" Width="280" FontFamily="Berlin Sans FB Demi" FontSize="22"  />
                 <Button x:Name="SendParcel" Grid.Column="1" HorizontalAlignment="Stretch" Height="44" VerticalAlignment="Stretch" Width="82" FontFamily="Berlin Sans FB Demi" FontSize="15" BorderBrush="{x:Null}" Margin="39,0,0,0" Click="SendParcel_Click" >
                     <Button.Background>
                         <ImageBrush ImageSource="\Images\Drone-icon.jpg"/>

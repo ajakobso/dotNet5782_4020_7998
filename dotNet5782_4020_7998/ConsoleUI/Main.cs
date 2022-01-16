@@ -44,11 +44,11 @@ namespace ConsoleUI
                         Adding.TryParse(input1, out a);
                         switch (a)
                         {
-                            case Adding.nUser:
-                                Console.WriteLine("please enter:\n user's id:");
-                                    int UId;//user id
-                                inp = Console.ReadLine();
-                                int.TryParse(inp, out UId);//////////////////////////////////////////////////////////////////
+                            //case Adding.nUser:
+                            //    Console.WriteLine("please enter:\n user's id:");
+                            //        int UId;//user id
+                            //    inp = Console.ReadLine();
+                            //    int.TryParse(inp, out UId);//////////////////////////////////////////////////////////////////
                             case Adding.nBaseStation:
                                 Console.WriteLine("please enter:\n" + "base station's id:\n");
                                 //string inp;
