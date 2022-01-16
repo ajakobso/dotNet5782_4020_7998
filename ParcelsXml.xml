@@ -44,9 +44,9 @@
     <Weight>Heavy</Weight>
     <Priority>Urgent</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded>2022-03-01T13:00:07</Scheduleded>
-    <PickedUp>2022-01-11T01:16:47.8795039+02:00</PickedUp>
-    <Delivered>2022-01-11T01:18:26.9936418+02:00</Delivered>
+    <Scheduleded xsi:nil="true" />
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
   </Parcel>
   <Parcel>
     <Id>1008</Id>
@@ -56,9 +56,9 @@
     <Weight>Middle</Weight>
     <Priority>Standart</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded>2022-03-01T13:00:07</Scheduleded>
-    <PickedUp>2022-01-11T01:17:44.8440952+02:00</PickedUp>
-    <Delivered>2022-01-11T01:20:56.0161227+02:00</Delivered>
+	  <Scheduleded xsi:nil="true" />
+	  <PickedUp xsi:nil="true" />
+	  <Delivered xsi:nil="true" />
   </Parcel>
   <Parcel>
     <Id>1003</Id>
@@ -68,9 +68,9 @@
     <Weight>Middle</Weight>
     <Priority>Fast</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded>2022-01-15T20:21:22.4329978+02:00</Scheduleded>
-    <PickedUp>2022-01-15T20:21:23.4982855+02:00</PickedUp>
-    <Delivered>2022-01-15T20:21:24.5625612+02:00</Delivered>
+	  <Scheduleded xsi:nil="true" />
+	  <PickedUp xsi:nil="true" />
+	  <Delivered xsi:nil="true" />
   </Parcel>
   <Parcel>
     <Id>1005</Id>
@@ -80,9 +80,9 @@
     <Weight>Heavy</Weight>
     <Priority>Fast</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded>2022-01-15T20:23:53.3267099+02:00</Scheduleded>
-    <PickedUp>2022-01-15T20:23:54.395305+02:00</PickedUp>
-    <Delivered>2022-01-15T20:23:55.4499766+02:00</Delivered>
+	  <Scheduleded xsi:nil="true" />
+	  <PickedUp xsi:nil="true" />
+	  <Delivered xsi:nil="true" />
   </Parcel>
   <Parcel>
     <Id>1002</Id>
@@ -92,9 +92,9 @@
     <Weight>Heavy</Weight>
     <Priority>Standart</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded>2022-01-15T20:23:55.9720757+02:00</Scheduleded>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+	  <Scheduleded xsi:nil="true" />
+	  <PickedUp xsi:nil="true" />
+	  <Delivered xsi:nil="true" />
   </Parcel>
   <Parcel>
     <Id>1001</Id>
@@ -104,9 +104,9 @@
     <Weight>Heavy</Weight>
     <Priority>Fast</Priority>
     <Requested>2022-03-01T13:00:06</Requested>
-    <Scheduleded>2022-03-01T13:02:06</Scheduleded>
-    <PickedUp>2022-01-15T21:01:59.3440809+02:00</PickedUp>
-    <Delivered>2022-01-15T21:02:00.4064605+02:00</Delivered>
+	  <Scheduleded xsi:nil="true" />
+	  <PickedUp xsi:nil="true" />
+	  <Delivered xsi:nil="true" />
   </Parcel>
   <Parcel>
     <Id>1007</Id>
@@ -116,8 +116,8 @@
     <Weight>Heavy</Weight>
     <Priority>Fast</Priority>
     <Requested>2022-03-01T13:00:07</Requested>
-    <Scheduleded>2022-01-15T21:02:03.7499361+02:00</Scheduleded>
-    <PickedUp>2022-01-15T21:02:04.805782+02:00</PickedUp>
-    <Delivered xsi:nil="true" />
+	<Scheduleded xsi:nil="true" />
+	<PickedUp xsi:nil="true" />
+	<Delivered xsi:nil="true" />
   </Parcel>
 </ArrayOfParcel>
