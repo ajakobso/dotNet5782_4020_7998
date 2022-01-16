@@ -43,7 +43,7 @@ namespace BL
                     }
                     catch (NoParcelAscriptedToDroneException)
                     {
-                        lock (myBl) { try { bl.DroneToCharge(droneId); } catch (NoChargingSlotIsAvailableException) { } }
+                        lock (myBl) { try { bl.DroneToCharge(droneId); } catch (NoChargingSlotIsAvailableException) { throw new NoChargingSlotIsAvailableException(); } catch (DroneOutOfBatteryException) { throw new DroneOutOfBatteryException(); } ; }
                         updateDisplay();
                         Thread.Sleep(DELAY);
                     }//the drone is available (but cant perform new delivary) which meen he is at the target location - so we send it to charge   
@@ -55,7 +55,7 @@ namespace BL
                     {
                         lock (myBl) { time = DateTime.Now - myBl.GetInsertionTime(droneId); }
                         timeInCharge = time.TotalSeconds;
-                        lock (myBl) { myBl.ReleaseDroneFromCharge(droneId, timeInCharge); myBl.DroneToCharge(droneId); }
+                        lock (myBl) { myBl.ReleaseDroneFromCharge(droneId, timeInCharge); try { myBl.DroneToCharge(droneId); } catch (NoChargingSlotIsAvailableException) { throw new NoChargingSlotIsAvailableException(); } catch (DroneOutOfBatteryException) { throw new DroneOutOfBatteryException(); }  ; }
                         battery += batteryConsuming[4] * timeInCharge;
                         if(battery >= 100)
                             lock (myBl) { myBl.ReleaseDroneFromCharge(droneId, 0); }

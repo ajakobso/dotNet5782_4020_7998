@@ -23,7 +23,7 @@ namespace Dal
     }
     class XmlTools
     {
-        static string dir = @"C:/Users/Ayele/source/repos/ajakobso/dotNet5782_4020_7998/";
+        static string dir = @"dotNet5782_4020_7998/";
         static XmlTools()
         {
             if (!Directory.Exists(dir))

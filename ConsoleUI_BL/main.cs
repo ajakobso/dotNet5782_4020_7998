@@ -137,7 +137,7 @@ namespace ConsoleUI_BL
                             Console.WriteLine("What do you want to update?\n" +
                               "DroneModel: Update drone's name\n" +
                               "BaseStation: Update a base station\n" +
-                              "RBaseStation: remove a base station\n"+
+                              "RBaseStation: remove a base station\n" +
                               "Customer: Update a customer\n" +
                               "DroneToCharge: Sending a drone to charge at a base station \n" +
                               "DroneRealese: Release drone from charging at a base station\n" +
@@ -346,7 +346,7 @@ namespace ConsoleUI_BL
                                 }
                                 break;
                             case Enums.ListsDisplaying.UnAscriptedParcelsLict:
-                                foreach(var fParcel in bl.DisplayUnAscriptedParcelsList())//free parcel///////////not linq
+                                foreach (var fParcel in bl.DisplayUnAscriptedParcelsList())//free parcel///////////not linq
                                 {
                                     Console.WriteLine(fParcel);
                                 }
