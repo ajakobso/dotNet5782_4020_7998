@@ -87,6 +87,7 @@ namespace PL
             ActionsOnCustomerGrid.Visibility = Visibility.Hidden;
             Close();
         }
+
         private void CustomerLongitudeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //string input;
@@ -129,6 +130,15 @@ namespace PL
             ParcelsFromDataGrid.DataContext = parcelsFromCustomer;
             ParcelsToDataGrid.DataContext = parcelsToCustomer;
             //if the name is changed then update the name - same about the phone, i just dont know how to check if the text changed.
+        }
+        private void ParcelsFromDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new CustomerWindow(bl, ((CustomerInParcel)ParcelsFromDataGrid.SelectedItem).CustomerId).Show();
+        }
+
+        private void ParcelsToDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new CustomerWindow(bl, ((CustomerInParcel)ParcelsToDataGrid.SelectedItem).CustomerId).Show();
         }
         #endregion
         private void SuccessOperation()

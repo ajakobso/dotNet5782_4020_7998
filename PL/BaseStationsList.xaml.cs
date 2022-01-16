@@ -34,14 +34,15 @@ namespace PL
             BaseStationForListDataGrid.ItemsSource = baseStations;
             BaseStationForListDataGrid.DataContext = baseStations;
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell cell = sender as DataGridCell;
-            PO.DroneInCharge s = cell.DataContext as PO.DroneInCharge;
-            if (cell.DataContext.ToString() != ""&&s!=null)
-            { new DroneWindow(bl, s.DroneId).Show(); }
-            else
-                MessageBox.Show("there is no drone in charge at this station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            new BaseStationWindow(bl, ((PO.BaseStationForList)BaseStationForListDataGrid.SelectedItem).BaseStationId).Show();
+            //    DataGridCell cell = sender as DataGridCell;
+            //    PO.DroneInCharge s = cell.DataContext as PO.DroneInCharge;
+            //    if (cell.DataContext.ToString() != ""&&s!=null)
+            //    { new DroneWindow(bl, s.DroneId).Show(); }
+            //    else
+            //        MessageBox.Show("there is no drone in charge at this station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
@@ -62,7 +63,7 @@ namespace PL
         }
         private void AddBaseStationWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationWindow(bl).Show();
+            new BaseStationWindow(bl).ShowDialog();
             BaseStationForListDataGrid.ItemsSource = bl.DisplayBaseStationsList(x => x.BaseStationId == x.BaseStationId);
             if (filterButtonIsClicked)
             { FilterButton_Click(FilterButton, null); }
@@ -89,5 +90,23 @@ namespace PL
             { FilterButton_Click(FilterButton, null); }
         }
 
+        private void group_Click(object sender, RoutedEventArgs e)
+        {
+            List<IGrouping<int, PO.BaseStationForList>> GroupingData = baseStations.GroupBy(x => x.AvailableChargingS).ToList();
+            baseStationGroupingDataGrid.DataContext = GroupingData;
+            baseStationGroupingDataGrid.ItemsSource = GroupingData;
+            BaseStationForListDataGrid.Visibility = Visibility.Hidden;
+            baseStationGroupingDataGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Hidden;
+            ungroup.Visibility = Visibility.Visible;
+        }
+
+        private void ungroup_Click(object sender, RoutedEventArgs e)
+        {
+            baseStationGroupingDataGrid.Visibility = Visibility.Hidden;
+            BaseStationForListDataGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
+        }
     }
 }

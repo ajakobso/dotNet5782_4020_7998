@@ -24,6 +24,7 @@ namespace PL
         private readonly IBL bl;
         private PO.ParcelToList parcel;
         public ObservableCollection<PO.ParcelToList> ParcelsList { get; set; }
+        public ParcelsListWindow() { }//an empty consractor - never used, its just formal for the grouping
         public ParcelsListWindow(IBL bl)
         {
             InitializeComponent();
@@ -35,7 +36,7 @@ namespace PL
         }
         private void AddParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(bl).Show();
+            new ParcelWindow(bl).ShowDialog();
             ParcelsList = PO.BoPoAdapter.ParcelToListAdapter(bl.DisplayParcelsList(x => x.ParcelId == x.ParcelId));
             ParcelForListDataGrid.DataContext = ParcelsList;
             ParcelForListDataGrid.ItemsSource = ParcelsList;
@@ -55,13 +56,6 @@ namespace PL
         private void UpdateParcelButton_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(bl, parcel.ParcelId).Show();
-            /*<syncfusion:ComboBoxAdv x:Name="filterComboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="FloralWhite" Foreground="#DD975387" BorderBrush="{x:Null}"> 
-            </syncfusion:ComboBoxAdv>
-             <Button x:Name="AddParcelButton" Grid.Column="4" Height="70" HorizontalContentAlignment="Stretch" Margin="4,-1,1,0" Click="AddParcelButton_Click" >
-                <Button.Background>
-                    <ImageBrush ImageSource="\Images\add-icon.png"/>
-                </Button.Background>
-            </Button>s*/
 
         }
         private void Reset_Click(object sender, RoutedEventArgs e)

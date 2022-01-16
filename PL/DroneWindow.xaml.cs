@@ -28,12 +28,22 @@ namespace PL
         private void updateDrone() => worker.ReportProgress(0);
         private bool checkStop() => worker.CancellationPending;
         public Drone drone = new();//binding for actions on drone and display
+        bool isUpdateDroneListWindow = false;
         int BsId,droneId;
         string model;
         Enums.WeightCategories weight;
         private bool IdTextBoxChanged, ModelTextBoxChanged;
         private DateTime In, Out;//in and out time of sending drone to charge
         private bool Auto = false;
+        private Action updateDronesListwindow;
+        #region variables to delete the close bottun from the tool window
+        private const int GWL_STYLE = -16;
+        private const int WS_SYSMENU = 0x80000;
+        [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        #endregion
         #region add drone
         public DroneWindow(IBL bl)//add drone constractor
         {
@@ -104,14 +114,21 @@ namespace PL
         }
         #endregion
         #region actions on drone
-        public DroneWindow(IBL bl, int droneId)//actions on existing drone constractor
+        public DroneWindow(IBL bl, int droneId, Action updateDronesListwindow)//actions on existing drone constractor
         {
             this.bl = bl;
             InitializeComponent();
             ActionsOnDroneGrid.Visibility = Visibility.Visible;
+            Loaded += ToolWindow_Loaded;
+            if (updateDronesListwindow != null)
+            { this.updateDronesListwindow = updateDronesListwindow; isUpdateDroneListWindow = true; }
             updateDroneWindow(droneId);
-            //if (drone.DeliveryParcel == null)
-            //    DataGr.Visibility = Visibility.Hidden;
+        }
+        void ToolWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Code to remove close box from window
+            var hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
         private void DroneModelTBox_TextChanged(object sender, TextChangedEventArgs e)//working
         {
@@ -127,6 +144,8 @@ namespace PL
             List<BO.Drone> l = new List<BO.Drone>();
             l.Add(drone);
             DroneDataGrid.ItemsSource = l;
+            if(isUpdateDroneListWindow)
+                updateDronesListwindow();
         }
         private void ModelUpdate_Click(object sender, RoutedEventArgs e)//working
         {
@@ -244,6 +263,12 @@ namespace PL
                 MessageBox.Show("this drone can't pick up this parcl", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
         }
+
+        private void DroneDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new ParcelWindow(bl, ((Drone)DroneDataGrid.SelectedItem).DeliveryParcel.ParcelId).Show();
+        }
+
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
             Parcel parcel = new();
@@ -289,6 +314,8 @@ namespace PL
             {
                 try { updateDroneWindow(drone.DroneId); }
                 catch (DroneIdNotFoundException) { MessageBox.Show("this drone is not exist\n please choose enother drone", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                if (isUpdateDroneListWindow)
+                    updateDronesListwindow();
             }
         }
     }

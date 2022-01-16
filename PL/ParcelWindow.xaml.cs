@@ -22,12 +22,11 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         private readonly IBL bl;
-        private Parcel Parcel;//for action
+        private Parcel parcel;//for action
         int SID, DID;//variables for binding - add parcel
         PO.Enums.WeightCategories weight;//variable for binding - add parcel
         PO.Enums.Priorities priority;//variable for binding - add parcel
         private bool SIDTextBoxChanged, DIDTextBoxChanged;
-        DateTime In;
         #region add Parcel
         public ParcelWindow(IBL bl)//add Parcel constractor
         {
@@ -87,122 +86,39 @@ namespace PL
             InitializeComponent();
             ActionsOnParcelGrid.Visibility = Visibility.Visible;
             try
-            { Parcel = bl.DisplayParcel(ParcelId); }
+            { parcel = bl.DisplayParcel(ParcelId); }
             catch (ParcelIdNotFoundException) { MessageBox.Show("sorry, this Parcel is not exist in our company yet!\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            ParcelDataGrid.DataContext = Parcel;
-            IEnumerable<Parcel> l = new List<Parcel>();
-            l.Append(Parcel);
+            DataContext = parcel;
+            List<Parcel> l = new List<Parcel>();
+            l.Add(parcel);//it didnt work without to list, i didnt found another solution here
             ParcelDataGrid.ItemsSource = l;
             //if the drone id then make the grid of the drone in charge to be invisible
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            CustomerInParcel s = Parcel.SCIParcel;
-            new CustomerWindow(bl, s.CustomerId).Show();
-            CustomerInParcel d = Parcel.DCIParcel;
-            new CustomerWindow(bl, d.CustomerId).Show();
-            DroneInParcel drone = Parcel.DInParcel;
-            new CustomerWindow(bl, drone.DroneId).Show();
-            // else
-            //   MessageBox.Show("there is no available sender", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-        }
-        //private void ParcelModelTBox_TextChanged(object sender, TextChangedEventArgs e)//what is this?
-        //{
-        //    Parcel.Model = ParcelModelTBox.Text;
-        //    ModelTextBoxChanged = true;
-        //}
-        //private void ModelUpdate_Click(object sender, RoutedEventArgs e)//working
-        //{
-        //    try
-        //    { bl.UpdateParcel(Parcel.ParcelId, ParcelModelTBox.Text); }//try catch
-        //    catch (ParcelIdNotFoundException) { MessageBox.Show("sorry, this Parcel is not exist in our company yet!\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-        //    SuccessOperation();
-        //}
-        //private void ChargeIn_Click(object sender, RoutedEventArgs e)//what is this?
-        //{
-        //    if (Parcel.ParcelState == PO.Enums.ParcelState.Ascripted)/////////gues so?
-        //    {
-        //        In = DateTime.Now;
-        //        try
-        //        { bl.ParcelToCharge(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
-        //        catch (ParcelOutOfBatteryException) { MessageBox.Show("this Parcel does not have enough battery to go to the closest charging station\n please call someone to take it", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-        //        catch (BaseStationNotFoundException) { MessageBox.Show("look like there is no charging station around the Parcel\n please call someone to take it to charge", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-        //        catch (NoChargingSlotIsAvailableException) { MessageBox.Show("there is no available charging stations anymore\n please call someone to take it to charge", "ERROE", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-        //        SuccessOperation();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("this Parcel can't be charged", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-        //    }
-        //}
-        //private void ChargeOut_Click(object sender, RoutedEventArgs e)//what is this?
-        // {
 
-        // }
-        private void PickUpParcel_Click(object sender, RoutedEventArgs e)//the drone is taking our parcel
+        private void OpenSenderWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Parcel.ParcelAscriptionTime != null && Parcel.ParcelPickUpTime == null)//deliver or pick up?
-            {
-                try
-                { bl.PickUpParcel(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
-                catch (ParcelIdNotFoundException) { MessageBox.Show("this Parcel is not exist\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-               // catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                catch (ParcelCantBePickedUPException) { MessageBox.Show("this parcel can not be picked up\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                SuccessOperation();
-            }
+            if (parcel.SCIParcel.CustomerId > 0)//check if the customer exists
+            { new CustomerWindow(bl, parcel.SCIParcel.CustomerId).Show(); }
             else
-            {
-                MessageBox.Show("this Parcel can't pick up this parcl", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
+            { MessageBox.Show("sorry, we couldnt open the data of this customer!\n please choose enother one", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
         }
-        private void DeliverParcel_Click(object sender, RoutedEventArgs e)//parcel has delivered
+
+        private void OpenReceiverWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            Parcel parcel = new();
-            try
-            { parcel = bl.DisplayParcel(Parcel.ParcelId); }//Parcel.InDeliveringParcelId
-            catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            if (parcel.ParcelAscriptionTime != null && parcel.ParcelPickUpTime != null && parcel.ParcelDeliveringTime == null)
-            {
-                try
-                { bl.DeliveringParcelByDrone(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
-                catch (ParcelIdNotFoundException) { MessageBox.Show("this Parcel is not exist\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-               // catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                catch (ParcelCantBeDeliveredException) { MessageBox.Show("this parcel can not be delivered\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                SuccessOperation();
-            }
+            if (parcel.DCIParcel.CustomerId > 0)//check if the customer exists
+            { new CustomerWindow(bl, parcel.DCIParcel.CustomerId).Show(); }
             else
-            {
-                MessageBox.Show("this Parcel can't deliver this parcl", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
+            { MessageBox.Show("sorry, we couldnt open the data of this customer!\n please choose enother one", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
         }
-        private void SendParcel_Click(object sender, RoutedEventArgs e)//Asctipted parcel to drone for delivery
+
+        private void OpenDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Parcel.ParcelCreationTime != null)
-            {
-                try
-                { bl.AscriptionParcelToDrone(Parcel.ParcelId); }//we to do this in try and catch and catch any exception that might be thrown from bl.
-                catch (ParcelIdNotFoundException) { MessageBox.Show("this Parcel is not exist\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-               // catch (ParcelIdNotFoundException) { MessageBox.Show("this parcel is not exist\n please choose enother parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                catch (NoParcelAscriptedToDroneException) { MessageBox.Show("no parcel could be ascripted to the Parcel\n please choose another Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); return; }
-                SuccessOperation();
-            }
+            if (parcel.DInParcel.DroneId > 0)//there is a drone that deliver the parcel
+            { new DroneWindow(bl, parcel.DInParcel.DroneId, null).Show(); }
             else
-            {
-                MessageBox.Show("this Parcel can't be sent to delivery", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
-        }
+            { MessageBox.Show("sorry, we couldnt open the data of this drone!\n please choose enother one", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+        }        
         #endregion
-        private void SuccessOperation()
-        {
-            MessageBoxResult result = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
-            if (result == MessageBoxResult.OK)
-            {
-                try
-                { ParcelDataGrid.ItemsSource = bl.DisplayParcel(Parcel.ParcelId).ToString(); }
-                catch (BO.ParcelIdNotFoundException) { MessageBox.Show("this Parcel is not exist\n please choose enother Parcel", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-            }
-        }
     }
 }
 

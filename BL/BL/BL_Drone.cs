@@ -132,7 +132,7 @@ namespace BL
                     //ths distance return the distance first argument, and base station id second argument
                     double[] bs = distanceFromBS(drone.CurrentLocation);
                     double Battery = bs[0];
-                    var baseStation = DisplayBaseStation(Convert.ToInt32(bs[1]));
+                    BaseStationForList baseStation = DisplayBaseStationsList(x=> x.BaseStationId == Convert.ToInt32(bs[1])).FirstOrDefault();
                     Location droneLocation = AddLocation(drone.CurrentLocation.Long, drone.CurrentLocation.Lat);
                     Location location = AddLocation(myDal.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Longitude, myDal.CopyBaseStation((int)distanceFromBS(droneLocation)[1]).Lattitude);
                     Battery *= myDal.DronePowerConsumingPerKM()[0];
@@ -153,7 +153,7 @@ namespace BL
                     newDrone = drone;
                     try { removeBaseStation(baseStation.BaseStationId); }
                     catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
-                    try { myDal.AddBaseStation(baseStation.BaseStationId, baseStation.StationName, baseStation.AvailableChargingS + baseStation.UnAvailableChargingS, baseStation.AvailableChargingS, baseStation.StationLocation.Long, baseStation.StationLocation.Lat); }
+                    try { myDal.AddBaseStation(baseStation.BaseStationId, baseStation.StationName, baseStation.UnAvailableChargingS + baseStation.AvailableChargingS, baseStation.AvailableChargingS, baseStation.StationLocation.Long, baseStation.StationLocation.Lat); }
                     catch (DO.BaseStationNotFoundException) { throw new BaseStationNotFoundException(); }
                     try { myDal.DroneCharging(drone.DroneId, baseStation.BaseStationId); }
                     catch (DO.DroneIdNotFoundException) { throw new DroneIdNotFoundException(); }

@@ -35,7 +35,7 @@ namespace PL
         }
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)//work
         {
-            new CustomerWindow(bl).Show();
+            new CustomerWindow(bl).ShowDialog();
             refreshWindow();
         }
         private void refreshWindow()

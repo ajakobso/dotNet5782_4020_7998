@@ -71,12 +71,14 @@ namespace PL
         }
         private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).Show();
+            new DroneWindow(bl).ShowDialog();
             refreshWindow();
         }
         private void refreshWindow()
         {
             dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
+            DroneForListDataGrid.DataContext = dronesList;
+            DroneForListDataGrid.ItemsSource = dronesList;
             WeightSelector_SelectionChanged(WeightSelector, null);
             StatusSelector_SelectionChanged(StatusSelector, null);
         }
@@ -91,16 +93,7 @@ namespace PL
         private void DroneForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             drone.DroneId = ((PO.DroneForList)DroneForListDataGrid.SelectedItem).DroneId;
-            /*if (IdOfOpenedDroneWindow.Exists(x => x == drone.DroneId))//check if there is an opened window of the 
-            {
-                Application.Current.Windows.OfType<DroneWindow>().Where(x => x.IsActive && x.drone.DroneId == drone.DroneId).First().Topmost = true;
-            }
-            else
-            {*/
-            new DroneWindow(bl, drone.DroneId).Show();
-            //    IdOfOpenedDroneWindow.Add(drone.DroneId);
-            //}
-            refreshWindow();
+            new DroneWindow(bl, drone.DroneId, refreshWindow).Show();
         }
     }
 }

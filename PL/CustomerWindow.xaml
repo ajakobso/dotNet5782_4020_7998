@@ -96,7 +96,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Parcels sent from the customer" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
-                <DataGrid x:Name="ParcelsFromDataGrid" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Foreground="#DD975387" Background="FloralWhite" ColumnHeaderStyle="{StaticResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected">
+                <DataGrid x:Name="ParcelsFromDataGrid" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Foreground="#DD975387" Background="FloralWhite" 
+                          ColumnHeaderStyle="{StaticResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected"
+                          MouseDoubleClick="ParcelsFromDataGrid_MouseDoubleClick">
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="parcelIdColumn" Binding="{Binding ParcelId}" Header="Id" Width="auto"/>
                         <DataGridTextColumn x:Name="parcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Priority" Width="auto"/>
@@ -105,7 +107,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Label Content="Parcels sent to the customer" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="1" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
-                <DataGrid x:Name="ParcelsToDataGrid" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="1" Foreground="#DD975387" Background="FloralWhite" ColumnHeaderStyle="{StaticResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected">
+                <DataGrid x:Name="ParcelsToDataGrid" ItemsSource="{Binding}" Grid.Row="1" 
+                          Grid.Column="1" Foreground="#DD975387" Background="FloralWhite" 
+                          ColumnHeaderStyle="{StaticResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="ParcelsToDataGrid_MouseDoubleClick">
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="ParcelIdColumn" Binding="{Binding ParcelId}" Header="Id" Width="auto"/>
                         <DataGridTextColumn x:Name="ParcelPriorityColumn" Binding="{Binding ParcelPriority}" Header="Priority" Width="auto"/>

@@ -12,26 +12,11 @@ namespace BO
         public string StationName { get; set; }
         public Location StationLocation { get; set; }
         public int AvailableChargingS { get; set; }
-        public List<DroneInCharge> DInChargeList { get; set; }
+        public IEnumerable<DroneInCharge> DInChargeList { get; set; }
         public override string ToString()
         {
             return $"id = {BaseStationId}, name = {StationName}, location = {StationLocation}, available charging stations = {AvailableChargingS}, drones in charge = {DInChargeList}";
         }
-       public void removeDInCharge(int id)
-        {
-            foreach (var drone in from drone in DInChargeList
-                                  where drone.DroneId == id
-                                  select drone)
-            {
-                DInChargeList.Remove(drone);
-            }
-            //foreach (var drone in DInChargeList)-not linq
-            //{
-            //    if (drone.DroneId == id)
-            //    {
-            //        DInChargeList.Remove(drone);
-            //    }
-            //}
-        }
+       
     }
 }

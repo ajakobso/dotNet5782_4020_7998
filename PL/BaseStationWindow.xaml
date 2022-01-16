@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d"
-        Title="BaseStationWindow" Height="450" Width="auto">
+        Title="BaseStationWindow" Height="450" Width="750">
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
@@ -15,7 +15,19 @@
                 </Border>
             </Grid>
         </ControlTemplate>
-        
+
+        <Style x:Key="ColumnHeaderStyles" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="#DD975387"/>
+            <Setter Property="FontFamily" Value="Berlin Sans FB Demi"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
     </Window.Resources>
     <Window.Background>FloralWhite</Window.Background>
     <Grid Name="MainGrid">
@@ -60,40 +72,106 @@
                 </Button.BorderBrush>
             </Button>
         </Grid>
-        <Grid x:Name="UpdateBaseStationGrid" Visibility="Hidden">
+        <Grid x:Name="ActionsOnBaseStationGrid" Height="auto" Width="auto" Background="FloralWhite" Visibility="Hidden">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.4*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="UpdateBaseStationIdTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationIdTextBox_TextChanged"/>
-            <Label x:Name="UpdateBaseStationIDLabel" Content="ID" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="64,19,79,15" />
-            <TextBox x:Name="UpdateBaseStationNameTextBox" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationNameTextBox_TextChanged"/>
-            <Label x:Name="UpdateBaseStationNameLabel" Content="Name" Grid.Column="0" Grid.Row="1" Height="38" VerticalAlignment="Stretch" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="49,0,70,0" />
-            <TextBox x:Name="UpdateBaseStationCSTextBox" Grid.Row="2" Height="20" Width="120" Grid.Column="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Foreground="Black" TextChanged="UpdateBaseStationCSTextBox_TextChanged"/>
-            <Label x:Name="UpdateBaseStationCSLabel" Content="Charging Slots" Grid.Row="2" Height="38" FontFamily="Berlin Sans FB Demi" FontSize="22" Margin="22,18,32,17" />
-            <Button x:Name="UpdateBaseStationButton" Content="Update BaseStation" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="40" Margin="118,16,138,16" Grid.Row="3" Grid.ColumnSpan="2" FontFamily="Berlin Sans FB Demi" FontSize="18" FontWeight="Bold" Foreground="Black" Click="UpdateBaseStationButton_Click">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFC5FBF5"/>
-                        <GradientStop Color="#FEB4FFFB" Offset="0.139"/>
-                        <GradientStop Color="#FEA5F9F5" Offset="0.357"/>
-                        <GradientStop Color="#FE92F2ED" Offset="0.648"/>
-                        <GradientStop Color="#FE76EAE4" Offset="0.726"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-                <Button.Effect>
-                    <DropShadowEffect/>
-                </Button.Effect>
-                <Button.BorderBrush>
-                    <SolidColorBrush Color="#FFCBC8A2" Opacity="0.75"/>
-                </Button.BorderBrush>
-            </Button>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Base Station's Data" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="FloralWhite" FontFamily="Berlin Sans FB Demi" FontSize="30" Height="40" Width="auto" Foreground="#DD975387"></Label>
+                <Button x:Name="UpdateBaseStationButton" Grid.Column="1" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" Click="UpdateBaseStationButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/update-icon.png"/>
+                    </Button.Background>
+                </Button>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Id" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <Label Content="Name" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="1" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <Label Content="Available charge slots" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="2" Foreground="#DD975387" FontSize="18" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <Label Content="Location" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="3" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <TextBox x:Name="BaseStationId" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+                <TextBox x:Name="BaseStationName" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="1" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+                <TextBox x:Name="BaseStationAvailableChargeSlots" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="2" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+                <TextBox x:Name="BaseStationLocation" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="1" Grid.Column="3" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Drones in carge" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Center" Width="auto" Grid.Row="0" Grid.Column="0" Foreground="#DD975387" FontSize="22" FontFamily="Berlin Sans FB" FontWeight="Bold"/>
+                <DataGrid x:Name="DronesInChargeDataGrid" BorderBrush="#DD975387" Width="274" HorizontalAlignment="Center" ItemsSource="{Binding}" Foreground="#DD975387" 
+                          Background="FloralWhite" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected"
+                          Margin="0,45,0,48" IsReadOnly="True" Grid.RowSpan="2" MouseDoubleClick="DronesInChargeDataGrid_MouseDoubleClick">
+                    <DataGrid.Resources>
+                        <Style x:Key="MyProgressBarStyle"  TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                                        <Grid MinHeight="20" MinWidth="30">
+                                            <Border Name="PART_Track" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" Background="White" />
+                                            <Border 
+                                    Name="PART_Indicator" 
+                                    CornerRadius="2" 
+                                    BorderBrush="Transparent" 
+                                    BorderThickness="1" 
+                                    HorizontalAlignment="Left">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Color="#FFE80C0C" Offset="0" ></GradientStop>
+                                                            <GradientStop Color="red" Offset="0.1" ></GradientStop>
+                                                            <GradientStop Color="#FFF58413" Offset=".2" ></GradientStop>
+                                                            <GradientStop Color="Orange" Offset=".25" ></GradientStop>
+                                                            <GradientStop Color="Yellow" Offset=".3" ></GradientStop>
+                                                            <GradientStop Color="#FFCEF16E" Offset=".4" ></GradientStop>
+                                                            <GradientStop Color="#FF75FB75" Offset="0.6" ></GradientStop>
+                                                            <GradientStop Color="#FF1EE81E" Offset="0.7" ></GradientStop>
+                                                            <GradientStop Color="#FF1DCF1D" Offset="0.9" ></GradientStop>
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <DataTemplate x:Key="batteryProgressBar">
+                            <Grid>
+                                <ProgressBar x:Name="BatteryStatus" Value="{Binding Battery}" Style="{StaticResource MyProgressBarStyle}" Orientation="Vertical" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top"  SnapsToDevicePixels="True" Margin="0" Height="25" Width="45"/>
+                                <TextBlock Text="{Binding Battery, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#DD975387" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="droneIdColumn" Binding="{Binding DroneId}" Header="Id" Width="auto"/>
+                        <DataGridTemplateColumn x:Name="batteryColumn" CellTemplate="{StaticResource batteryProgressBar}" Header="Battery" Width="SizeToHeader"/>
+                        <DataGridTextColumn x:Name="InsertionTimeColumn" Binding="{Binding InsertionTime}" Header="Insertion Time" Width="auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
         </Grid>
     </Grid>
 </Window>

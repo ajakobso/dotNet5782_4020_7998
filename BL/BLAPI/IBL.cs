@@ -24,7 +24,7 @@ namespace BlApi
         void DeliveringParcelByDrone(int Id);
         public void RemoveParcel(int id);
         DateTime GetInsertionTime(int droneID);
-        BaseStationForList DisplayBaseStation(int id);
+        BaseStation DisplayBaseStation(int id);
         DroneForList DisplayDrone(int id);
         Drone GetDrone(int id);
         Customer DisplayCustomer(int id);

@@ -17,7 +17,7 @@
             <Setter Property="Width" Value="auto"/>
             <Setter Property="FontStretch" Value="Expanded"/>
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Margin" Value="15,0,0,0"/>
         </Style>
     </Window.Resources>
     <Grid Name="MainGrid" Margin="3,0,-3,0">
@@ -55,21 +55,25 @@
                 </Button.Background>
             </Button>
         </Grid>
-        <DataGrid x:Name="CustomerForListDataGrid" ItemsSource="{Binding}"  Foreground="#DD975387" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="-13,69,13,8" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MouseDoubleClick="CustomerForListDataGrid_MouseDoubleClick" Background="FloralWhite">
-            <!--<DataGrid.Resources>
+        <Grid Name="downGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Grid.Row="1" Width="800"  Background="FloralWhite" >
+
+
+            <DataGrid x:Name="CustomerForListDataGrid" ColumnHeaderStyle="{DynamicResource ColumnHeaderStyles}" ItemsSource="{Binding}"  Foreground="#DD975387" IsReadOnly="True" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.RowSpan="2" MouseDoubleClick="CustomerForListDataGrid_MouseDoubleClick" Background="FloralWhite">
+                <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
-            </DataGrid.Resources>--> 
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="customerIdColumn" Binding="{Binding CustomerId}" Header="Customer Id" Width="SizeToHeader" Foreground="#DD975387"/>
-                <DataGridTextColumn x:Name="customerNameColumn" Binding="{Binding CustomerName}" Header="Customer Name" Width="SizeToHeader" Foreground="#DD975387"/>
-                <DataGridTextColumn x:Name="customerPhoneColumn" Binding="{Binding CustomerPhone}" Header="Customer Phone" Width="SizeToHeader" Foreground="#DD975387"/>
-                <DataGridTextColumn x:Name="numOfDeliveredParcelsColumn" Binding="{Binding NumOfDeliveredParcels}" Header="Num Of Delivered Parcels" Foreground="#DD975387" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="numOfUnDeliveredParcelsColumn" Binding="{Binding NumOfUnDeliveredParcels}" Header="Num Of Un Delivered Parcels" Foreground="#DD975387" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="numOfParcelsOnTheWayColumn" Binding="{Binding NumOfParcelsOnTheWay}" Header="Num Of Parcels On The Way" Foreground="#DD975387" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="numOfReceivedParcelsColumn" Binding="{Binding NumOfReceivedParcels}" Header="Num Of Received Parcels" Foreground="#DD975387" Width="SizeToHeader"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            </DataGrid.Resources>-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="customerIdColumn" Binding="{Binding CustomerId}" Header="Id" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="customerNameColumn" Binding="{Binding CustomerName}" Header="Name" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="customerPhoneColumn" Binding="{Binding CustomerPhone}" Header="Phone" Width="SizeToHeader" Foreground="#DD975387"/>
+                    <DataGridTextColumn x:Name="numOfDeliveredParcelsColumn" Binding="{Binding NumOfDeliveredParcels}" Header="Delivered Parcels" Foreground="#DD975387" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="numOfUnDeliveredParcelsColumn" Binding="{Binding NumOfUnDeliveredParcels}" Header="Un Delivered Parcels" Foreground="#DD975387" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="numOfParcelsOnTheWayColumn" Binding="{Binding NumOfParcelsOnTheWay}" Header="Parcels On The Way" Foreground="#DD975387" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="numOfReceivedParcelsColumn" Binding="{Binding NumOfReceivedParcels}" Header="Received Parcels" Foreground="#DD975387" Width="SizeToHeader"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>

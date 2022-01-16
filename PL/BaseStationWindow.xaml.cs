@@ -22,11 +22,13 @@ namespace PL
     public partial class BaseStationWindow : Window
     {
         private readonly IBL bl;
-        private BaseStationForList BaseStation;//for action
+        private BaseStation baseStation;//for action
+        #region variables for binding - add base station
         private int id, numChargeS;
         private string name;
         private double longitude, lattitude;
         private bool IdTextBoxChanged, CSTextBoxChanged, NameTextBoxChanged, LongChanged, LattChanged;
+        #endregion
         #region add BaseStation
         public BaseStationWindow(IBL bl)//add BaseStation constractor
         {
@@ -44,11 +46,11 @@ namespace PL
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to add this BaseStation?", "Add BaseStation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
                 if (result == MessageBoxResult.Yes)
                 {
-                    Location location = new(0,0);
+                    Location location = new(0, 0);
                     try
                     {
                         location = bl.AddLocation(longitude, lattitude);
-                        bl.AddBaseStation(id, name, location, numChargeS); 
+                        bl.AddBaseStation(id, name, location, numChargeS);
                     }//add try and catch with the proper exceptions from the bl.exceptions
                     catch (LocationOutOfRangeException) { _ = MessageBox.Show("the location of the base station you choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
                     _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -93,6 +95,7 @@ namespace PL
                 }
             }
         }
+
         private void BaseStationIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string input;
@@ -146,12 +149,12 @@ namespace PL
         {
             AddBaseStationGrid.Visibility = Visibility.Hidden;
             //RemoveBaseStationGrid.Visibility = Visibility.Hidden;
-            UpdateBaseStationGrid.Visibility = Visibility.Hidden;
+            ActionsOnBaseStationGrid.Visibility = Visibility.Hidden;
             Close();
         }
 
         #endregion
-        #region remove BaseStation
+        #region notes
         //public BaseStationWindow(IBL bl, bool nothing)//remove an existing BaseStation constractor
         //{
         //    this.bl = bl;
@@ -215,75 +218,36 @@ namespace PL
 */
         #endregion
         #region update BaseStation
-        public BaseStationWindow(IBL bl, int nothing)//update an existing BaseStation constractor
+        public BaseStationWindow(IBL bl, int baseStationId)//update an existing BaseStation constractor
         {
             this.bl = bl;
             InitializeComponent();
-            UpdateBaseStationGrid.Visibility = Visibility.Visible;
+            ActionsOnBaseStationGrid.Visibility = Visibility.Visible;
+            try
+            { baseStation = bl.DisplayBaseStation(baseStationId); }
+            catch (DroneIdNotFoundException) { MessageBox.Show("sorry, this base station is not exist in our company yet!\n please choose enother base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+            BaseStationId.Text = baseStation.BaseStationId.ToString();
+            BaseStationName.Text = baseStation.StationName;
+            BaseStationAvailableChargeSlots.Text = baseStation.AvailableChargingS.ToString();
+            BaseStationLocation.Text = baseStation.StationLocation.ToString();
+            DronesInChargeDataGrid.DataContext = baseStation.DInChargeList;
         }
         private void UpdateBaseStationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CSTextBoxChanged && NameTextBoxChanged && IdTextBoxChanged)
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to update this BaseStation?", "Update BaseStation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to update this BaseStation?", "Update BaseStation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-                if (result == MessageBoxResult.Yes)
-                {
-                    try
-                    { bl.UpdateBaseStation(id, name, numChargeS); }//try catch
-                    catch (BaseStationNotFoundException) { MessageBox.Show("sorry, this BaseStation is not exist in our company yet!\n please choose enother BaseStation", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
-                    _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NameTextBoxChanged = false;
-                    IdTextBoxChanged = false;
-                    CSTextBoxChanged = false;
-                    Close();
-                    return;
-                }
+                try
+                { bl.UpdateBaseStation(baseStation.BaseStationId, baseStation.StationName, baseStation.AvailableChargingS); }//try catch
+                catch (BaseStationNotFoundException) { MessageBox.Show("sorry, this BaseStation is not exist in our company yet!\n please choose enother BaseStation", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
             }
         }
-        private void UpdateBaseStationIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DronesInChargeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string input;
-            input = UpdateBaseStationIdTextBox.Text;
-            bool isInt = int.TryParse(input, out id);
-            if (isInt == false || id < 0)
-            {
-                UpdateBaseStationIdTextBox.Foreground = Brushes.Red;
-                _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
-            else
-            {
-                if (isInt && id >= 0)
-                {
-                    UpdateBaseStationIdTextBox.Foreground = Brushes.Black;
-                    IdTextBoxChanged = true;
-                }
-            }
-        }
-        private void UpdateBaseStationNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string input;
-            input = UpdateBaseStationNameTextBox.Text;
-            Name = input;
-            NameTextBoxChanged = true;
-        }
-        private void UpdateBaseStationCSTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string input;
-            input = UpdateBaseStationIdTextBox.Text;
-            bool isInt = int.TryParse(input, out id);
-            if (isInt == false || id < 0)
-            {
-                UpdateBaseStationCSTextBox.Foreground = Brushes.Red;
-                _ = MessageBox.Show("Invalid input, please enter a valid non-negative integer", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-            }
-            else
-            {
-                if (isInt && id >= 0)
-                {
-                    UpdateBaseStationCSTextBox.Foreground = Brushes.Black;
-                    CSTextBoxChanged = true;
-                }
-            }
+            int droneId = ((BO.DroneInCharge)DronesInChargeDataGrid.SelectedItem).DroneId;
+            new DroneWindow(bl, droneId, null).Show();
         }
         #endregion
     }

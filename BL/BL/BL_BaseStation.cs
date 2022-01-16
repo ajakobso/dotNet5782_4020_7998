@@ -69,7 +69,7 @@ namespace BL
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public BaseStationForList DisplayBaseStation(int id)
+        public BaseStation DisplayBaseStation(int id)
         {
             lock (myDal)
             {
@@ -87,7 +87,7 @@ namespace BL
                                                 where baseStation.Id == id
                                                 select baseStation)
                     {
-                        return new BaseStationForList { BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, UnAvailableChargingS = baseStation.ChargeSlots - baseStation.AvailableChargeSlots, StationLocation = new Location(baseStation.Longitude, baseStation.Lattitude), DInChargeList = dronesInCharge };
+                        return new BaseStation{ BaseStationId = baseStation.Id, StationName = baseStation.Name, AvailableChargingS = baseStation.AvailableChargeSlots, StationLocation = new Location(baseStation.Longitude, baseStation.Lattitude), DInChargeList = dronesInCharge };
                     }
                 }
                 throw new BaseStationNotFoundException();
