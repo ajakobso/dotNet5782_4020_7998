@@ -23,10 +23,10 @@ namespace Dal
     }
     class XmlTools
     {
-        static string dir = @"dotNet5782_4020_7998/";
+        static string dir = @"";
         static XmlTools()
         {
-            if (!Directory.Exists(dir))
+            if (dir != "" && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
         }
         

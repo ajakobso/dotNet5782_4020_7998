@@ -5,6 +5,14 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65D45E18-8F11-49CF-AC86-8E163237935C}"
 	ProjectSection(SolutionItems) = preProject
+		BaseStationsXml.xml = BaseStationsXml.xml
+		config.xml = config.xml
+		CoordinatesXml.xml = CoordinatesXml.xml
+		CustomersXml.xml = CustomersXml.xml
+		dal-config.xml = dal-config.xml
+		DronesInChargeXml.xml = DronesInChargeXml.xml
+		DronesXml.xml = DronesXml.xml
+		ParcelsXml.xml = ParcelsXml.xml
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
@@ -24,18 +32,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalObject", "DalObject\DalObject.csproj", "{0ECDB137-6693-48E1-8023-1949B089FD93}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{45961A07-B13F-4C21-B305-6BE6AA451D46}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{14D49DF4-4717-44FC-AA70-54894028334C}"
-	ProjectSection(SolutionItems) = preProject
-		BaseStationsXml.xml = BaseStationsXml.xml
-		config.xml = config.xml
-		CoordinatesXml.xml = CoordinatesXml.xml
-		CustomersXml.xml = CustomersXml.xml
-		dal-config.xml = dal-config.xml
-		DronesInChargeXml.xml = DronesInChargeXml.xml
-		DronesXml.xml = DronesXml.xml
-		ParcelsXml.xml = ParcelsXml.xml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,9 +70,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{14D49DF4-4717-44FC-AA70-54894028334C} = {65D45E18-8F11-49CF-AC86-8E163237935C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A281129B-4938-44F5-B362-C2CCD6529585}
