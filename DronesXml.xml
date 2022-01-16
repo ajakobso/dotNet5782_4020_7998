@@ -6,6 +6,16 @@
     <MaxWeight>Light</MaxWeight>
   </Drone>
   <Drone>
+    <Id>4</Id>
+    <Model>15C</Model>
+    <MaxWeight>Heavy</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>6</Id>
+    <Model>15D</Model>
+    <MaxWeight>Heavy</MaxWeight>
+  </Drone>
+  <Drone>
     <Id>3</Id>
     <Model>10B</Model>
     <MaxWeight>Middle</MaxWeight>
@@ -16,18 +26,8 @@
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>4</Id>
-    <Model>15C</Model>
-    <MaxWeight>Heavy</MaxWeight>
-  </Drone>
-  <Drone>
     <Id>5</Id>
     <Model>10D</Model>
-    <MaxWeight>Heavy</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>6</Id>
-    <Model>15D</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
 </ArrayOfDrone>
