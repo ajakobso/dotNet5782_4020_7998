@@ -3,15 +3,15 @@
   <BaseStation>
     <Id>102</Id>
     <Name>station2</Name>
-    <ChargeSlots>5</ChargeSlots>
-    <AvailableChargeSlots>5</AvailableChargeSlots>
+    <ChargeSlots>4</ChargeSlots>
+    <AvailableChargeSlots>4</AvailableChargeSlots>
     <Longitude>35.129248402818405</Longitude>
     <Lattitude>31.751978124616194</Lattitude>
   </BaseStation>
   <BaseStation>
     <Id>101</Id>
     <Name>station1</Name>
-    <ChargeSlots>3</ChargeSlots>
+    <ChargeSlots>2</ChargeSlots>
     <AvailableChargeSlots>2</AvailableChargeSlots>
     <Longitude>35.139781663410915</Longitude>
     <Lattitude>31.81134246856642</Lattitude>

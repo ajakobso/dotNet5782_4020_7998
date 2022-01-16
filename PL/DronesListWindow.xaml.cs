@@ -37,7 +37,7 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
         }
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)//filter the drones by their statuses
         {
             if (StatusSelector.SelectedItem != null)
             {
@@ -53,7 +53,7 @@ namespace PL
                 }
             }
         }
-        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)//ilter the drones by their wheight
         {
             if (WeightSelector.SelectedItem != null)
             {
@@ -69,12 +69,12 @@ namespace PL
                 }
             }
         }
-        private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)
+        private void AddDroneWindowButton_Click(object sender, RoutedEventArgs e)//add 
         {
             new DroneWindow(bl).ShowDialog();
             refreshWindow();
         }
-        private void refreshWindow()
+        private void refreshWindow()//refresh
         {
             dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
             DroneForListDataGrid.DataContext = dronesList;
@@ -82,11 +82,11 @@ namespace PL
             WeightSelector_SelectionChanged(WeightSelector, null);
             StatusSelector_SelectionChanged(StatusSelector, null);
         }
-        private void Reset_Click(object sender, RoutedEventArgs e)
+        private void Reset_Click(object sender, RoutedEventArgs e)//reset
         {
             dronesList = PO.BoPoAdapter.DroneForListAdapter(bl.DisplayDronesList(x => x.DroneId == x.DroneId));
         }
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)//close
         {
             Close();
         }

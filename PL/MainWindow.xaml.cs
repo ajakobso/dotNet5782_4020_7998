@@ -22,24 +22,24 @@ namespace PL
     public partial class MainWindow : Window
     {
         private readonly IBL bl;
-        public MainWindow(/*IBL bl*/)//to change for the passwords
+        public MainWindow()//starting
         {
             bl = BLFactory.GetBL("1");
             InitializeComponent();
         }
-        private void DronesListButton_Click(object sender, RoutedEventArgs e)
+        private void DronesListButton_Click(object sender, RoutedEventArgs e)//when we click on the "drones" button, open drones list window
         {
             new DronesListWindow(bl).Show();
         }
-        private void BSListButton_Click(object sender, RoutedEventArgs e)
+        private void BSListButton_Click(object sender, RoutedEventArgs e)//when we click on the "base stations" button, open base stations list window
         {
             new BaseStationsListWindow(bl).Show();
         }
-        private void ParcelsListButton_Click(object sender, RoutedEventArgs e)
+        private void ParcelsListButton_Click(object sender, RoutedEventArgs e)//when we click on the "parcels" button, open parcels list window
         {
             new ParcelsListWindow(bl).Show();
         }
-        private void CustomersListButton_Click(object sender, RoutedEventArgs e)
+        private void CustomersListButton_Click(object sender, RoutedEventArgs e)//when we click on the "customers" button, open customers list window
         {
             new CustomersListWindow(bl).Show();
         }
