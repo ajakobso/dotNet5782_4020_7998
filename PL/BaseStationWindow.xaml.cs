@@ -53,6 +53,7 @@ namespace PL
                         bl.AddBaseStation(id, name, location, numChargeS);
                     }//add try and catch with the proper exceptions from the bl.exceptions
                     catch (LocationOutOfRangeException) { _ = MessageBox.Show("the location of the base station you choose is out of range,\n please choose different base station", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK); }
+                    catch (AddExistingBaseStationException) { }
                     _ = MessageBox.Show("operation successfully completed", "SUCCESS!", MessageBoxButton.OK, MessageBoxImage.Information);
                     NameTextBoxChanged = false;
                     IdTextBoxChanged = false;

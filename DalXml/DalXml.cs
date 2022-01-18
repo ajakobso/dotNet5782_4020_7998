@@ -30,21 +30,21 @@ namespace Dal
         static DalXml() { }// static ctor to ensure instance init is done just before first usage
         DalXml()
         {
-            List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
-            List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
-            foreach (var drone in from drone in ListDrones
-                                  select drone)
-            {
-                DroneRelease(drone.DroneId);
-                foreach (var baseStation in from baseStation in ListBaseStations
-                                            where baseStation.Id == drone.StationId
-                                            select baseStation)
-                {
-                    ListBaseStations.Remove(baseStation);
-                    XmlTools.SaveListToXmlSerializer(ListBaseStations, BaseStationsPath);
-                    AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots, baseStation.AvailableChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude);
-                }
-            }
+            //List<DroneCharge> ListDrones = XmlTools.LoadListFromXmlSerializer<DroneCharge>(DronesInChargePath);
+            //List<BaseStation> ListBaseStations = XmlTools.LoadListFromXmlSerializer<BaseStation>(BaseStationsPath);
+            //foreach (var drone in from drone in ListDrones
+            //                      select drone)
+            //{
+            //    DroneRelease(drone.DroneId);
+            //    foreach (var baseStation in from baseStation in ListBaseStations
+            //                                where baseStation.Id == drone.StationId
+            //                                select baseStation)
+            //    {
+            //        ListBaseStations.Remove(baseStation);
+            //        XmlTools.SaveListToXmlSerializer(ListBaseStations, BaseStationsPath);
+            //        AddBaseStation(baseStation.Id, baseStation.Name, baseStation.ChargeSlots, baseStation.AvailableChargeSlots + 1, baseStation.Longitude, baseStation.Lattitude);
+            //    }
+            //}
         } // default => private
         public static DalXml Instance { get => instance; }// The public Instance property to use
         #endregion
