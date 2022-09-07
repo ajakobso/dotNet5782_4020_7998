@@ -1,2 +1,2 @@
 # dotNet5782_4020_7998
-מיני פרויקט חלונות אילת ועתיה
+mini project dotNet ayelet and etya
